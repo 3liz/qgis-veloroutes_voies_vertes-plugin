@@ -1,0 +1,20 @@
+[general]
+name=Gestion Adresse
+qgisMinimumVersion=3.4
+description=Gestion de la base adresse avec le module Lizmap
+author=3Liz
+email=info@3liz.com
+about=Gestion de la base adresse avec le module Lizmap
+
+version=0.1.1
+
+tracker=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+hasProcessingProvider=yes
+tags=adresse,france,french,address,lizmap
+homepage=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+category=Analysis
+icon=resources/icons/icon.png
+experimental=False
+deprecated=False
+changelog=changelog
