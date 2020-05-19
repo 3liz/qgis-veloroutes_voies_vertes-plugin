@@ -1,20 +1,19 @@
 [general]
-name=Gestion Adresse
+name=Veloroutes Voies Vertes
 qgisMinimumVersion=3.4
-description=Gestion de la base adresse avec le module Lizmap
+description=Standard COVADIS veloutes et voies vertes
 author=3Liz
 email=info@3liz.com
-about=Gestion de la base adresse avec le module Lizmap
+about=Standard COVADIS veloutes et voies vertes
 
 version=0.1.1
 
-tracker=https://github.com/3liz/qgis-gestion_base_adresse-plugin
-repository=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+tracker=https://github.com/3liz/qgis-veloutes_voies_vertes-plugin
+repository=https://github.com/3liz/qgis-veloutes_voies_vertes-plugin
 hasProcessingProvider=yes
-tags=adresse,france,french,address,lizmap
-homepage=https://github.com/3liz/qgis-gestion_base_adresse-plugin
+tags=covadis,velourtes
+homepage=https://github.com/3liz/qgis-veloutes_voies_vertes-plugin
 category=Analysis
-icon=resources/icons/icon.png
 experimental=False
 deprecated=False
 changelog=changelog
