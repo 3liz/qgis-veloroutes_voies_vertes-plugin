@@ -4,7 +4,7 @@ qgisMinimumVersion=3.4
 description=Standard COVADIS véloroutes et voies vertes
 author=3Liz
 email=info@3liz.com
-about=Standard COVADIS veloutes et voies vertes
+about=Standard COVADIS véloroutes et voies vertes
 
 version=0.1.1
 
