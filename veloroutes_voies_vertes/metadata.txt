@@ -1,5 +1,5 @@
 [general]
-name=Veloroutes Voies Vertes
+name=Véloroutes Voies Vertes
 qgisMinimumVersion=3.4
 description=Standard COVADIS veloutes et voies vertes
 author=3Liz
