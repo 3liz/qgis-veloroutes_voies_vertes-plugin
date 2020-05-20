@@ -1,7 +1,7 @@
 [general]
 name=Véloroutes Voies Vertes
 qgisMinimumVersion=3.4
-description=Standard COVADIS veloutes et voies vertes
+description=Standard COVADIS véloroutes et voies vertes
 author=3Liz
 email=info@3liz.com
 about=Standard COVADIS veloutes et voies vertes
