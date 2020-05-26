@@ -10,18 +10,20 @@ __revision__ = "$Format:%H$"
 
 
 from qgis.core import QgsApplication
+from .processing.provider import VeloroutesProvider
 
 class VeloroutesPlugin:
     def __init__(self, iface):
         self.iface = iface
         self.provider = None
-        
+
     def initProcessing (self):
-        pass
-    
+        self.provider = VeloroutesProvider()
+        QgsApplication.processingRegistry().addProvider(self.provider)
+
     def initGui(self):
         self.initProcessing()
-        
+
     def unload(self):
         if self.provider:
             QgsApplication.processingRegistry().removeProvider(self.provider)
