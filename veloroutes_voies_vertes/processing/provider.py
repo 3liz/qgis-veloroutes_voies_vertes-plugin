@@ -4,16 +4,18 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import QgsProcessingProvider
-from processing_provider.example_processing_algorithm import ExampleProcessingAlgorithm
+from .example_processing_algorithm import ExampleProcessingAlgorithm
 
-
+from .structure.create_database_structure import CreateDatabaseStructure
 
 # from ..qgis_plugin_tools.tools.resources import resources_path
 
 
-class VVVProvider(QgsProcessingProvider):
+class VeloroutesProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
         self.addAlgorithm(ExampleProcessingAlgorithm())
+        # self.addAlgorithm(CreateDatabaseStructure())
+
 
     def id(self):
         return "veloroutes_vv"

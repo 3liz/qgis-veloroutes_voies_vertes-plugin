@@ -10,7 +10,7 @@ __revision__ = "$Format:%H$"
 
 
 from qgis.core import QgsApplication
-#from .processing.provider import VeloroutesProvider
+from .processing.provider import VeloroutesProvider
 
 class VeloroutesPlugin:
     def __init__(self, iface):
@@ -18,9 +18,8 @@ class VeloroutesPlugin:
         self.provider = None
 
     def initProcessing (self):
-        # self.provider = VeloroutesProvider()
-        # QgsApplication.processingRegistry().addProvider(self.provider)
-        pass
+        self.provider = VeloroutesProvider()
+        QgsApplication.processingRegistry().addProvider(self.provider)
 
     def initGui(self):
         self.initProcessing()
