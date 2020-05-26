@@ -6,7 +6,7 @@ __revision__ = "$Format:%H$"
 from qgis.core import QgsProcessingProvider
 from .example_processing_algorithm import ExampleProcessingAlgorithm
 
-from .structure.create_database_structure import CreateDatabaseStructure
+# from .structure.create_database_structure import CreateDatabaseStructure
 
 # from ..qgis_plugin_tools.tools.resources import resources_path
 
