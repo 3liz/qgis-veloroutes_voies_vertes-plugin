@@ -20,142 +20,6 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
--- itineraire
-CREATE TABLE veloroutes.itineraire (
-    numero text NOT NULL,
-    nom_officiel text,
-    nom_usage text,
-    depart text,
-    arrivee text,
-    id_local integer NOT NULL,
-    annee_inscription date,
-    site_web text,
-    annee_ouverture date,
-    est_inscrit public.charbool,
-    niveau_schema text
-);
-
-
--- ItineraireCyclable_id_seq
-CREATE SEQUENCE veloroutes."ItineraireCyclable_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- ItineraireCyclable_id_seq
-ALTER SEQUENCE veloroutes."ItineraireCyclable_id_seq" OWNED BY veloroutes.itineraire.id_local;
-
-
--- liaison
-CREATE TABLE veloroutes.liaison (
-    "PRECISION" text,
-    "SRC_GEOM" text,
-    "SRC_ANNEE" text,
-    id_local integer NOT NULL,
-    id_repere integer,
-    id_poi integer
-);
-
-
--- LiaisonCyclable_id_seq
-CREATE SEQUENCE veloroutes."LiaisonCyclable_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- LiaisonCyclable_id_seq
-ALTER SEQUENCE veloroutes."LiaisonCyclable_id_seq" OWNED BY veloroutes.liaison.id_local;
-
-
--- repere
-CREATE TABLE veloroutes.repere (
-    libelle "char",
-    "numeroSerie" "char",
-    id_local integer NOT NULL,
-    type_noeud text NOT NULL,
-    geom public.geometry(Point,2154)
-);
-
-
--- PointRepereCyclable_id_seq
-CREATE SEQUENCE veloroutes."PointRepereCyclable_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- PointRepereCyclable_id_seq
-ALTER SEQUENCE veloroutes."PointRepereCyclable_id_seq" OWNED BY veloroutes.repere.id_local;
-
-
--- portion
-CREATE TABLE veloroutes.portion (
-    id_local integer NOT NULL,
-    nom text,
-    description text,
-    type_portion text NOT NULL
-);
-
-
--- PortionCyclable_id_seq
-CREATE SEQUENCE veloroutes."PortionCyclable_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- PortionCyclable_id_seq
-ALTER SEQUENCE veloroutes."PortionCyclable_id_seq" OWNED BY veloroutes.portion.id_local;
-
-
--- segment
-CREATE TABLE veloroutes.segment (
-    id_local integer NOT NULL,
-    annee_ouverture date,
-    date_saisie date,
-    "PRECISION" "char",
-    "SRC_GEOM" "char",
-    "SRC_ANNEE" "char",
-    sens_unique public.charbool DEFAULT 'F'::public.charbool,
-    geometrie_fictive public.charbool DEFAULT 'F'::public.charbool,
-    avancement integer NOT NULL,
-    revetement text,
-    statut text NOT NULL,
-    gestionnaire text,
-    proprietaire text,
-    geom public.geometry(LineString,2154),
-    CONSTRAINT chk_revetement CHECK (((avancement <> 1) AND (geometrie_fictive <> 'T'::public.charbool)))
-);
-
-
--- SegmentCyclable_id_seq
-CREATE SEQUENCE veloroutes."SegmentCyclable_id_seq"
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- SegmentCyclable_id_seq
-ALTER SEQUENCE veloroutes."SegmentCyclable_id_seq" OWNED BY veloroutes.segment.id_local;
-
-
 -- element
 CREATE TABLE veloroutes.element (
     id integer NOT NULL,
@@ -231,6 +95,61 @@ CREATE TABLE veloroutes.frequentation (
     id_repere integer,
     CONSTRAINT comptage CHECK ((comptage >= 0))
 );
+
+
+-- itineraire
+CREATE TABLE veloroutes.itineraire (
+    numero text NOT NULL,
+    nom_officiel text,
+    nom_usage text,
+    depart text,
+    arrivee text,
+    id_local integer NOT NULL,
+    annee_inscription date,
+    site_web text,
+    annee_ouverture date,
+    est_inscrit public.charbool,
+    niveau_schema text
+);
+
+
+-- itineraire_id_local_seq
+CREATE SEQUENCE veloroutes.itineraire_id_local_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- itineraire_id_local_seq
+ALTER SEQUENCE veloroutes.itineraire_id_local_seq OWNED BY veloroutes.itineraire.id_local;
+
+
+-- liaison
+CREATE TABLE veloroutes.liaison (
+    "precision" text,
+    src_geom text,
+    src_annee text,
+    id_local integer NOT NULL,
+    id_repere integer,
+    id_poi integer
+);
+
+
+-- liaison_id_local_seq
+CREATE SEQUENCE veloroutes.liaison_id_local_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- liaison_id_local_seq
+ALTER SEQUENCE veloroutes.liaison_id_local_seq OWNED BY veloroutes.liaison.id_local;
 
 
 -- niveau_administratif_val
@@ -399,6 +318,29 @@ CREATE SEQUENCE veloroutes.poi_tourisme_val_id_seq
 ALTER SEQUENCE veloroutes.poi_tourisme_val_id_seq OWNED BY veloroutes.poi_tourisme_val.id;
 
 
+-- portion
+CREATE TABLE veloroutes.portion (
+    id_local integer NOT NULL,
+    nom text,
+    description text,
+    type_portion text NOT NULL
+);
+
+
+-- portion_id_local_seq
+CREATE SEQUENCE veloroutes.portion_id_local_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- portion_id_local_seq
+ALTER SEQUENCE veloroutes.portion_id_local_seq OWNED BY veloroutes.portion.id_local;
+
+
 -- portion_val
 CREATE TABLE veloroutes.portion_val (
     id integer NOT NULL,
@@ -419,6 +361,30 @@ CREATE SEQUENCE veloroutes.portion_val_id_seq
 
 -- portion_val_id_seq
 ALTER SEQUENCE veloroutes.portion_val_id_seq OWNED BY veloroutes.portion_val.id;
+
+
+-- repere
+CREATE TABLE veloroutes.repere (
+    libelle text,
+    numero_serie text,
+    id_local integer NOT NULL,
+    type_noeud text NOT NULL,
+    geom public.geometry(Point,2154)
+);
+
+
+-- repere_id_local_seq
+CREATE SEQUENCE veloroutes.repere_id_local_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- repere_id_local_seq
+ALTER SEQUENCE veloroutes.repere_id_local_seq OWNED BY veloroutes.repere.id_local;
 
 
 -- repere_val
@@ -465,6 +431,40 @@ CREATE SEQUENCE veloroutes.revetement_val_id_seq
 ALTER SEQUENCE veloroutes.revetement_val_id_seq OWNED BY veloroutes.revetement_val.id;
 
 
+-- segment
+CREATE TABLE veloroutes.segment (
+    id_local integer NOT NULL,
+    annee_ouverture date,
+    date_saisie date,
+    src_geom text,
+    src_annee text,
+    sens_unique public.charbool DEFAULT 'F'::public.charbool,
+    geometrie_fictive public.charbool DEFAULT 'F'::public.charbool,
+    avancement integer NOT NULL,
+    revetement text,
+    statut text NOT NULL,
+    gestionnaire text,
+    proprietaire text,
+    geom public.geometry(LineString,2154),
+    "precision" text,
+    CONSTRAINT chk_revetement CHECK (((avancement <> 1) AND (geometrie_fictive <> 'T'::public.charbool)))
+);
+
+
+-- segment_id_local_seq
+CREATE SEQUENCE veloroutes.segment_id_local_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- segment_id_local_seq
+ALTER SEQUENCE veloroutes.segment_id_local_seq OWNED BY veloroutes.segment.id_local;
+
+
 -- statut_segment_val
 CREATE TABLE veloroutes.statut_segment_val (
     id integer NOT NULL,
@@ -500,11 +500,11 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val ALTER COLUMN id SET DEFAULT next
 
 
 -- itineraire id_local
-ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_local SET DEFAULT nextval('veloroutes."ItineraireCyclable_id_seq"'::regclass);
+ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.itineraire_id_local_seq'::regclass);
 
 
 -- liaison id_local
-ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_local SET DEFAULT nextval('veloroutes."LiaisonCyclable_id_seq"'::regclass);
+ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.liaison_id_local_seq'::regclass);
 
 
 -- niveau_administratif_val id
@@ -540,7 +540,7 @@ ALTER TABLE ONLY veloroutes.poi_tourisme_val ALTER COLUMN id SET DEFAULT nextval
 
 
 -- portion id_local
-ALTER TABLE ONLY veloroutes.portion ALTER COLUMN id_local SET DEFAULT nextval('veloroutes."PortionCyclable_id_seq"'::regclass);
+ALTER TABLE ONLY veloroutes.portion ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.portion_id_local_seq'::regclass);
 
 
 -- portion_val id
@@ -548,7 +548,7 @@ ALTER TABLE ONLY veloroutes.portion_val ALTER COLUMN id SET DEFAULT nextval('vel
 
 
 -- repere id_local
-ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_local SET DEFAULT nextval('veloroutes."PointRepereCyclable_id_seq"'::regclass);
+ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.repere_id_local_seq'::regclass);
 
 
 -- repere_val id
@@ -560,7 +560,7 @@ ALTER TABLE ONLY veloroutes.revetement_val ALTER COLUMN id SET DEFAULT nextval('
 
 
 -- segment id_local
-ALTER TABLE ONLY veloroutes.segment ALTER COLUMN id_local SET DEFAULT nextval('veloroutes."SegmentCyclable_id_seq"'::regclass);
+ALTER TABLE ONLY veloroutes.segment ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.segment_id_local_seq'::regclass);
 
 
 -- statut_segment_val id

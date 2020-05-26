@@ -23,31 +23,6 @@ ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT "FKcode" UNIQUE (code);
 
 
--- itineraire ItineraireCyclable_pkey
-ALTER TABLE ONLY veloroutes.itineraire
-    ADD CONSTRAINT "ItineraireCyclable_pkey" PRIMARY KEY (id_local);
-
-
--- liaison LiaisonCyclable_pkey
-ALTER TABLE ONLY veloroutes.liaison
-    ADD CONSTRAINT "LiaisonCyclable_pkey" PRIMARY KEY (id_local);
-
-
--- repere PointRepereCyclable_pkey
-ALTER TABLE ONLY veloroutes.repere
-    ADD CONSTRAINT "PointRepereCyclable_pkey" PRIMARY KEY (id_local);
-
-
--- portion PortionCyclable_pkey
-ALTER TABLE ONLY veloroutes.portion
-    ADD CONSTRAINT "PortionCyclable_pkey" PRIMARY KEY (id_local);
-
-
--- segment SegmentCyclable_pkey
-ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT "SegmentCyclable_pkey" PRIMARY KEY (id_local);
-
-
 -- poi_acces_val code2
 ALTER TABLE ONLY veloroutes.poi_acces_val
     ADD CONSTRAINT code2 UNIQUE (code);
@@ -103,6 +78,16 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val
     ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (code);
 
 
+-- itineraire itineraire_pkey
+ALTER TABLE ONLY veloroutes.itineraire
+    ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_local);
+
+
+-- liaison liaison_pkey
+ALTER TABLE ONLY veloroutes.liaison
+    ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_local);
+
+
 -- niveau_administratif_val niveau_administratif_val_pkey1
 ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT niveau_administratif_val_pkey1 PRIMARY KEY (id);
@@ -143,9 +128,19 @@ ALTER TABLE ONLY veloroutes.poi_tourisme_val
     ADD CONSTRAINT poi_tourisme_val_pkey1 PRIMARY KEY (id);
 
 
+-- portion portion_pkey
+ALTER TABLE ONLY veloroutes.portion
+    ADD CONSTRAINT portion_pkey PRIMARY KEY (id_local);
+
+
 -- portion_val portion_val_pkey1
 ALTER TABLE ONLY veloroutes.portion_val
     ADD CONSTRAINT portion_val_pkey1 PRIMARY KEY (id);
+
+
+-- repere repere_pkey
+ALTER TABLE ONLY veloroutes.repere
+    ADD CONSTRAINT repere_pkey PRIMARY KEY (id_local);
 
 
 -- repere_val repere_val_pkey1
@@ -158,9 +153,14 @@ ALTER TABLE ONLY veloroutes.revetement_val
     ADD CONSTRAINT revetement_val_pkey1 PRIMARY KEY (id);
 
 
+-- segment segment_pkey
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT segment_pkey PRIMARY KEY (id_local);
+
+
 -- segment avancement
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code) NOT VALID;
+    ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code);
 
 
 -- etape itineraire
@@ -170,17 +170,17 @@ ALTER TABLE ONLY veloroutes.etape
 
 -- itineraire niveau_schema
 ALTER TABLE ONLY veloroutes.itineraire
-    ADD CONSTRAINT niveau_schema FOREIGN KEY (niveau_schema) REFERENCES veloroutes.niveau_administratif_val(code) NOT VALID;
+    ADD CONSTRAINT niveau_schema FOREIGN KEY (niveau_schema) REFERENCES veloroutes.niveau_administratif_val(code);
 
 
 -- repere noeud
 ALTER TABLE ONLY veloroutes.repere
-    ADD CONSTRAINT noeud FOREIGN KEY (type_noeud) REFERENCES veloroutes.repere_val(code) NOT VALID;
+    ADD CONSTRAINT noeud FOREIGN KEY (type_noeud) REFERENCES veloroutes.repere_val(code);
 
 
 -- liaison poi
 ALTER TABLE ONLY veloroutes.liaison
-    ADD CONSTRAINT poi FOREIGN KEY (id_poi) REFERENCES veloroutes.poi(id_local) NOT VALID;
+    ADD CONSTRAINT poi FOREIGN KEY (id_poi) REFERENCES veloroutes.poi(id_local);
 
 
 -- frequentation portion
@@ -203,14 +203,14 @@ ALTER TABLE ONLY veloroutes.poi_acces
     ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 
--- poi_service portion
-ALTER TABLE ONLY veloroutes.poi_service
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local) NOT VALID;
-
-
 -- poi_tourisme portion
 ALTER TABLE ONLY veloroutes.poi_tourisme
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local) NOT VALID;
+    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
+
+
+-- poi_service portion
+ALTER TABLE ONLY veloroutes.poi_service
+    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 
 -- frequentation repere
@@ -225,7 +225,7 @@ ALTER TABLE ONLY veloroutes.liaison
 
 -- segment revetement
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code) NOT VALID;
+    ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code);
 
 
 -- element segment
@@ -235,7 +235,7 @@ ALTER TABLE ONLY veloroutes.element
 
 -- segment statut
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT statut FOREIGN KEY (statut) REFERENCES veloroutes.statut_segment_val(code) NOT VALID;
+    ADD CONSTRAINT statut FOREIGN KEY (statut) REFERENCES veloroutes.statut_segment_val(code);
 
 
 -- poi_acces type
@@ -255,7 +255,7 @@ ALTER TABLE ONLY veloroutes.poi_tourisme
 
 -- portion type_portion
 ALTER TABLE ONLY veloroutes.portion
-    ADD CONSTRAINT type_portion FOREIGN KEY (type_portion) REFERENCES veloroutes.portion_val(code) NOT VALID;
+    ADD CONSTRAINT type_portion FOREIGN KEY (type_portion) REFERENCES veloroutes.portion_val(code);
 
 
 --
