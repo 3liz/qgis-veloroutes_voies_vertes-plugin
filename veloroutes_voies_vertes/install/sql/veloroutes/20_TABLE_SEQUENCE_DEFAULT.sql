@@ -108,8 +108,8 @@ CREATE TABLE veloroutes.itineraire (
     annee_inscription date,
     site_web text,
     annee_ouverture date,
-    est_inscrit public.charbool,
-    niveau_schema text
+    niveau_schema text,
+    est_inscrit veloroutes.charbool
 );
 
 
@@ -438,8 +438,6 @@ CREATE TABLE veloroutes.segment (
     date_saisie date,
     src_geom text,
     src_annee text,
-    sens_unique public.charbool DEFAULT 'F'::public.charbool,
-    geometrie_fictive public.charbool DEFAULT 'F'::public.charbool,
     avancement integer NOT NULL,
     revetement text,
     statut text NOT NULL,
@@ -447,7 +445,8 @@ CREATE TABLE veloroutes.segment (
     proprietaire text,
     geom public.geometry(LineString,2154),
     "precision" text,
-    CONSTRAINT chk_revetement CHECK (((avancement <> 1) AND (geometrie_fictive <> 'T'::public.charbool)))
+    sens_unique veloroutes.charbool,
+    geometrie_fictive veloroutes.charbool
 );
 
 
