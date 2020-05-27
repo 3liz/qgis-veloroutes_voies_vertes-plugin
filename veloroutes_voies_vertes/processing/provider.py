@@ -15,7 +15,7 @@ class VeloroutesProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
         # self.addAlgorithm(ExampleProcessingAlgorithm())
         self.addAlgorithm(CreateDatabaseStructure())
-        # self.addAlgorithm(UpgradeDatabaseStructure())
+        self.addAlgorithm(UpgradeDatabaseStructure())
 
 
     def id(self):

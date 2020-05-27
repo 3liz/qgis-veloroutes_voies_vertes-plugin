@@ -49,7 +49,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         return tr("Structure")
 
     def groupId(self):
-        return "adresse_structure"
+        return "veloroutes_structure"
 
     def shortHelpString(self):
         return tr(
@@ -59,7 +59,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
     def initAlgorithm(self, config):
         # INPUTS
         connection_name = QgsExpressionContextUtils.globalScope().variable(
-            "adresse_connection_name"
+            "veloroutes_connection_name"
         )
         db_param_a = QgsProcessingParameterString(
             self.CONNECTION_NAME,
