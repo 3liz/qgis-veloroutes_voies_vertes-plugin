@@ -109,7 +109,7 @@ CREATE TABLE veloroutes.itineraire (
     site_web text,
     annee_ouverture date,
     niveau_schema text,
-    est_inscrit veloroutes.charbool
+    est_inscrit text
 );
 
 
@@ -445,8 +445,8 @@ CREATE TABLE veloroutes.segment (
     proprietaire text,
     geom public.geometry(LineString,2154),
     "precision" text,
-    sens_unique veloroutes.charbool,
-    geometrie_fictive veloroutes.charbool
+    sens_unique text,
+    geometrie_fictive text
 );
 
 
@@ -468,7 +468,7 @@ ALTER SEQUENCE veloroutes.segment_id_local_seq OWNED BY veloroutes.segment.id_lo
 CREATE TABLE veloroutes.statut_segment_val (
     id integer NOT NULL,
     code text NOT NULL,
-    text text
+    libelle text
 );
 
 

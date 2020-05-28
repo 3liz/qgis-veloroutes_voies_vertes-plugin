@@ -16,6 +16,35 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- numserie()
+CREATE FUNCTION veloroutes.numserie() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$    BEGIN
+        IF NEW.type_noeud = 'CPT' THEN
+            IF NEW.numero_serie IS NULL THEN
+				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
+			END IF;
+		END IF;	
+        RETURN NEW;
+    END;
+$$;
+
+
+-- revet()
+CREATE FUNCTION veloroutes.revet() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$    BEGIN
+        IF NEW.avancement = 01 THEN
+            NEW.revetement := NULL;
+        END IF;
+        IF NEW.geometrie_fictive ='T' THEN
+            NEW.revetement := NULL;
+        END IF;
+        RETURN NEW;
+    END;
+$$;
+
+
 --
 -- PostgreSQL database dump complete
 --
