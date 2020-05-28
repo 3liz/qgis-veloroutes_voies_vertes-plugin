@@ -62,5 +62,5 @@ rm "$OUTDIR/dump"
 echo "GLOSSARY"
 if [ $SCHEMA = 'veloroutes' ]
 then
-   pg_dump service=vvv --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
+   pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
 fi
