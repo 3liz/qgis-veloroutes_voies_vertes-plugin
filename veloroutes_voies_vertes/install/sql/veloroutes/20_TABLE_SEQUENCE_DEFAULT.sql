@@ -82,6 +82,10 @@ CREATE TABLE veloroutes.etat_avancement_val (
 );
 
 
+-- etat_avancement_val
+COMMENT ON TABLE veloroutes.etat_avancement_val IS 'Nomenclature pour l’état de réalisation d’un segment cyclable';
+
+
 -- etat_avancement_val_id_seq
 CREATE SEQUENCE veloroutes.etat_avancement_val_id_seq
     AS integer

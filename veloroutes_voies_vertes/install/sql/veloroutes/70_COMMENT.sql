@@ -53,6 +53,22 @@ COMMENT ON COLUMN veloroutes.etape.id IS 'identifiant de l''étape';
 COMMENT ON COLUMN veloroutes.etape.etape IS 'Numéro de l''étape. Un itinéraire est un agrégat continu et ordonné d''étapes.';
 
 
+-- etat_avancement_val
+COMMENT ON TABLE veloroutes.etat_avancement_val IS 'Nomenclature pour l’état de réalisation d’un segment cyclable';
+
+
+-- etat_avancement_val.code
+COMMENT ON COLUMN veloroutes.etat_avancement_val.code IS 'Code';
+
+
+-- etat_avancement_val.libelle
+COMMENT ON COLUMN veloroutes.etat_avancement_val.libelle IS 'Libellé';
+
+
+-- etat_avancement_val.id
+COMMENT ON COLUMN veloroutes.etat_avancement_val.id IS 'Identifiant';
+
+
 --
 -- PostgreSQL database dump complete
 --
