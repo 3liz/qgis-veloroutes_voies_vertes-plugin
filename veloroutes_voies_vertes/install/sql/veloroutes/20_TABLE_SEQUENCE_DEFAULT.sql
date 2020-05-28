@@ -7,7 +7,7 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
+
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -53,6 +53,11 @@ CREATE TABLE veloroutes.etape (
     id integer NOT NULL,
     etape integer
 );
+
+
+-- etape
+COMMENT ON TABLE veloroutes.etape IS 'Table de liaison entre itinéraire et portion. Un itinéraire correspond à un agrégat continu et ordonné d’étapes cyclables. Une étape est une portion d’un itinéraire cyclable. Une étape peut
+appartenir à plusieurs itinéraires. ';
 
 
 -- etape_id_seq
