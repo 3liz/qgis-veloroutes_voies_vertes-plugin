@@ -28,6 +28,10 @@ CREATE TABLE veloroutes.element (
 );
 
 
+-- element
+COMMENT ON TABLE veloroutes.element IS 'Table de liaison entre portion et segment. Une portion cyclable est une collection de segments cyclables continus. Un segment cyclable est un élément d’une ou plusieurs portions cyclables.';
+
+
 -- element_id_seq
 CREATE SEQUENCE veloroutes.element_id_seq
     AS integer

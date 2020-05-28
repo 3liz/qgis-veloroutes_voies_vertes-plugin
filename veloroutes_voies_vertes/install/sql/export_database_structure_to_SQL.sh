@@ -59,8 +59,8 @@ done
 rm "$OUTDIR/dump"
 
 # NOMENCLATURE
-#echo "GLOSSARY"
-#if [ $SCHEMA = 'adresse' ]
-#then
-#    pg_dump service=gobs --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "gobs.glossary" -f "$OUTDIR"/90_GLOSSARY.sql
-#fi
+echo "GLOSSARY"
+if [ $SCHEMA = 'veloroutes' ]
+then
+   pg_dump service=vvv --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
+fi

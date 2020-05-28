@@ -34,7 +34,7 @@ $$;
 CREATE FUNCTION veloroutes.revet() RETURNS trigger
     LANGUAGE plpgsql
     AS $$    BEGIN
-        IF NEW.avancement = 01 THEN
+        IF NEW.avancement = 1 THEN
             NEW.revetement := NULL;
         END IF;
         IF NEW.geometrie_fictive ='T' THEN
