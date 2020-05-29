@@ -110,6 +110,10 @@ CREATE TABLE veloroutes.frequentation (
 );
 
 
+-- frequentation
+COMMENT ON TABLE veloroutes.frequentation IS 'Fréquence de passage, table de lien entre repere et portion';
+
+
 -- itineraire
 CREATE TABLE veloroutes.itineraire (
     numero text NOT NULL,
@@ -124,6 +128,10 @@ CREATE TABLE veloroutes.itineraire (
     niveau_schema text,
     est_inscrit text
 );
+
+
+-- itineraire
+COMMENT ON TABLE veloroutes.itineraire IS 'Itinéraire cyclable, véloroute.';
 
 
 -- itineraire_id_local_seq
@@ -151,6 +159,10 @@ CREATE TABLE veloroutes.liaison (
 );
 
 
+-- liaison
+COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
+
+
 -- liaison_id_local_seq
 CREATE SEQUENCE veloroutes.liaison_id_local_seq
     AS integer
@@ -173,6 +185,10 @@ CREATE TABLE veloroutes.niveau_administratif_val (
 );
 
 
+-- niveau_administratif_val
+COMMENT ON TABLE veloroutes.niveau_administratif_val IS 'Nomenclature pour le niveau administratif d''un schéma';
+
+
 -- niveau_administratif_val_id_seq
 CREATE SEQUENCE veloroutes.niveau_administratif_val_id_seq
     AS integer
@@ -191,10 +207,13 @@ ALTER SEQUENCE veloroutes.niveau_administratif_val_id_seq OWNED BY veloroutes.ni
 CREATE TABLE veloroutes.poi (
     description text,
     type text,
-    id_portion integer,
     id_local integer NOT NULL,
     geom public.geometry(Point,2154)
 );
+
+
+-- poi
+COMMENT ON TABLE veloroutes.poi IS 'POI, point d’intérêt';
 
 
 -- poi_acces
@@ -203,12 +222,20 @@ CREATE TABLE veloroutes.poi_acces (
 INHERITS (veloroutes.poi);
 
 
+-- poi_acces
+COMMENT ON TABLE veloroutes.poi_acces IS 'Points d’intérêt localisant un accès à un centre d’intermodal';
+
+
 -- poi_acces_val
 CREATE TABLE veloroutes.poi_acces_val (
     id integer NOT NULL,
     code text NOT NULL,
     libelle text
 );
+
+
+-- poi_acces_val
+COMMENT ON TABLE veloroutes.poi_acces_val IS 'Nomenclature pour la nature des points d’accès à un autre réseau de transport';
 
 
 -- poi_acces_val_id_seq
@@ -243,10 +270,13 @@ ALTER SEQUENCE veloroutes.poi_id_local_seq OWNED BY veloroutes.poi.id_local;
 CREATE TABLE veloroutes.poi_service (
     description text,
     type text,
-    id_portion integer,
     id_local integer
 )
 INHERITS (veloroutes.poi);
+
+
+-- poi_service
+COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
 
 
 -- poi_service_id_local_seq
@@ -271,6 +301,10 @@ CREATE TABLE veloroutes.poi_service_val (
 );
 
 
+-- poi_service_val
+COMMENT ON TABLE veloroutes.poi_service_val IS 'Nomenclature pour  la nature des services offerts à un cyclotouriste par un point d’intérêt';
+
+
 -- poi_service_val_id_seq
 CREATE SEQUENCE veloroutes.poi_service_val_id_seq
     AS integer
@@ -289,10 +323,13 @@ ALTER SEQUENCE veloroutes.poi_service_val_id_seq OWNED BY veloroutes.poi_service
 CREATE TABLE veloroutes.poi_tourisme (
     description text,
     type text,
-    id_portion integer,
     id_local integer
 )
 INHERITS (veloroutes.poi);
+
+
+-- poi_tourisme
+COMMENT ON TABLE veloroutes.poi_tourisme IS 'Points d’intérêt touristique';
 
 
 -- poi_tourisme_id_local_seq
@@ -315,6 +352,10 @@ CREATE TABLE veloroutes.poi_tourisme_val (
     code text NOT NULL,
     libelle text
 );
+
+
+-- poi_tourisme_val
+COMMENT ON TABLE veloroutes.poi_tourisme_val IS 'Nomenclature pour la nature d’un point d’intérêt touristique';
 
 
 -- poi_tourisme_val_id_seq
@@ -340,6 +381,10 @@ CREATE TABLE veloroutes.portion (
 );
 
 
+-- portion
+COMMENT ON TABLE veloroutes.portion IS 'Portion d’itinéraire cyclable, collection de segments cyclables';
+
+
 -- portion_id_local_seq
 CREATE SEQUENCE veloroutes.portion_id_local_seq
     AS integer
@@ -360,6 +405,10 @@ CREATE TABLE veloroutes.portion_val (
     code text NOT NULL,
     libelle text
 );
+
+
+-- portion_val
+COMMENT ON TABLE veloroutes.portion_val IS 'Nomenclature pour le type d''une portion cyclable qualifié en fonction du rôle qu’elle joue dans la véloroute';
 
 
 -- portion_val_id_seq
@@ -386,6 +435,10 @@ CREATE TABLE veloroutes.repere (
 );
 
 
+-- repere
+COMMENT ON TABLE veloroutes.repere IS 'Point de repère cyclable, nœud cyclable particulier';
+
+
 -- repere_id_local_seq
 CREATE SEQUENCE veloroutes.repere_id_local_seq
     AS integer
@@ -408,6 +461,10 @@ CREATE TABLE veloroutes.repere_val (
 );
 
 
+-- repere_val
+COMMENT ON TABLE veloroutes.repere_val IS 'Nomenclature pour la nature d''un point de repère pour la description et la compréhension de l’itinéraire';
+
+
 -- repere_val_id_seq
 CREATE SEQUENCE veloroutes.repere_val_id_seq
     AS integer
@@ -428,6 +485,10 @@ CREATE TABLE veloroutes.revetement_val (
     code text NOT NULL,
     libelle text
 );
+
+
+-- revetement_val
+COMMENT ON TABLE veloroutes.revetement_val IS 'Nomenclature pour le niveau de qualité du revêtement d’un segment cyclable';
 
 
 -- revetement_val_id_seq
@@ -463,6 +524,10 @@ CREATE TABLE veloroutes.segment (
 );
 
 
+-- segment
+COMMENT ON TABLE veloroutes.segment IS 'Segment cyclable';
+
+
 -- segment_id_local_seq
 CREATE SEQUENCE veloroutes.segment_id_local_seq
     AS integer
@@ -483,6 +548,10 @@ CREATE TABLE veloroutes.statut_segment_val (
     code text NOT NULL,
     libelle text
 );
+
+
+-- statut_segment_val
+COMMENT ON TABLE veloroutes.statut_segment_val IS 'Nomenclature pour le statut réglementaire du segment cyclable';
 
 
 -- statut_segment_val_id_seq

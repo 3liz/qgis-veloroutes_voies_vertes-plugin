@@ -30,6 +30,10 @@ CREATE FUNCTION veloroutes.numserie() RETURNS trigger
 $$;
 
 
+-- FUNCTION numserie()
+COMMENT ON FUNCTION veloroutes.numserie() IS 'Empêche que le numéro de série soit NULL si le noeud est un capteur';
+
+
 -- revet()
 CREATE FUNCTION veloroutes.revet() RETURNS trigger
     LANGUAGE plpgsql
@@ -43,6 +47,10 @@ CREATE FUNCTION veloroutes.revet() RETURNS trigger
         RETURN NEW;
     END;
 $$;
+
+
+-- FUNCTION revet()
+COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
 --

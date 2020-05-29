@@ -198,21 +198,6 @@ ALTER TABLE ONLY veloroutes.element
     ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 
--- poi_acces portion
-ALTER TABLE ONLY veloroutes.poi_acces
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- poi_tourisme portion
-ALTER TABLE ONLY veloroutes.poi_tourisme
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- poi_service portion
-ALTER TABLE ONLY veloroutes.poi_service
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
 -- frequentation repere
 ALTER TABLE ONLY veloroutes.frequentation
     ADD CONSTRAINT repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_local) NOT VALID;

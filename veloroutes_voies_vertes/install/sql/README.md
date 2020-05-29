@@ -20,6 +20,7 @@ It splits the content of the SQL dump into one file per database object type:
 * triggers
 * constraints (pk, unique, fk, etc.)
 * comments
+* glossary
 
 The script needs :
 * `pg_dump`
