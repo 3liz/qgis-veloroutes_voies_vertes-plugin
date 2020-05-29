@@ -166,7 +166,7 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             "{}/50_TRIGGER.sql".format(SCHEMA),
             "{}/60_CONSTRAINT.sql".format(SCHEMA),
             "{}/70_COMMENT.sql".format(SCHEMA),
-            # "{}/90_GLOSSARY.sql".format(SCHEMA),
+            "{}/90_GLOSSARY.sql".format(SCHEMA),
             "99_finalize_database.sql",
         ]
         # Add test data
