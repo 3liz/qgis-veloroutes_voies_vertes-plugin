@@ -7,7 +7,7 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
+
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -195,21 +195,6 @@ ALTER TABLE ONLY veloroutes.etape
 
 -- element portion
 ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- poi_acces portion
-ALTER TABLE ONLY veloroutes.poi_acces
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- poi_tourisme portion
-ALTER TABLE ONLY veloroutes.poi_tourisme
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- poi_service portion
-ALTER TABLE ONLY veloroutes.poi_service
     ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 

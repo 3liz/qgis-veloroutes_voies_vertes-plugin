@@ -45,22 +45,26 @@ for ITEM in FUNCTION "TABLE|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRAINT COMM
     # Remove audit trigger (added afterwards)
     if [ $ITEM = 'TRIGGER' ]
     then
-        sed -i '/audit_trigger/d' "$OUTDIR"/"$I"_"$ITEM".sql;
+        sed -i "" -e '/audit_trigger/d' "$OUTDIR"/"$I"_"$ITEM".sql;
     fi
     # Remove SET function to remove some compatibility issues between PostgreSQL versions
-    sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"$I"_"$ITEM".sql;
-    # Rename
-    rename -f 's#\|#_#g' "$OUTDIR"/"$I"_"$ITEM".sql;
+    sed -i "" -e "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"$I"_"$ITEM".sql;
+    # # Rename
+    # rename -f 's#\|#_#g' "$OUTDIR"/"$I"_"$ITEM".sql;
     # Increment I
     I=$(($I+10));
 done
+
+# Rename
+mv 'veloroutes/20_TABLE|SEQUENCE|DEFAULT.sql' "veloroutes/20_TABLE_SEQUENCE_DEFAULT.sql";
+
 
 # Remove dump
 rm "$OUTDIR/dump"
 
 # NOMENCLATURE
-#echo "GLOSSARY"
-#if [ $SCHEMA = 'adresse' ]
-#then
-#    pg_dump service=gobs --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "gobs.glossary" -f "$OUTDIR"/90_GLOSSARY.sql
-#fi
+echo "GLOSSARY"
+if [ $SCHEMA = 'veloroutes' ]
+then
+   pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
+fi
