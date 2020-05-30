@@ -4,6 +4,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import QgsProcessingProvider
+from qgis.PyQt.QtGui import QIcon
 # from .example_processing_algorithm import ExampleProcessingAlgorithm
 
 from .structure.create_database_structure import CreateDatabaseStructure
@@ -22,7 +23,7 @@ class VeloroutesProvider(QgsProcessingProvider):
         return "veloroutes_vv"
 
     def icon(self):
-        return QgsProcessingProvider.icon(self)
+        return QIcon(resources_path("icons", "icon.png"))
 
     def name(self):
         return "Véloroutes et voies vertes COVADIS"

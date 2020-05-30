@@ -16,4 +16,5 @@ homepage=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
 category=Analysis
 experimental=False
 deprecated=False
+icon=resources/icons/icon.png
 changelog=changelog
