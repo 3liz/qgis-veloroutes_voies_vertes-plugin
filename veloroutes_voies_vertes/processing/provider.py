@@ -9,7 +9,7 @@ from qgis.PyQt.QtGui import QIcon
 
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
-# from ..qgis_plugin_tools.tools.resources import resources_path
+from ..qgis_plugin_tools.tools.resources import resources_path
 
 
 class VeloroutesProvider(QgsProcessingProvider):
