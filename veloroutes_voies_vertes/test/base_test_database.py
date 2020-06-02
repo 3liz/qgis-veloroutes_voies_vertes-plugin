@@ -20,7 +20,7 @@ else:
     import processing
 
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
-from ..processing.provider import GestionAdresseProvider as ProcessingProvider
+from ..processing.provider import VeloroutesProvider as ProcessingProvider
 
 __copyright__ = "Copyright 2020, 3Liz"
 __license__ = "GPL version 3"
