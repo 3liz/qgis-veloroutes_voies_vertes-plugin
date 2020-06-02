@@ -23,6 +23,16 @@ ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT "FKcode" UNIQUE (code);
 
 
+-- etat_avancement_val avancement_PK
+ALTER TABLE ONLY veloroutes.etat_avancement_val
+    ADD CONSTRAINT "avancement_PK" PRIMARY KEY (id);
+
+
+-- statut_segment_val code
+ALTER TABLE ONLY veloroutes.statut_segment_val
+    ADD CONSTRAINT code UNIQUE (code);
+
+
 -- poi_acces_val code2
 ALTER TABLE ONLY veloroutes.poi_acces_val
     ADD CONSTRAINT code2 UNIQUE (code);
@@ -53,11 +63,6 @@ ALTER TABLE ONLY veloroutes.revetement_val
     ADD CONSTRAINT code7 UNIQUE (code);
 
 
--- statut_segment_val code8
-ALTER TABLE ONLY veloroutes.statut_segment_val
-    ADD CONSTRAINT code8 PRIMARY KEY (code);
-
-
 -- etat_avancement_val codeFK
 ALTER TABLE ONLY veloroutes.etat_avancement_val
     ADD CONSTRAINT "codeFK" UNIQUE (code);
@@ -71,11 +76,6 @@ ALTER TABLE ONLY veloroutes.element
 -- etape etape_pkey
 ALTER TABLE ONLY veloroutes.etape
     ADD CONSTRAINT etape_pkey PRIMARY KEY (id);
-
-
--- etat_avancement_val etat_avancement_val_pkey
-ALTER TABLE ONLY veloroutes.etat_avancement_val
-    ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (code);
 
 
 -- itineraire itineraire_pkey
@@ -158,9 +158,14 @@ ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT segment_pkey PRIMARY KEY (id_local);
 
 
--- segment avancement
+-- statut_segment_val statut_segment_val_pkey
+ALTER TABLE ONLY veloroutes.statut_segment_val
+    ADD CONSTRAINT statut_segment_val_pkey PRIMARY KEY (id);
+
+
+-- segment avacement
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code);
+    ADD CONSTRAINT avacement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code) NOT VALID;
 
 
 -- etape itineraire
@@ -210,7 +215,7 @@ ALTER TABLE ONLY veloroutes.liaison
 
 -- segment revetement
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code);
+    ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code) NOT VALID;
 
 
 -- element segment
@@ -220,7 +225,7 @@ ALTER TABLE ONLY veloroutes.element
 
 -- segment statut
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT statut FOREIGN KEY (statut) REFERENCES veloroutes.statut_segment_val(code);
+    ADD CONSTRAINT statut FOREIGN KEY (statut) REFERENCES veloroutes.statut_segment_val(code) NOT VALID;
 
 
 -- poi_acces type
