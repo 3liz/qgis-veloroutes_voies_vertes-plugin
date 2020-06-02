@@ -33,15 +33,15 @@
       </table>
       <table name="etat_avancement_val" numRows="4" remarks="Nomenclature pour l’état de réalisation d’un segment cyclable" schema="veloroutes" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="code" nullable="false" remarks="Code" size="10" type="int4" typeCode="4">
-            <child column="avancement" foreignKey="avacement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <child column="avancement" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
-         <index name="avancement_PK" unique="true">
+         <index name="etat_avancement_val_pkey" unique="true">
             <column ascending="true" name="id"/>
          </index>
-         <index name="codeFK" unique="true">
+         <index name="code8" unique="true">
             <column ascending="true" name="code"/>
          </index>
       </table>
@@ -276,7 +276,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="src_geom" nullable="true" remarks="Type de la source de géoréférencement pour la digitalisation de la géométrie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="src_annee" nullable="true" remarks="Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement" nullable="false" remarks="Etat d’avancement de la réalisation du segment (clé étrangère)" size="10" type="int4" typeCode="4">
-            <parent column="code" foreignKey="avacement" implied="false" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
+            <parent column="code" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="revetement" nullable="true" remarks="Qualité du revêtement (clé étrangère)" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="revetement_val"/>
@@ -321,7 +321,7 @@
             IF NEW.numero_serie IS NULL THEN
 				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
 			END IF;
-		END IF;	
+		END IF;
         RETURN NEW;
     END;
 ]]></definition>

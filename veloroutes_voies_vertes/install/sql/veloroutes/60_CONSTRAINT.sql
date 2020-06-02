@@ -23,11 +23,6 @@ ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT "FKcode" UNIQUE (code);
 
 
--- etat_avancement_val avancement_PK
-ALTER TABLE ONLY veloroutes.etat_avancement_val
-    ADD CONSTRAINT "avancement_PK" PRIMARY KEY (id);
-
-
 -- statut_segment_val code
 ALTER TABLE ONLY veloroutes.statut_segment_val
     ADD CONSTRAINT code UNIQUE (code);
@@ -63,9 +58,9 @@ ALTER TABLE ONLY veloroutes.revetement_val
     ADD CONSTRAINT code7 UNIQUE (code);
 
 
--- etat_avancement_val codeFK
+-- etat_avancement_val code8
 ALTER TABLE ONLY veloroutes.etat_avancement_val
-    ADD CONSTRAINT "codeFK" UNIQUE (code);
+    ADD CONSTRAINT code8 UNIQUE (code);
 
 
 -- element element_pkey
@@ -76,6 +71,11 @@ ALTER TABLE ONLY veloroutes.element
 -- etape etape_pkey
 ALTER TABLE ONLY veloroutes.etape
     ADD CONSTRAINT etape_pkey PRIMARY KEY (id);
+
+
+-- etat_avancement_val etat_avancement_val_pkey
+ALTER TABLE ONLY veloroutes.etat_avancement_val
+    ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (id);
 
 
 -- itineraire itineraire_pkey
@@ -163,9 +163,9 @@ ALTER TABLE ONLY veloroutes.statut_segment_val
     ADD CONSTRAINT statut_segment_val_pkey PRIMARY KEY (id);
 
 
--- segment avacement
+-- segment avancement
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT avacement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code) NOT VALID;
+    ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code) NOT VALID;
 
 
 -- etape itineraire
