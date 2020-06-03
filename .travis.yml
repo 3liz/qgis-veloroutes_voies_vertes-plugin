@@ -43,3 +43,13 @@ jobs:
           api_key: ${GH_TOKEN}
           on:
             tags: true
+
+        - provider: script
+          script: qgis-plugin-ci release ${TRAVIS_TAG} --github-token ${GH_TOKEN} --create-plugin-repo
+          on:
+            tags: true
+
+        - provider: script
+          script: .github/push_to_github.sh
+          on:
+            tags: true
