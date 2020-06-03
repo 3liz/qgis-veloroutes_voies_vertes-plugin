@@ -34,7 +34,7 @@ COMMENT ON TABLE veloroutes.element IS 'Table de liaison entre portion et segmen
 
 -- element_id_seq
 CREATE SEQUENCE veloroutes.element_id_seq
-    --
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -62,7 +62,7 @@ appartenir à plusieurs itinéraires. ';
 
 -- etape_id_seq
 CREATE SEQUENCE veloroutes.etape_id_seq
-    --
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -88,7 +88,7 @@ COMMENT ON TABLE veloroutes.etat_avancement_val IS 'Nomenclature pour l’état 
 
 -- etat_avancement_val_id_seq
 CREATE SEQUENCE veloroutes.etat_avancement_val_id_seq
-    --
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -136,7 +136,7 @@ COMMENT ON TABLE veloroutes.itineraire IS 'Itinéraire cyclable, véloroute.';
 
 -- itineraire_id_local_seq
 CREATE SEQUENCE veloroutes.itineraire_id_local_seq
-    --
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -165,7 +165,7 @@ COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
 
 -- liaison_id_local_seq
 CREATE SEQUENCE veloroutes.liaison_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -191,7 +191,7 @@ COMMENT ON TABLE veloroutes.niveau_administratif_val IS 'Nomenclature pour le ni
 
 -- niveau_administratif_val_id_seq
 CREATE SEQUENCE veloroutes.niveau_administratif_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -240,7 +240,7 @@ COMMENT ON TABLE veloroutes.poi_acces_val IS 'Nomenclature pour la nature des po
 
 -- poi_acces_val_id_seq
 CREATE SEQUENCE veloroutes.poi_acces_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -254,7 +254,7 @@ ALTER SEQUENCE veloroutes.poi_acces_val_id_seq OWNED BY veloroutes.poi_acces_val
 
 -- poi_id_local_seq
 CREATE SEQUENCE veloroutes.poi_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -281,7 +281,7 @@ COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt po
 
 -- poi_service_id_local_seq
 CREATE SEQUENCE veloroutes.poi_service_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -307,7 +307,7 @@ COMMENT ON TABLE veloroutes.poi_service_val IS 'Nomenclature pour  la nature des
 
 -- poi_service_val_id_seq
 CREATE SEQUENCE veloroutes.poi_service_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -334,7 +334,7 @@ COMMENT ON TABLE veloroutes.poi_tourisme IS 'Points d’intérêt touristique';
 
 -- poi_tourisme_id_local_seq
 CREATE SEQUENCE veloroutes.poi_tourisme_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -360,7 +360,7 @@ COMMENT ON TABLE veloroutes.poi_tourisme_val IS 'Nomenclature pour la nature d�
 
 -- poi_tourisme_val_id_seq
 CREATE SEQUENCE veloroutes.poi_tourisme_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -387,7 +387,7 @@ COMMENT ON TABLE veloroutes.portion IS 'Portion d’itinéraire cyclable, collec
 
 -- portion_id_local_seq
 CREATE SEQUENCE veloroutes.portion_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -413,7 +413,7 @@ COMMENT ON TABLE veloroutes.portion_val IS 'Nomenclature pour le type d''une por
 
 -- portion_val_id_seq
 CREATE SEQUENCE veloroutes.portion_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -441,7 +441,7 @@ COMMENT ON TABLE veloroutes.repere IS 'Point de repère cyclable, nœud cyclable
 
 -- repere_id_local_seq
 CREATE SEQUENCE veloroutes.repere_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -467,7 +467,7 @@ COMMENT ON TABLE veloroutes.repere_val IS 'Nomenclature pour la nature d''un poi
 
 -- repere_val_id_seq
 CREATE SEQUENCE veloroutes.repere_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -493,7 +493,7 @@ COMMENT ON TABLE veloroutes.revetement_val IS 'Nomenclature pour le niveau de qu
 
 -- revetement_val_id_seq
 CREATE SEQUENCE veloroutes.revetement_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -530,7 +530,7 @@ COMMENT ON TABLE veloroutes.segment IS 'Segment cyclable';
 
 -- segment_id_local_seq
 CREATE SEQUENCE veloroutes.segment_id_local_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -556,7 +556,7 @@ COMMENT ON TABLE veloroutes.statut_segment_val IS 'Nomenclature pour le statut r
 
 -- statut_segment_val_id_seq
 CREATE SEQUENCE veloroutes.statut_segment_val_id_seq
-
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -651,3 +651,4 @@ ALTER TABLE ONLY veloroutes.statut_segment_val ALTER COLUMN id SET DEFAULT nextv
 --
 -- PostgreSQL database dump complete
 --
+
