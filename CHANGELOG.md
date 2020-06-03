@@ -9,4 +9,5 @@
   * Algo to create the database structure
 * Setting up the plugin
   * Including set up of continuous integration
+
 ###
