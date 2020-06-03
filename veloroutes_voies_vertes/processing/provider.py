@@ -6,7 +6,6 @@ __revision__ = "$Format:%H$"
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
 # from .example_processing_algorithm import ExampleProcessingAlgorithm
-
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
 from ..qgis_plugin_tools.tools.resources import resources_path
@@ -17,7 +16,6 @@ class VeloroutesProvider(QgsProcessingProvider):
         # self.addAlgorithm(ExampleProcessingAlgorithm())
         self.addAlgorithm(CreateDatabaseStructure())
         self.addAlgorithm(UpgradeDatabaseStructure())
-
 
     def id(self):
         return "veloroutes_vv"

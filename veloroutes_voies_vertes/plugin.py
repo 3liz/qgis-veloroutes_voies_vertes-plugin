@@ -12,12 +12,13 @@ __revision__ = "$Format:%H$"
 from qgis.core import QgsApplication
 from .processing.provider import VeloroutesProvider
 
+
 class VeloroutesPlugin:
     def __init__(self, iface):
         self.iface = iface
         self.provider = None
 
-    def initProcessing (self):
+    def initProcessing(self):
         self.provider = VeloroutesProvider()
         QgsApplication.processingRegistry().addProvider(self.provider)
 

@@ -244,4 +244,3 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         feedback.pushInfo(msg)
 
         return {self.OUTPUT_STATUS: 1, self.OUTPUT_STRING: msg}
-
