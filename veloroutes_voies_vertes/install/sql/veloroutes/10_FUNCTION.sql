@@ -24,7 +24,7 @@ CREATE FUNCTION veloroutes.numserie() RETURNS trigger
             IF NEW.numero_serie IS NULL THEN
 				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
 			END IF;
-		END IF;	
+		END IF;
         RETURN NEW;
     END;
 $$;

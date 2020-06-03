@@ -133,7 +133,7 @@
                                     <td><p>Identifiant</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="code">code</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="code">code</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -149,10 +149,6 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="portion_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='statut_segment_val.html'>statut_segment_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                         </table>
                                     </td>
                                     <td><p>Code</p></td>
@@ -229,8 +225,6 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
-                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
-                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
@@ -249,32 +243,6 @@
 <area shape="rect" id="node4" href="frequentation.html" target="_top" title="frequentation" alt="" coords="523,216,717,304">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/portion_val.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="portion.html" target="_top" title="portion" alt="" coords="605,8,756,155">
-<area shape="rect" id="node2" href="portion_val.html" target="_top" title="portion_val" alt="" coords="283,5,561,163">
-<area shape="rect" id="node3" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,37,239,155">
-</map>
-                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/portion_val.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="822,244,973,332">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="605,93,756,240">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="605,257,756,345">
-<area shape="rect" id="node11" href="portion_val.html" target="_top" title="portion_val" alt="" coords="283,91,561,248">
-<area shape="rect" id="node7" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,457,239,575">
-<area shape="rect" id="node13" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="319,301,525,389">
-<area shape="rect" id="node4" href="etape.html" target="_top" title="etape" alt="" coords="832,5,963,93">
-<area shape="rect" id="node5" href="frequentation.html" target="_top" title="frequentation" alt="" coords="800,111,995,199">
-<area shape="rect" id="node6" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="285,407,559,495">
-<area shape="rect" id="node8" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="329,512,515,600">
-<area shape="rect" id="node9" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="323,617,521,705">
-<area shape="rect" id="node10" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="315,723,529,811">
-<area shape="rect" id="node12" href="repere_val.html" target="_top" title="repere_val" alt="" coords="339,828,505,916">
-</map>
-                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/portion_val.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>
