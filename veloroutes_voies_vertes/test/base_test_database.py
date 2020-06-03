@@ -75,5 +75,3 @@ class DatabaseWithoutDataTestCase(DatabaseTestCase):
     def __init__(self, methodName="runTest"):
         super().__init__(methodName)
         self.add_data = False
-
-
