@@ -117,11 +117,11 @@
                                 <tbody>
                                 <tr>
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id">id</span></td>
-                                    <td>int4</td>
+                                    <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>nextval(&#39;veloroutes.revetement_val_id_seq&#39;::regclass)</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -133,7 +133,7 @@
                                     <td><p>Identifiant</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="code">code</span></td>
+                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="code">code</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -149,6 +149,10 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="revetement_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='statut_segment_val.html'>statut_segment_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
                                         </table>
                                     </td>
                                     <td><p>Code</p></td>
@@ -225,6 +229,8 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
@@ -243,6 +249,30 @@
 <area shape="rect" id="node5" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="45,285,279,373">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/revetement_val.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="283,5,596,163">
+<area shape="rect" id="node2" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,89,239,207">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="640,16,827,221">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/revetement_val.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="871,87,1021,175">
+<area shape="rect" id="node2" href="segment.html" target="_top" title="segment" alt="" coords="640,84,827,289">
+<area shape="rect" id="node4" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,477,239,595">
+<area shape="rect" id="node10" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="283,111,596,268">
+<area shape="rect" id="node11" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="315,5,563,93">
+<area shape="rect" id="node3" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="302,321,577,409">
+<area shape="rect" id="node5" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="346,427,533,515">
+<area shape="rect" id="node6" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="340,532,539,620">
+<area shape="rect" id="node7" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="332,637,547,725">
+<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="353,743,525,831">
+<area shape="rect" id="node9" href="repere_val.html" target="_top" title="repere_val" alt="" coords="356,848,523,936">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/revetement_val.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

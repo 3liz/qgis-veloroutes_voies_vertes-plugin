@@ -160,11 +160,11 @@ appartenir à plusieurs itinéraires.</p>
                                 </tr>
                                 <tr>
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id">id</span></td>
-                                    <td>int4</td>
+                                    <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>nextval(&#39;veloroutes.etape_id_seq&#39;::regclass)</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -251,7 +251,7 @@ appartenir à plusieurs itinéraires.</p>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="etape.html" target="_top" title="etape" alt="" coords="240,71,455,257">
+<area shape="rect" id="node1" href="etape.html" target="_top" title="etape" alt="" coords="240,71,464,257">
 <area shape="rect" id="node2" href="itineraire.html" target="_top" title="itineraire" alt="" coords="5,169,196,316">
 <area shape="rect" id="node3" href="portion.html" target="_top" title="portion" alt="" coords="25,5,176,152">
 </map>
@@ -259,13 +259,13 @@ appartenir à plusieurs itinéraires.</p>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="591,5,741,93">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="595,5,746,93">
 <area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="344,101,495,248">
 <area shape="rect" id="node7" href="portion_val.html" target="_top" title="portion_val" alt="" coords="57,133,229,221">
-<area shape="rect" id="node3" href="etape.html" target="_top" title="etape" alt="" coords="559,228,773,415">
+<area shape="rect" id="node3" href="etape.html" target="_top" title="etape" alt="" coords="559,228,783,415">
 <area shape="rect" id="node4" href="itineraire.html" target="_top" title="itineraire" alt="" coords="324,265,515,412">
 <area shape="rect" id="node6" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="5,297,280,385">
-<area shape="rect" id="node5" href="frequentation.html" target="_top" title="frequentation" alt="" coords="569,111,763,199">
+<area shape="rect" id="node5" href="frequentation.html" target="_top" title="frequentation" alt="" coords="573,111,768,199">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/etape.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>

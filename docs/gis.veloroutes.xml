@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<database name="gis" schema="veloroutes" type="PostgreSQL - 9.6.17">
+<database name="gis" schema="veloroutes" type="PostgreSQL - 10.6 (Debian 10.6-1.pgdg90+1)">
+   <sequences>
+      <sequence increment="1" name="element_id_seq" startValue="1"/>
+      <sequence increment="1" name="etape_id_seq" startValue="1"/>
+      <sequence increment="1" name="etat_avancement_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="itineraire_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="liaison_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="niveau_administratif_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_acces_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="poi_service_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="poi_service_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_tourisme_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="poi_tourisme_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="portion_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="portion_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="repere_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="repere_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="revetement_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="segment_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="statut_segment_val_id_seq" startValue="1"/>
+   </sequences>
    <tables>
       <table name="element" numRows="0" remarks="Table de liaison entre portion et segment. Une portion cyclable est une collection de segments cyclables continus. Un segment cyclable est un élément d’une ou plusieurs portions cyclables." schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.element_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_portion" nullable="true" remarks="Identifiant de la portion cyclable à laquelle appartient l'élément (clé étrangère)" size="10" type="int4" typeCode="4">
             <parent column="id_local" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
          </column>
@@ -21,7 +42,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="Identifiant de l'itinéraire cyclable auquel appartient l'étape (clé étrangère)" size="10" type="int4" typeCode="4">
             <parent column="id_local" foreignKey="itineraire" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id" nullable="false" remarks="identifiant de l'étape" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.etape_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="identifiant de l'étape" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="etape" nullable="true" remarks="Numéro d'ordre de l'étape dans l'itinéraire" size="10" type="int4" typeCode="4"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="etape_pkey" unique="true">
@@ -36,12 +57,12 @@
             <child column="avancement" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
-         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.etat_avancement_val_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <primaryKey column="code" sequenceNumberInPK="1"/>
          <index name="etat_avancement_val_pkey" unique="true">
-            <column ascending="true" name="id"/>
+            <column ascending="true" name="code"/>
          </index>
-         <index name="code8" unique="true">
+         <index name="codeFK" unique="true">
             <column ascending="true" name="code"/>
          </index>
       </table>
@@ -62,7 +83,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom_usage" nullable="true" remarks="Autre nom ou appellation de l’itinéraire en usage" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="depart" nullable="true" remarks="Nom de la localité située au départ de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="arrivee" nullable="true" remarks="Nom de la localité située à l'arrivée de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_local" nullable="false" remarks="Identifiant de l'itinéraire cyclable" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.itineraire_id_local_seq'::regclass)" digits="0" id="5" name="id_local" nullable="false" remarks="Identifiant de l'itinéraire cyclable" size="10" type="serial" typeCode="4">
             <child column="id_itineraire" foreignKey="itineraire" implied="false" onDeleteCascade="false" schema="veloroutes" table="etape"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="annee_inscription" nullable="true" remarks="Année d’approbation du premier schéma ayant inscrit l’itinéraire" size="13" type="date" typeCode="91"/>
@@ -81,7 +102,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="precision" nullable="true" remarks="Ordre de grandeur de la précision de saisie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="src_geom" nullable="true" remarks="Type de la source de géoréférencement pour la digitalisation de la géométrie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="src_annee" nullable="true" remarks="Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_local" nullable="false" remarks="Identifiant de la liaison cyclable" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.liaison_id_local_seq'::regclass)" digits="0" id="3" name="id_local" nullable="false" remarks="Identifiant de la liaison cyclable" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_repere" nullable="true" remarks="Identifiant du point de repère que la liaison connecte à un point d'intérêt (clé étrangère)" size="10" type="int4" typeCode="4">
             <parent column="id_local" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
          </column>
@@ -94,9 +115,10 @@
          </index>
       </table>
       <table name="niveau_administratif_val" numRows="4" remarks="Nomenclature pour le niveau administratif d'un schéma" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.niveau_administratif_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="niveau_schema" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -110,7 +132,7 @@
       <table name="poi" numRows="0" remarks="POI, point d’intérêt" schema="veloroutes" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_local_seq'::regclass)" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="serial" typeCode="4">
             <child column="id_poi" foreignKey="poi" implied="false" onDeleteCascade="false" schema="veloroutes" table="liaison"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
@@ -124,13 +146,14 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces_val"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_local_seq'::regclass)" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
       </table>
       <table name="poi_acces_val" numRows="6" remarks="Nomenclature pour la nature des points d’accès à un autre réseau de transport" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_acces_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -146,7 +169,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service_val"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_id_local_seq'::regclass)" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
          <primaryKey column="id_local" sequenceNumberInPK="1"/>
          <index name="poi_service_pkey" unique="true">
@@ -154,9 +177,10 @@
          </index>
       </table>
       <table name="poi_service_val" numRows="9" remarks="Nomenclature pour  la nature des services offerts à un cyclotouriste par un point d’intérêt" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -172,7 +196,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme_val"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_tourisme_id_local_seq'::regclass)" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point d'intérêt" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
          <primaryKey column="id_local" sequenceNumberInPK="1"/>
          <index name="poi_tourisme_pkey" unique="true">
@@ -180,9 +204,10 @@
          </index>
       </table>
       <table name="poi_tourisme_val" numRows="3" remarks="Nomenclature pour la nature d’un point d’intérêt touristique" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_tourisme_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -194,7 +219,7 @@
          </index>
       </table>
       <table name="portion" numRows="0" remarks="Portion d’itinéraire cyclable, collection de segments cyclables" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_local" nullable="false" remarks="Identifiant de la portion cyclable" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_id_local_seq'::regclass)" digits="0" id="0" name="id_local" nullable="false" remarks="Identifiant de la portion cyclable" size="10" type="serial" typeCode="4">
             <child column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="element"/>
             <child column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="etape"/>
             <child column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
@@ -210,9 +235,10 @@
          </index>
       </table>
       <table name="portion_val" numRows="4" remarks="Nomenclature pour le type d'une portion cyclable qualifié en fonction du rôle qu’elle joue dans la véloroute" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_portion" foreignKey="type_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -226,7 +252,7 @@
       <table name="repere" numRows="0" remarks="Point de repère cyclable, nœud cyclable particulier" schema="veloroutes" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="libelle" nullable="true" remarks="Numéro, nom ou description utilisé comme désignation du point de repère" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero_serie" nullable="true" remarks="Numéro de série du capteur utilisé pour l’identifier sur la plateforme nationale des fréquentations" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point de repère cyclable" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_id_local_seq'::regclass)" digits="0" id="2" name="id_local" nullable="false" remarks="Identifiant du point de repère cyclable" size="10" type="serial" typeCode="4">
             <child column="id_repere" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
             <child column="id_repere" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="liaison"/>
          </column>
@@ -240,9 +266,10 @@
          </index>
       </table>
       <table name="repere_val" numRows="7" remarks="Nomenclature pour la nature d'un point de repère pour la description et la compréhension de l’itinéraire" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_noeud" foreignKey="noeud" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -254,9 +281,10 @@
          </index>
       </table>
       <table name="revetement_val" numRows="3" remarks="Nomenclature pour le niveau de qualité du revêtement d’un segment cyclable" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.revetement_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="revetement" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -268,7 +296,7 @@
          </index>
       </table>
       <table name="segment" numRows="0" remarks="Segment cyclable" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_local" nullable="false" remarks="Identifiant du segment cyclable" size="10" type="int4" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.segment_id_local_seq'::regclass)" digits="0" id="0" name="id_local" nullable="false" remarks="Identifiant du segment cyclable" size="10" type="serial" typeCode="4">
             <child column="id_segment" foreignKey="segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="element"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="annee_ouverture" nullable="true" remarks="Année d'ouverture du segment" size="13" type="date" typeCode="91"/>
@@ -299,16 +327,20 @@
          </index>
       </table>
       <table name="statut_segment_val" numRows="6" remarks="Nomenclature pour le statut réglementaire du segment cyclable" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.statut_segment_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="niveau_administratif_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_acces_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_service_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="repere_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="revetement_val"/>
             <child column="statut" foreignKey="statut" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
-         <primaryKey column="id" sequenceNumberInPK="1"/>
-         <index name="statut_segment_val_pkey" unique="true">
-            <column ascending="true" name="id"/>
-         </index>
-         <index name="code" unique="true">
+         <primaryKey column="code" sequenceNumberInPK="1"/>
+         <index name="code8" unique="true">
             <column ascending="true" name="code"/>
          </index>
       </table>
@@ -321,7 +353,7 @@
             IF NEW.numero_serie IS NULL THEN
 				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
 			END IF;
-		END IF;
+		END IF;	
         RETURN NEW;
     END;
 ]]></definition>

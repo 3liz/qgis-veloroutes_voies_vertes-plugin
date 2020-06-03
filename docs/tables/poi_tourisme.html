@@ -155,11 +155,11 @@
                                 </tr>
                                 <tr>
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_local">id_local</span></td>
-                                    <td>int4</td>
+                                    <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
-                                    <td title=''></td>
-                                    <td>null</td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>nextval(&#39;veloroutes.poi_tourisme_id_local_seq&#39;::regclass)</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
@@ -235,6 +235,8 @@
                                 <h5>Close relationships within degrees of separation</h5>
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
@@ -243,6 +245,21 @@
 <area shape="rect" id="node2" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="5,8,220,155">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/poi_tourisme.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="264,5,597,192">
+<area shape="rect" id="node2" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="5,8,220,155">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/poi_tourisme.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="541,5,875,192">
+<area shape="rect" id="node2" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="283,8,497,155">
+<area shape="rect" id="node3" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,40,239,128">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/poi_tourisme.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>
