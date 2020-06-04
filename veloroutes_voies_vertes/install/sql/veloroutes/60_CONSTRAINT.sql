@@ -17,9 +17,9 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
--- niveau_administratif_val FKcode
+-- niveau_administratif_val code1
 ALTER TABLE ONLY veloroutes.niveau_administratif_val
-    ADD CONSTRAINT "FKcode" UNIQUE (code);
+    ADD CONSTRAINT code1 UNIQUE (code);
 
 
 -- poi_acces_val code2
@@ -54,12 +54,12 @@ ALTER TABLE ONLY veloroutes.revetement_val
 
 -- statut_segment_val code8
 ALTER TABLE ONLY veloroutes.statut_segment_val
-    ADD CONSTRAINT code8 PRIMARY KEY (code);
+    ADD CONSTRAINT code8 UNIQUE (code);
 
 
--- etat_avancement_val codeFK
+-- etat_avancement_val code9
 ALTER TABLE ONLY veloroutes.etat_avancement_val
-    ADD CONSTRAINT "codeFK" UNIQUE (code);
+    ADD CONSTRAINT code9 UNIQUE (code);
 
 
 -- element element_pkey
@@ -155,6 +155,11 @@ ALTER TABLE ONLY veloroutes.revetement_val
 -- segment segment_pkey
 ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT segment_pkey PRIMARY KEY (id_local);
+
+
+-- statut_segment_val statut_segment_val_pkey
+ALTER TABLE ONLY veloroutes.statut_segment_val
+    ADD CONSTRAINT statut_segment_val_pkey PRIMARY KEY (code);
 
 
 -- segment avancement
