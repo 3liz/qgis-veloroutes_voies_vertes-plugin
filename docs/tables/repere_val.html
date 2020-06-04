@@ -133,7 +133,7 @@
                                     <td><p>Identifiant</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='foreignKey' title='Foreign Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="code">code</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="code">code</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -149,10 +149,6 @@
                                     </td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="repere_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='statut_segment_val.html'>statut_segment_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                         </table>
                                     </td>
                                     <td><p>Code</p></td>
@@ -229,8 +225,6 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
-                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
-                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
@@ -248,31 +242,6 @@
 <area shape="rect" id="node3" href="liaison.html" target="_top" title="liaison" alt="" coords="552,111,688,199">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/repere_val.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="repere.html" target="_top" title="repere" alt="" coords="599,8,756,155">
-<area shape="rect" id="node2" href="repere_val.html" target="_top" title="repere_val" alt="" coords="283,5,555,163">
-<area shape="rect" id="node3" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,37,239,155">
-</map>
-                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/repere_val.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="frequentation.html" target="_top" title="frequentation" alt="" coords="803,5,997,93">
-<area shape="rect" id="node2" href="repere.html" target="_top" title="repere" alt="" coords="601,55,759,201">
-<area shape="rect" id="node10" href="repere_val.html" target="_top" title="repere_val" alt="" coords="284,52,556,209">
-<area shape="rect" id="node3" href="liaison.html" target="_top" title="liaison" alt="" coords="832,111,968,199">
-<area shape="rect" id="node4" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="283,227,557,315">
-<area shape="rect" id="node5" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,488,239,605">
-<area shape="rect" id="node6" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="327,332,513,420">
-<area shape="rect" id="node7" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="321,437,519,525">
-<area shape="rect" id="node8" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="313,543,527,631">
-<area shape="rect" id="node9" href="portion_val.html" target="_top" title="portion_val" alt="" coords="334,648,506,736">
-<area shape="rect" id="node11" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="317,789,523,877">
-<area shape="rect" id="node12" href="segment.html" target="_top" title="segment" alt="" coords="605,753,755,841">
-</map>
-                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/repere_val.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

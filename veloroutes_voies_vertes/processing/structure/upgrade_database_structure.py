@@ -206,7 +206,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                     feedback.pushInfo("* " + sf + " -- NON TRAITÉ (FICHIER VIDE)")
                     continue
 
-                # Add SQL database version in adresse.metadata
+                # Add SQL database version in veloroutes.metadata
                 new_db_version = (
                     sf.replace("upgrade_to_", "").replace(".sql", "").strip()
                 )

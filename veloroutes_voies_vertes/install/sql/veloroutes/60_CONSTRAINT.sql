@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -86,6 +85,16 @@ ALTER TABLE ONLY veloroutes.itineraire
 -- liaison liaison_pkey
 ALTER TABLE ONLY veloroutes.liaison
     ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_local);
+
+
+-- metadata metadata_me_version_key
+ALTER TABLE ONLY veloroutes.metadata
+    ADD CONSTRAINT metadata_me_version_key UNIQUE (me_version);
+
+
+-- metadata metadata_pkey
+ALTER TABLE ONLY veloroutes.metadata
+    ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
 
 
 -- niveau_administratif_val niveau_administratif_val_pkey1

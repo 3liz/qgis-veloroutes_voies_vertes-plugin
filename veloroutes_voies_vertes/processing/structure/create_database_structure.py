@@ -232,10 +232,11 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             SCHEMA, metadata_version
         )
 
-        fetch_data_from_sql_query(connection_name, sql)
-        feedback.pushInfo(
-            "Version de la base de données '{}'.".format(metadata_version)
-        )
+        _, _, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
+        if ok:
+            feedback.pushInfo("Version de la base de données '{}'.".format(metadata_version))
+        else:
+            raise QgsProcessingException(error_message)
 
         return {
             self.OUTPUT_STATUS: 1,

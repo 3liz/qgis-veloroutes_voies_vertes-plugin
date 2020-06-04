@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -175,6 +174,35 @@ CREATE SEQUENCE veloroutes.liaison_id_local_seq
 
 -- liaison_id_local_seq
 ALTER SEQUENCE veloroutes.liaison_id_local_seq OWNED BY veloroutes.liaison.id_local;
+
+
+-- metadata
+CREATE TABLE veloroutes.metadata (
+    id integer NOT NULL,
+    me_version text NOT NULL,
+    me_version_date date NOT NULL,
+    me_status smallint NOT NULL
+);
+
+
+-- metadata
+COMMENT ON TABLE veloroutes.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
+
+
+-- metadata_id_seq
+CREATE SEQUENCE veloroutes.metadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- metadata_id_seq
+ALTER SEQUENCE veloroutes.metadata_id_seq OWNED BY veloroutes.metadata.id;
+
+-- metadata id
+ALTER TABLE ONLY veloroutes.metadata ALTER COLUMN id SET DEFAULT nextval('veloroutes.metadata_id_seq'::regclass);
 
 
 -- niveau_administratif_val
@@ -651,4 +679,3 @@ ALTER TABLE ONLY veloroutes.statut_segment_val ALTER COLUMN id SET DEFAULT nextv
 --
 -- PostgreSQL database dump complete
 --
-
