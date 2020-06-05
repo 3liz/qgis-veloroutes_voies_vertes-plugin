@@ -504,6 +504,14 @@ COMMENT ON COLUMN veloroutes.statut_segment_val.code IS 'Code';
 COMMENT ON COLUMN veloroutes.statut_segment_val.libelle IS 'Libellé';
 
 
+-- VIEW v_portion
+COMMENT ON VIEW veloroutes.v_portion IS 'vue qui joint les portions aux collections de géométries des segments qui les composent';
+
+
+-- VIEW v_itineraire
+COMMENT ON VIEW veloroutes.v_itineraire IS 'vue qui joint les itinéraires aux collections de géométries des portions qui les composent';
+
+
 -- TRIGGER numserie ON repere
 COMMENT ON TRIGGER numserie ON veloroutes.repere IS 'Contrainte sur le champs numero_serie avec la fonction numserie()';
 
