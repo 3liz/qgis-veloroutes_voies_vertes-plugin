@@ -201,9 +201,6 @@ CREATE SEQUENCE veloroutes.metadata_id_seq
 -- metadata_id_seq
 ALTER SEQUENCE veloroutes.metadata_id_seq OWNED BY veloroutes.metadata.id;
 
--- metadata id
-ALTER TABLE ONLY veloroutes.metadata ALTER COLUMN id SET DEFAULT nextval('veloroutes.metadata_id_seq'::regclass);
-
 
 -- niveau_administratif_val
 CREATE TABLE veloroutes.niveau_administratif_val (
@@ -616,6 +613,10 @@ ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_local SET DEFAULT nextval
 ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.liaison_id_local_seq'::regclass);
 
 
+-- metadata id
+ALTER TABLE ONLY veloroutes.metadata ALTER COLUMN id SET DEFAULT nextval('veloroutes.metadata_id_seq'::regclass);
+
+
 -- niveau_administratif_val id
 ALTER TABLE ONLY veloroutes.niveau_administratif_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.niveau_administratif_val_id_seq'::regclass);
 
@@ -679,3 +680,4 @@ ALTER TABLE ONLY veloroutes.statut_segment_val ALTER COLUMN id SET DEFAULT nextv
 --
 -- PostgreSQL database dump complete
 --
+

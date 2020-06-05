@@ -53,7 +53,7 @@ class DatabaseTestCase(unittest.TestCase):
         params = {
             "CONNECTION_NAME": "test",
             "OVERRIDE": True,
-            # "ADD_TEST_DATA": self.add_data,
+            "ADD_TEST_DATA": self.add_data,
         }
         processing.run(
             "{}:create_database_structure".format(self.provider.id()),
