@@ -6,6 +6,7 @@
       <sequence increment="1" name="etat_avancement_val_id_seq" startValue="1"/>
       <sequence increment="1" name="itineraire_id_local_seq" startValue="1"/>
       <sequence increment="1" name="liaison_id_local_seq" startValue="1"/>
+      <sequence increment="1" name="metadata_id_seq" startValue="1"/>
       <sequence increment="1" name="niveau_administratif_val_id_seq" startValue="1"/>
       <sequence increment="1" name="poi_acces_val_id_seq" startValue="1"/>
       <sequence increment="1" name="poi_id_local_seq" startValue="1"/>
@@ -62,7 +63,7 @@
          <index name="etat_avancement_val_pkey" unique="true">
             <column ascending="true" name="code"/>
          </index>
-         <index name="codeFK" unique="true">
+         <index name="code9" unique="true">
             <column ascending="true" name="code"/>
          </index>
       </table>
@@ -114,18 +115,30 @@
             <column ascending="true" name="id_local"/>
          </index>
       </table>
+      <table name="metadata" numRows="0" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="me_version_date" nullable="false" remarks="Date de la version. Ex: 2019-06-01" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="me_status" nullable="false" remarks="" size="5" type="int2" typeCode="5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="metadata_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="metadata_me_version_key" unique="true">
+            <column ascending="true" name="me_version"/>
+         </index>
+      </table>
       <table name="niveau_administratif_val" numRows="4" remarks="Nomenclature pour le niveau administratif d'un schéma" schema="veloroutes" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('veloroutes.niveau_administratif_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="niveau_schema" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
          <index name="niveau_administratif_val_pkey1" unique="true">
             <column ascending="true" name="id"/>
          </index>
-         <index name="FKcode" unique="true">
+         <index name="code1" unique="true">
             <column ascending="true" name="code"/>
          </index>
       </table>
@@ -153,7 +166,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_acces_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -180,7 +192,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -207,7 +218,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_tourisme_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -238,7 +248,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_portion" foreignKey="type_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -269,7 +278,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_noeud" foreignKey="noeud" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -284,7 +292,6 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.revetement_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="revetement" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
-            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -329,17 +336,13 @@
       <table name="statut_segment_val" numRows="6" remarks="Nomenclature pour le statut réglementaire du segment cyclable" schema="veloroutes" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('veloroutes.statut_segment_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="niveau_administratif_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_acces_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_service_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="repere_val"/>
-            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="revetement_val"/>
             <child column="statut" foreignKey="statut" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
-         <primaryKey column="code" sequenceNumberInPK="1"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="statut_segment_val_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
          <index name="code8" unique="true">
             <column ascending="true" name="code"/>
          </index>

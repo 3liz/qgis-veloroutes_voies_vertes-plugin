@@ -116,7 +116,7 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td><span id="id">id</span></td>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id">id</span></td>
                                     <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
@@ -133,7 +133,7 @@
                                     <td><p>Identifiant</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="code">code</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="code">code</span></td>
                                     <td>text</td>
                                     <td>2147483647</td>
                                     <td title=''></td>
@@ -141,34 +141,6 @@
                                     <td>null</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
-                                            <tr>
-                                                <td title="niveau_administratif_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='niveau_administratif_val.html'>niveau_administratif_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="poi_acces_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='poi_acces_val.html'>poi_acces_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="poi_service_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='poi_service_val.html'>poi_service_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="poi_tourisme_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='poi_tourisme_val.html'>poi_tourisme_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="portion_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='portion_val.html'>portion_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="repere_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='repere_val.html'>repere_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td title="revetement_val.code&#39;s name implies that it&#39;s a child of statut_segment_val.code, but it doesn&#39;t reference that column."><a href='revetement_val.html'>revetement_val</a><span class='relatedKey'>.code</span></td>
-                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
-                                            </tr>
                                             <tr>
                                                 <td title="segment.statut references statut_segment_val.code via statut"><a href='segment.html'>segment</a><span class='relatedKey'>.statut</span></td>
                                                 <td class="constraint detail">statut<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
@@ -223,8 +195,14 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> code8</td>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> statut_segment_val_pkey</td>
                                     <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> code8</td>
+                                    <td>Must be unique</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>code</td>
                                 </tr>
@@ -247,8 +225,6 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
-                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
-                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
@@ -267,42 +243,6 @@
 <area shape="rect" id="node5" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,216,349,373">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/statut_segment_val.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="393,5,668,152">
-<area shape="rect" id="node2" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,577,349,735">
-<area shape="rect" id="node3" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="437,169,624,316">
-<area shape="rect" id="node4" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="431,333,630,480">
-<area shape="rect" id="node5" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="423,497,638,644">
-<area shape="rect" id="node6" href="portion_val.html" target="_top" title="portion_val" alt="" coords="445,661,617,808">
-<area shape="rect" id="node7" href="repere_val.html" target="_top" title="repere_val" alt="" coords="447,825,614,972">
-<area shape="rect" id="node8" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="427,989,634,1136">
-<area shape="rect" id="node9" href="segment.html" target="_top" title="segment" alt="" coords="712,993,899,1199">
-</map>
-                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/statut_segment_val.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
-                                    </div>
-                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
-                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="943,144,1093,232">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="734,64,877,152">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="712,220,899,425">
-<area shape="rect" id="node13" href="portion_val.html" target="_top" title="portion_val" alt="" coords="445,5,617,152">
-<area shape="rect" id="node6" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="5,555,349,712">
-<area shape="rect" id="node16" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="427,275,634,421">
-<area shape="rect" id="node17" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="407,169,655,257">
-<area shape="rect" id="node4" href="itineraire.html" target="_top" title="itineraire" alt="" coords="726,507,885,595">
-<area shape="rect" id="node5" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="393,475,668,621">
-<area shape="rect" id="node7" href="poi_acces.html" target="_top" title="poi_acces" alt="" coords="727,671,884,759">
-<area shape="rect" id="node8" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="437,639,624,785">
-<area shape="rect" id="node9" href="poi_service.html" target="_top" title="poi_service" alt="" coords="720,835,891,923">
-<area shape="rect" id="node10" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="431,803,630,949">
-<area shape="rect" id="node11" href="poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="713,999,898,1087">
-<area shape="rect" id="node12" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="423,967,638,1113">
-<area shape="rect" id="node14" href="repere.html" target="_top" title="repere" alt="" coords="736,1163,875,1251">
-<area shape="rect" id="node15" href="repere_val.html" target="_top" title="repere_val" alt="" coords="447,1131,614,1277">
-</map>
-                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/statut_segment_val.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

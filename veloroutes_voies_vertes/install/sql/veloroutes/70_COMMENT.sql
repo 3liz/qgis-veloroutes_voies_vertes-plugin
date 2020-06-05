@@ -176,6 +176,22 @@ COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repè
 COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérêt que la liaison dessert (clé étrangère)';
 
 
+-- metadata
+COMMENT ON TABLE veloroutes.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
+
+
+-- metadata.id
+COMMENT ON COLUMN veloroutes.metadata.id IS 'Identifiant de la version';
+
+
+-- metadata.me_version
+COMMENT ON COLUMN veloroutes.metadata.me_version IS 'Version. Ex: 1.0.2';
+
+
+-- metadata.me_version_date
+COMMENT ON COLUMN veloroutes.metadata.me_version_date IS 'Date de la version. Ex: 2019-06-01';
+
+
 -- niveau_administratif_val
 COMMENT ON TABLE veloroutes.niveau_administratif_val IS 'Nomenclature pour le niveau administratif d''un schéma';
 

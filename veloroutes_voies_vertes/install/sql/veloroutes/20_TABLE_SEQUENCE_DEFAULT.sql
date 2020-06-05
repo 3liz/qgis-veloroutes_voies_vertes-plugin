@@ -176,6 +176,35 @@ CREATE SEQUENCE veloroutes.liaison_id_local_seq
 ALTER SEQUENCE veloroutes.liaison_id_local_seq OWNED BY veloroutes.liaison.id_local;
 
 
+-- metadata
+CREATE TABLE veloroutes.metadata (
+    id integer NOT NULL,
+    me_version text NOT NULL,
+    me_version_date date NOT NULL,
+    me_status smallint NOT NULL
+);
+
+
+-- metadata
+COMMENT ON TABLE veloroutes.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
+
+
+-- metadata_id_seq
+CREATE SEQUENCE veloroutes.metadata_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- metadata_id_seq
+ALTER SEQUENCE veloroutes.metadata_id_seq OWNED BY veloroutes.metadata.id;
+
+-- metadata id
+ALTER TABLE ONLY veloroutes.metadata ALTER COLUMN id SET DEFAULT nextval('veloroutes.metadata_id_seq'::regclass);
+
+
 -- niveau_administratif_val
 CREATE TABLE veloroutes.niveau_administratif_val (
     id integer NOT NULL,
@@ -650,4 +679,3 @@ ALTER TABLE ONLY veloroutes.statut_segment_val ALTER COLUMN id SET DEFAULT nextv
 --
 -- PostgreSQL database dump complete
 --
-
