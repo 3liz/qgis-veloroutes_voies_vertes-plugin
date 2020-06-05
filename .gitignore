@@ -5,3 +5,5 @@ __pycache__/
 .idea/
 
 veloroutes-voies-vertes.*.zip
+
+export_database_structure_to_SQL_mac.sh
