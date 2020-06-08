@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -175,6 +174,22 @@ COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repè
 
 -- liaison.id_poi
 COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérêt que la liaison dessert (clé étrangère)';
+
+
+-- metadata
+COMMENT ON TABLE veloroutes.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
+
+
+-- metadata.id
+COMMENT ON COLUMN veloroutes.metadata.id IS 'Identifiant de la version';
+
+
+-- metadata.me_version
+COMMENT ON COLUMN veloroutes.metadata.me_version IS 'Version. Ex: 1.0.2';
+
+
+-- metadata.me_version_date
+COMMENT ON COLUMN veloroutes.metadata.me_version_date IS 'Date de la version. Ex: 2019-06-01';
 
 
 -- niveau_administratif_val
@@ -500,4 +515,3 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
-
