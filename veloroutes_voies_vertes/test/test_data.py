@@ -4,6 +4,7 @@ Created on Fri Jun  5 12:06:30 2020
 @author: enolasengeissen
 """
 
+import psycopg2
 from .base_test_database import DatabaseTestCase
 
 __copyright__ = "Copyright 2019, 3Liz"
@@ -11,8 +12,10 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
+SCHEMA = "veloroutes"
 
 class TestSqlFunctions(DatabaseTestCase):
+    
 
     def test_trigger_repere_numero_serie(self):
         """ Test the trigger on repere(numero_serie)"""
@@ -20,7 +23,20 @@ class TestSqlFunctions(DatabaseTestCase):
         with self.assertRaisesRegex(Exception, 'numero_serie ne peut être NULL si type_noeud vaut CPT'):
             self.cursor.execute(
                 "INSERT INTO veloroutes.repere(type_noeud) VALUES ('CPT')")
-
+    
+    def test_insertok_numero_serie(self):
+        """Test that we can insert a row in repere with good items"""
+        self.cursor.execute("TRUNCATE TABLE veloroutes.repere CASCADE")
+        self.cursor.execute("INSERT INTO veloroutes.repere(libelle,numero_serie,type_noeud,geom) VALUES ('libellé test', 'num_serie_test', 'DFE', '01010000206A080000A84C000037B72C41708D9999F2005A41');")
+        
+        res = """
+            SELECT veloroutes.repere.libelle FROM veloroutes.repere WHERE veloroutes.repere.numero_serie='num_serie_test';
+        """
+        self.cursor.execute(res)
+        
+        record = self.cursor.fetchall()
+        self.assertEqual('libellé test', record[0][0])
+        
     def test_trigger_segment_projet_revetement(self):
         """ Test the trigger on segment(revetement) case project"""
         # Contraintes sur le champs segment(revetement) avec la fonction revet()
@@ -36,3 +52,30 @@ class TestSqlFunctions(DatabaseTestCase):
             self.cursor.execute(
                 "INSERT INTO veloroutes.segment(geometrie_fictive, revetement, statut)"
                 " VALUES ('T','LIS','VV')")
+            
+    def test_insertok_revetement(self):
+        """Test that we can insert a row in segment with good items"""
+        self.cursor.execute("TRUNCATE TABLE veloroutes.segment CASCADE")
+        
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,statut,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test', 
+                    '2010',4,'LIS', 'ASP', 'gestion_test', 'GOLBEY', 
+                    '01020000206A08000003000000DA75FABEDD282D41D1FE479453EA594161E0B67349292D4118E0C2404AEA59412FAB58790D2A2D4150948B8726EA5941', 
+                    'DC', 'F', 'F')
+        """
+        self.cursor.execute(sql)
+        
+        res = """
+            SELECT veloroutes.segment.src_geom 
+            FROM veloroutes.segment 
+            WHERE veloroutes.segment.gestionnaire='gestion_test';
+        """
+        self.cursor.execute(res)
+        
+        record = self.cursor.fetchall()
+        self.assertEqual('src_geom_test', record[0][0])
