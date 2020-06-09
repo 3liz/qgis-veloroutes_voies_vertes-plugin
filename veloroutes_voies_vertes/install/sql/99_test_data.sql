@@ -1,3 +1,6 @@
+--table itineraire
+INSERT INTO veloroutes.itineraire VALUES ('50', 'La Voie Bleue - Moselle-Saône à vélo', 'La Voie Bleue - Moselle-Saône à vélo', 'Schengen', 'Lyon', 6, '2008-01-01', 'https://www.af3v.org/les-voies-vertes/voies/835-v50-la-voie-bleue-moselle-saone-a-velo-v51a-tour-de-bourgogne-du-sud-de-chalon-sur-saone-a-tournus/', '2011-01-01', 'NAT', 'OUI');
+
 --table portion
 INSERT INTO veloroutes.portion VALUES (1, 'VELOROUTE DE LA MOSELLE', 'Etape de Socourt au port d''Epinal', 'ETP');
 INSERT INTO veloroutes.portion VALUES (2, 'VOIE VERTE DU CANAL DES VOSGES', 'Etape du port d''Epinal à Montmotier', 'ETP');
