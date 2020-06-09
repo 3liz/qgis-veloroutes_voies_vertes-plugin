@@ -26,6 +26,7 @@ VERSION = "0.2.0"
 
 
 class TestProcessing(unittest.TestCase):
+
     def setUp(self) -> None:
         self.connection = psycopg2.connect(
             user="docker", password="docker", host="db", port="5432", database="gis"
@@ -37,7 +38,7 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
-    def Xtest_load_structure_with_migration(self):
+    def xtest_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
         QgsApplication.processingRegistry().addProvider(provider)
@@ -48,7 +49,6 @@ class TestProcessing(unittest.TestCase):
             "OVERRIDE": True,
             "ADD_TEST_DATA": True,
         }
-
         os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
         alg = "{}:create_database_structure".format(provider.id())
         try:
@@ -128,7 +128,6 @@ class TestProcessing(unittest.TestCase):
         )
         self.cursor.execute(sql)
         record = self.cursor.fetchone()
-
         migrations = available_migrations(000000)
         last_migration = migrations[-1]
         metadata_version = (
