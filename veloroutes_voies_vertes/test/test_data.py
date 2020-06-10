@@ -4,14 +4,12 @@ Created on Fri Jun  5 12:06:30 2020
 @author: enolasengeissen
 """
 
-from .base_test_database import DatabaseTestCase
+from veloroutes_voies_vertes.test.base_test_database import DatabaseTestCase
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
-
-SCHEMA = "veloroutes"
 
 
 class TestSqlFunctions(DatabaseTestCase):
@@ -29,7 +27,7 @@ class TestSqlFunctions(DatabaseTestCase):
         sql = """
             INSERT INTO veloroutes.repere(libelle,numero_serie,type_noeud,geom)
             VALUES ('libellé test', 'num_serie_test', 'DFE',
-                    '01010000206A080000A84C000037B72C41708D9999F2005A41')
+                    ST_GeomFromText('POINT(0 0)',2154))
         """
         self.cursor.execute(sql)
         res = """
@@ -68,8 +66,7 @@ class TestSqlFunctions(DatabaseTestCase):
                                            sens_unique,geometrie_fictive)
             VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
                     '2010',4,'LIS', 'ASP', 'gestion_test', 'GOLBEY',
-                    '01020000206A08000003000000DA75FABEDD282D41D1FE479453EA594161E0B67349292D4118E0C2404AEA59412FAB58790D2A2D4150948B8726EA5941',
-                    'DC', 'F', 'F')
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
         """
         self.cursor.execute(sql)
         res = """
