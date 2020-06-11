@@ -2596,9 +2596,11 @@ INSERT INTO veloroutes.element VALUES (105, 5, 17944);
 INSERT INTO veloroutes.element VALUES (106, 5, 17945);
 INSERT INTO veloroutes.element VALUES (107, 5, 17946);
 INSERT INTO veloroutes.element VALUES (108, 5, 18721);
+INSERT INTO veloroutes.element VALUES (109, 2, 17959);
 
 --table etape (lien portion/itineraire)
 INSERT INTO veloroutes.etape VALUES (1, 6, 1, 1);
+INSERT INTO veloroutes.etape VALUES (2, 6, 2, 2);
 
 --table poi_tourisme
 INSERT INTO veloroutes.poi_tourisme VALUES ('Office de Tourisme d''Epinal - 6 place Saint-Goëry 88000 EPINAL', 'OT', 1, '01010000206A080000D80B3E8AC22F2D41D981088764E85941');
