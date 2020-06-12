@@ -42,7 +42,7 @@ CREATE VIEW veloroutes.v_itineraire AS
     itineraire.niveau_schema,
     itineraire.est_inscrit
    FROM (veloroutes.itineraire
-     JOIN veloroutes.v_itin ON ((v_itin.id_itineraire = itineraire.id_local)));
+     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_local)));
 
 
 -- v_port
