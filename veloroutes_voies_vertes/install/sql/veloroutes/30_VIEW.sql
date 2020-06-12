@@ -62,8 +62,8 @@ CREATE VIEW veloroutes.v_portion AS
     portion.nom,
     portion.description,
     portion.type_portion
-   FROM (veloroutes.v_port
-     JOIN veloroutes.portion ON ((portion.id_local = v_port.id_portion)));
+   FROM (veloroutes.portion
+     JOIN veloroutes.v_port_geom ON ((portion.id_local = v_port_geom.id_portion)));
 
 
 -- VIEW v_portion
