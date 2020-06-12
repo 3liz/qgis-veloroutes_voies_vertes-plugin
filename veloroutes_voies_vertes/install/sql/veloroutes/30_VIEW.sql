@@ -46,7 +46,7 @@ CREATE VIEW veloroutes.v_itineraire AS
 
 
 -- v_port
-CREATE VIEW veloroutes.v_port AS
+CREATE VIEW veloroutes.v_port_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
     element.id_portion
    FROM ((veloroutes.element
