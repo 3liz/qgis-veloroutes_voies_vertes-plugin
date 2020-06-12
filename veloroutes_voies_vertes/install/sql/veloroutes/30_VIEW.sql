@@ -17,7 +17,7 @@ SET row_security = off;
 
 -- v_itin
 CREATE VIEW veloroutes.v_itin AS
- SELECT public.st_collect(segment.geom) AS st_collect,
+ SELECT public.st_collect(segment.geom) AS collect_geom,
     etape.id_itineraire
    FROM ((((veloroutes.itineraire
      JOIN veloroutes.etape ON ((etape.id_itineraire = itineraire.id_local)))
@@ -73,4 +73,3 @@ COMMENT ON VIEW veloroutes.v_portion IS 'vue qui joint les portions aux collecti
 --
 -- PostgreSQL database dump complete
 --
-
