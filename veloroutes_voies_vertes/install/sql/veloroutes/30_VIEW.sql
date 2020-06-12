@@ -29,7 +29,7 @@ CREATE VIEW veloroutes.v_itin AS
 
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
- SELECT v_itin.st_collect AS geom,
+ SELECT v_itin.collect_geom AS geom,
     itineraire.numero,
     itineraire.nom_officiel,
     itineraire.nom_usage,
