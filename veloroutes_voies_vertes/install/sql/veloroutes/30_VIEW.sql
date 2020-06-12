@@ -15,6 +15,36 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- v_itin
+CREATE VIEW veloroutes.v_itin AS
+ SELECT public.st_collect(segment.geom) AS st_collect,
+    etape.id_itineraire
+   FROM ((((veloroutes.itineraire
+     JOIN veloroutes.etape ON ((etape.id_itineraire = itineraire.id_local)))
+     JOIN veloroutes.portion ON ((portion.id_local = etape.id_portion)))
+     JOIN veloroutes.element ON ((element.id_portion = portion.id_local)))
+     JOIN veloroutes.segment ON ((segment.id_local = element.id_segment)))
+  GROUP BY etape.id_itineraire;
+
+
+-- v_itineraire
+CREATE VIEW veloroutes.v_itineraire AS
+ SELECT v_itin.st_collect AS geom,
+    itineraire.numero,
+    itineraire.nom_officiel,
+    itineraire.nom_usage,
+    itineraire.depart,
+    itineraire.arrivee,
+    itineraire.id_local,
+    itineraire.annee_inscription,
+    itineraire.site_web,
+    itineraire.annee_ouverture,
+    itineraire.niveau_schema,
+    itineraire.est_inscrit
+   FROM (veloroutes.itineraire
+     JOIN veloroutes.v_itin ON ((v_itin.id_itineraire = itineraire.id_local)));
+
+
 -- v_port
 CREATE VIEW veloroutes.v_port AS
  SELECT public.st_collect(segment.geom) AS st_collect,
@@ -38,38 +68,6 @@ CREATE VIEW veloroutes.v_portion AS
 
 -- VIEW v_portion
 COMMENT ON VIEW veloroutes.v_portion IS 'vue qui joint les portions aux collections de géométries des segments qui les composent';
-
-
--- v_itin
-CREATE VIEW veloroutes.v_itin AS
- SELECT public.st_collect(v_portion.geom) AS st_collect,
-    etape.id_itineraire
-   FROM ((veloroutes.etape
-     JOIN veloroutes.v_portion ON ((v_portion.id_local = etape.id_portion)))
-     JOIN veloroutes.itineraire ON ((itineraire.id_local = etape.id_itineraire)))
-  GROUP BY etape.id_itineraire;
-
-
--- v_itineraire
-CREATE VIEW veloroutes.v_itineraire AS
- SELECT v_itin.st_collect AS geom,
-    itineraire.numero,
-    itineraire.nom_officiel,
-    itineraire.nom_usage,
-    itineraire.depart,
-    itineraire.arrivee,
-    itineraire.id_local,
-    itineraire.annee_inscription,
-    itineraire.site_web,
-    itineraire.annee_ouverture,
-    itineraire.niveau_schema,
-    itineraire.est_inscrit
-   FROM (veloroutes.v_itin
-     JOIN veloroutes.itineraire ON ((itineraire.id_local = v_itin.id_itineraire)));
-
-
--- VIEW v_itineraire
-COMMENT ON VIEW veloroutes.v_itineraire IS 'vue qui joint les itinéraires aux collections de géométries des portions qui les composent';
 
 
 --
