@@ -89,9 +89,9 @@ class TestProcessing(unittest.TestCase):
             "segment",
             "statut_segment_val",
             "metadata",
-            "v_port",
+            "v_port_geom",
             "v_portion",
-            "v_itin",
+            "v_itin_geom",
             "v_itineraire"
         ]
         self.assertCountEqual(expected, result)
