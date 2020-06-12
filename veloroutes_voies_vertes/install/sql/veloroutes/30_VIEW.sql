@@ -57,7 +57,7 @@ CREATE VIEW veloroutes.v_port AS
 
 -- v_portion
 CREATE VIEW veloroutes.v_portion AS
- SELECT v_port.st_collect AS geom,
+ SELECT v_port.collect_geom AS geom,
     portion.id_local,
     portion.nom,
     portion.description,
