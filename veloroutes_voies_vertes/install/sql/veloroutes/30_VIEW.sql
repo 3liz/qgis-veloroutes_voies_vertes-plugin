@@ -16,7 +16,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 -- v_itin
-CREATE VIEW veloroutes.v_itin AS
+CREATE VIEW veloroutes.v_itin_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
     etape.id_itineraire
    FROM ((((veloroutes.itineraire
