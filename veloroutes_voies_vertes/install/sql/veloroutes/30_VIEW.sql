@@ -15,7 +15,7 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- v_itin
+-- v_itin_geom
 CREATE VIEW veloroutes.v_itin_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
     etape.id_itineraire
@@ -29,7 +29,7 @@ CREATE VIEW veloroutes.v_itin_geom AS
 
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
- SELECT v_itin.collect_geom AS geom,
+ SELECT v_itin_geom.collect_geom AS geom,
     itineraire.numero,
     itineraire.nom_officiel,
     itineraire.nom_usage,
@@ -45,7 +45,7 @@ CREATE VIEW veloroutes.v_itineraire AS
      JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_local)));
 
 
--- v_port
+-- v_port_geom
 CREATE VIEW veloroutes.v_port_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
     element.id_portion
@@ -57,7 +57,7 @@ CREATE VIEW veloroutes.v_port_geom AS
 
 -- v_portion
 CREATE VIEW veloroutes.v_portion AS
- SELECT v_port.collect_geom AS geom,
+ SELECT v_port_geom.collect_geom AS geom,
     portion.id_local,
     portion.nom,
     portion.description,
