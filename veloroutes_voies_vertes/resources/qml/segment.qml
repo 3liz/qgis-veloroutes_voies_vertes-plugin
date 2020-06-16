@@ -185,91 +185,199 @@
     <field name="id_local">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="annee_ouve">
       <editWidget type="DateTime">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="allow_null" type="bool" value="true"/>
+            <Option name="calendar_popup" type="bool" value="true"/>
+            <Option name="display_format" type="QString" value="yyyy-MM-dd"/>
+            <Option name="field_format" type="QString" value="yyyy-MM-dd"/>
+            <Option name="field_iso_format" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="date_saisi">
       <editWidget type="DateTime">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="allow_null" type="bool" value="true"/>
+            <Option name="calendar_popup" type="bool" value="true"/>
+            <Option name="display_format" type="QString" value="yyyy-MM-dd"/>
+            <Option name="field_format" type="QString" value="yyyy-MM-dd"/>
+            <Option name="field_iso_format" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="src_geom">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="src_annee">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="avancement">
-      <editWidget type="TextEdit">
+      <editWidget type="ValueMap">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="map" type="List">
+              <Option type="Map">
+                <Option name="Projet" type="QString" value="01"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Tracé arrêté" type="QString" value="02"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Travaux en cours" type="QString" value="03"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Ouvert" type="QString" value="04"/>
+              </Option>
+            </Option>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="revetement">
-      <editWidget type="TextEdit">
+      <editWidget type="ValueMap">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="map" type="List">
+              <Option type="Map">
+                <Option name="Lisse" type="QString" value="LIS"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Rugueux" type="QString" value="RUG"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Meuble" type="QString" value="MEU"/>
+              </Option>
+            </Option>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="statut">
-      <editWidget type="TextEdit">
+      <editWidget type="ValueMap">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="map" type="List">
+              <Option type="Map">
+                <Option name="Voie verte" type="QString" value="VV"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Piste cyclable" type="QString" value="PCY"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Autre site propre" type="QString" value="ASP"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Route" type="QString" value="RTE"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Bande cyclable" type="QString" value="BCY"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Itinéraire à circulation appaisée" type="QString" value="ICA"/>
+              </Option>
+            </Option>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="gestionnai">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="proprietai">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="precision">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="IsMultiline" type="bool" value="false"/>
+            <Option name="UseHtml" type="bool" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="sens_uniqu">
-      <editWidget type="TextEdit">
+      <editWidget type="ValueMap">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="map" type="List">
+              <Option type="Map">
+                <Option name="Vrai" type="QString" value="T"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Faux" type="QString" value="F"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Ne sais pas" type="QString" value="N"/>
+              </Option>
+              <Option type="Map">
+                <Option name="&lt;NULL>" type="QString" value="{2839923C-8B7D-419E-B84B-CA2FE9B80EC7}"/>
+              </Option>
+            </Option>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="geometrie_">
-      <editWidget type="TextEdit">
+      <editWidget type="ValueMap">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option name="map" type="List">
+              <Option type="Map">
+                <Option name="Vrai" type="QString" value="T"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Faux" type="QString" value="F"/>
+              </Option>
+              <Option type="Map">
+                <Option name="Ne sais pas" type="QString" value="N"/>
+              </Option>
+              <Option type="Map">
+                <Option name="&lt;NULL>" type="QString" value="{2839923C-8B7D-419E-B84B-CA2FE9B80EC7}"/>
+              </Option>
+            </Option>
+          </Option>
         </config>
       </editWidget>
     </field>
@@ -340,7 +448,7 @@
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="&quot;revetement&quot;" sortOrder="0">
     <columns>
       <column width="-1" hidden="0" name="id_local" type="field"/>
       <column width="-1" hidden="0" name="annee_ouve" type="field"/>
@@ -384,14 +492,29 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
+  <attributeEditorForm>
+    <attributeEditorField showLabel="1" name="id_local" index="0"/>
+    <attributeEditorField showLabel="1" name="annee_ouve" index="1"/>
+    <attributeEditorField showLabel="1" name="date_saisi" index="2"/>
+    <attributeEditorField showLabel="1" name="src_geom" index="3"/>
+    <attributeEditorField showLabel="1" name="src_annee" index="4"/>
+    <attributeEditorField showLabel="1" name="avancement" index="5"/>
+    <attributeEditorField showLabel="1" name="revetement" index="6"/>
+    <attributeEditorField showLabel="1" name="statut" index="7"/>
+    <attributeEditorField showLabel="1" name="gestionnai" index="8"/>
+    <attributeEditorField showLabel="1" name="proprietai" index="9"/>
+    <attributeEditorField showLabel="1" name="precision" index="10"/>
+    <attributeEditorField showLabel="1" name="sens_uniqu" index="11"/>
+    <attributeEditorField showLabel="1" name="geometrie_" index="12"/>
+  </attributeEditorForm>
   <editable>
     <field name="annee_ouve" editable="1"/>
     <field name="avancement" editable="1"/>
     <field name="date_saisi" editable="1"/>
     <field name="geometrie_" editable="1"/>
     <field name="gestionnai" editable="1"/>
-    <field name="id_local" editable="1"/>
+    <field name="id_local" editable="0"/>
     <field name="precision" editable="1"/>
     <field name="proprietai" editable="1"/>
     <field name="revetement" editable="1"/>
