@@ -179,7 +179,7 @@ ALTER TABLE ONLY veloroutes.segment
 
 -- etape itineraire
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT itineraire FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_local);
+    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_local);
 
 
 -- itineraire niveau_schema
@@ -204,12 +204,12 @@ ALTER TABLE ONLY veloroutes.frequentation
 
 -- etape portion
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
+    ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 
 -- element portion
 ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
+    ADD CONSTRAINT element_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
 
 
 -- frequentation repere
@@ -229,7 +229,7 @@ ALTER TABLE ONLY veloroutes.segment
 
 -- element segment
 ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_local);
+    ADD CONSTRAINT element_segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_local);
 
 
 -- segment statut
@@ -260,4 +260,3 @@ ALTER TABLE ONLY veloroutes.portion
 --
 -- PostgreSQL database dump complete
 --
-
