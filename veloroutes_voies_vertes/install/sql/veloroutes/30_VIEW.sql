@@ -27,6 +27,11 @@ CREATE VIEW veloroutes.v_itin_geom AS
   GROUP BY etape.id_itineraire;
 
 
+-- VIEW v_itin_geom
+COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itinéraires aux collections de géométries des segments qui les composent
+';
+
+
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
  SELECT v_itin_geom.collect_geom AS geom,
@@ -45,6 +50,11 @@ CREATE VIEW veloroutes.v_itineraire AS
      JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_local)));
 
 
+-- VIEW v_itineraire
+COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent
+';
+
+
 -- v_port_geom
 CREATE VIEW veloroutes.v_port_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
@@ -53,6 +63,11 @@ CREATE VIEW veloroutes.v_port_geom AS
      JOIN veloroutes.segment ON ((segment.id_local = element.id_segment)))
      JOIN veloroutes.portion ON ((portion.id_local = element.id_portion)))
   GROUP BY element.id_portion;
+
+
+-- VIEW v_port_geom
+COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les portions aux collections de géométries des segments qui les composent
+';
 
 
 -- v_portion
@@ -67,9 +82,10 @@ CREATE VIEW veloroutes.v_portion AS
 
 
 -- VIEW v_portion
-COMMENT ON VIEW veloroutes.v_portion IS 'vue qui joint les portions aux collections de géométries des segments qui les composent';
+COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
 
 
 --
 -- PostgreSQL database dump complete
 --
+
