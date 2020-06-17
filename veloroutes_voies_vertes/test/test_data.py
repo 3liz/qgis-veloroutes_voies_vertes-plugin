@@ -19,7 +19,7 @@ class TestSqlFunctions(DatabaseTestCase):
         """ Test the trigger on repere(numero_serie)"""
         # Contrainte sur le champs repere(numero_serie) avec la fonction numserie()
         msg = 'numero_serie ne peut être NULL si type_noeud vaut CPT'
-        with self.assertRaises(psycopg2.InternalError, msg):
+        with self.assertRaises(psycopg2.InternalError, msg=msg):
             self.cursor.execute(
                 "INSERT INTO veloroutes.repere(type_noeud) VALUES ('CPT')")
 
