@@ -2511,9 +2511,12 @@ INSERT INTO veloroutes.portion VALUES (2, 'VOIE VERTE DU CANAL DES VOSGES', 'Eta
 INSERT INTO veloroutes.portion VALUES (3, 'VARIANTE DE LA VELOROUTE V50', 'Variante par le lac de Bouzey', 'VAR');
 INSERT INTO veloroutes.portion VALUES (4, 'VOIE VERTE DE LA VALLEE DE LA MOSELOTTE', 'Bifurcation de Dommartin-les-Remiremont à Cornimont', 'ETP');
 INSERT INTO veloroutes.portion VALUES (5, 'VOIE VERTE DE LA VALLEE DE LA MOSELLE', 'Etape de Remiremont à Bussang', 'ETP');
+INSERT INTO veloroutes.portion VALUES (6, 'MEUSE A VELO', 'Etape de Neufchâteau à Vaucouleurs', 'ETP');
+INSERT INTO veloroutes.portion VALUES (7, 'MEUSE A VELO', 'Etape de Neufchâteau à Bourmont', 'ETP');
 
 --table itineraire
 INSERT INTO veloroutes.itineraire VALUES ('50', 'La Voie Bleue - Moselle-Saône à vélo', 'La Voie Bleue - Moselle-Saône à vélo', 'Schengen', 'Lyon', 6, '2008-01-01', 'https://www.af3v.org/les-voies-vertes/voies/835-v50-la-voie-bleue-moselle-saone-a-velo-v51a-tour-de-bourgogne-du-sud-de-chalon-sur-saone-a-tournus/', '2011-01-01', 'NAT', 'OUI');
+INSERT INTO veloroutes.itineraire VALUES ('19', 'La meuse à vélo', 'La meuse à vélo', 'Langres', 'Givet', 7, '2019-03-08', 'https://www.velo-territoires.org/schemas-itineraires/schema-europeen-eurovelo/v54/', '2017-06-01', 'EUR', 'OUI');
 
 --table element (lien segment/portion)
 INSERT INTO veloroutes.element VALUES (56, 2, 17637);
@@ -2597,10 +2600,24 @@ INSERT INTO veloroutes.element VALUES (106, 5, 17945);
 INSERT INTO veloroutes.element VALUES (107, 5, 17946);
 INSERT INTO veloroutes.element VALUES (108, 5, 18721);
 INSERT INTO veloroutes.element VALUES (109, 2, 17959);
+INSERT INTO veloroutes.element VALUES (1, 6, 17988);
+INSERT INTO veloroutes.element VALUES (2, 6, 17989);
+INSERT INTO veloroutes.element VALUES (3, 6, 17990);
+INSERT INTO veloroutes.element VALUES (4, 6, 17991);
+INSERT INTO veloroutes.element VALUES (5, 6, 17992);
+INSERT INTO veloroutes.element VALUES (6, 6, 17993);
+INSERT INTO veloroutes.element VALUES (7, 6, 17994);
+INSERT INTO veloroutes.element VALUES (8, 7, 17979);
+INSERT INTO veloroutes.element VALUES (9, 7, 17980);
+INSERT INTO veloroutes.element VALUES (10, 7, 17981);
+INSERT INTO veloroutes.element VALUES (11, 7, 17982);
+INSERT INTO veloroutes.element VALUES (12, 7, 17986);
 
 --table etape (lien portion/itineraire)
 INSERT INTO veloroutes.etape VALUES (1, 6, 1, 1);
 INSERT INTO veloroutes.etape VALUES (2, 6, 2, 2);
+INSERT INTO veloroutes.etape VALUES (6, 7, 3, 4);
+INSERT INTO veloroutes.etape VALUES (7, 7, 4, 3);
 
 --table poi_tourisme
 INSERT INTO veloroutes.poi_tourisme VALUES ('Office de Tourisme d''Epinal - 6 place Saint-Goëry 88000 EPINAL', 'OT', 1, '01010000206A080000D80B3E8AC22F2D41D981088764E85941');
