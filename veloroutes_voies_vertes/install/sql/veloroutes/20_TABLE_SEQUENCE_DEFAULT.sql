@@ -154,7 +154,8 @@ CREATE TABLE veloroutes.liaison (
     src_annee text,
     id_local integer NOT NULL,
     id_repere integer,
-    id_poi integer
+    id_poi integer,
+    geom public.geometry(MultiLineString,2154)
 );
 
 
