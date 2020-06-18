@@ -176,6 +176,10 @@ COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repè
 COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérêt que la liaison dessert (clé étrangère)';
 
 
+-- liaison.geom
+COMMENT ON COLUMN veloroutes.liaison.geom IS 'Géométrie';
+
+
 -- metadata
 COMMENT ON TABLE veloroutes.metadata IS 'Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C''est utilisé pour les scripts de migration de la structure entre 2 versions.';
 
