@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" readOnly="0" version="3.10.5-A Coruña" maxScale="0" minScale="1e+08">
+<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.5-A Coruña" maxScale="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -11,7 +11,7 @@
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -70,42 +70,42 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="id_local" index="0"/>
-    <alias name="" field="nom" index="1"/>
-    <alias name="" field="description" index="2"/>
-    <alias name="" field="type_portion" index="3"/>
+    <alias field="id_local" name="" index="0"/>
+    <alias field="nom" name="" index="1"/>
+    <alias field="description" name="" index="2"/>
+    <alias field="type_portion" name="" index="3"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="id_local" expression=""/>
-    <default applyOnUpdate="0" field="nom" expression=""/>
-    <default applyOnUpdate="0" field="description" expression=""/>
-    <default applyOnUpdate="0" field="type_portion" expression=""/>
+    <default field="id_local" applyOnUpdate="0" expression=""/>
+    <default field="nom" applyOnUpdate="0" expression=""/>
+    <default field="description" applyOnUpdate="0" expression=""/>
+    <default field="type_portion" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="1" constraints="3" unique_strength="1" field="id_local" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="nom" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="description" exp_strength="0"/>
-    <constraint notnull_strength="1" constraints="1" unique_strength="0" field="type_portion" exp_strength="0"/>
+    <constraint field="id_local" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
+    <constraint field="nom" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="description" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="type_portion" constraints="1" unique_strength="0" exp_strength="0" notnull_strength="1"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="id_local"/>
-    <constraint desc="" exp="" field="nom"/>
-    <constraint desc="" exp="" field="description"/>
-    <constraint desc="" exp="" field="type_portion"/>
+    <constraint field="id_local" exp="" desc=""/>
+    <constraint field="nom" exp="" desc=""/>
+    <constraint field="description" exp="" desc=""/>
+    <constraint field="type_portion" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column name="id_local" hidden="0" width="95" type="field"/>
-      <column name="nom" hidden="0" width="224" type="field"/>
-      <column name="description" hidden="0" width="301" type="field"/>
-      <column name="type_portion" hidden="0" width="-1" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
+      <column width="95" name="id_local" hidden="0" type="field"/>
+      <column width="224" name="nom" hidden="0" type="field"/>
+      <column width="301" name="description" hidden="0" type="field"/>
+      <column width="-1" name="type_portion" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -136,10 +136,10 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="description" editable="1"/>
-    <field name="id_local" editable="1"/>
-    <field name="nom" editable="1"/>
-    <field name="type_portion" editable="1"/>
+    <field editable="1" name="description"/>
+    <field editable="1" name="id_local"/>
+    <field editable="1" name="nom"/>
+    <field editable="1" name="type_portion"/>
   </editable>
   <labelOnTop>
     <field name="description" labelOnTop="0"/>
@@ -150,12 +150,12 @@ def my_form_open(dialog, layer, feature):
   <widgets>
     <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_local">
       <config type="Map">
-        <Option name="nm-rel" value="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_4214b7a3_a1ee_4111_87bb_31270944a154_id_local" type="QString"/>
+        <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
     <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_local">
       <config type="Map">
-        <Option name="nm-rel" value="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_itineraire_itineraire_c47affa8_3ced_43b5_b85b_cb009c7b432a_id_local" type="QString"/>
+        <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
   </widgets>

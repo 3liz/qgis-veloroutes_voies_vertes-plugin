@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" readOnly="0" version="3.10.5-A Coruña" maxScale="0" minScale="1e+08">
+<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.5-A Coruña" maxScale="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -11,7 +11,7 @@
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -70,42 +70,42 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="id_portion" index="0"/>
-    <alias name="" field="id_itineraire" index="1"/>
-    <alias name="" field="id" index="2"/>
-    <alias name="" field="etape" index="3"/>
+    <alias field="id_portion" name="" index="0"/>
+    <alias field="id_itineraire" name="" index="1"/>
+    <alias field="id" name="" index="2"/>
+    <alias field="etape" name="" index="3"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="id_portion" expression=""/>
-    <default applyOnUpdate="0" field="id_itineraire" expression=""/>
-    <default applyOnUpdate="0" field="id" expression=""/>
-    <default applyOnUpdate="0" field="etape" expression=""/>
+    <default field="id_portion" applyOnUpdate="0" expression=""/>
+    <default field="id_itineraire" applyOnUpdate="0" expression=""/>
+    <default field="id" applyOnUpdate="0" expression=""/>
+    <default field="etape" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="id_portion" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="id_itineraire" exp_strength="0"/>
-    <constraint notnull_strength="1" constraints="3" unique_strength="1" field="id" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="2" unique_strength="1" field="etape" exp_strength="0"/>
+    <constraint field="id_portion" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="id_itineraire" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="id" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
+    <constraint field="etape" constraints="2" unique_strength="1" exp_strength="0" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="id_portion"/>
-    <constraint desc="" exp="" field="id_itineraire"/>
-    <constraint desc="" exp="" field="id"/>
-    <constraint desc="" exp="" field="etape"/>
+    <constraint field="id_portion" exp="" desc=""/>
+    <constraint field="id_itineraire" exp="" desc=""/>
+    <constraint field="id" exp="" desc=""/>
+    <constraint field="etape" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column name="id_portion" hidden="0" width="-1" type="field"/>
-      <column name="id_itineraire" hidden="0" width="261" type="field"/>
-      <column name="id" hidden="0" width="200" type="field"/>
-      <column name="etape" hidden="0" width="-1" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
+      <column width="-1" name="id_portion" hidden="0" type="field"/>
+      <column width="261" name="id_itineraire" hidden="0" type="field"/>
+      <column width="200" name="id" hidden="0" type="field"/>
+      <column width="-1" name="etape" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -136,10 +136,10 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="etape" editable="1"/>
-    <field name="id" editable="1"/>
-    <field name="id_itineraire" editable="1"/>
-    <field name="id_portion" editable="1"/>
+    <field editable="1" name="etape"/>
+    <field editable="1" name="id"/>
+    <field editable="1" name="id_itineraire"/>
+    <field editable="1" name="id_portion"/>
   </editable>
   <labelOnTop>
     <field name="etape" labelOnTop="0"/>

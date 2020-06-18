@@ -1,19 +1,19 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" styleCategories="AllStyleCategories" readOnly="0" version="3.10.5-A Coruña" labelsEnabled="0" maxScale="0" simplifyDrawingHints="0" minScale="1e+08" simplifyAlgorithm="0" simplifyLocal="1" simplifyDrawingTol="1" simplifyMaxScale="1">
+<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" simplifyDrawingTol="1" minScale="1e+08" styleCategories="AllStyleCategories" simplifyAlgorithm="0" simplifyMaxScale="1" simplifyDrawingHints="0" labelsEnabled="0" version="3.10.5-A Coruña" maxScale="0" simplifyLocal="1">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" attr="TYPE" forceraster="0" enableorderby="0" type="categorizedSymbol">
+  <renderer-v2 symbollevels="0" attr="TYPE" enableorderby="0" type="categorizedSymbol" forceraster="0">
     <categories>
-      <category render="true" label="OT" symbol="0" value="OT"/>
-      <category render="true" label="OTL" symbol="1" value="OTL"/>
-      <category render="true" label="ST" symbol="2" value="ST"/>
+      <category value="OT" label="OT" render="true" symbol="0"/>
+      <category value="OTL" label="OTL" render="true" symbol="1"/>
+      <category value="ST" label="ST" render="true" symbol="2"/>
     </categories>
     <symbols>
-      <symbol name="0" clip_to_extent="1" alpha="1" force_rhr="0" type="marker">
-        <layer locked="0" class="SvgMarker" enabled="1" pass="0">
+      <symbol name="0" alpha="1" force_rhr="0" type="marker" clip_to_extent="1">
+        <layer enabled="1" pass="0" locked="0" class="SvgMarker">
           <prop k="angle" v="0"/>
           <prop k="color" v="31,7,255,255"/>
           <prop k="fixedAspectRatio" v="0"/>
@@ -40,8 +40,8 @@
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="1" clip_to_extent="1" alpha="1" force_rhr="0" type="marker">
-        <layer locked="0" class="SvgMarker" enabled="1" pass="0">
+      <symbol name="1" alpha="1" force_rhr="0" type="marker" clip_to_extent="1">
+        <layer enabled="1" pass="0" locked="0" class="SvgMarker">
           <prop k="angle" v="0"/>
           <prop k="color" v="31,7,255,255"/>
           <prop k="fixedAspectRatio" v="0"/>
@@ -68,8 +68,8 @@
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="2" clip_to_extent="1" alpha="1" force_rhr="0" type="marker">
-        <layer locked="0" class="SimpleMarker" enabled="1" pass="0">
+      <symbol name="2" alpha="1" force_rhr="0" type="marker" clip_to_extent="1">
+        <layer enabled="1" pass="0" locked="0" class="SimpleMarker">
           <prop k="angle" v="0"/>
           <prop k="color" v="31,7,255,255"/>
           <prop k="horizontal_anchor_point" v="1"/>
@@ -99,8 +99,8 @@
       </symbol>
     </symbols>
     <source-symbol>
-      <symbol name="0" clip_to_extent="1" alpha="1" force_rhr="0" type="marker">
-        <layer locked="0" class="SvgMarker" enabled="1" pass="0">
+      <symbol name="0" alpha="1" force_rhr="0" type="marker" clip_to_extent="1">
+        <layer enabled="1" pass="0" locked="0" class="SvgMarker">
           <prop k="angle" v="0"/>
           <prop k="color" v="152,125,183,255"/>
           <prop k="fixedAspectRatio" v="0"/>
@@ -140,12 +140,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory enabled="0" lineSizeType="MM" scaleBasedVisibility="0" width="15" diagramOrientation="Up" minimumSize="0" minScaleDenominator="0" sizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" lineSizeScale="3x:0,0,0,0,0,0" rotationOffset="270" sizeType="MM" scaleDependency="Area" penColor="#000000" opacity="1" backgroundColor="#ffffff" labelPlacementMethod="XHeight" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" height="15" penWidth="0">
+    <DiagramCategory labelPlacementMethod="XHeight" opacity="1" minScaleDenominator="0" penWidth="0" diagramOrientation="Up" penColor="#000000" width="15" backgroundAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" lineSizeType="MM" barWidth="5" sizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" scaleBasedVisibility="0" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" minimumSize="0" enabled="0" penAlpha="255" height="15" sizeType="MM">
       <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
-      <attribute color="#000000" label="" field=""/>
+      <attribute field="" label="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" zIndex="0" linePlacementFlags="18" obstacle="0" showAll="1" dist="0" placement="0">
+  <DiagramLayerSettings showAll="1" zIndex="0" linePlacementFlags="18" placement="0" priority="0" obstacle="0" dist="0">
     <properties>
       <Option type="Map">
         <Option name="name" value="" type="QString"/>
@@ -154,13 +154,13 @@
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
   <fieldConfiguration>
-    <field name="descriptio">
-      <editWidget type="TextEdit">
+    <field name="description">
+      <editWidget type="">
         <config>
           <Option/>
         </config>
@@ -194,37 +194,37 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="descriptio" index="0"/>
-    <alias name="" field="type" index="1"/>
-    <alias name="" field="id_local" index="2"/>
+    <alias field="description" name="" index="0"/>
+    <alias field="type" name="" index="1"/>
+    <alias field="id_local" name="" index="2"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="descriptio" expression=""/>
-    <default applyOnUpdate="0" field="type" expression=""/>
-    <default applyOnUpdate="0" field="id_local" expression=""/>
+    <default field="description" applyOnUpdate="0" expression=""/>
+    <default field="type" applyOnUpdate="0" expression=""/>
+    <default field="id_local" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="descriptio" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="type" exp_strength="0"/>
-    <constraint notnull_strength="0" constraints="0" unique_strength="0" field="id_local" exp_strength="0"/>
+    <constraint field="description" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="type" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint field="id_local" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="descriptio"/>
-    <constraint desc="" exp="" field="type"/>
-    <constraint desc="" exp="" field="id_local"/>
+    <constraint field="description" exp="" desc=""/>
+    <constraint field="type" exp="" desc=""/>
+    <constraint field="id_local" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
     <columns>
-      <column name="descriptio" hidden="0" width="-1" type="field"/>
-      <column name="type" hidden="0" width="-1" type="field"/>
-      <column name="id_local" hidden="0" width="-1" type="field"/>
-      <column hidden="1" width="-1" type="actions"/>
+      <column width="-1" name="descriptio" hidden="0" type="field"/>
+      <column width="-1" name="type" hidden="0" type="field"/>
+      <column width="-1" name="id_local" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -255,9 +255,9 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="descriptio" editable="1"/>
-    <field name="id_local" editable="1"/>
-    <field name="type" editable="1"/>
+    <field editable="1" name="descriptio"/>
+    <field editable="1" name="id_local"/>
+    <field editable="1" name="type"/>
   </editable>
   <labelOnTop>
     <field name="descriptio" labelOnTop="0"/>
