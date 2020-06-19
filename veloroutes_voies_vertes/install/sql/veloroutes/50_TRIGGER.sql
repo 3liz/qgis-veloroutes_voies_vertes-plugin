@@ -15,6 +15,10 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- v_portion insert
+CREATE TRIGGER insert INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
+
+
 -- repere numserie
 CREATE TRIGGER numserie BEFORE INSERT OR UPDATE ON veloroutes.repere FOR EACH ROW EXECUTE PROCEDURE veloroutes.numserie();
 

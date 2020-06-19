@@ -57,6 +57,21 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- v_portion_insert()
+CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$BEGIN
+    -- insert the new portion first
+    INSERT INTO veloroutes.portion(nom, description,type_portion)
+    VALUES(NEW.nom, NEW.description, NEW.type_portion);
+    
+    -- use the portion id to insert a new element
+    INSERT INTO veloroutes.element(id_portion)
+    VALUES(currval('veloroutes.portion_id_local_seq'));
+	RETURN NEW;
+END;$$;
+
+
 --
 -- PostgreSQL database dump complete
 --
