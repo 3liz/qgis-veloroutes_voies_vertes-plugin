@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.5-A Coruña" maxScale="0">
+<qgis maxScale="0" minScale="1e+08" readOnly="0" hasScaleBasedVisibilityFlag="0" version="3.10.5-A Coruña" styleCategories="AllStyleCategories">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -20,8 +20,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -30,14 +30,14 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option name="AllowAddFeatures" value="false" type="bool"/>
-            <Option name="AllowNULL" value="false" type="bool"/>
-            <Option name="MapIdentification" value="false" type="bool"/>
-            <Option name="OrderByValue" value="false" type="bool"/>
-            <Option name="ReadOnly" value="false" type="bool"/>
-            <Option name="Relation" value="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_local" type="QString"/>
-            <Option name="ShowForm" value="false" type="bool"/>
-            <Option name="ShowOpenFormButton" value="true" type="bool"/>
+            <Option type="bool" name="AllowAddFeatures" value="true"/>
+            <Option type="bool" name="AllowNULL" value="true"/>
+            <Option type="bool" name="MapIdentification" value="true"/>
+            <Option type="bool" name="OrderByValue" value="false"/>
+            <Option type="bool" name="ReadOnly" value="false"/>
+            <Option type="QString" name="Relation" value="element_87_id_portion_v_portion__id_local"/>
+            <Option type="bool" name="ShowForm" value="false"/>
+            <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>
         </config>
       </editWidget>
@@ -46,87 +46,51 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option name="AllowAddFeatures" value="false" type="bool"/>
-            <Option name="AllowNULL" value="false" type="bool"/>
-            <Option name="MapIdentification" value="true" type="bool"/>
-            <Option name="OrderByValue" value="false" type="bool"/>
-            <Option name="ReadOnly" value="false" type="bool"/>
-            <Option name="Relation" value="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_local" type="QString"/>
-            <Option name="ShowForm" value="false" type="bool"/>
-            <Option name="ShowOpenFormButton" value="true" type="bool"/>
+            <Option type="bool" name="AllowAddFeatures" value="true"/>
+            <Option type="bool" name="AllowNULL" value="true"/>
+            <Option type="bool" name="MapIdentification" value="true"/>
+            <Option type="bool" name="OrderByValue" value="false"/>
+            <Option type="bool" name="ReadOnly" value="false"/>
+            <Option type="QString" name="Relation" value="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_local"/>
+            <Option type="bool" name="ShowForm" value="false"/>
+            <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>
-        </config>
-      </editWidget>
-    </field>
-    <field name="portion_nom">
-      <editWidget type="TextEdit">
-        <config>
-          <Option/>
-        </config>
-      </editWidget>
-    </field>
-    <field name="portion_description">
-      <editWidget type="TextEdit">
-        <config>
-          <Option/>
-        </config>
-      </editWidget>
-    </field>
-    <field name="portion_type_portion">
-      <editWidget type="TextEdit">
-        <config>
-          <Option/>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="id" name="" index="0"/>
-    <alias field="id_portion" name="" index="1"/>
-    <alias field="id_segment" name="" index="2"/>
-    <alias field="portion_nom" name="" index="3"/>
-    <alias field="portion_description" name="" index="4"/>
-    <alias field="portion_type_portion" name="" index="5"/>
+    <alias name="" field="id" index="0"/>
+    <alias name="" field="id_portion" index="1"/>
+    <alias name="" field="id_segment" index="2"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
     <default field="id" applyOnUpdate="0" expression=""/>
-    <default field="id_portion" applyOnUpdate="0" expression=""/>
-    <default field="id_segment" applyOnUpdate="0" expression=""/>
-    <default field="portion_nom" applyOnUpdate="0" expression=""/>
-    <default field="portion_description" applyOnUpdate="0" expression=""/>
-    <default field="portion_type_portion" applyOnUpdate="0" expression=""/>
+    <default field="id_portion" applyOnUpdate="0" expression="NULL"/>
+    <default field="id_segment" applyOnUpdate="0" expression="NULL"/>
   </defaults>
   <constraints>
-    <constraint field="id" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
-    <constraint field="id_portion" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="id_segment" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="portion_nom" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="portion_description" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="portion_type_portion" constraints="1" unique_strength="0" exp_strength="0" notnull_strength="1"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id" constraints="3" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="2" field="id_portion" constraints="1" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="2" field="id_segment" constraints="1" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="id" exp="" desc=""/>
-    <constraint field="id_portion" exp="" desc=""/>
-    <constraint field="id_segment" exp="" desc=""/>
-    <constraint field="portion_nom" exp="" desc=""/>
-    <constraint field="portion_description" exp="" desc=""/>
-    <constraint field="portion_type_portion" exp="" desc=""/>
+    <constraint exp="" field="id" desc=""/>
+    <constraint exp="" field="id_portion" desc=""/>
+    <constraint exp="" field="id_segment" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortExpression="&quot;id&quot;" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig sortExpression="&quot;id&quot;" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="-1" name="id" hidden="0" type="field"/>
-      <column width="-1" name="id_portion" hidden="0" type="field"/>
-      <column width="409" name="id_segment" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" name="portion_nom" hidden="0" type="field"/>
-      <column width="-1" name="portion_description" hidden="0" type="field"/>
-      <column width="-1" name="portion_type_portion" hidden="0" type="field"/>
+      <column type="field" name="id" width="-1" hidden="0"/>
+      <column type="field" name="id_portion" width="-1" hidden="0"/>
+      <column type="field" name="id_segment" width="409" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -157,46 +121,58 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="id"/>
-    <field editable="1" name="id_portion"/>
-    <field editable="1" name="id_segment"/>
-    <field editable="0" name="portion_description"/>
-    <field editable="0" name="portion_nom"/>
-    <field editable="0" name="portion_type_portion"/>
-    <field editable="0" name="segment_annee_ouverture"/>
-    <field editable="0" name="segment_avancement"/>
-    <field editable="0" name="segment_date_saisie"/>
-    <field editable="0" name="segment_geometrie_fictive"/>
-    <field editable="0" name="segment_gestionnaire"/>
-    <field editable="0" name="segment_precision"/>
-    <field editable="0" name="segment_proprietaire"/>
-    <field editable="0" name="segment_revetement"/>
-    <field editable="0" name="segment_sens_unique"/>
-    <field editable="0" name="segment_src_annee"/>
-    <field editable="0" name="segment_src_geom"/>
-    <field editable="0" name="segment_statut"/>
+    <field name="id" editable="0"/>
+    <field name="id_portion" editable="1"/>
+    <field name="id_segment" editable="1"/>
+    <field name="portion_description" editable="0"/>
+    <field name="portion_nom" editable="0"/>
+    <field name="portion_type_portion" editable="0"/>
+    <field name="portion_v_portion_description" editable="0"/>
+    <field name="portion_v_portion_nom" editable="0"/>
+    <field name="portion_v_portion_type_portion" editable="0"/>
+    <field name="segment_annee_ouverture" editable="0"/>
+    <field name="segment_avancement" editable="0"/>
+    <field name="segment_date_saisie" editable="0"/>
+    <field name="segment_geometrie_fictive" editable="0"/>
+    <field name="segment_gestionnaire" editable="0"/>
+    <field name="segment_precision" editable="0"/>
+    <field name="segment_proprietaire" editable="0"/>
+    <field name="segment_revetement" editable="0"/>
+    <field name="segment_sens_unique" editable="0"/>
+    <field name="segment_src_annee" editable="0"/>
+    <field name="segment_src_geom" editable="0"/>
+    <field name="segment_statut" editable="0"/>
   </editable>
   <labelOnTop>
-    <field name="id" labelOnTop="0"/>
-    <field name="id_portion" labelOnTop="0"/>
-    <field name="id_segment" labelOnTop="0"/>
-    <field name="portion_description" labelOnTop="0"/>
-    <field name="portion_nom" labelOnTop="0"/>
-    <field name="portion_type_portion" labelOnTop="0"/>
-    <field name="segment_annee_ouverture" labelOnTop="0"/>
-    <field name="segment_avancement" labelOnTop="0"/>
-    <field name="segment_date_saisie" labelOnTop="0"/>
-    <field name="segment_geometrie_fictive" labelOnTop="0"/>
-    <field name="segment_gestionnaire" labelOnTop="0"/>
-    <field name="segment_precision" labelOnTop="0"/>
-    <field name="segment_proprietaire" labelOnTop="0"/>
-    <field name="segment_revetement" labelOnTop="0"/>
-    <field name="segment_sens_unique" labelOnTop="0"/>
-    <field name="segment_src_annee" labelOnTop="0"/>
-    <field name="segment_src_geom" labelOnTop="0"/>
-    <field name="segment_statut" labelOnTop="0"/>
+    <field labelOnTop="0" name="id"/>
+    <field labelOnTop="0" name="id_portion"/>
+    <field labelOnTop="0" name="id_segment"/>
+    <field labelOnTop="0" name="portion_description"/>
+    <field labelOnTop="0" name="portion_nom"/>
+    <field labelOnTop="0" name="portion_type_portion"/>
+    <field labelOnTop="0" name="portion_v_portion_description"/>
+    <field labelOnTop="0" name="portion_v_portion_nom"/>
+    <field labelOnTop="0" name="portion_v_portion_type_portion"/>
+    <field labelOnTop="0" name="segment_annee_ouverture"/>
+    <field labelOnTop="0" name="segment_avancement"/>
+    <field labelOnTop="0" name="segment_date_saisie"/>
+    <field labelOnTop="0" name="segment_geometrie_fictive"/>
+    <field labelOnTop="0" name="segment_gestionnaire"/>
+    <field labelOnTop="0" name="segment_precision"/>
+    <field labelOnTop="0" name="segment_proprietaire"/>
+    <field labelOnTop="0" name="segment_revetement"/>
+    <field labelOnTop="0" name="segment_sens_unique"/>
+    <field labelOnTop="0" name="segment_src_annee"/>
+    <field labelOnTop="0" name="segment_src_geom"/>
+    <field labelOnTop="0" name="segment_statut"/>
   </labelOnTop>
-  <widgets/>
+  <widgets>
+    <widget name="v_portion__id_local_element_87_id_portion">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+  </widgets>
   <previewExpression>id</previewExpression>
   <mapTip></mapTip>
   <layerGeometryType>4</layerGeometryType>

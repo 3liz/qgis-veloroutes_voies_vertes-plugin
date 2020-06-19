@@ -1,21 +1,21 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" simplifyDrawingTol="1" minScale="1e+08" styleCategories="AllStyleCategories" simplifyAlgorithm="0" simplifyMaxScale="1" simplifyDrawingHints="1" labelsEnabled="0" version="3.10.5-A Coruña" maxScale="0" simplifyLocal="1">
+<qgis simplifyDrawingHints="1" maxScale="0" simplifyLocal="1" simplifyMaxScale="1" minScale="1e+08" simplifyDrawingTol="1" readOnly="0" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" version="3.10.5-A Coruña" styleCategories="AllStyleCategories" labelsEnabled="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" enableorderby="0" type="RuleRenderer" forceraster="0">
+  <renderer-v2 type="RuleRenderer" symbollevels="0" enableorderby="0" forceraster="0">
     <rules key="{9004152c-ebea-4b9c-bad3-cbaa7e4ec10e}">
-      <rule checkstate="0" symbol="0" key="{04260390-4615-496a-97bf-4fb78ed1465c}" filter="ELSE"/>
-      <rule label="Voie dédiée" symbol="1" key="{c65d6d33-a6ec-4881-b5ba-d3706a340bea}" filter=" &quot;statut&quot; = 'ASP'  or  &quot;statut&quot; = 'PCY'  or  &quot;statut&quot; =  'VV' or &quot;statut&quot; = 'BCY' and  &quot;revetement&quot; = 'LIS' "/>
-      <rule label="Voie dédiée" symbol="2" key="{1614c6c8-8b2f-4915-93a4-528dbf54f227}" filter=" &quot;statut&quot; = 'ASP'  or  &quot;statut&quot; = 'PCY'  or  &quot;statut&quot; =  'VV' and  (&quot;revetement&quot; = 'RUG'  or &quot;revetement&quot; = 'MEU')"/>
-      <rule label="voie partagée" symbol="3" key="{f760d85d-6a63-4667-af8d-d5d51ce14dcb}" filter=" &quot;statut&quot; = 'RTE' or &quot;statut&quot; = 'ICA' and  &quot;revetement&quot; = 'LIS' "/>
-      <rule label="voie partagée" symbol="4" key="{e91167ef-d66e-4aae-b29d-c5140de7abb0}" filter=" &quot;statut&quot; = 'RTE' or &quot;statut&quot; = 'ICA' and  (&quot;revetement&quot; = 'RUG'  or &quot;revetement&quot; = 'MEU')"/>
+      <rule symbol="0" checkstate="0" filter="ELSE" key="{04260390-4615-496a-97bf-4fb78ed1465c}"/>
+      <rule symbol="1" label="Voie dédiée" filter=" &quot;statut&quot; = 'ASP'  or  &quot;statut&quot; = 'PCY'  or  &quot;statut&quot; =  'VV' or &quot;statut&quot; = 'BCY' and  &quot;revetement&quot; = 'LIS' " key="{c65d6d33-a6ec-4881-b5ba-d3706a340bea}"/>
+      <rule symbol="2" label="Voie dédiée" filter=" &quot;statut&quot; = 'ASP'  or  &quot;statut&quot; = 'PCY'  or  &quot;statut&quot; =  'VV' and  (&quot;revetement&quot; = 'RUG'  or &quot;revetement&quot; = 'MEU')" key="{1614c6c8-8b2f-4915-93a4-528dbf54f227}"/>
+      <rule symbol="3" label="voie partagée" filter=" &quot;statut&quot; = 'RTE' or &quot;statut&quot; = 'ICA' and  &quot;revetement&quot; = 'LIS' " key="{f760d85d-6a63-4667-af8d-d5d51ce14dcb}"/>
+      <rule symbol="4" label="voie partagée" filter=" &quot;statut&quot; = 'RTE' or &quot;statut&quot; = 'ICA' and  (&quot;revetement&quot; = 'RUG'  or &quot;revetement&quot; = 'MEU')" key="{e91167ef-d66e-4aae-b29d-c5140de7abb0}"/>
     </rules>
     <symbols>
-      <symbol name="0" alpha="1" force_rhr="0" type="line" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleLine">
+      <symbol type="line" name="0" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -34,15 +34,15 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="1" alpha="1" force_rhr="0" type="line" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleLine">
+      <symbol type="line" name="1" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -61,15 +61,15 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="2" alpha="1" force_rhr="0" type="line" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleLine">
+      <symbol type="line" name="2" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -88,15 +88,15 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="3" alpha="1" force_rhr="0" type="line" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleLine">
+      <symbol type="line" name="3" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -115,15 +115,15 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="4" alpha="1" force_rhr="0" type="line" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleLine">
+      <symbol type="line" name="4" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleLine">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -142,9 +142,9 @@
           <prop k="width_map_unit_scale" v="3x:0,0,0,0,0,0"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -161,17 +161,17 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory labelPlacementMethod="XHeight" opacity="1" minScaleDenominator="0" penWidth="0" diagramOrientation="Up" penColor="#000000" width="15" backgroundAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" lineSizeType="MM" barWidth="5" sizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" scaleBasedVisibility="0" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" minimumSize="0" enabled="0" penAlpha="255" height="15" sizeType="MM">
+    <DiagramCategory diagramOrientation="Up" scaleDependency="Area" minimumSize="0" rotationOffset="270" labelPlacementMethod="XHeight" sizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" enabled="0" maxScaleDenominator="1e+08" sizeType="MM" scaleBasedVisibility="0" minScaleDenominator="0" width="15" penWidth="0" penColor="#000000" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" opacity="1" height="15" penAlpha="255" barWidth="5" lineSizeType="MM">
       <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
-      <attribute field="" label="" color="#000000"/>
+      <attribute label="" field="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings showAll="1" zIndex="0" linePlacementFlags="18" placement="2" priority="0" obstacle="0" dist="0">
+  <DiagramLayerSettings showAll="1" priority="0" zIndex="0" obstacle="0" linePlacementFlags="18" dist="0" placement="2">
     <properties>
       <Option type="Map">
-        <Option name="name" value="" type="QString"/>
+        <Option type="QString" name="name" value=""/>
         <Option name="properties"/>
-        <Option name="type" value="collection" type="QString"/>
+        <Option type="QString" name="type" value="collection"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -184,8 +184,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -193,14 +193,26 @@
     <field name="annee_ouverture">
       <editWidget type="DateTime">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="allow_null" value="true"/>
+            <Option type="bool" name="calendar_popup" value="true"/>
+            <Option type="QString" name="display_format" value="yyyy-MM-dd"/>
+            <Option type="QString" name="field_format" value="yyyy-MM-dd"/>
+            <Option type="bool" name="field_iso_format" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="date_saisie">
       <editWidget type="DateTime">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="allow_null" value="true"/>
+            <Option type="bool" name="calendar_popup" value="true"/>
+            <Option type="QString" name="display_format" value="yyyy-MM-dd"/>
+            <Option type="QString" name="field_format" value="yyyy-MM-dd"/>
+            <Option type="bool" name="field_iso_format" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
@@ -208,8 +220,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -218,8 +230,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -228,18 +240,18 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option name="Projet" value="01" type="QString"/>
+                <Option type="QString" name="Projet" value="01"/>
               </Option>
               <Option type="Map">
-                <Option name="Tracé arrêté" value="02" type="QString"/>
+                <Option type="QString" name="Tracé arrêté" value="02"/>
               </Option>
               <Option type="Map">
-                <Option name="Travaux en cours" value="03" type="QString"/>
+                <Option type="QString" name="Travaux en cours" value="03"/>
               </Option>
               <Option type="Map">
-                <Option name="Ouvert" value="04" type="QString"/>
+                <Option type="QString" name="Ouvert" value="04"/>
               </Option>
             </Option>
           </Option>
@@ -250,15 +262,15 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option name="Lisse" value="LIS" type="QString"/>
+                <Option type="QString" name="Lisse" value="LIS"/>
               </Option>
               <Option type="Map">
-                <Option name="Rugueux" value="RUG" type="QString"/>
+                <Option type="QString" name="Rugueux" value="RUG"/>
               </Option>
               <Option type="Map">
-                <Option name="Meuble" value="MEU" type="QString"/>
+                <Option type="QString" name="Meuble" value="MEU"/>
               </Option>
             </Option>
           </Option>
@@ -269,24 +281,24 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option name="Voie verte" value="VV" type="QString"/>
+                <Option type="QString" name="Voie verte" value="VV"/>
               </Option>
               <Option type="Map">
-                <Option name="Piste cyclable" value="PCY" type="QString"/>
+                <Option type="QString" name="Piste cyclable" value="PCY"/>
               </Option>
               <Option type="Map">
-                <Option name="Autre site propre" value="ASP" type="QString"/>
+                <Option type="QString" name="Autre site propre" value="ASP"/>
               </Option>
               <Option type="Map">
-                <Option name="Route" value="RTE" type="QString"/>
+                <Option type="QString" name="Route" value="RTE"/>
               </Option>
               <Option type="Map">
-                <Option name="Bande cyclable" value="BCY" type="QString"/>
+                <Option type="QString" name="Bande cyclable" value="BCY"/>
               </Option>
               <Option type="Map">
-                <Option name="Itinéraire à circulation appaisée" value="ICA" type="QString"/>
+                <Option type="QString" name="Itinéraire à circulation appaisée" value="ICA"/>
               </Option>
             </Option>
           </Option>
@@ -296,14 +308,20 @@
     <field name="gestionnaire">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="proprietaire">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
@@ -311,8 +329,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -320,32 +338,38 @@
     <field name="sens_unique">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="geometrie_fictive">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
+          </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="id_local" name="" index="0"/>
-    <alias field="annee_ouverture" name="" index="1"/>
-    <alias field="date_saisie" name="" index="2"/>
-    <alias field="src_geom" name="" index="3"/>
-    <alias field="src_annee" name="" index="4"/>
-    <alias field="avancement" name="" index="5"/>
-    <alias field="revetement" name="" index="6"/>
-    <alias field="statut" name="" index="7"/>
-    <alias field="gestionnaire" name="" index="8"/>
-    <alias field="proprietaire" name="" index="9"/>
-    <alias field="precision" name="" index="10"/>
-    <alias field="sens_unique" name="" index="11"/>
-    <alias field="geometrie_fictive" name="" index="12"/>
+    <alias name="" field="id_local" index="0"/>
+    <alias name="" field="annee_ouverture" index="1"/>
+    <alias name="" field="date_saisie" index="2"/>
+    <alias name="" field="src_geom" index="3"/>
+    <alias name="" field="src_annee" index="4"/>
+    <alias name="" field="avancement" index="5"/>
+    <alias name="" field="revetement" index="6"/>
+    <alias name="" field="statut" index="7"/>
+    <alias name="" field="gestionnaire" index="8"/>
+    <alias name="" field="proprietaire" index="9"/>
+    <alias name="" field="precision" index="10"/>
+    <alias name="" field="sens_unique" index="11"/>
+    <alias name="" field="geometrie_fictive" index="12"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -365,55 +389,55 @@
     <default field="geometrie_fictive" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="id_local" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
-    <constraint field="annee_ouverture" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="date_saisie" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="src_geom" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="src_annee" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="avancement" constraints="1" unique_strength="0" exp_strength="0" notnull_strength="1"/>
-    <constraint field="revetement" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="statut" constraints="1" unique_strength="0" exp_strength="0" notnull_strength="1"/>
-    <constraint field="gestionnaire" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="proprietaire" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="precision" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="sens_unique" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="geometrie_fictive" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id_local" constraints="3" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="annee_ouverture" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="date_saisie" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="src_geom" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="src_annee" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="1" field="avancement" constraints="1" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="revetement" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="1" field="statut" constraints="1" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="gestionnaire" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="proprietaire" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="precision" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="sens_unique" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="geometrie_fictive" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="id_local" exp="" desc=""/>
-    <constraint field="annee_ouverture" exp="" desc=""/>
-    <constraint field="date_saisie" exp="" desc=""/>
-    <constraint field="src_geom" exp="" desc=""/>
-    <constraint field="src_annee" exp="" desc=""/>
-    <constraint field="avancement" exp="" desc=""/>
-    <constraint field="revetement" exp="" desc=""/>
-    <constraint field="statut" exp="" desc=""/>
-    <constraint field="gestionnaire" exp="" desc=""/>
-    <constraint field="proprietaire" exp="" desc=""/>
-    <constraint field="precision" exp="" desc=""/>
-    <constraint field="sens_unique" exp="" desc=""/>
-    <constraint field="geometrie_fictive" exp="" desc=""/>
+    <constraint exp="" field="id_local" desc=""/>
+    <constraint exp="" field="annee_ouverture" desc=""/>
+    <constraint exp="" field="date_saisie" desc=""/>
+    <constraint exp="" field="src_geom" desc=""/>
+    <constraint exp="" field="src_annee" desc=""/>
+    <constraint exp="" field="avancement" desc=""/>
+    <constraint exp="" field="revetement" desc=""/>
+    <constraint exp="" field="statut" desc=""/>
+    <constraint exp="" field="gestionnaire" desc=""/>
+    <constraint exp="" field="proprietaire" desc=""/>
+    <constraint exp="" field="precision" desc=""/>
+    <constraint exp="" field="sens_unique" desc=""/>
+    <constraint exp="" field="geometrie_fictive" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortExpression="&quot;id_local&quot;" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig sortExpression="&quot;id_local&quot;" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="-1" name="id_local" hidden="0" type="field"/>
-      <column width="-1" name="src_geom" hidden="0" type="field"/>
-      <column width="-1" name="src_annee" hidden="0" type="field"/>
-      <column width="-1" name="avancement" hidden="0" type="field"/>
-      <column width="-1" name="revetement" hidden="0" type="field"/>
-      <column width="-1" name="statut" hidden="0" type="field"/>
-      <column width="-1" name="precision" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" name="annee_ouverture" hidden="0" type="field"/>
-      <column width="-1" name="date_saisie" hidden="0" type="field"/>
-      <column width="-1" name="gestionnaire" hidden="0" type="field"/>
-      <column width="-1" name="proprietaire" hidden="0" type="field"/>
-      <column width="-1" name="sens_unique" hidden="0" type="field"/>
-      <column width="-1" name="geometrie_fictive" hidden="0" type="field"/>
+      <column type="field" name="id_local" width="-1" hidden="0"/>
+      <column type="field" name="src_geom" width="-1" hidden="0"/>
+      <column type="field" name="src_annee" width="-1" hidden="0"/>
+      <column type="field" name="avancement" width="-1" hidden="0"/>
+      <column type="field" name="revetement" width="-1" hidden="0"/>
+      <column type="field" name="statut" width="-1" hidden="0"/>
+      <column type="field" name="precision" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
+      <column type="field" name="annee_ouverture" width="-1" hidden="0"/>
+      <column type="field" name="date_saisie" width="-1" hidden="0"/>
+      <column type="field" name="gestionnaire" width="-1" hidden="0"/>
+      <column type="field" name="proprietaire" width="-1" hidden="0"/>
+      <column type="field" name="sens_unique" width="-1" hidden="0"/>
+      <column type="field" name="geometrie_fictive" width="-1" hidden="0"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -444,66 +468,66 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorField name="id_local" index="0" showLabel="1"/>
-    <attributeEditorField name="annee_ouve" index="-1" showLabel="1"/>
-    <attributeEditorField name="date_saisi" index="-1" showLabel="1"/>
-    <attributeEditorField name="src_geom" index="3" showLabel="1"/>
-    <attributeEditorField name="src_annee" index="4" showLabel="1"/>
-    <attributeEditorField name="avancement" index="5" showLabel="1"/>
-    <attributeEditorField name="revetement" index="6" showLabel="1"/>
-    <attributeEditorField name="statut" index="7" showLabel="1"/>
-    <attributeEditorField name="gestionnai" index="-1" showLabel="1"/>
-    <attributeEditorField name="proprietai" index="-1" showLabel="1"/>
-    <attributeEditorField name="precision" index="10" showLabel="1"/>
-    <attributeEditorField name="sens_uniqu" index="-1" showLabel="1"/>
-    <attributeEditorField name="geometrie_" index="-1" showLabel="1"/>
+    <attributeEditorField name="id_local" showLabel="1" index="0"/>
+    <attributeEditorField name="annee_ouve" showLabel="1" index="-1"/>
+    <attributeEditorField name="date_saisi" showLabel="1" index="-1"/>
+    <attributeEditorField name="src_geom" showLabel="1" index="3"/>
+    <attributeEditorField name="src_annee" showLabel="1" index="4"/>
+    <attributeEditorField name="avancement" showLabel="1" index="5"/>
+    <attributeEditorField name="revetement" showLabel="1" index="6"/>
+    <attributeEditorField name="statut" showLabel="1" index="7"/>
+    <attributeEditorField name="gestionnai" showLabel="1" index="-1"/>
+    <attributeEditorField name="proprietai" showLabel="1" index="-1"/>
+    <attributeEditorField name="precision" showLabel="1" index="10"/>
+    <attributeEditorField name="sens_uniqu" showLabel="1" index="-1"/>
+    <attributeEditorField name="geometrie_" showLabel="1" index="-1"/>
   </attributeEditorForm>
   <editable>
-    <field editable="1" name="annee_ouve"/>
-    <field editable="1" name="annee_ouverture"/>
-    <field editable="1" name="avancement"/>
-    <field editable="1" name="date_saisi"/>
-    <field editable="1" name="date_saisie"/>
-    <field editable="1" name="geometrie_"/>
-    <field editable="1" name="geometrie_fictive"/>
-    <field editable="1" name="gestionnai"/>
-    <field editable="1" name="gestionnaire"/>
-    <field editable="0" name="id_local"/>
-    <field editable="1" name="precision"/>
-    <field editable="1" name="proprietai"/>
-    <field editable="1" name="proprietaire"/>
-    <field editable="1" name="revetement"/>
-    <field editable="1" name="sens_uniqu"/>
-    <field editable="1" name="sens_unique"/>
-    <field editable="1" name="src_annee"/>
-    <field editable="1" name="src_geom"/>
-    <field editable="1" name="statut"/>
+    <field name="annee_ouve" editable="1"/>
+    <field name="annee_ouverture" editable="1"/>
+    <field name="avancement" editable="1"/>
+    <field name="date_saisi" editable="1"/>
+    <field name="date_saisie" editable="1"/>
+    <field name="geometrie_" editable="1"/>
+    <field name="geometrie_fictive" editable="1"/>
+    <field name="gestionnai" editable="1"/>
+    <field name="gestionnaire" editable="1"/>
+    <field name="id_local" editable="0"/>
+    <field name="precision" editable="1"/>
+    <field name="proprietai" editable="1"/>
+    <field name="proprietaire" editable="1"/>
+    <field name="revetement" editable="1"/>
+    <field name="sens_uniqu" editable="1"/>
+    <field name="sens_unique" editable="1"/>
+    <field name="src_annee" editable="1"/>
+    <field name="src_geom" editable="1"/>
+    <field name="statut" editable="1"/>
   </editable>
   <labelOnTop>
-    <field name="annee_ouve" labelOnTop="0"/>
-    <field name="annee_ouverture" labelOnTop="0"/>
-    <field name="avancement" labelOnTop="0"/>
-    <field name="date_saisi" labelOnTop="0"/>
-    <field name="date_saisie" labelOnTop="0"/>
-    <field name="geometrie_" labelOnTop="0"/>
-    <field name="geometrie_fictive" labelOnTop="0"/>
-    <field name="gestionnai" labelOnTop="0"/>
-    <field name="gestionnaire" labelOnTop="0"/>
-    <field name="id_local" labelOnTop="0"/>
-    <field name="precision" labelOnTop="0"/>
-    <field name="proprietai" labelOnTop="0"/>
-    <field name="proprietaire" labelOnTop="0"/>
-    <field name="revetement" labelOnTop="0"/>
-    <field name="sens_uniqu" labelOnTop="0"/>
-    <field name="sens_unique" labelOnTop="0"/>
-    <field name="src_annee" labelOnTop="0"/>
-    <field name="src_geom" labelOnTop="0"/>
-    <field name="statut" labelOnTop="0"/>
+    <field labelOnTop="0" name="annee_ouve"/>
+    <field labelOnTop="0" name="annee_ouverture"/>
+    <field labelOnTop="0" name="avancement"/>
+    <field labelOnTop="0" name="date_saisi"/>
+    <field labelOnTop="0" name="date_saisie"/>
+    <field labelOnTop="0" name="geometrie_"/>
+    <field labelOnTop="0" name="geometrie_fictive"/>
+    <field labelOnTop="0" name="gestionnai"/>
+    <field labelOnTop="0" name="gestionnaire"/>
+    <field labelOnTop="0" name="id_local"/>
+    <field labelOnTop="0" name="precision"/>
+    <field labelOnTop="0" name="proprietai"/>
+    <field labelOnTop="0" name="proprietaire"/>
+    <field labelOnTop="0" name="revetement"/>
+    <field labelOnTop="0" name="sens_uniqu"/>
+    <field labelOnTop="0" name="sens_unique"/>
+    <field labelOnTop="0" name="src_annee"/>
+    <field labelOnTop="0" name="src_geom"/>
+    <field labelOnTop="0" name="statut"/>
   </labelOnTop>
   <widgets>
     <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_local">
       <config type="Map">
-        <Option name="nm-rel" value="" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>

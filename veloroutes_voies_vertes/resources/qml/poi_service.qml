@@ -1,14 +1,14 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" simplifyDrawingTol="1" minScale="1e+08" styleCategories="AllStyleCategories" simplifyAlgorithm="0" simplifyMaxScale="1" simplifyDrawingHints="0" labelsEnabled="0" version="3.10.5-A Coruña" maxScale="0" simplifyLocal="1">
+<qgis simplifyDrawingHints="0" maxScale="0" simplifyLocal="1" simplifyMaxScale="1" minScale="1e+08" simplifyDrawingTol="1" readOnly="0" hasScaleBasedVisibilityFlag="0" simplifyAlgorithm="0" version="3.10.5-A Coruña" styleCategories="AllStyleCategories" labelsEnabled="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="0" enableorderby="0" type="singleSymbol" forceraster="0">
+  <renderer-v2 type="singleSymbol" symbollevels="0" enableorderby="0" forceraster="0">
     <symbols>
-      <symbol name="0" alpha="1" force_rhr="0" type="marker" clip_to_extent="1">
-        <layer enabled="1" pass="0" locked="0" class="SimpleMarker">
+      <symbol type="marker" name="0" alpha="1" force_rhr="0" clip_to_extent="1">
+        <layer enabled="1" locked="0" pass="0" class="SimpleMarker">
           <prop k="angle" v="0"/>
           <prop k="color" v="23,190,40,255"/>
           <prop k="horizontal_anchor_point" v="1"/>
@@ -29,9 +29,9 @@
           <prop k="vertical_anchor_point" v="1"/>
           <data_defined_properties>
             <Option type="Map">
-              <Option name="name" value="" type="QString"/>
+              <Option type="QString" name="name" value=""/>
               <Option name="properties"/>
-              <Option name="type" value="collection" type="QString"/>
+              <Option type="QString" name="type" value="collection"/>
             </Option>
           </data_defined_properties>
         </layer>
@@ -50,17 +50,17 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer diagramType="Histogram" attributeLegend="1">
-    <DiagramCategory labelPlacementMethod="XHeight" opacity="1" minScaleDenominator="0" penWidth="0" diagramOrientation="Up" penColor="#000000" width="15" backgroundAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" lineSizeType="MM" barWidth="5" sizeScale="3x:0,0,0,0,0,0" scaleDependency="Area" scaleBasedVisibility="0" rotationOffset="270" lineSizeScale="3x:0,0,0,0,0,0" minimumSize="0" enabled="0" penAlpha="255" height="15" sizeType="MM">
+    <DiagramCategory diagramOrientation="Up" scaleDependency="Area" minimumSize="0" rotationOffset="270" labelPlacementMethod="XHeight" sizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" enabled="0" maxScaleDenominator="1e+08" sizeType="MM" scaleBasedVisibility="0" minScaleDenominator="0" width="15" penWidth="0" penColor="#000000" lineSizeScale="3x:0,0,0,0,0,0" backgroundColor="#ffffff" opacity="1" height="15" penAlpha="255" barWidth="5" lineSizeType="MM">
       <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
-      <attribute field="" label="" color="#000000"/>
+      <attribute label="" field="" color="#000000"/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings showAll="1" zIndex="0" linePlacementFlags="18" placement="0" priority="0" obstacle="0" dist="0">
+  <DiagramLayerSettings showAll="1" priority="0" zIndex="0" obstacle="0" linePlacementFlags="18" dist="0" placement="0">
     <properties>
       <Option type="Map">
-        <Option name="name" value="" type="QString"/>
+        <Option type="QString" name="name" value=""/>
         <Option name="properties"/>
-        <Option name="type" value="collection" type="QString"/>
+        <Option type="QString" name="type" value="collection"/>
       </Option>
     </properties>
   </DiagramLayerSettings>
@@ -70,7 +70,7 @@
   </geometryOptions>
   <fieldConfiguration>
     <field name="description">
-      <editWidget type="">
+      <editWidget type="TextEdit">
         <config>
           <Option/>
         </config>
@@ -80,33 +80,33 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option name="Restauration" value="RST" type="QString"/>
+                <Option type="QString" name="Restauration" value="RST"/>
               </Option>
               <Option type="Map">
-                <Option name="Marché" value="MAR" type="QString"/>
+                <Option type="QString" name="Marché" value="MAR"/>
               </Option>
               <Option type="Map">
-                <Option name="Sanitaires" value="WC" type="QString"/>
+                <Option type="QString" name="Sanitaires" value="WC"/>
               </Option>
               <Option type="Map">
-                <Option name="Relais info service" value="RIS" type="QString"/>
+                <Option type="QString" name="Relais info service" value="RIS"/>
               </Option>
               <Option type="Map">
-                <Option name="Relai vélo" value="RV" type="QString"/>
+                <Option type="QString" name="Relai vélo" value="RV"/>
               </Option>
               <Option type="Map">
-                <Option name="Station de gonflage" value="GFG" type="QString"/>
+                <Option type="QString" name="Station de gonflage" value="GFG"/>
               </Option>
               <Option type="Map">
-                <Option name="Réparation, localtion de vélo" value="RLV" type="QString"/>
+                <Option type="QString" name="Réparation, localtion de vélo" value="RLV"/>
               </Option>
               <Option type="Map">
-                <Option name="Aire de pique-nique" value="PIC" type="QString"/>
+                <Option type="QString" name="Aire de pique-nique" value="PIC"/>
               </Option>
               <Option type="Map">
-                <Option name="Point d'eau" value="H2O" type="QString"/>
+                <Option type="QString" name="Point d'eau" value="H2O"/>
               </Option>
             </Option>
           </Option>
@@ -117,17 +117,17 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="description" name="" index="0"/>
-    <alias field="type" name="" index="1"/>
-    <alias field="id_local" name="" index="2"/>
+    <alias name="" field="description" index="0"/>
+    <alias name="" field="type" index="1"/>
+    <alias name="" field="id_local" index="2"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -137,25 +137,25 @@
     <default field="id_local" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="description" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="type" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="id_local" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
+    <constraint unique_strength="0" notnull_strength="0" field="description" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="type" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id_local" constraints="3" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="description" exp="" desc=""/>
-    <constraint field="type" exp="" desc=""/>
-    <constraint field="id_local" exp="" desc=""/>
+    <constraint exp="" field="description" desc=""/>
+    <constraint exp="" field="type" desc=""/>
+    <constraint exp="" field="id_local" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="-1" name="descriptio" hidden="0" type="field"/>
-      <column width="-1" name="type" hidden="0" type="field"/>
-      <column width="-1" name="id_local" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
+      <column type="field" name="type" width="-1" hidden="0"/>
+      <column type="field" name="id_local" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
+      <column type="field" name="description" width="-1" hidden="0"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -186,14 +186,16 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="descriptio"/>
-    <field editable="1" name="id_local"/>
-    <field editable="1" name="type"/>
+    <field name="descriptio" editable="1"/>
+    <field name="description" editable="1"/>
+    <field name="id_local" editable="0"/>
+    <field name="type" editable="1"/>
   </editable>
   <labelOnTop>
-    <field name="descriptio" labelOnTop="0"/>
-    <field name="id_local" labelOnTop="0"/>
-    <field name="type" labelOnTop="0"/>
+    <field labelOnTop="0" name="descriptio"/>
+    <field labelOnTop="0" name="description"/>
+    <field labelOnTop="0" name="id_local"/>
+    <field labelOnTop="0" name="type"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>descriptio</previewExpression>

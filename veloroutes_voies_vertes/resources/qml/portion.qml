@@ -1,5 +1,5 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.5-A Coruña" maxScale="0">
+<qgis maxScale="0" minScale="1e+08" readOnly="0" hasScaleBasedVisibilityFlag="0" version="3.10.5-A Coruña" styleCategories="AllStyleCategories">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
@@ -20,8 +20,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -30,8 +30,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -40,8 +40,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -50,18 +50,18 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option name="Etpae" value="ETP" type="QString"/>
+                <Option type="QString" name="Etape" value="ETP"/>
               </Option>
               <Option type="Map">
-                <Option name="Variante" value="VAR" type="QString"/>
+                <Option type="QString" name="Variante" value="VAR"/>
               </Option>
               <Option type="Map">
-                <Option name="Portion provisoire" value="PRV" type="QString"/>
+                <Option type="QString" name="Portion provisoire" value="PRV"/>
               </Option>
               <Option type="Map">
-                <Option name="Portion obeservée" value="OBS" type="QString"/>
+                <Option type="QString" name="Portion obeservée" value="OBS"/>
               </Option>
             </Option>
           </Option>
@@ -70,10 +70,10 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias field="id_local" name="" index="0"/>
-    <alias field="nom" name="" index="1"/>
-    <alias field="description" name="" index="2"/>
-    <alias field="type_portion" name="" index="3"/>
+    <alias name="" field="id_local" index="0"/>
+    <alias name="" field="nom" index="1"/>
+    <alias name="" field="description" index="2"/>
+    <alias name="" field="type_portion" index="3"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -84,28 +84,28 @@
     <default field="type_portion" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint field="id_local" constraints="3" unique_strength="1" exp_strength="0" notnull_strength="1"/>
-    <constraint field="nom" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="description" constraints="0" unique_strength="0" exp_strength="0" notnull_strength="0"/>
-    <constraint field="type_portion" constraints="1" unique_strength="0" exp_strength="0" notnull_strength="1"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id_local" constraints="3" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="nom" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" field="description" constraints="0" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="1" field="type_portion" constraints="1" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="id_local" exp="" desc=""/>
-    <constraint field="nom" exp="" desc=""/>
-    <constraint field="description" exp="" desc=""/>
-    <constraint field="type_portion" exp="" desc=""/>
+    <constraint exp="" field="id_local" desc=""/>
+    <constraint exp="" field="nom" desc=""/>
+    <constraint exp="" field="description" desc=""/>
+    <constraint exp="" field="type_portion" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortExpression="" sortOrder="0" actionWidgetStyle="dropDown">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="95" name="id_local" hidden="0" type="field"/>
-      <column width="224" name="nom" hidden="0" type="field"/>
-      <column width="301" name="description" hidden="0" type="field"/>
-      <column width="-1" name="type_portion" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
+      <column type="field" name="id_local" width="95" hidden="0"/>
+      <column type="field" name="nom" width="224" hidden="0"/>
+      <column type="field" name="description" width="301" hidden="0"/>
+      <column type="field" name="type_portion" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -136,26 +136,47 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="description"/>
-    <field editable="1" name="id_local"/>
-    <field editable="1" name="nom"/>
-    <field editable="1" name="type_portion"/>
+    <field name="description" editable="1"/>
+    <field name="id_local" editable="0"/>
+    <field name="nom" editable="1"/>
+    <field name="type_portion" editable="1"/>
+    <field name="v_portion_description" editable="0"/>
+    <field name="v_portion_nom" editable="0"/>
+    <field name="v_portion_type_portion" editable="0"/>
   </editable>
   <labelOnTop>
-    <field name="description" labelOnTop="0"/>
-    <field name="id_local" labelOnTop="0"/>
-    <field name="nom" labelOnTop="0"/>
-    <field name="type_portion" labelOnTop="0"/>
+    <field labelOnTop="0" name="description"/>
+    <field labelOnTop="0" name="id_local"/>
+    <field labelOnTop="0" name="nom"/>
+    <field labelOnTop="0" name="type_portion"/>
+    <field labelOnTop="0" name="v_portion_description"/>
+    <field labelOnTop="0" name="v_portion_nom"/>
+    <field labelOnTop="0" name="v_portion_type_portion"/>
   </labelOnTop>
   <widgets>
     <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_local">
       <config type="Map">
-        <Option name="nm-rel" value="" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_local">
       <config type="Map">
-        <Option name="nm-rel" value="" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="v_portion__id_local_portion_43_id_local">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="v_portion__id_local_portion_43_id_local_1">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="virtual_la_id_local_portion_43_id_local">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>
