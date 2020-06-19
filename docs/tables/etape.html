@@ -130,8 +130,8 @@ appartenir à plusieurs itinéraires.</p>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="etape.id_portion references portion.id_local via portion"><a href='portion.html'>portion</a><span class='relatedKey'>.id_local</span></td>
-                                                <td class="constraint detail">portion<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td title="etape.id_portion references portion.id_local via etape_portion_segment"><a href='portion.html'>portion</a><span class='relatedKey'>.id_local</span></td>
+                                                <td class="constraint detail">etape_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -151,8 +151,8 @@ appartenir à plusieurs itinéraires.</p>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="etape.id_itineraire references itineraire.id_local via itineraire"><a href='itineraire.html'>itineraire</a><span class='relatedKey'>.id_local</span></td>
-                                                <td class="constraint detail">itineraire<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td title="etape.id_itineraire references itineraire.id_local via etape_itineraire_portion"><a href='itineraire.html'>itineraire</a><span class='relatedKey'>.id_local</span></td>
+                                                <td class="constraint detail">etape_itineraire_portion<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -176,7 +176,7 @@ appartenir à plusieurs itinéraires.</p>
                                     <td><p>identifiant de l&rsquo;étape</p></td>
                                 </tr>
                                 <tr>
-                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="etape">etape</span></td>
+                                    <td><span id="etape">etape</span></td>
                                     <td>int4</td>
                                     <td>10</td>
                                     <td title='nullable'>√</td>
@@ -221,12 +221,6 @@ appartenir à plusieurs itinéraires.</p>
                                     <td>Primary key</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>id</td>
-                                </tr>
-                                <tr>
-                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> order_etape</td>
-                                    <td>Must be unique</td>
-                                    <td><span title='Ascending'>Asc</span></td>
-                                    <td>etape</td>
                                 </tr>
                                 </tbody>
                             </table>
