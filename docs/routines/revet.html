@@ -125,7 +125,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">    BEGIN&#10;        IF NEW.avancement = 1 THEN&#10;            NEW.revetement := NULL;&#10;        END IF;&#10;        IF NEW.geometrie_fictive =&#39;T&#39; THEN&#10;            NEW.revetement := NULL;&#10;        END IF;&#10;        RETURN NEW;&#10;    END;&#10;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">&#10;    BEGIN&#10;        IF NEW.avancement = 1 THEN&#10;&#9;&#9;&#9;IF NEW.revetement IS NOT NULL THEN&#10;            &#9;RAISE EXCEPTION &#39;revetement ne peut pas prendre de valeur si avancement vaut 1&#39;;&#10;&#9;&#9;&#9;END IF;&#10;        END IF;&#10;        IF NEW.geometrie_fictive =&#39;T&#39; THEN&#10;            IF NEW.revetement IS NOT NULL THEN&#10;            &#9;RAISE EXCEPTION &#39;revetement ne peut pas prendre de valeur si la geom est fictive&#39;;&#10;&#9;&#9;&#9;END IF;&#10;        END IF;&#10;        RETURN NEW;&#10;    END;&#10;</textarea>
                         </div>
                     </div>
                 </section>
