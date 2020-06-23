@@ -68,7 +68,7 @@ BEGIN
     RETURNING id_local into iti_id;
     
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion) 
-    SELECT pid, vp.id_local
+    SELECT iti_id, vp.id_local
 	FROM veloroutes.v_portion vp
 	WHERE ST_Within(vp.geom, NEW.geom);
 	
