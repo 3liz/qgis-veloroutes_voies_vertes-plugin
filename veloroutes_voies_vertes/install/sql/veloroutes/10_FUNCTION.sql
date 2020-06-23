@@ -60,15 +60,26 @@ COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$BEGIN
+    AS $$DECLARE seg RECORD;
+
+BEGIN
     -- insert the new portion first
     INSERT INTO veloroutes.portion(nom, description,type_portion)
     VALUES(NEW.nom, NEW.description, NEW.type_portion);
-    
-    -- use the portion id to insert a new element
-    INSERT INTO veloroutes.element(id_portion)
-    VALUES(currval('veloroutes.portion_id_local_seq'));
-	RETURN NEW;
+	
+	--cursor for each segment that compose the new entity
+	FOR seg IN( 
+	SELECT veloroutes.segment.id_local
+		FROM veloroutes.segment, veloroutes.v_portion
+		WHERE ST_Within(veloroutes.segment.geom, NEW.geom))
+		
+	LOOP
+	--insert in table element as many rows as there are segments in seg 
+		INSERT INTO veloroutes.element(id_portion,id_segment) VALUES(currval('veloroutes.portion_id_local_seq'),seg.id_local);
+	END LOOP;
+	
+ 	RETURN NEW;
+	
 END;$$;
 
 
