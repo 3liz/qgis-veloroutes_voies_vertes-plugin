@@ -14,9 +14,6 @@ __revision__ = "$Format:%H$"
 
 
 class TestSqlFunctions(DatabaseTestCase):
-    
-    
-        
 
     def test_trigger_repere_numero_serie(self):
         """ Test the trigger on repere(numero_serie)"""
