@@ -60,7 +60,7 @@ COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE pid int;
+    AS $$DECLARE iti_id int;
 
 BEGIN
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, id_local, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
@@ -100,4 +100,3 @@ END;$$;
 --
 -- PostgreSQL database dump complete
 --
-
