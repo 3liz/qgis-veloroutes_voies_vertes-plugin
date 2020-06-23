@@ -65,7 +65,7 @@ CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
 BEGIN
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, id_local, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
     VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.id_local, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_local into pid;
+    RETURNING id_local into iti_id;
     
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion) 
     SELECT pid, vp.id_local
