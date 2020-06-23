@@ -57,26 +57,40 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- v_itineraire_insert()
+CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$DECLARE pid int;
+
+BEGIN
+    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, id_local, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
+    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.id_local, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
+    RETURNING id_local into pid;
+    
+	INSERT INTO veloroutes.etape(id_itineraire,id_portion) 
+    SELECT pid, vp.id_local
+	FROM veloroutes.v_portion vp
+	WHERE ST_Within(vp.geom, NEW.geom);
+	
+ 	RETURN NEW;
+	
+END;$$;
+
+
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE seg RECORD;
+    AS $$DECLARE pid int;
 
 BEGIN
-    -- insert the new portion first
     INSERT INTO veloroutes.portion(nom, description,type_portion)
-    VALUES(NEW.nom, NEW.description, NEW.type_portion);
-	
-	--cursor for each segment that compose the new entity
-	FOR seg IN( 
-	SELECT veloroutes.segment.id_local
-		FROM veloroutes.segment, veloroutes.v_portion
-		WHERE ST_Within(veloroutes.segment.geom, NEW.geom))
-		
-	LOOP
-	--insert in table element as many rows as there are segments in seg 
-		INSERT INTO veloroutes.element(id_portion,id_segment) VALUES(currval('veloroutes.portion_id_local_seq'),seg.id_local);
-	END LOOP;
+    VALUES(NEW.nom, NEW.description, NEW.type_portion)
+    RETURNING id_local into pid;
+    
+	INSERT INTO veloroutes.element(id_portion,id_segment) 
+    SELECT pid, s.id_local
+	FROM veloroutes.segment s, (SELECT veloroutes.v_portion.geom FROM veloroutes.v_portion WHERE veloroutes.v_portion.id_local=NEW.id_local) AS po
+	WHERE ST_Within(s.geom, po.geom);
 	
  	RETURN NEW;
 	
