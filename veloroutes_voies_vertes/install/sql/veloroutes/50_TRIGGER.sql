@@ -58,4 +58,3 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
-

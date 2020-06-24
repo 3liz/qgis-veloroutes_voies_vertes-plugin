@@ -131,4 +131,3 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
-
