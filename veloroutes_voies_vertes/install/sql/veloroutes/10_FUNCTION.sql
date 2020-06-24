@@ -23,7 +23,7 @@ CREATE FUNCTION veloroutes.numserie() RETURNS trigger
             IF NEW.numero_serie IS NULL THEN
 				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
 			END IF;
-		END IF;	
+		END IF;
         RETURN NEW;
     END;
 $$;
@@ -57,46 +57,78 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- snap()
+CREATE FUNCTION veloroutes.snap() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$DECLARE geo geometry;
+
+BEGIN
+	SELECT ST_collect(veloroutes.segment.geom)
+	FROM veloroutes.segment
+	GROUP BY veloroutes.segment.geom
+	HAVING ST_distance(veloroutes.segment.geom,NEW.geom) = min(ST_distance(veloroutes.segment.geom,NEW.geom))
+	into geo;
+
+	SELECT ST_Snap(NEW.geom,geo,0.01) into NEW.geom;
+
+	RETURN NEW;
+END$$;
+
+
+-- FUNCTION snap()
+COMMENT ON FUNCTION veloroutes.snap() IS 'Force la géométrie saisie à coller à la géométrie des segments existants';
+
+
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
     AS $$DECLARE iti_id int;
 
 BEGIN
-    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, id_local, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
-    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.id_local, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
+    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
+    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
     RETURNING id_local into iti_id;
-    
-	INSERT INTO veloroutes.etape(id_itineraire,id_portion) 
+
+	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
     SELECT iti_id, vp.id_local
 	FROM veloroutes.v_portion vp
-	WHERE ST_Within(vp.geom, NEW.geom);
-	
+	WHERE ST_DWithin(vp.geom, NEW.geom,0.01);
+
  	RETURN NEW;
-	
+
 END;$$;
+
+
+-- FUNCTION v_itineraire_insert()
+COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire';
 
 
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE pid int;
+    AS $$DECLARE pid int; geo geometry;
 
 BEGIN
+
     INSERT INTO veloroutes.portion(nom, description,type_portion)
     VALUES(NEW.nom, NEW.description, NEW.type_portion)
     RETURNING id_local into pid;
-    
-	INSERT INTO veloroutes.element(id_portion,id_segment) 
-    SELECT pid, s.id_local
-	FROM veloroutes.segment s, (SELECT veloroutes.v_portion.geom FROM veloroutes.v_portion WHERE veloroutes.v_portion.id_local=NEW.id_local) AS po
-	WHERE ST_Within(s.geom, po.geom);
-	
+
+	INSERT INTO veloroutes.element(id_portion,id_segment)
+    SELECT pid, veloroutes.segment.id_local
+	FROM veloroutes.segment
+	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+	AND ST_Touches(veloroutes.segment.geom, NEW.geom)=FALSE;
  	RETURN NEW;
-	
+
 END;$$;
+
+
+-- FUNCTION v_portion_insert()
+COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion';
 
 
 --
 -- PostgreSQL database dump complete
 --
+

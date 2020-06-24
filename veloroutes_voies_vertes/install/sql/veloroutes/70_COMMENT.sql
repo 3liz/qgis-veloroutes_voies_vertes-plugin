@@ -23,6 +23,18 @@ COMMENT ON FUNCTION veloroutes.numserie() IS 'Empêche que le numéro de série 
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- FUNCTION snap()
+COMMENT ON FUNCTION veloroutes.snap() IS 'Force la géométrie saisie à coller à la géométrie des segments existants';
+
+
+-- FUNCTION v_itineraire_insert()
+COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire';
+
+
+-- FUNCTION v_portion_insert()
+COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion';
+
+
 -- element
 COMMENT ON TABLE veloroutes.element IS 'Table de liaison entre portion et segment. Une portion cyclable est une collection de segments cyclables continus. Un segment cyclable est un élément d’une ou plusieurs portions cyclables.';
 
@@ -525,6 +537,18 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 
 -- VIEW v_portion
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
+
+
+-- TRIGGER asnap ON v_portion
+COMMENT ON TRIGGER asnap ON veloroutes.v_portion IS 'Modifie la géométrie saisie avec la fonction snap()';
+
+
+-- TRIGGER insert ON v_portion
+COMMENT ON TRIGGER insert ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+
+
+-- TRIGGER insert2 ON v_itineraire
+COMMENT ON TRIGGER insert2 ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- TRIGGER numserie ON repere

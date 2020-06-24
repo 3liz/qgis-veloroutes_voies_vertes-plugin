@@ -15,12 +15,28 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- v_portion asnap
+CREATE TRIGGER asnap INSTEAD OF INSERT OR UPDATE ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.snap();
+
+
+-- TRIGGER asnap ON v_portion
+COMMENT ON TRIGGER asnap ON veloroutes.v_portion IS 'Modifie la géométrie saisie avec la fonction snap()';
+
+
 -- v_portion insert
 CREATE TRIGGER insert INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
 
 
--- v_itineraire insert()
-CREATE TRIGGER "insert()" INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
+-- TRIGGER insert ON v_portion
+COMMENT ON TRIGGER insert ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+
+
+-- v_itineraire insert2
+CREATE TRIGGER insert2 INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
+
+
+-- TRIGGER insert2 ON v_itineraire
+COMMENT ON TRIGGER insert2 ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- repere numserie
