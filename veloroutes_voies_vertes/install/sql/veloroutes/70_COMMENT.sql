@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -21,10 +22,6 @@ COMMENT ON FUNCTION veloroutes.numserie() IS 'Empêche que le numéro de série 
 
 -- FUNCTION revet()
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
-
-
--- FUNCTION snap()
-COMMENT ON FUNCTION veloroutes.snap() IS 'Force la géométrie saisie à coller à la géométrie des segments existants';
 
 
 -- FUNCTION v_itineraire_insert()
@@ -537,10 +534,6 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 
 -- VIEW v_portion
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
-
-
--- TRIGGER asnap ON v_portion
-COMMENT ON TRIGGER asnap ON veloroutes.v_portion IS 'Modifie la géométrie saisie avec la fonction snap()';
 
 
 -- TRIGGER insert ON v_portion

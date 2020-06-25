@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -57,28 +58,6 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
--- snap()
-CREATE FUNCTION veloroutes.snap() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$DECLARE geo geometry;
-
-BEGIN
-	SELECT ST_collect(veloroutes.segment.geom)
-	FROM veloroutes.segment
-	GROUP BY veloroutes.segment.geom
-	HAVING ST_distance(veloroutes.segment.geom,NEW.geom) = min(ST_distance(veloroutes.segment.geom,NEW.geom))
-	into geo;
-
-	SELECT ST_Snap(NEW.geom,geo,0.01) into NEW.geom;
-
-	RETURN NEW;
-END$$;
-
-
--- FUNCTION snap()
-COMMENT ON FUNCTION veloroutes.snap() IS 'Force la géométrie saisie à coller à la géométrie des segments existants';
-
-
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
@@ -92,7 +71,7 @@ BEGIN
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
     SELECT iti_id, vp.id_local
 	FROM veloroutes.v_portion vp
-	WHERE ST_DWithin(vp.geom, NEW.geom,0.01);
+	WHERE ST_DWithin(NEW.geom, vp.geom,0.01);
 
  	RETURN NEW;
 
@@ -131,3 +110,4 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
+
