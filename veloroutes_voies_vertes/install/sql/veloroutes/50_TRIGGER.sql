@@ -16,20 +16,20 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- v_portion insert
+-- v_portion insert_v_portion
 CREATE TRIGGER insert_v_portion INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
 
 
--- TRIGGER insert ON v_portion
-COMMENT ON TRIGGER insert ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
 
 
--- v_itineraire insert2
+-- v_itineraire insert_v_itineraire
 CREATE TRIGGER insert_v_itineraire INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
 
 
--- TRIGGER insert2 ON v_itineraire
-COMMENT ON TRIGGER insert2 ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+-- TRIGGER insert_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- repere numserie

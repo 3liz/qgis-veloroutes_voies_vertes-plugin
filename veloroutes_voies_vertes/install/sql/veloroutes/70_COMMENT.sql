@@ -536,12 +536,12 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
 
 
--- TRIGGER insert ON v_portion
-COMMENT ON TRIGGER insert ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
 
 
--- TRIGGER insert2 ON v_itineraire
-COMMENT ON TRIGGER insert2 ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+-- TRIGGER insert_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- TRIGGER numserie ON repere
@@ -555,4 +555,3 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
-
