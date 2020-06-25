@@ -25,7 +25,7 @@ COMMENT ON TRIGGER insert ON veloroutes.v_portion IS 'Rend la vue éditable avec
 
 
 -- v_itineraire insert2
-CREATE TRIGGER insert2 INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
+CREATE TRIGGER insert_v_itineraire INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
 
 
 -- TRIGGER insert2 ON v_itineraire
