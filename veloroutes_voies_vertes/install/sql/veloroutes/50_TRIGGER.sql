@@ -17,7 +17,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 -- v_portion insert
-CREATE TRIGGER insert INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
+CREATE TRIGGER insert_v_portion INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
 
 
 -- TRIGGER insert ON v_portion
@@ -51,4 +51,3 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
-
