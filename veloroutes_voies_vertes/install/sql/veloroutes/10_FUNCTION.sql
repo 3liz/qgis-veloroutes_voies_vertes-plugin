@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -61,21 +60,42 @@ COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE iti_id int;
+    AS $$DECLARE iti_id int; ids text;
 
 BEGIN
+
+	--INSERT a new row in itineraire
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
     VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
     RETURNING id_local into iti_id;
 
+	--INSERT stages of the itineray in etape
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
     SELECT iti_id, vp.id_local
 	FROM veloroutes.v_portion vp
-	WHERE ST_DWithin(NEW.geom, vp.geom,0.01);
+	--segments must be around the new geometry
+	WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
+	--segments that share just one vertex with the new geom are eliminated
+	AND ST_Within(vp.geom,ST_Buffer(NEW.geom,1));
 
+	--Warning for the user if the selection includes a piece of portion
+	--The selection should only be composed by full portions
+	FOR ids IN
+		SELECT veloroutes.v_portion.id_local
+		FROM veloroutes.v_portion
+		--Optional
+		WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
+		--Portions whose geometry is only partially included in the selection
+		AND ST_Overlaps(veloroutes.v_portion.geom,NEW.geom)
+	LOOP
+      RAISE NOTICE 'La portion (%) ne peut pas être partiellement séléctionnée',ids;
+   	END LOOP;
  	RETURN NEW;
 
-END;$$;
+END;
+
+
+$$;
 
 
 -- FUNCTION v_itineraire_insert()
@@ -85,19 +105,36 @@ COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE pid int; geo geometry;
+    AS $$DECLARE pid int; geo geometry;ids text;
 
 BEGIN
-
+	--INSERT a new portion
     INSERT INTO veloroutes.portion(nom, description,type_portion)
     VALUES(NEW.nom, NEW.description, NEW.type_portion)
     RETURNING id_local into pid;
 
+	--INSERT in element elements of the new portion
 	INSERT INTO veloroutes.element(id_portion,id_segment)
     SELECT pid, veloroutes.segment.id_local
 	FROM veloroutes.segment
+	--segments must be around the new geometry
 	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
-	AND ST_Touches(veloroutes.segment.geom, NEW.geom)=FALSE;
+	--segments that share just one vertex with the new geom are eliminated
+	AND ST_Within(veloroutes.segment.geom,ST_Buffer(NEW.geom,1));
+
+	--Warning for the user if the selection includes a piece of segment
+	--The selection should only be composed by full segments
+	FOR ids IN
+		SELECT veloroutes.segment.id_local
+		FROM veloroutes.segment
+		--Optional
+		WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+		--Segments whose geometry is only partially included in the selection
+		AND ST_Overlaps(veloroutes.segment.geom,NEW.geom)
+	LOOP
+      RAISE NOTICE 'Le segment (%) ne peut pas être partiellement séléctionné',ids;
+   	END LOOP;
+
  	RETURN NEW;
 
 END;$$;
@@ -110,4 +147,3 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
-
