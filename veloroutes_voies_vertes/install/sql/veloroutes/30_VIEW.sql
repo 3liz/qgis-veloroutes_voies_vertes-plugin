@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -19,11 +20,11 @@ SET row_security = off;
 CREATE VIEW veloroutes.v_itin_geom AS
  SELECT public.st_collect(segment.geom) AS collect_geom,
     etape.id_itineraire
-   FROM ((((veloroutes.itineraire
-     JOIN veloroutes.etape ON ((etape.id_itineraire = itineraire.id_local)))
+   FROM ((((veloroutes.etape
      JOIN veloroutes.portion ON ((portion.id_local = etape.id_portion)))
      JOIN veloroutes.element ON ((element.id_portion = portion.id_local)))
      JOIN veloroutes.segment ON ((segment.id_local = element.id_segment)))
+     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_local)))
   GROUP BY etape.id_itineraire;
 
 
@@ -35,12 +36,12 @@ COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itin
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
  SELECT v_itin_geom.collect_geom AS geom,
+    itineraire.id_local,
     itineraire.numero,
     itineraire.nom_officiel,
     itineraire.nom_usage,
     itineraire.depart,
     itineraire.arrivee,
-    itineraire.id_local,
     itineraire.annee_inscription,
     itineraire.site_web,
     itineraire.annee_ouverture,

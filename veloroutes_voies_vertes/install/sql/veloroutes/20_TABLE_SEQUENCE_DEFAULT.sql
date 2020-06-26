@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -154,7 +155,8 @@ CREATE TABLE veloroutes.liaison (
     src_annee text,
     id_local integer NOT NULL,
     id_repere integer,
-    id_poi integer
+    id_poi integer,
+    geom public.geometry(MultiLineString,2154)
 );
 
 
@@ -456,7 +458,9 @@ CREATE TABLE veloroutes.repere (
     numero_serie text,
     id_local integer NOT NULL,
     type_noeud text NOT NULL,
-    geom public.geometry(Point,2154)
+    geom public.geometry(Point,2154),
+    x double precision,
+    y double precision
 );
 
 
