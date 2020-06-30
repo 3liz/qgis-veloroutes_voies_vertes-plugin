@@ -8,6 +8,8 @@ from qgis.PyQt.QtGui import QIcon
 # from .example_processing_algorithm import ExampleProcessingAlgorithm
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
+from .chargement.load_layers import LoadLayersAlgorithm
+from .chargement.load_styles import LoadStylesAlgorithm
 from ..qgis_plugin_tools.tools.resources import resources_path
 
 
@@ -16,6 +18,8 @@ class VeloroutesProvider(QgsProcessingProvider):
         # self.addAlgorithm(ExampleProcessingAlgorithm())
         self.addAlgorithm(CreateDatabaseStructure())
         self.addAlgorithm(UpgradeDatabaseStructure())
+        self.addAlgorithm(LoadLayersAlgorithm())
+        self.addAlgorithm(LoadStylesAlgorithm())
 
     def id(self):
         return "veloroutes_vv"
