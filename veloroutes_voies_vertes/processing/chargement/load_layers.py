@@ -1,4 +1,4 @@
-__copyright__ = "Copyright 2020, 3Liz"
+laye__copyright__ = "Copyright 2020, 3Liz"
 __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
@@ -10,7 +10,10 @@ from qgis.core import (
     QgsProcessingContext,
     QgsVectorLayer,
     QgsRasterLayer,
+    QgsRectangle
 )
+
+from qgis.utils import iface
 
 from processing.tools.postgis import uri_from_name
 
@@ -79,36 +82,49 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def initLayer(self, context, uri, schema, table, geom, sql, pk=None, pkey=None):
+    def initLayer(self, order, context, uri, schema, table, geom, sql, pk=None, pkey=None):
+        displayname=table
         uri.setDataSource(schema, table, geom, sql)
         if pkey:
             uri.setDataSource(schema, table, geom, sql, pkey)
+            displayname=table[2:]
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
+        ext=layer.extent()
+        iface.mapCanvas().setExtent(ext)
         if not layer.isValid():
             return False
+        order.insert(0, layer)
+
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
             layer.id(),
-            QgsProcessingContext.LayerDetails(table, context.project(), self.OUTPUT),
+            QgsProcessingContext.LayerDetails(displayname, context.project(), self.OUTPUT)
         )
-        return layer
+        return layer, order
 
-    def XYZ(self, context, url, name):
+    def XYZ(self, order, context, url, name):
         rasterLyr = QgsRasterLayer("type=xyz&url=" + url, name, "wms")
+        order.insert(0, rasterLyr)
         context.temporaryLayerStore().addMapLayer(rasterLyr)
         context.addLayerToLoadOnCompletion(
             rasterLyr.id(),
             QgsProcessingContext.LayerDetails("osm", context.project(), self.OUTPUT)
         )
-        return rasterLyr
+        return rasterLyr, order
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
-        layers_name_view = ["v_itineraire", "v_portion"]
+        layers_name_view = ["v_portion", "v_itineraire"]
 
-        # override = self.parameterAsBool(parameters, self.OVERRIDE, context)
+        root = context.project().layerTreeRoot()
+        root.setHasCustomLayerOrder(True)
+        order = root.customLayerOrder()
+
+        extent = QgsRectangle()
+        extent.setMinimal()
+
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -123,22 +139,32 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         schema = self.parameterAsString(parameters, self.SCHEMA, context)
         feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DES COUCHES ##")
+
         for x in layers_name:
             if not context.project().mapLayersByName(x):
-                result = self.initLayer(context, uri, schema, x, "geom", "")
+                result, order = self.initLayer(order, context, uri, schema, x, "geom", "")
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
                 else:
                     output_layers.append(result.id())
+                    root.setCustomLayerOrder(order)
+
         for x in layers_name_view:
-            if not context.project().mapLayersByName(x):
-                result = self.initLayer(
-                    context, uri, schema, x, "geom", "", None, "id_local"
+            if not context.project().mapLayersByName(x[2:]):
+                result, order = self.initLayer(
+                        order, context, uri, schema, x, "geom", "", None, "id_local"
                 )
+                feedback.pushInfo(str(order))
+                root.setCustomLayerOrder(order)
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-        urlWithParams = ('type=xyz&url=https://a.tile.openstreetmap.org/%7Bz%7D/%7Bx%7D'
-                         '/%7By%7D.png&zmax=19&zmin=0&xmax=19&xmin=0&crs=EPSG2154')
-        result = self.XYZ(context, urlWithParams, 'OpenStreetMap')
-        output_layers.append(result.id())
+
+        if not context.project().mapLayersByName("osm"):
+            urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/${z}/${x}/${y}'
+                             '.png&zmax=19&zmin=0&crs=EPSG2154')
+            result, order = self.XYZ(order, context, urlWithParams, 'OpenStreetMap')
+            root.setCustomLayerOrder(order)
+            output_layers.append(result.id())
+        iface.mapCanvas().refresh()
+
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
