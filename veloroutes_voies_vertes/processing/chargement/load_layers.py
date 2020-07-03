@@ -71,7 +71,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             }
         )
         self.addParameter(schema_param)
-        
+
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.RASTER,
@@ -150,7 +150,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 )
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-        
+
         raster = self.parameterAsBool(parameters, self.RASTER, context)
         if raster:
             if not context.project().mapLayersByName("OpenStreetMap"):
