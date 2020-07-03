@@ -56,7 +56,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         _ = parameters
         msg = ""
         layers_name = ["repere", "poi_tourisme", "poi_service", "OpenStreetMap",
-                       "liaison", "segment", "v_portion", "v_itineraire"]
+                       "liaison", "segment", "v_portion", "v_itineraire", "etape", "element"]
 
         for x in layers_name:
             if x[0:2]=="v_":
