@@ -4,6 +4,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
+    QgsProcessingParameterBoolean,
     QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
@@ -24,6 +25,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
     DATABASE = "DATABASE"
     SCHEMA = "SCHEMA"
+    RASTER = "RASTER"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
 
@@ -40,7 +42,8 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         return tr("Données")
 
     def shortHelpString(self):
-        return tr("Charger toutes les couches de la base de données.")
+        return tr("Charger toutes les couches de la base de données."
+                  "Vous pouvez aussi ajouter un fond raster OpenSreetMap")
 
     def initAlgorithm(self, config):
         # INPUTS
@@ -68,6 +71,15 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             }
         )
         self.addParameter(schema_param)
+        
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.RASTER,
+                tr("Ajouter un fond raster OpenStreetMap?"),
+                defaultValue=False,
+                optional=False,
+            )
+        )
 
         # OUTPUTS
         self.addOutput(
@@ -99,7 +111,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         context.temporaryLayerStore().addMapLayer(rasterLyr)
         context.addLayerToLoadOnCompletion(
             rasterLyr.id(),
-            QgsProcessingContext.LayerDetails("osm", context.project(), self.OUTPUT)
+            QgsProcessingContext.LayerDetails(name, context.project(), self.OUTPUT)
         )
         return rasterLyr
 
@@ -138,10 +150,12 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 )
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-
-        if not context.project().mapLayersByName("osm"):
-            urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/${z}/${x}/${y}'
-                             '.png&zmax=19&zmin=0&crs=EPSG2154')
-            result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
-            output_layers.append(result.id())
+        
+        raster = self.parameterAsBool(parameters, self.RASTER, context)
+        if raster:
+            if not context.project().mapLayersByName("OpenStreetMap"):
+                urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/'
+                                 '%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857')
+                result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
+                output_layers.append(result.id())
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
