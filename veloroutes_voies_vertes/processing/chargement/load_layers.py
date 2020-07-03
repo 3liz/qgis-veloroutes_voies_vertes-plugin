@@ -120,7 +120,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         layers_v_name = ["v_portion", "v_itineraire"]
-        tables_name = ["element","etape"]
+        tables_name = ["element", "etape"]
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -160,7 +160,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                                  '%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857')
                 result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
                 output_layers.append(result.id())
-                
+
         # add attribute tables
         for x in tables_name:
             if not context.project().mapLayersByName(x):
