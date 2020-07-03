@@ -55,11 +55,14 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
-        layers_name = ["v_itineraire", "repere", "poi_tourisme",
-                       "poi_service", "v_portion", "liaison", "segment"]
+        layers_name = ["repere", "poi_tourisme", "poi_service",
+                       "liaison", "segment", "v_portion", "v_itineraire"]
 
         for x in layers_name:
-            layers = context.project().mapLayersByName(x)
+            if x[0:2]=="v_":
+                layers = context.project().mapLayersByName(x[2:])
+            else:
+                layers = context.project().mapLayersByName(x)
             if layers:
                 for layer in layers:
                     feedback.pushInfo(layer.name() + ", qml loaded")

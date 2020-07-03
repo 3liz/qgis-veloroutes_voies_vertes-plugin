@@ -9,12 +9,8 @@ from qgis.core import (
     QgsProcessingOutputString,
     QgsProcessingContext,
     QgsVectorLayer,
-    QgsRasterLayer,
-    QgsRectangle
+    QgsRasterLayer
 )
-
-from qgis.utils import iface
-
 from processing.tools.postgis import uri_from_name
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -82,49 +78,36 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def initLayer(self, order, context, uri, schema, table, geom, sql, pk=None, pkey=None):
+    def initLayer(self, context, uri, schema, table, geom, sql, pk=None, pkey=None):
         displayname=table
         uri.setDataSource(schema, table, geom, sql)
         if pkey:
             uri.setDataSource(schema, table, geom, sql, pkey)
             displayname=table[2:]
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
-        ext=layer.extent()
-        iface.mapCanvas().setExtent(ext)
         if not layer.isValid():
             return False
-        order.insert(0, layer)
-
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
             layer.id(),
             QgsProcessingContext.LayerDetails(displayname, context.project(), self.OUTPUT)
         )
-        return layer, order
+        return layer
 
-    def XYZ(self, order, context, url, name):
+    def XYZ(self, context, url, name):
         rasterLyr = QgsRasterLayer("type=xyz&url=" + url, name, "wms")
-        order.insert(0, rasterLyr)
         context.temporaryLayerStore().addMapLayer(rasterLyr)
         context.addLayerToLoadOnCompletion(
             rasterLyr.id(),
             QgsProcessingContext.LayerDetails("osm", context.project(), self.OUTPUT)
         )
-        return rasterLyr, order
+        return rasterLyr
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
-        layers_name_view = ["v_portion", "v_itineraire"]
-
-        root = context.project().layerTreeRoot()
-        root.setHasCustomLayerOrder(True)
-        order = root.customLayerOrder()
-
-        extent = QgsRectangle()
-        extent.setMinimal()
-
+        layers_v_name= ["v_portion", "v_itineraire"]
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -142,29 +125,23 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         for x in layers_name:
             if not context.project().mapLayersByName(x):
-                result, order = self.initLayer(order, context, uri, schema, x, "geom", "")
+                result = self.initLayer(context, uri, schema, x, "geom", "")
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
                 else:
                     output_layers.append(result.id())
-                    root.setCustomLayerOrder(order)
 
-        for x in layers_name_view:
+        for x in layers_v_name:
             if not context.project().mapLayersByName(x[2:]):
-                result, order = self.initLayer(
-                        order, context, uri, schema, x, "geom", "", None, "id_local"
+                result= self.initLayer(
+                        context, uri, schema, x, "geom", "", None, "id_local"
                 )
-                feedback.pushInfo(str(order))
-                root.setCustomLayerOrder(order)
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
 
         if not context.project().mapLayersByName("osm"):
             urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/${z}/${x}/${y}'
                              '.png&zmax=19&zmin=0&crs=EPSG2154')
-            result, order = self.XYZ(order, context, urlWithParams, 'OpenStreetMap')
-            root.setCustomLayerOrder(order)
+            result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
             output_layers.append(result.id())
-        iface.mapCanvas().refresh()
-
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
