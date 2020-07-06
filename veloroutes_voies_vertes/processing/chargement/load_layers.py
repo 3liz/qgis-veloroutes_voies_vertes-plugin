@@ -91,18 +91,16 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         )
 
     def initLayer(self, context, uri, schema, table, geom, sql, pk=None, pkey=None):
-        displayname=table
         uri.setDataSource(schema, table, geom, sql)
         if pkey:
             uri.setDataSource(schema, table, geom, sql, pkey)
-            displayname=table[2:]
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
         if not layer.isValid():
             return False
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
             layer.id(),
-            QgsProcessingContext.LayerDetails(displayname, context.project(), self.OUTPUT)
+            QgsProcessingContext.LayerDetails(table, context.project(), self.OUTPUT)
         )
         return layer
 
@@ -120,7 +118,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         layers_v_name = ["v_portion", "v_itineraire"]
-        tables_name = ["element", "etape"]
+        tables_name = ["element", "etape", "portion", "itineraire"]
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -146,7 +144,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                     output_layers.append(result.id())
         # add views
         for x in layers_v_name:
-            if not context.project().mapLayersByName(x[2:]):
+            if not context.project().mapLayersByName(x):
                 result= self.initLayer(
                         context, uri, schema, x, "geom", "", None, "id_local"
                 )
@@ -169,4 +167,5 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
                 else:
                     output_layers.append(result.id())
+
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
