@@ -58,6 +58,48 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- split(integer, real, real)
+CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$DECLARE
+	cut geometry;
+	seg record;
+    geom_init geometry;
+    geom_term geometry;
+
+BEGIN
+
+	--Récupération du point cliqué 
+	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
+		
+	--Récupération du segment cliqué
+	SELECT *
+	FROM veloroutes.segment 
+	WHERE veloroutes.segment.id_local=id_seg
+	INTO seg;
+	
+	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
+    geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
+	
+	-- Modification du segment :
+    -- OA----------(O)----------OB devient  OA----------(O)
+	UPDATE veloroutes.segment s
+	SET
+		geom = ST_Snap(geom_init, cut, 0.05)
+	WHERE id_local = seg.id_local;
+	
+	-- Création d'un nouveau segment :
+    -- (O)----------OB
+    -- On récupère les valeurs issues du segment d'orig
+	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
+	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, ST_Snap(geom_term, cut, 0.05));
+
+	-- Return 1
+    RETURN 1;
+	
+END;$$;
+
+
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
