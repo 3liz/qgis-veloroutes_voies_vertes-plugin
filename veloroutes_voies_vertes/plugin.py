@@ -32,7 +32,7 @@ class VeloroutesPlugin:
     def unload(self):
         if self.provider:
             QgsApplication.processingRegistry().removeProvider(self.provider)
-        
+
     @staticmethod
     def run_action(name, *args):
         """Run a specific action.
@@ -63,10 +63,8 @@ class VeloroutesPlugin:
             return
 
         params = list(args)
-#        if len(actions[name]) > 2:
-#            params += actions[name][2:]
-
+        msg = 'Appel de l\'action {} avec les arguments: {}'
         QgsMessageLog.logMessage(
-            'Appel de l\'action {} avec les arguments: {}'.format(name, ', '.join(['{}'.format(i) for i in params])),
+            msg.format(name, ', '.join(['{}'.format(i) for i in params])),
             'VélroutesPlugin', Qgis.Info)
         actions[name][1](*params)

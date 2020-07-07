@@ -12,6 +12,7 @@ __license__ = 'GPL version 3'
 __email__ = 'info@3liz.org'
 __revision__ = '$Format:%H$'
 
+
 def split_segment(*args):
     id_seg = int(args[0])
     xnode= args[1]
