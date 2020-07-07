@@ -62,10 +62,11 @@ COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si
 CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
     LANGUAGE plpgsql
     AS $$DECLARE
-	cut geometry;
 	seg record;
+	cut geometry;
     geom_init geometry;
     geom_term geometry;
+	id_new_seg integer;
 
 BEGIN
 
@@ -92,8 +93,15 @@ BEGIN
     -- (O)----------OB
     -- On récupère les valeurs issues du segment d'orig
 	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
-	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, ST_Snap(geom_term, cut, 0.05));
-
+	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, ST_Snap(geom_term, cut, 0.05))
+	RETURNING id_local into id_new_seg;
+	
+	-- Création des nouveaux elements de portion si besoin
+	INSERT INTO veloroutes.element(id_portion,id_segment)
+    SELECT veloroutes.element.id_portion, id_new_seg
+	FROM veloroutes.element
+	WHERE veloroutes.element.id_segment = id_seg;
+	
 	-- Return 1
     RETURN 1;
 	
