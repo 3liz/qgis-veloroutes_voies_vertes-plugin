@@ -29,8 +29,7 @@ class TestViews(DatabaseTestCase):
             VALUES ('nom portion',
             'sa description',
             'ETP',
-            ST_GeomFromText('LINESTRING(998286.7000028117 6793594.999997201,
-            993605.0000027686 6794850.799997196)',2154))
+            (SELECT vp.geom FROM veloroutes.v_portion as vp WHERE vp.id_local =5))
         """
         self.cursor.execute(sql)
 
@@ -76,8 +75,7 @@ class TestViews(DatabaseTestCase):
         sql = """
             INSERT INTO veloroutes.v_itineraire(numero,geom)
             VALUES ('numero test',
-            ST_GeomFromText('LINESTRING(971101.7560048789 6771149.292894136,
-            970972.4940048757 6769768.618894132)',2154))
+            (SELECT i.geom FROM veloroutes.v_itineraire as i WHERE i.id_local =6))
         """
         self.cursor.execute(sql)
 
