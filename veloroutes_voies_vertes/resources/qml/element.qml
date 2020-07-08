@@ -51,7 +51,7 @@
             <Option type="bool" name="MapIdentification" value="true"/>
             <Option type="bool" name="OrderByValue" value="false"/>
             <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_local"/>
+            <Option type="QString" name="Relation" value="element_34_id_segment_segment__id_local"/>
             <Option type="bool" name="ShowForm" value="false"/>
             <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>

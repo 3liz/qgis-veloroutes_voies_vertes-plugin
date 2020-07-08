@@ -1,20 +1,20 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis simplifyDrawingTol="1" simplifyMaxScale="1" hasScaleBasedVisibilityFlag="1" simplifyDrawingHints="1" styleCategories="AllStyleCategories" minScale="1e+08" simplifyAlgorithm="0" maxScale="122926" version="3.10.5-A Coruña" readOnly="0" labelsEnabled="1" simplifyLocal="1">
+<qgis styleCategories="AllStyleCategories" hasScaleBasedVisibilityFlag="1" maxScale="122926" readOnly="0" simplifyDrawingHints="1" simplifyMaxScale="1" simplifyLocal="1" version="3.10.5-A Coruña" minScale="1e+08" simplifyDrawingTol="1" labelsEnabled="1" simplifyAlgorithm="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 enableorderby="0" attr="id_local" type="categorizedSymbol" symbollevels="1" forceraster="0">
+  <renderer-v2 symbollevels="1" enableorderby="0" forceraster="0" type="categorizedSymbol" attr="id_local">
     <categories>
-      <category render="true" value="6" symbol="0" label="6"/>
-      <category render="true" value="7" symbol="1" label="7"/>
-      <category render="false" value="" symbol="2" label=""/>
-      <category render="true" value="8" symbol="3" label="8"/>
+      <category render="true" symbol="0" value="6" label="6"/>
+      <category render="true" symbol="1" value="7" label="7"/>
+      <category render="false" symbol="2" value="" label=""/>
+      <category render="true" symbol="3" value="8" label="8"/>
     </categories>
     <symbols>
-      <symbol name="0" type="line" alpha="1" clip_to_extent="1" force_rhr="0">
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+      <symbol name="0" force_rhr="0" clip_to_extent="1" type="line" alpha="1">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -39,7 +39,7 @@
             </Option>
           </data_defined_properties>
         </layer>
-        <layer enabled="1" pass="1" class="SimpleLine" locked="0">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="1">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -65,8 +65,8 @@
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="1" type="line" alpha="1" clip_to_extent="1" force_rhr="0">
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+      <symbol name="1" force_rhr="0" clip_to_extent="1" type="line" alpha="1">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -91,7 +91,7 @@
             </Option>
           </data_defined_properties>
         </layer>
-        <layer enabled="1" pass="1" class="SimpleLine" locked="0">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="1">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -117,8 +117,8 @@
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="2" type="line" alpha="1" clip_to_extent="1" force_rhr="0">
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+      <symbol name="2" force_rhr="0" clip_to_extent="1" type="line" alpha="1">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -143,7 +143,7 @@
             </Option>
           </data_defined_properties>
         </layer>
-        <layer enabled="1" pass="1" class="SimpleLine" locked="0">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="1">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -169,8 +169,8 @@
           </data_defined_properties>
         </layer>
       </symbol>
-      <symbol name="3" type="line" alpha="1" clip_to_extent="1" force_rhr="0">
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+      <symbol name="3" force_rhr="0" clip_to_extent="1" type="line" alpha="1">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -195,7 +195,7 @@
             </Option>
           </data_defined_properties>
         </layer>
-        <layer enabled="1" pass="1" class="SimpleLine" locked="0">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="1">
           <prop k="capstyle" v="round"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -223,8 +223,8 @@
       </symbol>
     </symbols>
     <source-symbol>
-      <symbol name="0" type="line" alpha="1" clip_to_extent="1" force_rhr="0">
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+      <symbol name="0" force_rhr="0" clip_to_extent="1" type="line" alpha="1">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -249,7 +249,7 @@
             </Option>
           </data_defined_properties>
         </layer>
-        <layer enabled="1" pass="0" class="SimpleLine" locked="0">
+        <layer class="SimpleLine" locked="0" enabled="1" pass="0">
           <prop k="capstyle" v="square"/>
           <prop k="customdash" v="5;2"/>
           <prop k="customdash_map_unit_scale" v="3x:0,0,0,0,0,0"/>
@@ -281,11 +281,11 @@
   </renderer-v2>
   <labeling type="simple">
     <settings calloutType="simple">
-      <text-style fontKerning="0" previewBkgrdColor="255,255,255,255" fontSizeUnit="Point" fontCapitals="0" fontLetterSpacing="0" textOpacity="1" fontStrikeout="0" fontWordSpacing="0" fontUnderline="0" fontSizeMapUnitScale="3x:0,0,0,0,0,0" fontItalic="0" textOrientation="horizontal" fontFamily=".AppleSystemUIFont" useSubstitutions="0" multilineHeight="1" namedStyle="Bold" fontWeight="75" blendMode="0" fieldName="nom_officiel" isExpression="0" fontSize="12" textColor="0,0,0,255">
-        <text-buffer bufferSizeUnits="MM" bufferColor="255,255,255,255" bufferOpacity="1" bufferJoinStyle="128" bufferSize="1" bufferDraw="0" bufferNoFill="1" bufferBlendMode="0" bufferSizeMapUnitScale="3x:0,0,0,0,0,0"/>
-        <background shapeSVGFile="" shapeRadiiUnit="MM" shapeSizeUnit="MM" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeRotationType="0" shapeFillColor="255,255,255,255" shapeOffsetX="0" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeOpacity="1" shapeDraw="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeRadiiY="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeJoinStyle="64" shapeType="0" shapeBorderWidthUnit="MM" shapeOffsetY="0" shapeBorderWidth="0" shapeSizeX="0" shapeSizeType="0" shapeRotation="0" shapeBorderColor="128,128,128,255" shapeBlendMode="0" shapeRadiiX="0" shapeOffsetUnit="MM" shapeSizeY="0">
-          <symbol name="markerSymbol" type="marker" alpha="1" clip_to_extent="1" force_rhr="0">
-            <layer enabled="1" pass="0" class="SimpleMarker" locked="0">
+      <text-style fontUnderline="0" fontItalic="0" fontStrikeout="0" multilineHeight="1" textOpacity="1" fontCapitals="0" fontLetterSpacing="0" textOrientation="horizontal" previewBkgrdColor="255,255,255,255" fontSizeMapUnitScale="3x:0,0,0,0,0,0" fontSizeUnit="Point" fontWordSpacing="0" textColor="0,0,0,255" fontFamily=".AppleSystemUIFont" fontKerning="0" isExpression="0" namedStyle="Bold" blendMode="0" fontWeight="75" fontSize="12" fieldName="nom_officiel" useSubstitutions="0">
+        <text-buffer bufferJoinStyle="128" bufferOpacity="1" bufferBlendMode="0" bufferSize="1" bufferColor="255,255,255,255" bufferSizeMapUnitScale="3x:0,0,0,0,0,0" bufferNoFill="1" bufferDraw="0" bufferSizeUnits="MM"/>
+        <background shapeOffsetUnit="MM" shapeSizeType="0" shapeBorderColor="128,128,128,255" shapeRadiiY="0" shapeBlendMode="0" shapeSizeX="0" shapeOffsetY="0" shapeOffsetMapUnitScale="3x:0,0,0,0,0,0" shapeBorderWidth="0" shapeSizeMapUnitScale="3x:0,0,0,0,0,0" shapeDraw="0" shapeRadiiUnit="MM" shapeBorderWidthMapUnitScale="3x:0,0,0,0,0,0" shapeRotationType="0" shapeRadiiMapUnitScale="3x:0,0,0,0,0,0" shapeFillColor="255,255,255,255" shapeSVGFile="" shapeRotation="0" shapeOpacity="1" shapeSizeUnit="MM" shapeBorderWidthUnit="MM" shapeType="0" shapeSizeY="0" shapeJoinStyle="64" shapeRadiiX="0" shapeOffsetX="0">
+          <symbol name="markerSymbol" force_rhr="0" clip_to_extent="1" type="marker" alpha="1">
+            <layer class="SimpleMarker" locked="0" enabled="1" pass="0">
               <prop k="angle" v="0"/>
               <prop k="color" v="152,125,183,255"/>
               <prop k="horizontal_anchor_point" v="1"/>
@@ -314,7 +314,7 @@
             </layer>
           </symbol>
         </background>
-        <shadow shadowRadius="1.5" shadowDraw="0" shadowOffsetGlobal="1" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowRadiusUnit="MM" shadowOffsetAngle="135" shadowOffsetUnit="MM" shadowRadiusAlphaOnly="0" shadowScale="100" shadowBlendMode="6" shadowOpacity="0.7" shadowOffsetDist="1" shadowColor="0,0,0,255" shadowUnder="0" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0"/>
+        <shadow shadowOffsetAngle="135" shadowOffsetUnit="MM" shadowScale="100" shadowDraw="0" shadowRadiusUnit="MM" shadowColor="0,0,0,255" shadowBlendMode="6" shadowRadiusMapUnitScale="3x:0,0,0,0,0,0" shadowUnder="0" shadowRadiusAlphaOnly="0" shadowOpacity="0.7" shadowOffsetMapUnitScale="3x:0,0,0,0,0,0" shadowRadius="1.5" shadowOffsetDist="1" shadowOffsetGlobal="1"/>
         <dd_properties>
           <Option type="Map">
             <Option name="name" value="" type="QString"/>
@@ -324,9 +324,9 @@
         </dd_properties>
         <substitutions/>
       </text-style>
-      <text-format addDirectionSymbol="0" reverseDirectionSymbol="0" plussign="0" useMaxLineLengthForAutoWrap="1" wrapChar="" autoWrapLength="0" rightDirectionSymbol=">" formatNumbers="0" placeDirectionSymbol="0" multilineAlign="0" leftDirectionSymbol="&lt;" decimals="3"/>
-      <placement distUnits="MM" geometryGeneratorEnabled="0" dist="0" placementFlags="10" repeatDistance="0" distMapUnitScale="3x:0,0,0,0,0,0" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" placement="3" maxCurvedCharAngleOut="-25" overrunDistanceUnit="MM" fitInPolygonOnly="0" rotationAngle="0" centroidWhole="0" yOffset="0" offsetUnits="MM" quadOffset="4" priority="10" geometryGeneratorType="PointGeometry" geometryGenerator="" offsetType="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" overrunDistance="0" repeatDistanceUnits="MM" preserveRotation="1" overrunDistanceMapUnitScale="3x:0,0,0,0,0,0" layerType="LineGeometry" xOffset="0" centroidInside="0" maxCurvedCharAngleIn="25"/>
-      <rendering zIndex="0" fontMinPixelSize="3" upsidedownLabels="0" minFeatureSize="0" obstacle="1" mergeLines="0" fontLimitPixelSize="0" scaleMax="1073059" displayAll="0" maxNumLabels="2000" fontMaxPixelSize="10000" scaleVisibility="0" scaleMin="1200" obstacleFactor="1" limitNumLabels="0" labelPerPart="0" obstacleType="0" drawLabels="1"/>
+      <text-format addDirectionSymbol="0" reverseDirectionSymbol="0" multilineAlign="0" autoWrapLength="0" leftDirectionSymbol="&lt;" plussign="0" wrapChar="" placeDirectionSymbol="0" useMaxLineLengthForAutoWrap="1" formatNumbers="0" rightDirectionSymbol=">" decimals="3"/>
+      <placement yOffset="0" placement="3" repeatDistanceMapUnitScale="3x:0,0,0,0,0,0" dist="0" repeatDistanceUnits="MM" fitInPolygonOnly="0" centroidInside="0" geometryGenerator="" distUnits="MM" offsetUnits="MM" overrunDistanceMapUnitScale="3x:0,0,0,0,0,0" overrunDistance="0" quadOffset="4" maxCurvedCharAngleOut="-25" centroidWhole="0" labelOffsetMapUnitScale="3x:0,0,0,0,0,0" rotationAngle="0" xOffset="0" preserveRotation="1" repeatDistance="0" geometryGeneratorEnabled="0" maxCurvedCharAngleIn="25" overrunDistanceUnit="MM" distMapUnitScale="3x:0,0,0,0,0,0" layerType="LineGeometry" offsetType="0" predefinedPositionOrder="TR,TL,BR,BL,R,L,TSR,BSR" geometryGeneratorType="PointGeometry" placementFlags="10" priority="10"/>
+      <rendering obstacleType="0" scaleVisibility="0" scaleMin="1200" zIndex="0" maxNumLabels="2000" mergeLines="0" labelPerPart="0" drawLabels="1" fontMinPixelSize="3" obstacleFactor="1" scaleMax="1073059" limitNumLabels="0" obstacle="1" minFeatureSize="0" fontMaxPixelSize="10000" fontLimitPixelSize="0" displayAll="0" upsidedownLabels="0"/>
       <dd_properties>
         <Option type="Map">
           <Option name="name" value="" type="QString"/>
@@ -350,7 +350,7 @@
           </Option>
           <Option name="drawToAllParts" value="false" type="bool"/>
           <Option name="enabled" value="0" type="QString"/>
-          <Option name="lineSymbol" value="&lt;symbol name=&quot;symbol&quot; type=&quot;line&quot; alpha=&quot;1&quot; clip_to_extent=&quot;1&quot; force_rhr=&quot;0&quot;>&lt;layer enabled=&quot;1&quot; pass=&quot;0&quot; class=&quot;SimpleLine&quot; locked=&quot;0&quot;>&lt;prop k=&quot;capstyle&quot; v=&quot;square&quot;/>&lt;prop k=&quot;customdash&quot; v=&quot;5;2&quot;/>&lt;prop k=&quot;customdash_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;prop k=&quot;customdash_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;draw_inside_polygon&quot; v=&quot;0&quot;/>&lt;prop k=&quot;joinstyle&quot; v=&quot;bevel&quot;/>&lt;prop k=&quot;line_color&quot; v=&quot;60,60,60,255&quot;/>&lt;prop k=&quot;line_style&quot; v=&quot;solid&quot;/>&lt;prop k=&quot;line_width&quot; v=&quot;0.3&quot;/>&lt;prop k=&quot;line_width_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;offset&quot; v=&quot;0&quot;/>&lt;prop k=&quot;offset_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;prop k=&quot;offset_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;ring_filter&quot; v=&quot;0&quot;/>&lt;prop k=&quot;use_custom_dash&quot; v=&quot;0&quot;/>&lt;prop k=&quot;width_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;data_defined_properties>&lt;Option type=&quot;Map&quot;>&lt;Option name=&quot;name&quot; value=&quot;&quot; type=&quot;QString&quot;/>&lt;Option name=&quot;properties&quot;/>&lt;Option name=&quot;type&quot; value=&quot;collection&quot; type=&quot;QString&quot;/>&lt;/Option>&lt;/data_defined_properties>&lt;/layer>&lt;/symbol>" type="QString"/>
+          <Option name="lineSymbol" value="&lt;symbol name=&quot;symbol&quot; force_rhr=&quot;0&quot; clip_to_extent=&quot;1&quot; type=&quot;line&quot; alpha=&quot;1&quot;>&lt;layer class=&quot;SimpleLine&quot; locked=&quot;0&quot; enabled=&quot;1&quot; pass=&quot;0&quot;>&lt;prop k=&quot;capstyle&quot; v=&quot;square&quot;/>&lt;prop k=&quot;customdash&quot; v=&quot;5;2&quot;/>&lt;prop k=&quot;customdash_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;prop k=&quot;customdash_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;draw_inside_polygon&quot; v=&quot;0&quot;/>&lt;prop k=&quot;joinstyle&quot; v=&quot;bevel&quot;/>&lt;prop k=&quot;line_color&quot; v=&quot;60,60,60,255&quot;/>&lt;prop k=&quot;line_style&quot; v=&quot;solid&quot;/>&lt;prop k=&quot;line_width&quot; v=&quot;0.3&quot;/>&lt;prop k=&quot;line_width_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;offset&quot; v=&quot;0&quot;/>&lt;prop k=&quot;offset_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;prop k=&quot;offset_unit&quot; v=&quot;MM&quot;/>&lt;prop k=&quot;ring_filter&quot; v=&quot;0&quot;/>&lt;prop k=&quot;use_custom_dash&quot; v=&quot;0&quot;/>&lt;prop k=&quot;width_map_unit_scale&quot; v=&quot;3x:0,0,0,0,0,0&quot;/>&lt;data_defined_properties>&lt;Option type=&quot;Map&quot;>&lt;Option name=&quot;name&quot; value=&quot;&quot; type=&quot;QString&quot;/>&lt;Option name=&quot;properties&quot;/>&lt;Option name=&quot;type&quot; value=&quot;collection&quot; type=&quot;QString&quot;/>&lt;/Option>&lt;/data_defined_properties>&lt;/layer>&lt;/symbol>" type="QString"/>
           <Option name="minLength" value="0" type="double"/>
           <Option name="minLengthMapUnitScale" value="3x:0,0,0,0,0,0" type="QString"/>
           <Option name="minLengthUnit" value="MM" type="QString"/>
@@ -365,8 +365,8 @@
     </settings>
   </labeling>
   <customproperties>
-    <property key="dualview/previewExpressions" value="id_local"/>
-    <property key="embeddedWidgets/count" value="0"/>
+    <property value="id_local" key="dualview/previewExpressions"/>
+    <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -374,12 +374,12 @@
   <featureBlendMode>0</featureBlendMode>
   <layerOpacity>1</layerOpacity>
   <SingleCategoryDiagramRenderer attributeLegend="1" diagramType="Histogram">
-    <DiagramCategory maxScaleDenominator="1e+08" width="15" minScaleDenominator="122926" rotationOffset="270" diagramOrientation="Up" labelPlacementMethod="XHeight" opacity="1" lineSizeScale="3x:0,0,0,0,0,0" barWidth="5" scaleDependency="Area" lineSizeType="MM" backgroundColor="#ffffff" penWidth="0" sizeType="MM" enabled="0" minimumSize="0" sizeScale="3x:0,0,0,0,0,0" backgroundAlpha="255" scaleBasedVisibility="0" height="15" penAlpha="255" penColor="#000000">
-      <fontProperties description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0" style=""/>
+    <DiagramCategory opacity="1" height="15" minScaleDenominator="122926" sizeType="MM" backgroundColor="#ffffff" sizeScale="3x:0,0,0,0,0,0" lineSizeType="MM" maxScaleDenominator="1e+08" minimumSize="0" labelPlacementMethod="XHeight" diagramOrientation="Up" penWidth="0" rotationOffset="270" penAlpha="255" scaleDependency="Area" width="15" barWidth="5" penColor="#000000" backgroundAlpha="255" scaleBasedVisibility="0" lineSizeScale="3x:0,0,0,0,0,0" enabled="0">
+      <fontProperties style="" description=".AppleSystemUIFont,13,-1,5,50,0,0,0,0,0"/>
       <attribute field="" color="#000000" label=""/>
     </DiagramCategory>
   </SingleCategoryDiagramRenderer>
-  <DiagramLayerSettings priority="0" placement="2" showAll="1" zIndex="0" obstacle="0" linePlacementFlags="18" dist="0">
+  <DiagramLayerSettings placement="2" linePlacementFlags="18" showAll="1" priority="0" dist="0" zIndex="0" obstacle="0">
     <properties>
       <Option type="Map">
         <Option name="name" value="" type="QString"/>
@@ -388,7 +388,7 @@
       </Option>
     </properties>
   </DiagramLayerSettings>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -507,36 +507,36 @@
     <default expression="" applyOnUpdate="0" field="est_inscrit"/>
   </defaults>
   <constraints>
-    <constraint exp_strength="0" notnull_strength="1" field="id_local" constraints="3" unique_strength="1"/>
-    <constraint exp_strength="0" notnull_strength="0" field="numero" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="nom_officiel" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="nom_usage" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="depart" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="arrivee" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="annee_inscription" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="site_web" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="annee_ouverture" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="niveau_schema" constraints="0" unique_strength="0"/>
-    <constraint exp_strength="0" notnull_strength="0" field="est_inscrit" constraints="0" unique_strength="0"/>
+    <constraint unique_strength="1" exp_strength="0" field="id_local" constraints="3" notnull_strength="1"/>
+    <constraint unique_strength="0" exp_strength="0" field="numero" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="nom_officiel" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="nom_usage" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="depart" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="arrivee" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="annee_inscription" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="site_web" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="annee_ouverture" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="niveau_schema" constraints="0" notnull_strength="0"/>
+    <constraint unique_strength="0" exp_strength="0" field="est_inscrit" constraints="0" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" field="id_local" exp=""/>
-    <constraint desc="" field="numero" exp=""/>
-    <constraint desc="" field="nom_officiel" exp=""/>
-    <constraint desc="" field="nom_usage" exp=""/>
-    <constraint desc="" field="depart" exp=""/>
-    <constraint desc="" field="arrivee" exp=""/>
-    <constraint desc="" field="annee_inscription" exp=""/>
-    <constraint desc="" field="site_web" exp=""/>
-    <constraint desc="" field="annee_ouverture" exp=""/>
-    <constraint desc="" field="niveau_schema" exp=""/>
-    <constraint desc="" field="est_inscrit" exp=""/>
+    <constraint field="id_local" desc="" exp=""/>
+    <constraint field="numero" desc="" exp=""/>
+    <constraint field="nom_officiel" desc="" exp=""/>
+    <constraint field="nom_usage" desc="" exp=""/>
+    <constraint field="depart" desc="" exp=""/>
+    <constraint field="arrivee" desc="" exp=""/>
+    <constraint field="annee_inscription" desc="" exp=""/>
+    <constraint field="site_web" desc="" exp=""/>
+    <constraint field="annee_ouverture" desc="" exp=""/>
+    <constraint field="niveau_schema" desc="" exp=""/>
+    <constraint field="est_inscrit" desc="" exp=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
       <column name="numero" hidden="0" type="field" width="-1"/>
       <column name="nom_officiel" hidden="0" type="field" width="-1"/>
@@ -578,19 +578,31 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
+  <attributeEditorForm>
+    <attributeEditorField name="numero" showLabel="1" index="1"/>
+    <attributeEditorField name="nom_officiel" showLabel="1" index="2"/>
+    <attributeEditorField name="nom_usage" showLabel="1" index="3"/>
+    <attributeEditorField name="depart" showLabel="1" index="4"/>
+    <attributeEditorField name="arrivee" showLabel="1" index="5"/>
+    <attributeEditorField name="annee_inscription" showLabel="1" index="6"/>
+    <attributeEditorField name="site_web" showLabel="1" index="7"/>
+    <attributeEditorField name="annee_ouverture" showLabel="1" index="8"/>
+    <attributeEditorField name="niveau_schema" showLabel="1" index="9"/>
+    <attributeEditorField name="est_inscrit" showLabel="1" index="10"/>
+  </attributeEditorForm>
   <editable>
-    <field editable="1" name="annee_inscription"/>
-    <field editable="1" name="annee_ouverture"/>
-    <field editable="1" name="arrivee"/>
-    <field editable="1" name="depart"/>
-    <field editable="1" name="est_inscrit"/>
-    <field editable="1" name="id_local"/>
-    <field editable="1" name="niveau_schema"/>
-    <field editable="1" name="nom_officiel"/>
-    <field editable="1" name="nom_usage"/>
-    <field editable="1" name="numero"/>
-    <field editable="1" name="site_web"/>
+    <field name="annee_inscription" editable="1"/>
+    <field name="annee_ouverture" editable="1"/>
+    <field name="arrivee" editable="1"/>
+    <field name="depart" editable="1"/>
+    <field name="est_inscrit" editable="1"/>
+    <field name="id_local" editable="1"/>
+    <field name="niveau_schema" editable="1"/>
+    <field name="nom_officiel" editable="1"/>
+    <field name="nom_usage" editable="1"/>
+    <field name="numero" editable="1"/>
+    <field name="site_web" editable="1"/>
   </editable>
   <labelOnTop>
     <field name="annee_inscription" labelOnTop="0"/>
