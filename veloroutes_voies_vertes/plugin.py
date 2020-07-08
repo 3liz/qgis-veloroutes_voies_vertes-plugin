@@ -66,5 +66,5 @@ class VeloroutesPlugin:
         msg = 'Appel de l\'action {} avec les arguments: {}'
         QgsMessageLog.logMessage(
             msg.format(name, ', '.join(['{}'.format(i) for i in params])),
-            'VélroutesPlugin', Qgis.Info)
+            'VéloroutesPlugin', Qgis.Info)
         actions[name][1](*params)

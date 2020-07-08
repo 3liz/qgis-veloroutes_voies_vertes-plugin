@@ -5,7 +5,11 @@ Created on Tue Jul  7 10:06:14 2020
 
 Actions."""
 
-from qgis.core import QgsProviderRegistry
+from qgis.core import(
+    QgsProviderRegistry,
+    QgsMessageLog,
+    Qgis
+    )
 
 __copyright__ = 'Copyright 2019, 3Liz'
 __license__ = 'GPL version 3'
@@ -22,4 +26,5 @@ def split_segment(*args):
     connection = metadata.findConnection('vvv')
     sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
     connection.executeSql(sql)
-    print("segment " + str(id_seg) +" split")
+    message = "segment " + str(id_seg) +" split"
+    QgsMessageLog.logMessage(message, 'Split', Qgis.Info)
