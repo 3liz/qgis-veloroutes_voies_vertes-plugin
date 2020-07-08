@@ -68,7 +68,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         msg = ""
 
         lay = context.project().mapLayers()
-        layers = [l for l in lay.values()]
+        layers = [layer for layer in lay.values()]
 
         manager = context.project().relationManager()
         manager.setRelations(manager.discoverRelations([], layers))
@@ -79,26 +79,29 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         etape = context.project().mapLayersByName("etape")[0]
         element = context.project().mapLayersByName("element")[0]
 
-        rel1 = self.createRelation(vportion.id(), etape.id(), "id_portion",
-                                   "id_local", "vportion_etape",
-                                   "etape_7d2f_id_portion_v_portion__id_local")
-        rel2 = self.createRelation(vportion.id(), element.id(), "id_portion",
-                                   "id_local", "vportion_element",
-                                   "element_87_id_portion_v_portion__id_local")
-        rel3 = self.createRelation(vitineraire.id(), etape.id(), "id_itineraire",
-                                   "id_local", "vitineraire_etape",
-                                   "etape_7d2f_id_itineraire_v_itinerai_id_local")
-        rel4 = self.createRelation(segment.id(), element.id(), "id_segment",
-                                   "id_local", "segment_element",
-                                   "element_34_id_segment_segment__id_local")
+        rel1 = self.createRelation(
+            vportion.id(), etape.id(), "id_portion", "id_local",
+            "vportion_etape", "etape_7d2f_id_portion_v_portion__id_local")
+        rel2 = self.createRelation(
+            vportion.id(), element.id(), "id_portion", "id_local",
+            "vportion_element", "element_87_id_portion_v_portion__id_local")
+        rel3 = self.createRelation(
+            vitineraire.id(), etape.id(), "id_itineraire", "id_local",
+            "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_local")
+        rel4 = self.createRelation(
+            segment.id(), element.id(), "id_segment", "id_local",
+            "segment_element", "element_34_id_segment_segment__id_local")
 
         manager.addRelation(rel1)
         manager.addRelation(rel2)
         manager.addRelation(rel3)
         manager.addRelation(rel4)
 
-        layers_name = ["repere", "poi_tourisme", "poi_service", "OpenStreetMap", "portion", "itineraire"
-                       "liaison", "segment", "v_portion", "v_itineraire", "etape", "element"]
+        layers_name = [
+            "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
+            "portion", "itineraire", "liaison", "segment", "v_portion",
+            "v_itineraire", "etape", "element"
+        ]
 
         for x in layers_name:
             layers = context.project().mapLayersByName(x)
