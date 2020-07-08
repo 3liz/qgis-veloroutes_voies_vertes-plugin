@@ -8,7 +8,8 @@ Actions."""
 from qgis.core import (
     QgsProviderRegistry,
     QgsMessageLog,
-    Qgis
+    Qgis,
+    QgsExpressionContextUtils
 )
 
 __copyright__ = 'Copyright 2019, 3Liz'
@@ -23,7 +24,12 @@ def split_segment(*args):
     ynode= args[2]
 
     metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-    connection = metadata.findConnection('vvv')
+    connection_name = QgsExpressionContextUtils.globalScope().variable(
+            "veloroutes_connection_name"
+    )
+
+    QgsMessageLog.logMessage(connection_name, 'VéloroutesPlugin', Qgis.Info)
+    connection = metadata.findConnection(connection_name)
     sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
     connection.executeSql(sql)
     message = "segment " + str(id_seg) +" split"
