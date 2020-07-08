@@ -59,7 +59,6 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
         connection_name = QgsExpressionContextUtils.globalScope().variable(
             "veloroutes_connection_name"
         )
-        print(connection_name)
         db_param_a = QgsProcessingParameterString(
             self.CONNECTION_NAME,
             tr("Connexion PostgreSQL vers la base de données"),

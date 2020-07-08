@@ -89,7 +89,9 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
 
         # Set global variable
         # noinspection PyCallByClass,PyArgumentList
-        QgsExpressionContextUtils.setGlobalVariable('veloroutes_connection_name', connection_name)
+        QgsExpressionContextUtils.setProjectVariable(
+                context.project(), 'veloroutes_connection_name', connection_name
+        )
         feedback.pushInfo('Connection PostgreSQL à la base vvv "{}"'.format(connection_name))
 
         msg = 'La configuration a été faite'
