@@ -42,7 +42,7 @@ class VeloroutesPlugin:
         These lines are included in the QGIS project.
 
         from qgis.utils import plugins
-        plugins['VeloroutesPlugin'].run_action('action_name', params)
+        plugins['veloroutes_voies_vertes'].run_action('action_name', params)
         """
         # Dictionary of actions
         # number of arguments it expects
