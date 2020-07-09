@@ -110,4 +110,4 @@ class TestActions(DatabaseTestCase):
 
         # Check that the new row has the same attributes
         # (except id_local) than the chosen segment
-        self.assertEqual(info[1:],new_info[1:])
+        self.assertEqual(info[1:], new_info[1:])
