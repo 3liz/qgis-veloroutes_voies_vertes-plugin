@@ -70,17 +70,28 @@ CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS
 
 BEGIN
 
-	--Récupération du point cliqué
+	-- Récupération du point cliqué
 	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
 
-	--Récupération du segment cliqué
+	-- Récupération du segment cliqué
 	SELECT *
 	FROM veloroutes.segment
 	WHERE veloroutes.segment.id_local=id_seg
 	INTO seg;
 
+	-- Vérification que le clique ne se situe pas trop loin d'un segment
+	IF ST_Distance(cut, seg.geom)> 5 THEN
+		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic';
+	END IF;
+
+	-- Création des nouvelles géométries
 	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
     geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
+
+	-- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
+	IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
+		RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
+	END IF;
 
 	-- Modification du segment :
     -- OA----------(O)----------OB devient  OA----------(O)

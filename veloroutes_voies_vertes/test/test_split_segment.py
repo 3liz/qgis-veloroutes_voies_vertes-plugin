@@ -19,7 +19,7 @@ __revision__ = "$Format:%H$"
 
 
 class TestActions(DatabaseTestCase):
-    def xtest_trigger_split_segment(self):
+    def test_trigger_split_segment(self):
         """ Test the function that splits a segment in two new segments"""
 
         # Counts how many segment are in the db
