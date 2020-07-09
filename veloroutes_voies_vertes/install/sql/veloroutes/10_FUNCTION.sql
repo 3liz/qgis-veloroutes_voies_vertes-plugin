@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -64,6 +63,7 @@ CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS
     AS $$DECLARE
 	seg record;
 	cut geometry;
+	cut_inseg geometry;
     geom_init geometry;
     geom_term geometry;
 	id_new_seg integer;
@@ -81,19 +81,20 @@ BEGIN
 	
 	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
     geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
+	cut_inseg = ST_LineInterpolatePoint(seg.geom, ST_LineLocatePoint(seg.geom, cut));
 	
 	-- Modification du segment :
     -- OA----------(O)----------OB devient  OA----------(O)
 	UPDATE veloroutes.segment s
 	SET
-		geom = ST_Snap(geom_init, cut, 0.05)
+		geom = geom_init
 	WHERE id_local = seg.id_local;
 	
 	-- Création d'un nouveau segment :
     -- (O)----------OB
-    -- On récupère les valeurs issues du segment d'orig
+    -- On récupère les valeurs issues du segment d'origine
 	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
-	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, ST_Snap(geom_term, cut, 0.05))
+	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
 	RETURNING id_local into id_new_seg;
 	
 	-- Création des nouveaux elements de portion si besoin
@@ -101,7 +102,7 @@ BEGIN
     SELECT veloroutes.element.id_portion, id_new_seg
 	FROM veloroutes.element
 	WHERE veloroutes.element.id_segment = id_seg;
-	
+
 	-- Return 1
     RETURN 1;
 	
