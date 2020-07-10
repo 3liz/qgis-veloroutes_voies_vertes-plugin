@@ -57,6 +57,68 @@ $$;
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
 
 
+-- split(integer, real, real)
+CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$DECLARE
+	seg record;
+	cut geometry;
+	cut_inseg geometry;
+    geom_init geometry;
+    geom_term geometry;
+	id_new_seg integer;
+
+BEGIN
+
+	-- Récupération du point cliqué
+	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
+
+	-- Récupération du segment cliqué
+	SELECT *
+	FROM veloroutes.segment
+	WHERE veloroutes.segment.id_local=id_seg
+	INTO seg;
+
+	-- Vérification que le clique ne se situe pas trop loin d'un segment
+	IF ST_Distance(cut, seg.geom)> 5 THEN
+		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic';
+	END IF;
+
+	-- Création des nouvelles géométries
+	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
+    geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
+
+	-- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
+	IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
+		RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
+	END IF;
+
+	-- Modification du segment :
+    -- OA----------(O)----------OB devient  OA----------(O)
+	UPDATE veloroutes.segment s
+	SET
+		geom = geom_init
+	WHERE id_local = seg.id_local;
+
+	-- Création d'un nouveau segment :
+    -- (O)----------OB
+    -- On récupère les valeurs issues du segment d'origine
+	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
+	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
+	RETURNING id_local into id_new_seg;
+
+	-- Création des nouveaux elements de portion si besoin
+	INSERT INTO veloroutes.element(id_portion,id_segment)
+    SELECT veloroutes.element.id_portion, id_new_seg
+	FROM veloroutes.element
+	WHERE veloroutes.element.id_segment = id_seg;
+
+	-- Return 1
+    RETURN 1;
+
+END;$$;
+
+
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
@@ -147,4 +209,3 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
-

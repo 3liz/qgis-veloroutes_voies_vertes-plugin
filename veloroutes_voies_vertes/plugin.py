@@ -9,7 +9,11 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 
-from qgis.core import QgsApplication
+from qgis.core import QgsApplication, QgsMessageLog, Qgis
+from qgis.PyQt.QtWidgets import QMessageBox
+
+from .actions import split_segment
+
 from .processing.provider import VeloroutesProvider
 
 
@@ -28,3 +32,39 @@ class VeloroutesPlugin:
     def unload(self):
         if self.provider:
             QgsApplication.processingRegistry().removeProvider(self.provider)
+
+    @staticmethod
+    def run_action(name, *args):
+        """Run a specific action.
+
+        Do not rename this function, it's part of the public API of the plugin.
+
+        These lines are included in the QGIS project.
+
+        from qgis.utils import plugins
+        plugins['veloroutes_voies_vertes'].run_action('action_name', params)
+        """
+        # Dictionary of actions
+        # number of arguments it expects
+        # function to call
+        # extra args to add on runtime
+        actions = {
+            'split_segment':
+                [3, split_segment]
+        }
+        if name not in actions:
+            QMessageBox.critical(
+                None, 'Action non trouvée', 'L\'action n\'a pas été trouvée.')
+            return
+
+        if actions[name][0] != len(args):
+            QMessageBox.critical(
+                None, 'Mauvais nombre d\'arguments', 'Mauvais nombre d\'arguments pour l\'action.')
+            return
+
+        params = list(args)
+        msg = 'Appel de l\'action {} avec les arguments: {}'
+        QgsMessageLog.logMessage(
+            msg.format(name, ', '.join(['{}'.format(i) for i in params])),
+            'VéloroutesPlugin', Qgis.Info)
+        actions[name][1](*params)

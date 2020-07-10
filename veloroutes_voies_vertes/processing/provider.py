@@ -11,11 +11,13 @@ from .structure.upgrade_database_structure import UpgradeDatabaseStructure
 from .chargement.load_layers import LoadLayersAlgorithm
 from .chargement.load_styles import LoadStylesAlgorithm
 from ..qgis_plugin_tools.tools.resources import resources_path
+from .config.configure import ConfigurePlugin
 
 
 class VeloroutesProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
         # self.addAlgorithm(ExampleProcessingAlgorithm())
+        self.addAlgorithm(ConfigurePlugin())
         self.addAlgorithm(CreateDatabaseStructure())
         self.addAlgorithm(UpgradeDatabaseStructure())
         self.addAlgorithm(LoadLayersAlgorithm())

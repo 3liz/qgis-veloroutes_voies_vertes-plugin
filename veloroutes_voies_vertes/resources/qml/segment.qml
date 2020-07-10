@@ -420,7 +420,13 @@
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction value="{f2b3586e-a4e0-4997-9edc-c84cd2d96230}" key="Canvas"/>
+    <actionsetting capture="0" name="coupe un segment en un point" shortTitle="split" notificationMessage="" isEnabledOnlyWhenEditable="1" id="{f2b3586e-a4e0-4997-9edc-c84cd2d96230}" icon="" type="1" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_local%],[% @click_x %],[% @click_y %])&#xa;print([%id_local%])">
+      <actionScope id="Canvas"/>
+      <actionScope id="Feature"/>
+      <actionScope id="Field"/>
+      <actionScope id="Layer"/>
+    </actionsetting>
   </attributeactions>
   <attributetableconfig sortExpression="&quot;id_local&quot;" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
