@@ -11,7 +11,6 @@ from qgis.core import (
     Qgis,
     QgsExpressionContextUtils,
     QgsProject,
-
 )
 
 from qgis.utils import iface
@@ -35,7 +34,13 @@ def split_segment(*args):
         return
     metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
     connection = metadata.findConnection(connection_name)
-    sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
-    connection.executeSql(sql)
+    try:
+        sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
+        connection.executeSql(sql)
+        msg= "Le segment " + str(id_seg) + " a bien été coupé"
+        iface.messageBar().pushInfo('Véloroutes', msg)
+    except Exception as e:
+        msg = e.args[0]
+        iface.messageBar().pushCritical('Véloroutes', msg)
     message = "segment " + str(id_seg) +" split"
     QgsMessageLog.logMessage(message, 'VéloroutesPlugin', Qgis.Info)
