@@ -144,9 +144,13 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                     output_layers.append(result.id())
         # add views
         for x in layers_v_name:
+            if x == "v_portion":
+                pkey= "id_portion"
+            if x == "v_itineraire":
+                pkey = "id_iti"
             if not context.project().mapLayersByName(x):
                 result= self.initLayer(
-                        context, uri, schema, x, "geom", "", None, "id_local"
+                        context, uri, schema, x, "geom", "", None, pkey
                 )
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")

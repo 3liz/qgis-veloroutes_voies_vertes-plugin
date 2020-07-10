@@ -6,7 +6,7 @@
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property value="id_local" key="dualview/previewExpressions"/>
+    <property value="id_iti" key="dualview/previewExpressions"/>
     <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
@@ -66,7 +66,7 @@
         </config>
       </editWidget>
     </field>
-    <field name="id_local">
+    <field name="id_iti">
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
@@ -157,7 +157,7 @@
     <alias name="" field="nom_usage" index="2"/>
     <alias name="" field="depart" index="3"/>
     <alias name="" field="arrivee" index="4"/>
-    <alias name="" field="id_local" index="5"/>
+    <alias name="" field="id_iti" index="5"/>
     <alias name="" field="annee_inscription" index="6"/>
     <alias name="" field="site_web" index="7"/>
     <alias name="" field="annee_ouverture" index="8"/>
@@ -172,7 +172,7 @@
     <default field="nom_usage" applyOnUpdate="0" expression=""/>
     <default field="depart" applyOnUpdate="0" expression=""/>
     <default field="arrivee" applyOnUpdate="0" expression=""/>
-    <default field="id_local" applyOnUpdate="0" expression=""/>
+    <default field="id_iti" applyOnUpdate="0" expression=""/>
     <default field="annee_inscription" applyOnUpdate="0" expression=""/>
     <default field="site_web" applyOnUpdate="0" expression=""/>
     <default field="annee_ouverture" applyOnUpdate="0" expression=""/>
@@ -185,7 +185,7 @@
     <constraint unique_strength="0" notnull_strength="0" field="nom_usage" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="depart" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="arrivee" constraints="0" exp_strength="0"/>
-    <constraint unique_strength="1" notnull_strength="1" field="id_local" constraints="3" exp_strength="0"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id_iti" constraints="3" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="annee_inscription" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="site_web" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="annee_ouverture" constraints="0" exp_strength="0"/>
@@ -198,7 +198,7 @@
     <constraint exp="" field="nom_usage" desc=""/>
     <constraint exp="" field="depart" desc=""/>
     <constraint exp="" field="arrivee" desc=""/>
-    <constraint exp="" field="id_local" desc=""/>
+    <constraint exp="" field="id_iti" desc=""/>
     <constraint exp="" field="annee_inscription" desc=""/>
     <constraint exp="" field="site_web" desc=""/>
     <constraint exp="" field="annee_ouverture" desc=""/>
@@ -216,7 +216,7 @@
       <column type="field" name="nom_usage" width="-1" hidden="0"/>
       <column type="field" name="depart" width="-1" hidden="0"/>
       <column type="field" name="arrivee" width="-1" hidden="0"/>
-      <column type="field" name="id_local" width="127" hidden="0"/>
+      <column type="field" name="id_iti" width="127" hidden="0"/>
       <column type="field" name="annee_inscription" width="-1" hidden="0"/>
       <column type="field" name="site_web" width="-1" hidden="0"/>
       <column type="field" name="annee_ouverture" width="-1" hidden="0"/>
@@ -258,7 +258,7 @@ def my_form_open(dialog, layer, feature):
     <field name="arrivee" editable="1"/>
     <field name="depart" editable="1"/>
     <field name="est_inscrit" editable="1"/>
-    <field name="id_local" editable="0"/>
+    <field name="id_iti" editable="0"/>
     <field name="niveau_schema" editable="1"/>
     <field name="nom_officiel" editable="1"/>
     <field name="nom_usage" editable="1"/>
@@ -271,7 +271,7 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="arrivee"/>
     <field labelOnTop="0" name="depart"/>
     <field labelOnTop="0" name="est_inscrit"/>
-    <field labelOnTop="0" name="id_local"/>
+    <field labelOnTop="0" name="id_iti"/>
     <field labelOnTop="0" name="niveau_schema"/>
     <field labelOnTop="0" name="nom_officiel"/>
     <field labelOnTop="0" name="nom_usage"/>
@@ -279,13 +279,13 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="site_web"/>
   </labelOnTop>
   <widgets>
-    <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_itineraire_itineraire_c47affa8_3ced_43b5_b85b_cb009c7b432a_id_local">
+    <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_itineraire_itineraire_c47affa8_3ced_43b5_b85b_cb009c7b432a_id_iti">
       <config type="Map">
         <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>
-  <previewExpression>id_local</previewExpression>
+  <previewExpression>id_iti</previewExpression>
   <mapTip></mapTip>
   <layerGeometryType>4</layerGeometryType>
 </qgis>

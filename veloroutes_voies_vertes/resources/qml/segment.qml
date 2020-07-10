@@ -152,7 +152,7 @@
     </symbols>
   </renderer-v2>
   <customproperties>
-    <property value="id_local" key="dualview/previewExpressions"/>
+    <property value="id_segment" key="dualview/previewExpressions"/>
     <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
@@ -180,7 +180,7 @@
     <checkConfiguration/>
   </geometryOptions>
   <fieldConfiguration>
-    <field name="id_local">
+    <field name="id_segment">
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
@@ -357,7 +357,7 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="id_local" index="0"/>
+    <alias name="" field="id_segment" index="0"/>
     <alias name="" field="annee_ouverture" index="1"/>
     <alias name="" field="date_saisie" index="2"/>
     <alias name="" field="src_geom" index="3"/>
@@ -374,7 +374,7 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default field="id_local" applyOnUpdate="0" expression=""/>
+    <default field="id_segment" applyOnUpdate="0" expression=""/>
     <default field="annee_ouverture" applyOnUpdate="0" expression=""/>
     <default field="date_saisie" applyOnUpdate="0" expression=""/>
     <default field="src_geom" applyOnUpdate="0" expression=""/>
@@ -389,7 +389,7 @@
     <default field="geometrie_fictive" applyOnUpdate="0" expression=""/>
   </defaults>
   <constraints>
-    <constraint unique_strength="1" notnull_strength="1" field="id_local" constraints="3" exp_strength="0"/>
+    <constraint unique_strength="1" notnull_strength="1" field="id_segment" constraints="3" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="annee_ouverture" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="date_saisie" constraints="0" exp_strength="0"/>
     <constraint unique_strength="0" notnull_strength="0" field="src_geom" constraints="0" exp_strength="0"/>
@@ -404,7 +404,7 @@
     <constraint unique_strength="0" notnull_strength="0" field="geometrie_fictive" constraints="0" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" field="id_local" desc=""/>
+    <constraint exp="" field="id_segment" desc=""/>
     <constraint exp="" field="annee_ouverture" desc=""/>
     <constraint exp="" field="date_saisie" desc=""/>
     <constraint exp="" field="src_geom" desc=""/>
@@ -421,16 +421,16 @@
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{f2b3586e-a4e0-4997-9edc-c84cd2d96230}" key="Canvas"/>
-    <actionsetting capture="0" name="coupe un segment en un point" shortTitle="split" notificationMessage="" isEnabledOnlyWhenEditable="1" id="{f2b3586e-a4e0-4997-9edc-c84cd2d96230}" icon="" type="1" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_local%],[% @click_x %],[% @click_y %])&#xa;print([%id_local%])">
+    <actionsetting capture="0" name="coupe un segment en un point" shortTitle="split" notificationMessage="" isEnabledOnlyWhenEditable="1" id="{f2b3586e-a4e0-4997-9edc-c84cd2d96230}" icon="" type="1" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_segment%],[% @click_x %],[% @click_y %])&#xa;print([%id_segment%])">
       <actionScope id="Canvas"/>
       <actionScope id="Feature"/>
       <actionScope id="Field"/>
       <actionScope id="Layer"/>
     </actionsetting>
   </attributeactions>
-  <attributetableconfig sortExpression="&quot;id_local&quot;" actionWidgetStyle="dropDown" sortOrder="0">
+  <attributetableconfig sortExpression="&quot;id_segment&quot;" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column type="field" name="id_local" width="-1" hidden="0"/>
+      <column type="field" name="id_segment" width="-1" hidden="0"/>
       <column type="field" name="src_geom" width="-1" hidden="0"/>
       <column type="field" name="src_annee" width="-1" hidden="0"/>
       <column type="field" name="avancement" width="-1" hidden="0"/>
@@ -474,7 +474,7 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorField name="id_local" showLabel="1" index="0"/>
+    <attributeEditorField name="id_segment" showLabel="1" index="0"/>
     <attributeEditorField name="annee_ouve" showLabel="1" index="-1"/>
     <attributeEditorField name="date_saisi" showLabel="1" index="-1"/>
     <attributeEditorField name="src_geom" showLabel="1" index="3"/>
@@ -498,7 +498,7 @@ def my_form_open(dialog, layer, feature):
     <field name="geometrie_fictive" editable="1"/>
     <field name="gestionnai" editable="1"/>
     <field name="gestionnaire" editable="1"/>
-    <field name="id_local" editable="0"/>
+    <field name="id_segment" editable="0"/>
     <field name="precision" editable="1"/>
     <field name="proprietai" editable="1"/>
     <field name="proprietaire" editable="1"/>
@@ -519,7 +519,7 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="geometrie_fictive"/>
     <field labelOnTop="0" name="gestionnai"/>
     <field labelOnTop="0" name="gestionnaire"/>
-    <field labelOnTop="0" name="id_local"/>
+    <field labelOnTop="0" name="id_segment"/>
     <field labelOnTop="0" name="precision"/>
     <field labelOnTop="0" name="proprietai"/>
     <field labelOnTop="0" name="proprietaire"/>
@@ -531,13 +531,13 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="statut"/>
   </labelOnTop>
   <widgets>
-    <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_local">
+    <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_segment_segment_7bda5417_48a9_4c43_b874_6c6b490dfa9e_id_segment">
       <config type="Map">
         <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>
-  <previewExpression>id_local</previewExpression>
+  <previewExpression>id_segment</previewExpression>
   <mapTip></mapTip>
   <layerGeometryType>1</layerGeometryType>
 </qgis>

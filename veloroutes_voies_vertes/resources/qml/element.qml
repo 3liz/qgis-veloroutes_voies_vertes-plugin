@@ -35,7 +35,7 @@
             <Option type="bool" name="MapIdentification" value="true"/>
             <Option type="bool" name="OrderByValue" value="false"/>
             <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="element_87_id_portion_v_portion__id_local"/>
+            <Option type="QString" name="Relation" value="element_87_id_portion_v_portion__id_portion"/>
             <Option type="bool" name="ShowForm" value="false"/>
             <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>
@@ -51,7 +51,7 @@
             <Option type="bool" name="MapIdentification" value="true"/>
             <Option type="bool" name="OrderByValue" value="false"/>
             <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="element_34_id_segment_segment__id_local"/>
+            <Option type="QString" name="Relation" value="element_34_id_segment_segment__id_segment"/>
             <Option type="bool" name="ShowForm" value="false"/>
             <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>
@@ -167,7 +167,7 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="segment_statut"/>
   </labelOnTop>
   <widgets>
-    <widget name="v_portion__id_local_element_87_id_portion">
+    <widget name="v_portion__id_portion_element_87_id_portion">
       <config type="Map">
         <Option type="QString" name="nm-rel" value=""/>
       </config>

@@ -63,7 +63,6 @@ CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS
     AS $$DECLARE
 	seg record;
 	cut geometry;
-	cut_inseg geometry;
     geom_init geometry;
     geom_term geometry;
 	id_new_seg integer;
@@ -76,7 +75,7 @@ BEGIN
 	-- Récupération du segment cliqué
 	SELECT *
 	FROM veloroutes.segment
-	WHERE veloroutes.segment.id_local=id_seg
+	WHERE veloroutes.segment.id_segment=id_seg
 	INTO seg;
 
 	-- Vérification que le clique ne se situe pas trop loin d'un segment
@@ -98,14 +97,14 @@ BEGIN
 	UPDATE veloroutes.segment s
 	SET
 		geom = geom_init
-	WHERE id_local = seg.id_local;
+	WHERE id_segment = seg.id_segment;
 
 	-- Création d'un nouveau segment :
     -- (O)----------OB
     -- On récupère les valeurs issues du segment d'origine
 	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
 	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
-	RETURNING id_local into id_new_seg;
+	RETURNING id_segment into id_new_seg;
 
 	-- Création des nouveaux elements de portion si besoin
 	INSERT INTO veloroutes.element(id_portion,id_segment)
@@ -129,11 +128,11 @@ BEGIN
 	--INSERT a new row in itineraire
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
     VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_local into iti_id;
+    RETURNING id_iti into iti_id;
 
 	--INSERT stages of the itineray in etape
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
-    SELECT iti_id, vp.id_local
+    SELECT iti_id, vp.id_portion
 	FROM veloroutes.v_portion vp
 	--segments must be around the new geometry
 	WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
@@ -143,7 +142,7 @@ BEGIN
 	--Warning for the user if the selection includes a piece of portion
 	--The selection should only be composed by full portions
 	FOR ids IN
-		SELECT veloroutes.v_portion.id_local
+		SELECT veloroutes.v_portion.id_portion
 		FROM veloroutes.v_portion
 		--Optional
 		WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
@@ -173,11 +172,11 @@ BEGIN
 	--INSERT a new portion
     INSERT INTO veloroutes.portion(nom, description,type_portion)
     VALUES(NEW.nom, NEW.description, NEW.type_portion)
-    RETURNING id_local into pid;
+    RETURNING id_portion into pid;
 
 	--INSERT in element elements of the new portion
 	INSERT INTO veloroutes.element(id_portion,id_segment)
-    SELECT pid, veloroutes.segment.id_local
+    SELECT pid, veloroutes.segment.id_segment
 	FROM veloroutes.segment
 	--segments must be around the new geometry
 	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
@@ -187,7 +186,7 @@ BEGIN
 	--Warning for the user if the selection includes a piece of segment
 	--The selection should only be composed by full segments
 	FOR ids IN
-		SELECT veloroutes.segment.id_local
+		SELECT veloroutes.segment.id_segment
 		FROM veloroutes.segment
 		--Optional
 		WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)

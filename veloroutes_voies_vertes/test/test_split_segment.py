@@ -76,7 +76,7 @@ class TestActions(DatabaseTestCase):
     def test_split_duplicate_segment(self):
 
         # Get the last id given in segment
-        curr_id="""SELECT max(veloroutes.segment.id_local) FROM veloroutes.segment"""
+        curr_id="""SELECT max(veloroutes.segment.id_segment) FROM veloroutes.segment"""
         self.cursor.execute(curr_id)
         # Id expected for the next insert in segment
         last_id = self.cursor.fetchone()[0]+1
@@ -90,7 +90,7 @@ class TestActions(DatabaseTestCase):
         seg="""
             SELECT *
             FROM veloroutes.segment s
-            WHERE s.id_local={}
+            WHERE s.id_segment={}
         """.format(id_seg)
         self.cursor.execute(seg)
         info=self.cursor.fetchall()
@@ -103,11 +103,11 @@ class TestActions(DatabaseTestCase):
         new="""
             SELECT *
             FROM veloroutes.segment s
-            WHERE s.id_local={}
+            WHERE s.id_segment={}
         """.format(last_id)
         self.cursor.execute(new)
         new_info=self.cursor.fetchall()
 
         # Check that the new row has the same attributes
-        # (except id_local) than the chosen segment
+        # (except id_segment) than the chosen segment
         self.assertEqual(info[1:], new_info[1:])
