@@ -80,7 +80,7 @@ BEGIN
 
 	-- Vérification que le clique ne se situe pas trop loin d'un segment
 	IF ST_Distance(cut, seg.geom)> 5 THEN
-		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic';
+		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic : Distance > 5m ';
 	END IF;
 
 	-- Création des nouvelles géométries
