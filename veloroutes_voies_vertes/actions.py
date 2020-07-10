@@ -39,7 +39,7 @@ def split_segment(*args):
         connection.executeSql(sql)
         msg= "Le segment " + str(id_seg) + " a bien été coupé"
         iface.messageBar().pushInfo('Véloroutes', msg)
-    except Exception as e:
+    except Exception as e:  # attempt to use QgsProviderConnectionException instead cf #34
         msg = e.args[0]
         iface.messageBar().pushCritical('Véloroutes', msg)
     message = "segment " + str(id_seg) +" split"
