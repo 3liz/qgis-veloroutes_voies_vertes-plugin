@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -76,6 +75,26 @@ ALTER TABLE ONLY veloroutes.etape
 -- etat_avancement_val etat_avancement_val_pkey
 ALTER TABLE ONLY veloroutes.etat_avancement_val
     ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (code);
+
+
+-- portion id_local
+ALTER TABLE ONLY veloroutes.portion
+    ADD CONSTRAINT id_local UNIQUE (id_local);
+
+
+-- segment id_local2
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT id_local2 UNIQUE (id_local);
+
+
+-- portion id_on3v
+ALTER TABLE ONLY veloroutes.portion
+    ADD CONSTRAINT id_on3v UNIQUE (id_on3v);
+
+
+-- segment id_on3v2
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT id_on3v2 UNIQUE (id_on3v);
 
 
 -- itineraire itineraire_pkey
