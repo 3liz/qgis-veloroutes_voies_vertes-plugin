@@ -116,25 +116,33 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_local">id_local</span></td>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_portion">id_portion</span></td>
                                     <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
                                     <td title='Automatically updated by the database'>√</td>
-                                    <td>nextval(&#39;veloroutes.portion_id_local_seq&#39;::regclass)</td>
+                                    <td>nextval(&#39;veloroutes.portion_id_portion_seq&#39;::regclass)</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="element.id_portion references portion.id_local via element_portion_segment"><a href='element.html'>element</a><span class='relatedKey'>.id_portion</span></td>
+                                                <td title="element.id_portion references portion.id_portion via element_portion_segment"><a href='element.html'>element</a><span class='relatedKey'>.id_portion</span></td>
                                                 <td class="constraint detail">element_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="etape.id_portion references portion.id_local via etape_portion_segment"><a href='etape.html'>etape</a><span class='relatedKey'>.id_portion</span></td>
+                                                <td title="etape.id_portion references portion.id_portion via etape_portion_segment"><a href='etape.html'>etape</a><span class='relatedKey'>.id_portion</span></td>
                                                 <td class="constraint detail">etape_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                             <tr>
-                                                <td title="frequentation.id_portion references portion.id_local via portion"><a href='frequentation.html'>frequentation</a><span class='relatedKey'>.id_portion</span></td>
+                                                <td title="frequentation.id_portion references portion.id_portion via portion"><a href='frequentation.html'>frequentation</a><span class='relatedKey'>.id_portion</span></td>
                                                 <td class="constraint detail">portion<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="v_port_geom.id_portion&#39;s name implies that it&#39;s a child of portion.id_portion, but it doesn&#39;t reference that column."><a href='v_port_geom.html'>v_port_geom</a><span class='relatedKey'>.id_portion</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="v_portion.id_portion&#39;s name implies that it&#39;s a child of portion.id_portion, but it doesn&#39;t reference that column."><a href='v_portion.html'>v_portion</a><span class='relatedKey'>.id_portion</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -142,7 +150,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Identifiant de la portion cyclable</p></td>
+                                    <td><p>Clé primaire</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="nom">nom</span></td>
@@ -199,6 +207,74 @@
                                     </td>
                                     <td><p>Rôle que joue la portion par rapport à l’itinéraire principal auquel elle se rapporte (clé étrangère)</p></td>
                                 </tr>
+                                <tr>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="id_on3v">id_on3v</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant créé et géré par l&rsquo;ON3V</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="id_local">id_local</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant créé et géré par l&rsquo;organisme local</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="mont_subv">mont_subv</span></td>
+                                    <td>float4</td>
+                                    <td>8,8</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Montant de la subvention de la portion</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="annee_subv">annee_subv</span></td>
+                                    <td>date</td>
+                                    <td>13</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Année de la subvention</p></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -227,7 +303,19 @@
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> portion_pkey</td>
                                     <td>Primary key</td>
                                     <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_portion</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> portion_id_local</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
                                     <td>id_local</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> portion_id_on3v</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_on3v</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -248,12 +336,14 @@
                                 <ul class="nav nav-tabs pull-left ui-sortable-handle">
                                     <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
                                     <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
                                 </ul>
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="578,5,729,157">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,172,512,359">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,172,512,476">
 <area shape="rect" id="node5" href="portion_val.html" target="_top" title="portion_val" alt="" coords="5,233,177,380">
 <area shape="rect" id="node3" href="etape.html" target="_top" title="etape" alt="" coords="581,175,726,351">
 <area shape="rect" id="node4" href="frequentation.html" target="_top" title="frequentation" alt="" coords="556,368,751,515">
@@ -262,16 +352,43 @@
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="578,205,729,357">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,136,512,323">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="291,340,442,428">
-<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="5,197,177,344">
-<area shape="rect" id="node4" href="etape.html" target="_top" title="etape" alt="" coords="581,5,726,181">
-<area shape="rect" id="node5" href="itineraire.html" target="_top" title="itineraire" alt="" coords="287,31,446,119">
-<area shape="rect" id="node6" href="frequentation.html" target="_top" title="frequentation" alt="" coords="556,388,751,535">
-<area shape="rect" id="node7" href="repere.html" target="_top" title="repere" alt="" coords="297,445,436,533">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="578,244,729,396">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,111,512,415">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="291,432,442,520">
+<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="5,172,177,319">
+<area shape="rect" id="node4" href="etape.html" target="_top" title="etape" alt="" coords="581,44,726,220">
+<area shape="rect" id="node5" href="itineraire.html" target="_top" title="itineraire" alt="" coords="287,5,446,93">
+<area shape="rect" id="node6" href="frequentation.html" target="_top" title="frequentation" alt="" coords="556,428,751,575">
+<area shape="rect" id="node7" href="repere.html" target="_top" title="repere" alt="" coords="297,537,436,625">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/portion.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="578,5,729,157">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,365,512,669">
+<area shape="rect" id="node5" href="portion_val.html" target="_top" title="portion_val" alt="" coords="5,427,177,573">
+<area shape="rect" id="node3" href="etape.html" target="_top" title="etape" alt="" coords="581,175,726,351">
+<area shape="rect" id="node4" href="frequentation.html" target="_top" title="frequentation" alt="" coords="556,368,751,515">
+<area shape="rect" id="node6" href="v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="564,532,743,625">
+<area shape="rect" id="node7" href="v_portion.html" target="_top" title="v_portion" alt="" coords="575,643,731,736">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/portion.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="578,5,729,157">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="221,184,512,488">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="291,67,442,155">
+<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="5,245,177,392">
+<area shape="rect" id="node4" href="etape.html" target="_top" title="etape" alt="" coords="581,396,726,572">
+<area shape="rect" id="node5" href="itineraire.html" target="_top" title="itineraire" alt="" coords="287,505,446,593">
+<area shape="rect" id="node6" href="frequentation.html" target="_top" title="frequentation" alt="" coords="556,589,751,736">
+<area shape="rect" id="node7" href="repere.html" target="_top" title="repere" alt="" coords="297,621,436,709">
+<area shape="rect" id="node9" href="v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="564,285,743,379">
+<area shape="rect" id="node10" href="v_portion.html" target="_top" title="v_portion" alt="" coords="575,175,731,268">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/portion.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                 </div>
                             </div>

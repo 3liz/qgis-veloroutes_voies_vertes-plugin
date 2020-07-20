@@ -163,7 +163,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT st_collect(segment.geom) AS collect_geom,&#10;    etape.id_itineraire&#10;   FROM ((((veloroutes.itineraire&#10;     JOIN veloroutes.etape ON ((etape.id_itineraire = itineraire.id_local)))&#10;     JOIN veloroutes.portion ON ((portion.id_local = etape.id_portion)))&#10;     JOIN veloroutes.element ON ((element.id_portion = portion.id_local)))&#10;     JOIN veloroutes.segment ON ((segment.id_local = element.id_segment)))&#10;  GROUP BY etape.id_itineraire;</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT st_collect(segment.geom) AS collect_geom,&#10;    etape.id_itineraire&#10;   FROM ((((veloroutes.etape&#10;     JOIN veloroutes.portion ON ((portion.id_portion = etape.id_portion)))&#10;     JOIN veloroutes.element ON ((element.id_portion = portion.id_portion)))&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_iti)))&#10;  GROUP BY etape.id_itineraire;</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
@@ -175,9 +175,9 @@
                                     <ul class="list-unstyled">
                                         <li><a href="segment.html">segment</a></li>
                                         <li><a href="etape.html">etape</a></li>
-                                        <li><a href="itineraire.html">itineraire</a></li>
                                         <li><a href="portion.html">portion</a></li>
                                         <li><a href="element.html">element</a></li>
+                                        <li><a href="itineraire.html">itineraire</a></li>
                                     </ul>
                                 </div><!-- /.box-body -->
                             </div>

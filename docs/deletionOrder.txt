@@ -7,8 +7,8 @@ poi_tourisme
 poi_service
 poi_acces
 segment
-itineraire
 repere
+itineraire
 portion
 statut_segment_val
 revetement_val

@@ -116,16 +116,16 @@
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_local">id_local</span></td>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="id_segment">id_segment</span></td>
                                     <td>serial</td>
                                     <td>10</td>
                                     <td title=''></td>
                                     <td title='Automatically updated by the database'>√</td>
-                                    <td>nextval(&#39;veloroutes.segment_id_local_seq&#39;::regclass)</td>
+                                    <td>nextval(&#39;veloroutes.segment_id_segment_seq&#39;::regclass)</td>
                                     <td>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
-                                                <td title="element.id_segment references segment.id_local via element_segment"><a href='element.html'>element</a><span class='relatedKey'>.id_segment</span></td>
+                                                <td title="element.id_segment references segment.id_segment via element_segment"><a href='element.html'>element</a><span class='relatedKey'>.id_segment</span></td>
                                                 <td class="constraint detail">element_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
                                             </tr>
                                         </table>
@@ -134,7 +134,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                         </table>
                                     </td>
-                                    <td><p>Identifiant du segment cyclable</p></td>
+                                    <td><p>Clé primaire</p></td>
                                 </tr>
                                 <tr>
                                     <td><span id="annee_ouverture">annee_ouverture</span></td>
@@ -369,6 +369,40 @@
                                     </td>
                                     <td><p>Indique si le tracé de la section de véloroute est inconnu ou approximatif</p></td>
                                 </tr>
+                                <tr>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="id_on3v">id_on3v</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant créé et géré par l&rsquo;ON3V</p></td>
+                                </tr>
+                                <tr>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="id_local">id_local</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant créé et géré par l&rsquo;organisme local</p></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -397,13 +431,25 @@
                                     <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> segment_pkey</td>
                                     <td>Primary key</td>
                                     <td><span title='Ascending'>Asc</span></td>
-                                    <td>id_local</td>
+                                    <td>id_segment</td>
                                 </tr>
                                 <tr>
                                     <td title='Indexed'>revetement</td>
                                     <td>Performance</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>revetement</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> segment_id_local</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_local</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> segment_id_on3v</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>id_on3v</td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -429,7 +475,7 @@
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
 <area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="708,5,859,157">
-<area shape="rect" id="node2" href="segment.html" target="_top" title="segment" alt="" coords="297,61,664,541">
+<area shape="rect" id="node2" href="segment.html" target="_top" title="segment" alt="" coords="297,61,664,600">
 <area shape="rect" id="node3" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,76,253,193">
 <area shape="rect" id="node4" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="26,211,233,357">
 <area shape="rect" id="node5" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="13,375,246,521">
@@ -440,7 +486,7 @@
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
 <area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="708,15,859,167">
 <area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="409,5,552,93">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="297,111,664,591">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="297,111,664,649">
 <area shape="rect" id="node4" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,125,253,243">
 <area shape="rect" id="node5" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="26,260,233,407">
 <area shape="rect" id="node6" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="13,424,246,571">

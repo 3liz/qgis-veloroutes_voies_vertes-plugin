@@ -19,7 +19,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     arrowsize="0.8"
   ];
   "element":"id_portion":w -> "portion":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
-  "element":"id_segment":w -> "segment":"id_local.type":e [arrowhead=none dir=back arrowtail=crowodot];
+  "element":"id_segment":w -> "segment":"id_segment.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "segment":"avancement":w -> "etat_avancement_val":"code":e [arrowhead=none dir=back arrowtail=crowodot];
   "segment":"revetement":w -> "revetement_val":"code":e [arrowhead=none dir=back arrowtail=crowodot];
   "segment":"statut":w -> "statut_segment_val":"code":e [arrowhead=none dir=back arrowtail=crowodot];
@@ -76,7 +76,7 @@ digraph "twoDegreesRelationshipsDiagram" {
    label=<
     <TABLE BORDER="2" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="4"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>segment</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="id_local" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">id_local</TD></TR></TABLE></TD><TD PORT="id_local.type" ALIGN="LEFT">serial[10]</TD></TR>
+      <TR><TD PORT="id_segment" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">id_segment</TD></TR></TABLE></TD><TD PORT="id_segment.type" ALIGN="LEFT">serial[10]</TD></TR>
       <TR><TD PORT="annee_ouverture" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">annee_ouverture</TD></TR></TABLE></TD><TD PORT="annee_ouverture.type" ALIGN="LEFT">date[13]</TD></TR>
       <TR><TD PORT="date_saisie" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">date_saisie</TD></TR></TABLE></TD><TD PORT="date_saisie.type" ALIGN="LEFT">date[13]</TD></TR>
       <TR><TD PORT="src_geom" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">src_geom</TD></TR></TABLE></TD><TD PORT="src_geom.type" ALIGN="LEFT">text[2147483647]</TD></TR>
@@ -90,6 +90,8 @@ digraph "twoDegreesRelationshipsDiagram" {
       <TR><TD PORT="precision" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">precision</TD></TR></TABLE></TD><TD PORT="precision.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD PORT="sens_unique" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">sens_unique</TD></TR></TABLE></TD><TD PORT="sens_unique.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD PORT="geometrie_fictive" COLSPAN="2" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">geometrie_fictive</TD></TR></TABLE></TD><TD PORT="geometrie_fictive.type" ALIGN="LEFT">text[2147483647]</TD></TR>
+      <TR><TD PORT="id_on3v" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">id_on3v</TD></TR></TABLE></TD><TD PORT="id_on3v.type" ALIGN="LEFT">text[2147483647]</TD></TR>
+      <TR><TD PORT="id_local" COLSPAN="2" BGCOLOR="#ffffff" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="103" HEIGHT="16">id_local</TD></TR></TABLE></TD><TD PORT="id_local.type" ALIGN="LEFT">text[2147483647]</TD></TR>
       <TR><TD ALIGN="LEFT" BGCOLOR="#ffffff">&lt; 3</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">0 rows</TD><TD ALIGN="RIGHT" BGCOLOR="#ffffff">1 &gt;</TD></TR>
     </TABLE>>
     URL="segment.html"

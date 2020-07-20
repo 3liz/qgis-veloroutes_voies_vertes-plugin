@@ -9,8 +9,8 @@ repere_val
 revetement_val
 statut_segment_val
 portion
-repere
 itineraire
+repere
 segment
 poi_acces
 poi_service
