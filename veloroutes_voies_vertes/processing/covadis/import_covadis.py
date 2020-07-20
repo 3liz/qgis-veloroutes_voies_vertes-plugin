@@ -7,17 +7,19 @@ from qgis.core import (
     QgsProcessing,
     QgsProcessingParameterVectorLayer,
     QgsProcessingOutputString,
-    # QgsProcessingParameterMatrix,
-    # QgsParameterFieldMapping,
-    QgsProcessingParameterField,
+    QgsProcessingParameterMatrix,
+    # QgsProcessingParameterField,
     QgsProcessingParameterFeatureSink,
-    # QgsExpressionContextUtils,
+    QgsExpressionContextUtils,
     # QgsProviderRegistry,
-    QgsProcessingParameterString
+    QgsProcessingParameterString,
+    QgsVectorLayer
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
+from processing.tools.postgis import uri_from_name
+
 
 import processing
 
@@ -82,9 +84,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            "",
-            False,
-            False
+            'segment',
+            optional=True
+
         )
         table_param.setMetadata(
             {
@@ -97,51 +99,44 @@ class ImportCovadis(BaseProcessingAlgorithm):
         self.addParameter(table_param)
 
         # Couche à importer
-        parameter1 = QgsProcessingParameterVectorLayer(
+        couche = QgsProcessingParameterVectorLayer(
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue=None
+            defaultValue=('/Users/enolasengeissen/Documents/Stage_3Liz/'
+                          'data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg')
         )
-        self.addParameter(parameter1)
+        self.addParameter(couche)
 
-        # Liste des champs de la couche à importer
-        field_or = QgsProcessingParameterField(
-                'or_field',
-                'Champs d\'origine',
-                '',
-                self.INPUT)
-        self.addParameter(field_or)
+        # Liste des champs de la couche à importer --> fonctionne
+#        field_or = QgsProcessingParameterField(
+#                'or_field',
+#                'Champs d\'origine',
+#                '',
+#                self.INPUT)
+#        self.addParameter(field_or)
 
-        # Liste des champs de destination
+#        # Liste des champs de destination --> fonctionne pas
 #        field_dest = QgsProcessingParameterField(
 #                'dest_field',
 #                'Champs de destination',
 #                '',
 #                self.TABLE)
-#        field_dest.setParentLayerParameterName(self.TABLE)
 #        self.addParameter(field_dest)
 
-#        mapping = QgsParameterFieldMapping(  # Probleme on peut pas l'importer
-#                'mapping',
-#                'mapping',
-#                'segment',
-#                False)
-#        self.addParameter(mapping)
-
         # Paramètre pour le mapping de champs
-#        table = QgsProcessingParameterMatrix(
-#                'matrix',
-#                'matrix',
-#                headers=['Champs source', 'Champs destination'],
-#                defaultValue=["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-#                              "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-#                              "avancement", "REVETEMENT_COVADIS", "revetement",
-#                              "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-#                              "gestionnaire", "PRECISION_COVADIS", "precision",
-#                              "SOURCE", "src_geom", "SENS", "sens_unique",
-#                              "DATE_MODIF", "date_saisie"]
-#        )
+        table = QgsProcessingParameterMatrix(
+                'matrix',
+                'matrix',
+                headers=['Champs source', 'Champs destination'],
+                defaultValue=["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+                              "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+                              "avancement", "REVETEMENT_COVADIS", "revetement",
+                              "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+                              "gestionnaire", "PRECISION_COVADIS", "precision",
+                              "SOURCE", "src_geom", "SENS", "sens_unique",
+                              "DATE_MODIF", "date_saisie"]
+        )
 #        # itineraires
 #        ["ANNE_SUBVENTION_ITIN", "annee_subv", "SITE_WEB", "site_web", "NUMERO_ITIN",
 #         "numero", "NOM_USAGE", "nom_usage", "NOM_ITIN", "nom_officiel",
@@ -152,7 +147,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
 #         "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
-#        self.addParameter(table)
+        self.addParameter(table)
 
         outparam = QgsProcessingParameterFeatureSink(
                 self.OUTPUT,
@@ -208,40 +203,45 @@ class ImportCovadis(BaseProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
-#        project = context.project()
-#        connection_name = QgsExpressionContextUtils.projectScope(project).variable(
-#            "veloroutes_connection_name"
-#        )
+        project = context.project()
+        connection_name = QgsExpressionContextUtils.projectScope(project).variable(
+            "veloroutes_connection_name"
+        )
 #        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
 #        connection = metadata.findConnection(connection_name)
 
         results = {}
         outputs = {}
 
+        uri = uri_from_name(connection_name)
+        uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], "geom", "")
+        layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
+
         # Création du dictionnaire de correspondance des champs
 
-        # Format générque d'une correspondance entre champs
+        # Format générique d'une correspondance entre champs
         champs= {
-            'expression': '',
-            'length': 60,  # voir si on peut mettre nul..
-            'name': '',  # nom du champs de sortie, celui qu'on veut
-            'precision': 0,  # de sortie
-            'type': 10  # type de sortie
+            'expression': '',  # champs d'entrée
+            'length': 0,  # longueur de destinaion
+            'name': '',  # champs de destination
+            'precision': 0,  # precision de destinaton
+            'type': 10  # type de destination
         }
         matrix = parameters['matrix']
         field_map=[]
 
-        # On parcourt le tableau d'association des champs matrix
-        # pour fournir un paramètre à qgis:refactorfields
-        i=0
-        while i<len(matrix):
-            c = champs
-            c['expression'] = matrix[i]
-            c['name'] = matrix[i+1]
-            print(c)
-            ccopy= c.copy()
-            field_map.append(ccopy)
-            i = i+2
+        # Création du mapping de champs
+        for field in layer.fields():
+            if field.displayName() in matrix:
+                i = matrix.index(field.displayName())
+                c = champs
+                c['expression'] = matrix[i-1]
+                c['name'] = matrix[i]
+                c['precision']= field.precision()
+                c['type']=field.type()
+                c['length']=field.length()
+                ccopy= c.copy()
+                field_map.append(ccopy)
 
         # Refactorisation des champs
         refact_params = {
@@ -257,9 +257,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             is_child_algorithm=True)
 
         results['couchecov'] = outputs['RefactoriserLesChamps']['OUTPUT']
-        i = self.parameterAsEnums(parameters, self.TABLE, context)[0]
-        table = self.TABLE_LIST[i]
-        print(table)
+#        i = self.parameterAsEnums(parameters, self.TABLE, context)[0]
+#        table = self.TABLE_LIST[i]
 
         # Exporter dans PostgreSQL
 #        self.toPostgres(
