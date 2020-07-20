@@ -2809,10 +2809,10 @@ SELECT pg_catalog.setval('veloroutes.etape_id_seq', 5, false);
 --
 -- TOC entry 4851 (class 0 OID 0)
 -- Dependencies: 221
--- Name: itineraire_id_local_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
+-- Name: itineraire_id_iti_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
 --
 
-SELECT pg_catalog.setval('veloroutes.itineraire_id_local_seq', 8, false);
+SELECT pg_catalog.setval('veloroutes.itineraire_id_iti_seq', 8, false);
 
 
 --
@@ -2854,10 +2854,10 @@ SELECT pg_catalog.setval('veloroutes.poi_tourisme_id_local_seq', 18, false);
 --
 -- TOC entry 4861 (class 0 OID 0)
 -- Dependencies: 242
--- Name: portion_id_local_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
+-- Name: portion_id_portion_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
 --
 
-SELECT pg_catalog.setval('veloroutes.portion_id_local_seq', 8, false);
+SELECT pg_catalog.setval('veloroutes.portion_id_portion_seq', 8, false);
 
 
 --
@@ -2872,7 +2872,7 @@ SELECT pg_catalog.setval('veloroutes.repere_id_local_seq', 29, false);
 --
 -- TOC entry 4866 (class 0 OID 0)
 -- Dependencies: 252
--- Name: segment_id_local_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
+-- Name: segment_id_segment_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
 --
 
-SELECT pg_catalog.setval('veloroutes.segment_id_local_seq', 20134, false);
+SELECT pg_catalog.setval('veloroutes.segment_id_segment_seq', 20134, false);

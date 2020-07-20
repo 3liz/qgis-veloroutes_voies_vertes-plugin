@@ -5,7 +5,7 @@
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
-  <renderer-v2 symbollevels="1" enableorderby="0" forceraster="0" type="categorizedSymbol" attr="id_local">
+  <renderer-v2 symbollevels="1" enableorderby="0" forceraster="0" type="categorizedSymbol" attr="id_portion">
     <categories>
       <category render="true" symbol="0" value="1" label="1"/>
       <category render="true" symbol="1" value="2" label="2"/>
@@ -571,7 +571,7 @@
     </settings>
   </labeling>
   <customproperties>
-    <property value="id_local" key="dualview/previewExpressions"/>
+    <property value="id_portion" key="dualview/previewExpressions"/>
     <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
@@ -599,7 +599,7 @@
     <checkConfiguration/>
   </geometryOptions>
   <fieldConfiguration>
-    <field name="id_local">
+    <field name="id_portion">
       <editWidget type="Range">
         <config>
           <Option type="Map">
@@ -657,7 +657,7 @@
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="id_local" index="0"/>
+    <alias name="" field="id_portion" index="0"/>
     <alias name="" field="nom" index="1"/>
     <alias name="" field="description" index="2"/>
     <alias name="" field="type_portion" index="3"/>
@@ -665,19 +665,19 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" applyOnUpdate="0" field="id_local"/>
+    <default expression="" applyOnUpdate="0" field="id_portion"/>
     <default expression="" applyOnUpdate="0" field="nom"/>
     <default expression="" applyOnUpdate="0" field="description"/>
     <default expression="" applyOnUpdate="0" field="type_portion"/>
   </defaults>
   <constraints>
-    <constraint unique_strength="1" exp_strength="0" field="id_local" constraints="3" notnull_strength="1"/>
+    <constraint unique_strength="1" exp_strength="0" field="id_portion" constraints="3" notnull_strength="1"/>
     <constraint unique_strength="0" exp_strength="0" field="nom" constraints="0" notnull_strength="0"/>
     <constraint unique_strength="0" exp_strength="0" field="description" constraints="0" notnull_strength="0"/>
     <constraint unique_strength="0" exp_strength="0" field="type_portion" constraints="0" notnull_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint field="id_local" desc="" exp=""/>
+    <constraint field="id_portion" desc="" exp=""/>
     <constraint field="nom" desc="" exp=""/>
     <constraint field="description" desc="" exp=""/>
     <constraint field="type_portion" desc="" exp=""/>
@@ -688,7 +688,7 @@
   </attributeactions>
   <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column name="id_local" hidden="0" type="field" width="-1"/>
+      <column name="id_portion" hidden="0" type="field" width="-1"/>
       <column name="nom" hidden="0" type="field" width="-1"/>
       <column name="description" hidden="0" type="field" width="292"/>
       <column name="type_portion" hidden="0" type="field" width="262"/>
@@ -726,34 +726,34 @@ def my_form_open(dialog, layer, feature):
     <attributeEditorField name="nom" showLabel="1" index="1"/>
     <attributeEditorField name="description" showLabel="1" index="2"/>
     <attributeEditorField name="type_portion" showLabel="1" index="3"/>
-    <attributeEditorRelation showLinkButton="1" name="element_87_id_portion_v_portion__id_local" showLabel="1" showUnlinkButton="1" relation="element_87_id_portion_v_portion__id_local"/>
-    <attributeEditorRelation showLinkButton="1" name="etape_7d2f_id_portion_v_portion__id_local" showLabel="1" showUnlinkButton="1" relation="etape_7d2f_id_portion_v_portion__id_local"/>
+    <attributeEditorRelation showLinkButton="1" name="element_87_id_portion_v_portion__id_portion" showLabel="1" showUnlinkButton="1" relation="element_87_id_portion_v_portion__id_portion"/>
+    <attributeEditorRelation showLinkButton="1" name="etape_7d2f_id_portion_v_portion__id_portion" showLabel="1" showUnlinkButton="1" relation="etape_7d2f_id_portion_v_portion__id_portion"/>
   </attributeEditorForm>
   <editable>
     <field name="description" editable="1"/>
-    <field name="id_local" editable="1"/>
+    <field name="id_portion" editable="1"/>
     <field name="nom" editable="1"/>
     <field name="type_portion" editable="1"/>
   </editable>
   <labelOnTop>
     <field name="description" labelOnTop="0"/>
-    <field name="id_local" labelOnTop="0"/>
+    <field name="id_portion" labelOnTop="0"/>
     <field name="nom" labelOnTop="0"/>
     <field name="type_portion" labelOnTop="0"/>
   </labelOnTop>
   <widgets>
-    <widget name="element_87_id_portion_v_portion__id_local">
+    <widget name="element_87_id_portion_v_portion__id_portion">
       <config type="Map">
         <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
-    <widget name="etape_7d2f_id_portion_v_portion__id_local">
+    <widget name="etape_7d2f_id_portion_v_portion__id_portion">
       <config type="Map">
         <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
   </widgets>
-  <previewExpression>id_local</previewExpression>
+  <previewExpression>id_portion</previewExpression>
   <mapTip></mapTip>
   <layerGeometryType>1</layerGeometryType>
 </qgis>

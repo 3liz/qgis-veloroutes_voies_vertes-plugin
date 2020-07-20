@@ -25,7 +25,7 @@
             <Option type="bool" name="MapIdentification" value="true"/>
             <Option type="bool" name="OrderByValue" value="false"/>
             <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="etape_7d2f_id_portion_v_portion__id_local"/>
+            <Option type="QString" name="Relation" value="etape_7d2f_id_portion_v_portion__id_portion"/>
             <Option type="bool" name="ShowForm" value="false"/>
             <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>
@@ -41,7 +41,7 @@
             <Option type="bool" name="MapIdentification" value="true"/>
             <Option type="bool" name="OrderByValue" value="false"/>
             <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="etape_7d2f_id_itineraire_v_itinerai_id_local"/>
+            <Option type="QString" name="Relation" value="etape_7d2f_id_itineraire_v_itinerai_id_iti"/>
             <Option type="bool" name="ShowForm" value="false"/>
             <Option type="bool" name="ShowOpenFormButton" value="true"/>
           </Option>

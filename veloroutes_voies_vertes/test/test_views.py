@@ -18,7 +18,7 @@ class TestViews(DatabaseTestCase):
         """ Test if v_portion view is editable"""
 
         # Get the last id given in v_portion
-        curr_id="""SELECT max(veloroutes.v_portion.id_local) FROM veloroutes.v_portion"""
+        curr_id="""SELECT max(veloroutes.v_portion.id_portion) FROM veloroutes.v_portion"""
         self.cursor.execute(curr_id)
         # Id expected for the next insert in v_portion
         last_id= self.cursor.fetchone()[0]+1
@@ -29,7 +29,7 @@ class TestViews(DatabaseTestCase):
             VALUES ('nom portion',
             'sa description',
             'ETP',
-            (SELECT vp.geom FROM veloroutes.v_portion as vp WHERE vp.id_local =5))
+            (SELECT vp.geom FROM veloroutes.v_portion as vp WHERE vp.id_portion =5))
         """
         self.cursor.execute(sql)
 
@@ -37,7 +37,7 @@ class TestViews(DatabaseTestCase):
         self.cursor.execute("SELECT * FROM veloroutes.portion")
         last_port = self.cursor.fetchall()
         expected = (last_id, 'nom portion', 'sa description', 'ETP')
-        self.assertTupleEqual(last_port[-1], expected)
+        self.assertTupleEqual(last_port[-1][:4], expected)
 
         # Check that new row(s) are added in element
         elem = """
@@ -51,7 +51,7 @@ class TestViews(DatabaseTestCase):
 
         # Check that the new row was inserted in v_portion
         vport = """
-            SELECT veloroutes.v_portion.id_local,
+            SELECT veloroutes.v_portion.id_portion,
             veloroutes.v_portion.nom,
             veloroutes.v_portion.description,
             veloroutes.v_portion.type_portion
@@ -66,7 +66,7 @@ class TestViews(DatabaseTestCase):
         """ Test if v_itineraire view is editable"""
 
         # Get the last id given in v_itineraire
-        curr_id="SELECT max(veloroutes.v_itineraire.id_local) FROM veloroutes.v_itineraire"
+        curr_id="SELECT max(veloroutes.v_itineraire.id_iti) FROM veloroutes.v_itineraire"
         self.cursor.execute(curr_id)
         # Id expected for the next insert in v_itineraire
         last_itid= self.cursor.fetchone()[0]+1
@@ -75,13 +75,13 @@ class TestViews(DatabaseTestCase):
         sql = """
             INSERT INTO veloroutes.v_itineraire(numero,geom)
             VALUES ('numero test',
-            (SELECT i.geom FROM veloroutes.v_itineraire as i WHERE i.id_local =6))
+            (SELECT i.geom FROM veloroutes.v_itineraire as i WHERE i.id_iti =6))
         """
         self.cursor.execute(sql)
 
         # Check that the corresponding portion was added in itineraire
         iti = """
-        SELECT veloroutes.itineraire.id_local,
+        SELECT veloroutes.itineraire.id_iti,
         veloroutes.itineraire.numero
         FROM veloroutes.itineraire
         """
@@ -101,7 +101,7 @@ class TestViews(DatabaseTestCase):
 
         # Check that the new row was inserted in v_itineraire
         vitin = """
-            SELECT veloroutes.v_itineraire.id_local,
+            SELECT veloroutes.v_itineraire.id_iti,
             veloroutes.v_itineraire.numero
             FROM veloroutes.v_itineraire
         """
