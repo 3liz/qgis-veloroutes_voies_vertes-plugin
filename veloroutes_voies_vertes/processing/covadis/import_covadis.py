@@ -163,34 +163,34 @@ class ImportCovadis(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-#    def toPostgres(self, conn, table, refact, context, feedback):
-#        """
-#        Fonction qui refactorise les champs
-#        et importe les fichiers dans un schema imports
-#        """
-#
-#        table_name = 'import_'+table
-#
-#        export_params = {
-#            'CREATEINDEX': True,
-#            'DATABASE': conn,
-#            'DROP_STRING_LENGTH': True,
-#            'ENCODING': 'UTF-8',
-#            'FORCE_SINGLEPART': True,
-#            'GEOMETRY_COLUMN': "geom",
-#            'INPUT': refact,
-#            'LOWERCASE_NAMES': True,
-#            'OVERWRITE': True,
-#            'PRIMARY_KEY': None,
-#            'SCHEMA': 'imports',
-#            'TABLENAME': table_name
-#        }
-#        processing.run(
-#                'qgis:importintopostgis',
-#                export_params,
-#                context=context, feedback=feedback, is_child_algorithm=True
-#        )
-#
+    def toPostgres(self, conn, table, refact, context, feedback):
+        """
+        Fonction qui refactorise les champs
+        et importe les fichiers dans un schema imports
+        """
+
+        table_name = 'import_'+table
+
+        export_params = {
+            'CREATEINDEX': True,
+            'DATABASE': conn,
+            'DROP_STRING_LENGTH': True,
+            'ENCODING': 'UTF-8',
+            'FORCE_SINGLEPART': True,
+            'GEOMETRY_COLUMN': "geom",
+            'INPUT': refact,
+            'LOWERCASE_NAMES': True,
+            'OVERWRITE': True,
+            'PRIMARY_KEY': None,
+            'SCHEMA': 'imports',
+            'TABLENAME': table_name
+        }
+        processing.run(
+                'qgis:importintopostgis',
+                export_params,
+                context=context, feedback=feedback, is_child_algorithm=True
+        )
+
 #    def toVeloroutes(self, connection, table):
 #        """
 #        Fonction qui adapte les données si besoin
@@ -232,13 +232,14 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Création du mapping de champs
         for field in layer.fields():
-            if field.displayName() in matrix:
-                i = matrix.index(field.displayName())
+            name=field.displayName()
+            if name in matrix:
+                i = matrix.index(name)
                 c = champs
                 c['expression'] = matrix[i-1]
-                c['name'] = matrix[i]
+                c['name']=name
                 c['precision']= field.precision()
-                c['type']=field.type()
+#                c['type']=field.type()  # issues for date type where input data don't fits
                 c['length']=field.length()
                 ccopy= c.copy()
                 field_map.append(ccopy)
@@ -249,7 +250,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'INPUT': parameters[self.INPUT],
             'OUTPUT': parameters[self.OUTPUT]
         }
-        outputs['RefactoriserLesChamps'] = processing.run(
+
+        outputs['RefactoriserLesChamps'] = processing.run(  # à retirer plus tard
             'qgis:refactorfields',
             refact_params,
             context=context,
@@ -257,13 +259,14 @@ class ImportCovadis(BaseProcessingAlgorithm):
             is_child_algorithm=True)
 
         results['couchecov'] = outputs['RefactoriserLesChamps']['OUTPUT']
-#        i = self.parameterAsEnums(parameters, self.TABLE, context)[0]
-#        table = self.TABLE_LIST[i]
+        table=layer.name()
 
         # Exporter dans PostgreSQL
-#        self.toPostgres(
-#                connection_name, table, outputs['RefactoriserLesChamps']['OUTPUT'],
-#                context, feedback)
+        self.toPostgres(
+                connection_name,
+                table,
+                outputs['RefactoriserLesChamps']['OUTPUT'],
+                context, feedback)
 
         # Importer la table dans veloroutes
 #        self.toVeloroutes(connection, table)
