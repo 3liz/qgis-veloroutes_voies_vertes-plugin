@@ -79,22 +79,22 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val
 
 -- portion id_local
 ALTER TABLE ONLY veloroutes.portion
-    ADD CONSTRAINT id_local UNIQUE (id_local);
+    ADD CONSTRAINT portion_id_local UNIQUE (id_local);
 
 
 -- segment id_local2
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT id_local2 UNIQUE (id_local);
+    ADD CONSTRAINT segment_id_local UNIQUE (id_local);
 
 
 -- portion id_on3v
 ALTER TABLE ONLY veloroutes.portion
-    ADD CONSTRAINT id_on3v UNIQUE (id_on3v);
+    ADD CONSTRAINT portion_id_on3v UNIQUE (id_on3v);
 
 
--- segment id_on3v2
+-- segment id_on3v
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT id_on3v2 UNIQUE (id_on3v);
+    ADD CONSTRAINT segment_id_on3v UNIQUE (id_on3v);
 
 
 -- itineraire itineraire_pkey
@@ -275,4 +275,3 @@ ALTER TABLE ONLY veloroutes.portion
 --
 -- PostgreSQL database dump complete
 --
-
