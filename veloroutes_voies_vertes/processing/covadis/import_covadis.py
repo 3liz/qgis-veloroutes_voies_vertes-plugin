@@ -130,12 +130,12 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-         "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-         "avancement", "REVETEMENT_COVADIS", "revetement",
-         "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-         "gestionnaire", "PRECISION_COVADIS", "precision",
-         "SOURCE", "src_geom", "SENS", "sens_unique",
-         "DATE_MODIF", "date_saisie"]
+                              "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+                              "avancement", "REVETEMENT_COVADIS", "revetement",
+                              "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+                              "gestionnaire", "PRECISION_COVADIS", "precision",
+                              "SOURCE", "src_geom", "SENS", "sens_unique",
+                              "DATE_MODIF", "date_saisie"]
         )
 #        # segment
 #        ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
