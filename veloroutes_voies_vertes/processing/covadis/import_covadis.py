@@ -130,13 +130,22 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-                              "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-                              "avancement", "REVETEMENT_COVADIS", "revetement",
-                              "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-                              "gestionnaire", "PRECISION_COVADIS", "precision",
-                              "SOURCE", "src_geom", "SENS", "sens_unique",
-                              "DATE_MODIF", "date_saisie"]
+         "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+         "avancement", "REVETEMENT_COVADIS", "revetement",
+         "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+         "gestionnaire", "PRECISION_COVADIS", "precision",
+         "SOURCE", "src_geom", "SENS", "sens_unique",
+         "DATE_MODIF", "date_saisie"]
         )
+#        # segment
+#        ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+#         "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+#         "avancement", "REVETEMENT_COVADIS", "revetement",
+#         "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+#         "gestionnaire", "PRECISION_COVADIS", "precision",
+#         "SOURCE", "src_geom", "SENS", "sens_unique",
+#         "DATE_MODIF", "date_saisie"]
+#
 #        # itineraires
 #        ["ANNE_SUBVENTION_ITIN", "annee_subv", "SITE_WEB", "site_web", "NUMERO_ITIN",
 #         "numero", "NOM_USAGE", "nom_usage", "NOM_ITIN", "nom_officiel",
@@ -213,8 +222,13 @@ class ImportCovadis(BaseProcessingAlgorithm):
         results = {}
         outputs = {}
 
+        geom = None
+        geomlayer=["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
+        if parameters[self.TABLE] in geomlayer:
+            geom = "geom"
+
         uri = uri_from_name(connection_name)
-        uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], "geom", "")
+        uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], geom, "")
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
 
         # Création du dictionnaire de correspondance des champs
@@ -232,6 +246,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Création du mapping de champs
         for field in layer.fields():
+            print(field)
+            print("hello")
             name=field.displayName()
             if name in matrix:
                 i = matrix.index(name)
