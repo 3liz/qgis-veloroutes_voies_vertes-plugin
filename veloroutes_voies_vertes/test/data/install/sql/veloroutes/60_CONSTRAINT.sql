@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,15 +12,14 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
 
--- niveau_administratif_val FKcode
+-- niveau_administratif_val code1
 ALTER TABLE ONLY veloroutes.niveau_administratif_val
-    ADD CONSTRAINT "FKcode" UNIQUE (code);
+    ADD CONSTRAINT code1 UNIQUE (code);
 
 
 -- poi_acces_val code2
@@ -55,12 +54,12 @@ ALTER TABLE ONLY veloroutes.revetement_val
 
 -- statut_segment_val code8
 ALTER TABLE ONLY veloroutes.statut_segment_val
-    ADD CONSTRAINT code8 PRIMARY KEY (code);
+    ADD CONSTRAINT code8 UNIQUE (code);
 
 
--- etat_avancement_val codeFK
+-- etat_avancement_val code9
 ALTER TABLE ONLY veloroutes.etat_avancement_val
-    ADD CONSTRAINT "codeFK" UNIQUE (code);
+    ADD CONSTRAINT code9 UNIQUE (code);
 
 
 -- element element_pkey
@@ -78,9 +77,29 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val
     ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (code);
 
 
+-- portion id_local
+ALTER TABLE ONLY veloroutes.portion
+    ADD CONSTRAINT portion_id_local UNIQUE (id_local);
+
+
+-- segment id_local2
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT segment_id_local UNIQUE (id_local);
+
+
+-- portion id_on3v
+ALTER TABLE ONLY veloroutes.portion
+    ADD CONSTRAINT portion_id_on3v UNIQUE (id_on3v);
+
+
+-- segment id_on3v
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT segment_id_on3v UNIQUE (id_on3v);
+
+
 -- itineraire itineraire_pkey
 ALTER TABLE ONLY veloroutes.itineraire
-    ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_local);
+    ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_iti);
 
 
 -- liaison liaison_pkey
@@ -88,14 +107,19 @@ ALTER TABLE ONLY veloroutes.liaison
     ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_local);
 
 
+-- metadata metadata_me_version_key
+ALTER TABLE ONLY veloroutes.metadata
+    ADD CONSTRAINT metadata_me_version_key UNIQUE (me_version);
+
+
+-- metadata metadata_pkey
+ALTER TABLE ONLY veloroutes.metadata
+    ADD CONSTRAINT metadata_pkey PRIMARY KEY (id);
+
+
 -- niveau_administratif_val niveau_administratif_val_pkey1
 ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT niveau_administratif_val_pkey1 PRIMARY KEY (id);
-
-
--- etape order_etape
-ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT order_etape UNIQUE (etape);
 
 
 -- poi_acces_val poi_acces_val_pkey1
@@ -130,7 +154,7 @@ ALTER TABLE ONLY veloroutes.poi_tourisme_val
 
 -- portion portion_pkey
 ALTER TABLE ONLY veloroutes.portion
-    ADD CONSTRAINT portion_pkey PRIMARY KEY (id_local);
+    ADD CONSTRAINT portion_pkey PRIMARY KEY (id_portion);
 
 
 -- portion_val portion_val_pkey1
@@ -155,7 +179,12 @@ ALTER TABLE ONLY veloroutes.revetement_val
 
 -- segment segment_pkey
 ALTER TABLE ONLY veloroutes.segment
-    ADD CONSTRAINT segment_pkey PRIMARY KEY (id_local);
+    ADD CONSTRAINT segment_pkey PRIMARY KEY (id_segment);
+
+
+-- statut_segment_val statut_segment_val_pkey
+ALTER TABLE ONLY veloroutes.statut_segment_val
+    ADD CONSTRAINT statut_segment_val_pkey PRIMARY KEY (id);
 
 
 -- segment avancement
@@ -163,9 +192,24 @@ ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code);
 
 
--- etape itineraire
+-- element element_portion_segment
+ALTER TABLE ONLY veloroutes.element
+    ADD CONSTRAINT element_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
+
+
+-- element element_segment
+ALTER TABLE ONLY veloroutes.element
+    ADD CONSTRAINT element_segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_segment);
+
+
+-- etape etape_itineraire_portion
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT itineraire FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_local);
+    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_iti);
+
+
+-- etape etape_portion_segment
+ALTER TABLE ONLY veloroutes.etape
+    ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
 
 
 -- itineraire niveau_schema
@@ -185,17 +229,7 @@ ALTER TABLE ONLY veloroutes.liaison
 
 -- frequentation portion
 ALTER TABLE ONLY veloroutes.frequentation
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local) NOT VALID;
-
-
--- etape portion
-ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
-
-
--- element portion
-ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_local);
+    ADD CONSTRAINT portion FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion) NOT VALID;
 
 
 -- frequentation repere
@@ -211,11 +245,6 @@ ALTER TABLE ONLY veloroutes.liaison
 -- segment revetement
 ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code);
-
-
--- element segment
-ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_local);
 
 
 -- segment statut
@@ -246,4 +275,3 @@ ALTER TABLE ONLY veloroutes.portion
 --
 -- PostgreSQL database dump complete
 --
-

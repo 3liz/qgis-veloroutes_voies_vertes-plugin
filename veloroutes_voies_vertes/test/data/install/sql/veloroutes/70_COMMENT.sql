@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -21,6 +22,14 @@ COMMENT ON FUNCTION veloroutes.numserie() IS 'Empêche que le numéro de série 
 
 -- FUNCTION revet()
 COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
+
+
+-- FUNCTION v_itineraire_insert()
+COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire';
+
+
+-- FUNCTION v_portion_insert()
+COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion';
 
 
 -- element
@@ -121,8 +130,8 @@ COMMENT ON COLUMN veloroutes.itineraire.depart IS 'Nom de la localité située a
 COMMENT ON COLUMN veloroutes.itineraire.arrivee IS 'Nom de la localité située à l''arrivée de l’itinéraire';
 
 
--- itineraire.id_local
-COMMENT ON COLUMN veloroutes.itineraire.id_local IS 'Identifiant de l''itinéraire cyclable';
+-- itineraire.id_iti
+COMMENT ON COLUMN veloroutes.itineraire.id_iti IS 'Identifiant de l''itinéraire cyclable';
 
 
 -- itineraire.annee_inscription
@@ -146,6 +155,14 @@ COMMENT ON COLUMN veloroutes.itineraire.niveau_schema IS 'Niveau administratif d
 
 -- itineraire.est_inscrit
 COMMENT ON COLUMN veloroutes.itineraire.est_inscrit IS 'Vrai si l’itinéraire est inscrit à un schéma de développement des véloroutes';
+
+
+-- itineraire.mont_subv
+COMMENT ON COLUMN veloroutes.itineraire.mont_subv IS 'Montant de la subvention de l''itinéraire';
+
+
+-- itineraire.annee_subv
+COMMENT ON COLUMN veloroutes.itineraire.annee_subv IS 'Année de la subvention';
 
 
 -- liaison
@@ -174,6 +191,10 @@ COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repè
 
 -- liaison.id_poi
 COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérêt que la liaison dessert (clé étrangère)';
+
+
+-- liaison.geom
+COMMENT ON COLUMN veloroutes.liaison.geom IS 'Géométrie';
 
 
 -- metadata
@@ -340,8 +361,8 @@ COMMENT ON COLUMN veloroutes.poi_tourisme_val.libelle IS 'Libellé';
 COMMENT ON TABLE veloroutes.portion IS 'Portion d’itinéraire cyclable, collection de segments cyclables';
 
 
--- portion.id_local
-COMMENT ON COLUMN veloroutes.portion.id_local IS 'Identifiant de la portion cyclable';
+-- portion.id_portion
+COMMENT ON COLUMN veloroutes.portion.id_portion IS 'Clé primaire';
 
 
 -- portion.nom
@@ -354,6 +375,22 @@ COMMENT ON COLUMN veloroutes.portion.description IS 'Information donnant des dé
 
 -- portion.type_portion
 COMMENT ON COLUMN veloroutes.portion.type_portion IS 'Rôle que joue la portion par rapport à l’itinéraire principal auquel elle se rapporte (clé étrangère)';
+
+
+-- portion.id_on3v
+COMMENT ON COLUMN veloroutes.portion.id_on3v IS 'Identifiant créé et géré par l''ON3V';
+
+
+-- portion.id_local
+COMMENT ON COLUMN veloroutes.portion.id_local IS 'Identifiant créé et géré par l''organisme local';
+
+
+-- portion.mont_subv
+COMMENT ON COLUMN veloroutes.portion.mont_subv IS 'Montant de la subvention de la portion';
+
+
+-- portion.annee_subv
+COMMENT ON COLUMN veloroutes.portion.annee_subv IS 'Année de la subvention';
 
 
 -- portion_val
@@ -432,8 +469,8 @@ COMMENT ON COLUMN veloroutes.revetement_val.libelle IS 'Libellé';
 COMMENT ON TABLE veloroutes.segment IS 'Segment cyclable';
 
 
--- segment.id_local
-COMMENT ON COLUMN veloroutes.segment.id_local IS 'Identifiant du segment cyclable';
+-- segment.id_segment
+COMMENT ON COLUMN veloroutes.segment.id_segment IS 'Clé primaire';
 
 
 -- segment.annee_ouverture
@@ -488,6 +525,14 @@ COMMENT ON COLUMN veloroutes.segment.sens_unique IS 'Indique si le segment se pa
 COMMENT ON COLUMN veloroutes.segment.geometrie_fictive IS 'Indique si le tracé de la section de véloroute est inconnu ou approximatif';
 
 
+-- segment.id_on3v
+COMMENT ON COLUMN veloroutes.segment.id_on3v IS 'Identifiant créé et géré par l''ON3V';
+
+
+-- segment.id_local
+COMMENT ON COLUMN veloroutes.segment.id_local IS 'Identifiant créé et géré par l''organisme local';
+
+
 -- statut_segment_val
 COMMENT ON TABLE veloroutes.statut_segment_val IS 'Nomenclature pour le statut réglementaire du segment cyclable';
 
@@ -502,6 +547,33 @@ COMMENT ON COLUMN veloroutes.statut_segment_val.code IS 'Code';
 
 -- statut_segment_val.libelle
 COMMENT ON COLUMN veloroutes.statut_segment_val.libelle IS 'Libellé';
+
+
+-- VIEW v_itin_geom
+COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itinéraires aux collections de géométries des segments qui les composent
+';
+
+
+-- VIEW v_itineraire
+COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent
+';
+
+
+-- VIEW v_port_geom
+COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les portions aux collections de géométries des segments qui les composent
+';
+
+
+-- VIEW v_portion
+COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
+
+
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+
+
+-- TRIGGER insert_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- TRIGGER numserie ON repere
