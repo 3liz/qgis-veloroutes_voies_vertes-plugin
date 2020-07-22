@@ -130,7 +130,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-         "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
+                              "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
         )
 #        # segment
 #        ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
