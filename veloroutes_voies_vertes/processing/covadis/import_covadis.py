@@ -8,9 +8,7 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
     QgsProcessingOutputString,
     QgsProcessingParameterMatrix,
-    # QgsProcessingParameterField,
     QgsProcessingParameterFeatureSink,
-    QgsExpressionContextUtils,
     QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer
@@ -29,12 +27,12 @@ class ImportCovadis(BaseProcessingAlgorithm):
     Import des données conformément au standard COVADIS
     """
 
-    INPUT = "INPUT"
-    TABLE = "TABLE"
+    INPUT="INPUT"
+    TABLE="TABLE"
     OUTPUT="OUTPUT"  # à retirer plus tard
-    OUTPUT_MSG = "OUTPUT MSG"
-    SCHEMA = "veloroutes"
-    DATABASE = "vvv"
+    OUTPUT_MSG="OUTPUT MSG"
+    SCHEMA="veloroutes"
+    DATABASE="vvv"
 
     def name(self):
         return "import_covadis"
@@ -86,7 +84,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
             tr("Table de destination"),
             'segment',
             optional=True
-
         )
         table_param.setMetadata(
             {
@@ -109,20 +106,20 @@ class ImportCovadis(BaseProcessingAlgorithm):
         self.addParameter(couche)
 
         # Liste des champs de la couche à importer --> fonctionne
-#        field_or = QgsProcessingParameterField(
-#                'or_field',
-#                'Champs d\'origine',
-#                '',
-#                self.INPUT)
-#        self.addParameter(field_or)
+        # field_or = QgsProcessingParameterField(
+        #        'or_field',
+        #        'Champs d\'origine',
+        #        '',
+        #        self.INPUT)
+        # self.addParameter(field_or)
 
-#        # Liste des champs de destination --> fonctionne pas
-#        field_dest = QgsProcessingParameterField(
-#                'dest_field',
-#                'Champs de destination',
-#                '',
-#                self.TABLE)
-#        self.addParameter(field_dest)
+        # Liste des champs de destination --> fonctionne pas
+        # field_dest = QgsProcessingParameterField(
+        #        'dest_field',
+        #        'Champs de destination',
+        #        '',
+        #        self.TABLE)
+        # self.addParameter(field_dest)
 
         # Paramètre pour le mapping de champs
         table = QgsProcessingParameterMatrix(
@@ -130,17 +127,23 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
-                    "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-                    "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
+                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+                    "avancement", "REVETEMENT_COVADIS", "revetement",
+                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+                    "gestionnaire", "PRECISION_COVADIS", "precision",
+                    "SOURCE", "src_geom", "SENS", "sens_unique",
+                    "DATE_MODIF", "date_saisie"]
         )
+        self.addParameter(table)
 #        # segment
-#        ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-#         "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-#         "avancement", "REVETEMENT_COVADIS", "revetement",
-#         "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-#         "gestionnaire", "PRECISION_COVADIS", "precision",
-#         "SOURCE", "src_geom", "SENS", "sens_unique",
-#         "DATE_MODIF", "date_saisie"]
+    #    ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+    #     "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+    #     "avancement", "REVETEMENT_COVADIS", "revetement",
+    #     "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+    #     "gestionnaire", "PRECISION_COVADIS", "precision",
+    #     "SOURCE", "src_geom", "SENS", "sens_unique",
+    #     "DATE_MODIF", "date_saisie"]
 #
 #        # itineraires
 #        ["SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
@@ -152,7 +155,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
 #         "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
-        self.addParameter(table)
 
         outparam = QgsProcessingParameterFeatureSink(
                 self.OUTPUT,
@@ -163,22 +165,22 @@ class ImportCovadis(BaseProcessingAlgorithm):
         )
         self.addParameter(outparam)
 
-#        # OUTPUTS
+        # OUTPUTS
         self.addOutput(
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def toPostgres(self, conn, table, refact, context, feedback):
+    def toPostgres(self, db, table, refact, context, feedback):
         """
         Fonction qui refactorise les champs
         et importe les fichiers dans un schema imports
         """
 
-        table_name = 'import_'+table
+        table_name = 'import2_'+table
 
         export_params = {
             'CREATEINDEX': True,
-            'DATABASE': conn,
+            'DATABASE': db,
             'DROP_STRING_LENGTH': True,
             'ENCODING': 'UTF-8',
             'FORCE_SINGLEPART': True,
@@ -202,28 +204,26 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et insère la table dans le schéma veloroutes
         """
 
-        sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
+        # sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
+        sql = "SELECT veloroutes.message()"
         connection.executeSql(sql)
 
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
-        project = context.project()
-        connection_name = QgsExpressionContextUtils.projectScope(project).variable(
-            "veloroutes_connection_name"
-        )
-        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-        connection = metadata.findConnection(connection_name)
-
         results = {}
         outputs = {}
+
+        connection = self.parameterAsString(parameters, self.DATABASE, context)
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        conn = metadata.findConnection(connection)
 
         geom = None
         geomlayer=["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         if parameters[self.TABLE] in geomlayer:
             geom = "geom"
 
-        uri = uri_from_name(connection_name)
+        uri = uri_from_name(connection)
         uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], geom, "")
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
 
@@ -242,8 +242,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Création du mapping de champs
         for field in layer.fields():
-            print(field)
-            print("hello")
             name=field.displayName()
             if name in matrix:
                 i = matrix.index(name)
@@ -275,12 +273,12 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Exporter dans PostgreSQL
         self.toPostgres(
-                connection_name,
+                parameters[self.DATABASE],
                 table,
                 outputs['RefactoriserLesChamps']['OUTPUT'],
                 context, feedback)
 
         # Importer la table dans veloroutes
-        self.toVeloroutes(connection, table)
+        self.toVeloroutes(conn, table)
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: results}
