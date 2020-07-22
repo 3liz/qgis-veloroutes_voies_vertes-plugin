@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -120,12 +121,14 @@ CREATE TABLE veloroutes.itineraire (
     nom_usage text,
     depart text,
     arrivee text,
-    id_local integer NOT NULL,
+    id_iti integer NOT NULL,
     annee_inscription date,
     site_web text,
     annee_ouverture date,
     niveau_schema text,
-    est_inscrit text
+    est_inscrit text,
+    mont_subv real,
+    annee_subv date
 );
 
 
@@ -133,8 +136,8 @@ CREATE TABLE veloroutes.itineraire (
 COMMENT ON TABLE veloroutes.itineraire IS 'Itinéraire cyclable, véloroute.';
 
 
--- itineraire_id_local_seq
-CREATE SEQUENCE veloroutes.itineraire_id_local_seq
+-- itineraire_id_iti_seq
+CREATE SEQUENCE veloroutes.itineraire_id_iti_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -143,8 +146,8 @@ CREATE SEQUENCE veloroutes.itineraire_id_local_seq
     CACHE 1;
 
 
--- itineraire_id_local_seq
-ALTER SEQUENCE veloroutes.itineraire_id_local_seq OWNED BY veloroutes.itineraire.id_local;
+-- itineraire_id_iti_seq
+ALTER SEQUENCE veloroutes.itineraire_id_iti_seq OWNED BY veloroutes.itineraire.id_iti;
 
 
 -- liaison
@@ -154,7 +157,8 @@ CREATE TABLE veloroutes.liaison (
     src_annee text,
     id_local integer NOT NULL,
     id_repere integer,
-    id_poi integer
+    id_poi integer,
+    geom public.geometry(MultiLineString,2154)
 );
 
 
@@ -399,10 +403,14 @@ ALTER SEQUENCE veloroutes.poi_tourisme_val_id_seq OWNED BY veloroutes.poi_touris
 
 -- portion
 CREATE TABLE veloroutes.portion (
-    id_local integer NOT NULL,
+    id_portion integer NOT NULL,
     nom text,
     description text,
-    type_portion text NOT NULL
+    type_portion text NOT NULL,
+    id_on3v text,
+    id_local text,
+    mont_subv real,
+    annee_subv date
 );
 
 
@@ -410,8 +418,8 @@ CREATE TABLE veloroutes.portion (
 COMMENT ON TABLE veloroutes.portion IS 'Portion d’itinéraire cyclable, collection de segments cyclables';
 
 
--- portion_id_local_seq
-CREATE SEQUENCE veloroutes.portion_id_local_seq
+-- portion_id_portion_seq
+CREATE SEQUENCE veloroutes.portion_id_portion_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -420,8 +428,8 @@ CREATE SEQUENCE veloroutes.portion_id_local_seq
     CACHE 1;
 
 
--- portion_id_local_seq
-ALTER SEQUENCE veloroutes.portion_id_local_seq OWNED BY veloroutes.portion.id_local;
+-- portion_id_portion_seq
+ALTER SEQUENCE veloroutes.portion_id_portion_seq OWNED BY veloroutes.portion.id_portion;
 
 
 -- portion_val
@@ -456,7 +464,9 @@ CREATE TABLE veloroutes.repere (
     numero_serie text,
     id_local integer NOT NULL,
     type_noeud text NOT NULL,
-    geom public.geometry(Point,2154)
+    geom public.geometry(Point,2154),
+    x double precision,
+    y double precision
 );
 
 
@@ -532,7 +542,7 @@ ALTER SEQUENCE veloroutes.revetement_val_id_seq OWNED BY veloroutes.revetement_v
 
 -- segment
 CREATE TABLE veloroutes.segment (
-    id_local integer NOT NULL,
+    id_segment integer NOT NULL,
     annee_ouverture date,
     date_saisie date,
     src_geom text,
@@ -545,7 +555,9 @@ CREATE TABLE veloroutes.segment (
     geom public.geometry(LineString,2154),
     "precision" text,
     sens_unique text,
-    geometrie_fictive text
+    geometrie_fictive text,
+    id_on3v text,
+    id_local text
 );
 
 
@@ -553,8 +565,8 @@ CREATE TABLE veloroutes.segment (
 COMMENT ON TABLE veloroutes.segment IS 'Segment cyclable';
 
 
--- segment_id_local_seq
-CREATE SEQUENCE veloroutes.segment_id_local_seq
+-- segment_id_segment_seq
+CREATE SEQUENCE veloroutes.segment_id_segment_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -563,8 +575,8 @@ CREATE SEQUENCE veloroutes.segment_id_local_seq
     CACHE 1;
 
 
--- segment_id_local_seq
-ALTER SEQUENCE veloroutes.segment_id_local_seq OWNED BY veloroutes.segment.id_local;
+-- segment_id_segment_seq
+ALTER SEQUENCE veloroutes.segment_id_segment_seq OWNED BY veloroutes.segment.id_segment;
 
 
 -- statut_segment_val
@@ -605,8 +617,8 @@ ALTER TABLE ONLY veloroutes.etape ALTER COLUMN id SET DEFAULT nextval('veloroute
 ALTER TABLE ONLY veloroutes.etat_avancement_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.etat_avancement_val_id_seq'::regclass);
 
 
--- itineraire id_local
-ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.itineraire_id_local_seq'::regclass);
+-- itineraire id_iti
+ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_iti SET DEFAULT nextval('veloroutes.itineraire_id_iti_seq'::regclass);
 
 
 -- liaison id_local
@@ -649,8 +661,8 @@ ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_local SET DEFAULT nextv
 ALTER TABLE ONLY veloroutes.poi_tourisme_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.poi_tourisme_val_id_seq'::regclass);
 
 
--- portion id_local
-ALTER TABLE ONLY veloroutes.portion ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.portion_id_local_seq'::regclass);
+-- portion id_portion
+ALTER TABLE ONLY veloroutes.portion ALTER COLUMN id_portion SET DEFAULT nextval('veloroutes.portion_id_portion_seq'::regclass);
 
 
 -- portion_val id
@@ -669,8 +681,8 @@ ALTER TABLE ONLY veloroutes.repere_val ALTER COLUMN id SET DEFAULT nextval('velo
 ALTER TABLE ONLY veloroutes.revetement_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.revetement_val_id_seq'::regclass);
 
 
--- segment id_local
-ALTER TABLE ONLY veloroutes.segment ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.segment_id_local_seq'::regclass);
+-- segment id_segment
+ALTER TABLE ONLY veloroutes.segment ALTER COLUMN id_segment SET DEFAULT nextval('veloroutes.segment_id_segment_seq'::regclass);
 
 
 -- statut_segment_val id
@@ -680,4 +692,3 @@ ALTER TABLE ONLY veloroutes.statut_segment_val ALTER COLUMN id SET DEFAULT nextv
 --
 -- PostgreSQL database dump complete
 --
-
