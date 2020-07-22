@@ -11,13 +11,15 @@ from qgis.core import (
     QgsProcessingParameterFeatureSink,
     QgsProviderRegistry,
     QgsProcessingParameterString,
-    QgsVectorLayer
+    QgsVectorLayer,
+    QgsProviderConnectionException,
+    Qgis,
+    QgsMessageLog
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
 from processing.tools.postgis import uri_from_name
-
 
 import processing
 
@@ -176,7 +178,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et importe les fichiers dans un schema imports
         """
 
-        table_name = 'import2_'+table
+        table_name = 'import_'+table
 
         export_params = {
             'CREATEINDEX': True,
@@ -204,9 +206,12 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et insère la table dans le schéma veloroutes
         """
 
-        # sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
-        sql = "SELECT veloroutes.message()"
-        connection.executeSql(sql)
+        try :
+            sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
+            connection.executeSql(sql)
+        except QgsProviderConnectionException as e:  # attempt to use QgsProviderConnectionException instead cf #34
+            msg = e.args[0]
+            QgsMessageLog.logMessage(msg, 'VéloroutesPlugin', Qgis.Critical)
 
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
@@ -228,7 +233,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
 
         # Création du dictionnaire de correspondance des champs
-
         # Format générique d'une correspondance entre champs
         champs= {
             'expression': '',  # champs d'entrée
