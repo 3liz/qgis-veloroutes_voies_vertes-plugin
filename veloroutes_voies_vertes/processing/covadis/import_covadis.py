@@ -12,7 +12,6 @@ from qgis.core import (
     QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer,
-    QgsProviderConnectionException,
     Qgis,
     QgsMessageLog
 )
@@ -206,10 +205,10 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et insère la table dans le schéma veloroutes
         """
 
-        try :
+        try:
             sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
             connection.executeSql(sql)
-        except QgsProviderConnectionException as e:  # attempt to use QgsProviderConnectionException instead cf #34
+        except Exception as e:
             msg = e.args[0]
             QgsMessageLog.logMessage(msg, 'VéloroutesPlugin', Qgis.Critical)
 
