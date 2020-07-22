@@ -11,7 +11,7 @@ from qgis.core import (
     # QgsProcessingParameterField,
     QgsProcessingParameterFeatureSink,
     QgsExpressionContextUtils,
-    # QgsProviderRegistry,
+    QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer
 )
@@ -129,13 +129,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
-                defaultValue=["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-                              "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-                              "avancement", "REVETEMENT_COVADIS", "revetement",
-                              "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-                              "gestionnaire", "PRECISION_COVADIS", "precision",
-                              "SOURCE", "src_geom", "SENS", "sens_unique",
-                              "DATE_MODIF", "date_saisie"]
+                defaultValue=["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
+         "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
         )
 #        # segment
 #        ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
@@ -147,11 +142,11 @@ class ImportCovadis(BaseProcessingAlgorithm):
 #         "DATE_MODIF", "date_saisie"]
 #
 #        # itineraires
-#        ["ANNE_SUBVENTION_ITIN", "annee_subv", "SITE_WEB", "site_web", "NUMERO_ITIN",
-#         "numero", "NOM_USAGE", "nom_usage", "NOM_ITIN", "nom_officiel",
-#         "NIV_INSCRIPTION", "niveau_schema", "MONTANT_SUBVENTION_ITIN", "mont_subv",
+#        ["SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
+#         "nom_usage", "NOM_ITIN", "nom_officiel","NIV_INSCRIPTION", "niveau_schema",
 #         "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
-#         "ANNEE_INSCRIPTION", "annee_inscription"]
+#         "ANNEE_INSCRIPTION", "annee_inscription",
+#         "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
 #
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
@@ -200,15 +195,15 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 context=context, feedback=feedback, is_child_algorithm=True
         )
 
-#    def toVeloroutes(self, connection, table):
-#        """
-#        Fonction qui adapte les données si besoin
-#        et insère la table dans le schéma veloroutes
-#        """
-#
-#        sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
-#        connection.executeSql(sql)
-#
+    def toVeloroutes(self, connection, table):
+        """
+        Fonction qui adapte les données si besoin
+        et insère la table dans le schéma veloroutes
+        """
+
+        sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
+        connection.executeSql(sql)
+
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
@@ -216,8 +211,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
         connection_name = QgsExpressionContextUtils.projectScope(project).variable(
             "veloroutes_connection_name"
         )
-#        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-#        connection = metadata.findConnection(connection_name)
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
 
         results = {}
         outputs = {}
@@ -285,6 +280,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 context, feedback)
 
         # Importer la table dans veloroutes
-#        self.toVeloroutes(connection, table)
+        self.toVeloroutes(connection, table)
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: results}
