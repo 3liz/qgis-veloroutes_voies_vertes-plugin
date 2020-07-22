@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,7 +12,6 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
-SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -568,12 +567,12 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
 
 
--- TRIGGER insert_v_portion ON v_portion
-COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
-
-
 -- TRIGGER insert_v_itineraire ON v_itineraire
 COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+
+
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
 
 
 -- TRIGGER numserie ON repere
@@ -587,3 +586,4 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
+
