@@ -19,7 +19,7 @@ SET row_security = off;
 CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
     LANGUAGE plpgsql
     AS $$BEGIN
-	IF table_name = 'segment' THEN
+    IF table_name = 'segment' THEN
 
 		INSERT INTO veloroutes.segment(
 		geom,
@@ -38,9 +38,25 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		geom,
 		--id_local,
 		--id_on3v,
-		statut,
-		CAST (avancement AS INTEGER),
-		revetement,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_vall WHERE code = statut)
+			THEN statut
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut)
+			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE v.libelle = statut LIMIT 1)
+		END AS statut,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE code = CAST (avancement AS INTEGER))
+			THEN CAST (avancement AS INTEGER)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement)
+			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE v.libelle = avancement LIMIT 1)
+		END AS avancement,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
+			THEN revetement
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
+			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE v.libelle = revetement LIMIT 1)
+			ELSE revetement
+		END AS revetement,
 		proprietaire,
 		gestionnaire,
 		precision,
@@ -55,14 +71,18 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		WHERE avancement IS NOT null
 		AND statut IS NOT null
 		-- check that enumerate types are correct
-		AND EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE code = CAST (avancement AS INTEGER))
-		AND EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
-		AND EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement);
+		AND (EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE code = CAST (avancement AS INTEGER))
+			 OR EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement))
+		AND (EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
+			 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut))
+		AND (EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
+			 OR EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
+			 OR revetement IS NULL);
 
-		RAISE NOTICE 'segment a été importé dans veloroutes';
+		RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
 	END IF;
 
-    IF table_name = 'portion' THEN
+	IF table_name = 'portion' THEN
 
 		INSERT INTO veloroutes.portion(
 		type_portion,
@@ -70,7 +90,12 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		annee_subv
 		)
 		SELECT
-		type_portion,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
+			THEN type_portion
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion)
+			THEN (SELECT code FROM veloroutes.portion_val as v WHERE v.libelle = type_portion LIMIT 1)
+		END AS type_portion,
 		CAST (mont_subv AS real),
 		CASE
 			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
@@ -78,19 +103,20 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		END AS annee_subv
 		FROM imports.import_portion
 		WHERE type_portion IS NOT NULL
-		AND EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion);
+		AND (EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
+			 OR EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion));
 
 		RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
 	END IF;
 
-    IF table_name = 'itineraire' THEN
+	IF table_name = 'itineraire' THEN
 
 		INSERT INTO veloroutes.itineraire(
 			site_web,
 			numero,
 			nom_usage,
 			nom_officiel,
-			--niveau_schema,
+			niveau_schema,
 			est_inscrit,
 			depart,
 			arrivee,
@@ -102,7 +128,13 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 			numero,
 			nom_usage,
 			nom_officiel,
-			--niveau_schema,
+			CASE
+				WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
+				THEN niveau_schema
+				WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+				THEN (SELECT code FROM veloroutes.niveau_administratif_val as v WHERE v.libelle = niveau_schema LIMIT 1)
+				ELSE niveau_schema
+			END AS niveau_schema,
 			est_inscrit,
 			depart,
 			arrivee,
@@ -116,8 +148,11 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 			END AS annee_subv,
 			CAST (mont_subv AS real)
 		FROM imports.import_itineraire
-		WHERE numero IS NOT NULL;
-		--WHERE EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema);
+		WHERE numero IS NOT NULL
+		AND (EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
+		OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+		OR niveau_schema IS NULL);
+
 
 		RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';
 	END IF;
