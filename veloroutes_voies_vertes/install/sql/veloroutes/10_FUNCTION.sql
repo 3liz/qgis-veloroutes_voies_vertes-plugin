@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,6 +12,7 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
@@ -39,7 +40,7 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		--id_local,
 		--id_on3v,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_vall WHERE code = statut)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
 			THEN statut
 			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut)
 			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE v.libelle = statut LIMIT 1)
@@ -61,7 +62,15 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		gestionnaire,
 		precision,
 		src_geom,
-		sens_unique,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
+			THEN sens_unique
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = sens_unique LIMIT 1)
+			--WHEN sens_unique = 'bidirectionnelle' THEN 'F'
+			--WHEN sens_unique = 'monodirectionnelle' THEN 'T'
+			ELSE sens_unique
+		END AS sens_unique,
 		CASE
 			WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
 			WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
@@ -77,7 +86,10 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 			 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut))
 		AND (EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
 			 OR EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
-			 OR revetement IS NULL);
+			 OR revetement IS NULL)
+		AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
+			 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
+			 OR sens_unique IS NULL);
 
 		RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
 	END IF;
@@ -135,7 +147,15 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 				THEN (SELECT code FROM veloroutes.niveau_administratif_val as v WHERE v.libelle = niveau_schema LIMIT 1)
 				ELSE niveau_schema
 			END AS niveau_schema,
-			est_inscrit,
+			CASE
+				WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
+				THEN est_inscrit
+				WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
+				THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = est_inscrit LIMIT 1)
+				--WHEN est_inscrit = 'non' THEN 'F'
+				--WHEN est_inscrit = 'oui' THEN 'T'
+				ELSE est_inscrit
+			END AS est_inscrit,
 			depart,
 			arrivee,
 			CASE
@@ -150,8 +170,11 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		FROM imports.import_itineraire
 		WHERE numero IS NOT NULL
 		AND (EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
-		OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
-		OR niveau_schema IS NULL);
+			OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+			OR niveau_schema IS NULL)
+		AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
+			 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
+			 OR est_inscrit IS NULL);
 
 
 		RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';

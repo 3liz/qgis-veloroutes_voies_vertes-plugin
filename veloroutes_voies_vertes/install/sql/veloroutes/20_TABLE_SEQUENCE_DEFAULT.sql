@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,12 +12,35 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+-- booleen_val
+CREATE TABLE veloroutes.booleen_val (
+    code text,
+    libelle text,
+    id integer NOT NULL
+);
+
+
+-- booleen_val_id_seq
+CREATE SEQUENCE veloroutes.booleen_val_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- booleen_val_id_seq
+ALTER SEQUENCE veloroutes.booleen_val_id_seq OWNED BY veloroutes.booleen_val.id;
+
 
 -- element
 CREATE TABLE veloroutes.element (
@@ -553,8 +576,8 @@ CREATE TABLE veloroutes.segment (
     proprietaire text,
     geom public.geometry(LineString,2154),
     "precision" text,
-    sens_unique text,
-    geometrie_fictive text,
+    sens_unique text DEFAULT 'F'::text,
+    geometrie_fictive text DEFAULT 'F'::text,
     id_on3v text,
     id_local text
 );
@@ -602,6 +625,10 @@ CREATE SEQUENCE veloroutes.statut_segment_val_id_seq
 
 -- statut_segment_val_id_seq
 ALTER SEQUENCE veloroutes.statut_segment_val_id_seq OWNED BY veloroutes.statut_segment_val.id;
+
+
+-- booleen_val id
+ALTER TABLE ONLY veloroutes.booleen_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.booleen_val_id_seq'::regclass);
 
 
 -- element id

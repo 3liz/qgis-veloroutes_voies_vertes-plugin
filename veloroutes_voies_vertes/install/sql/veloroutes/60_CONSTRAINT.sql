@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.10
+-- Dumped by pg_dump version 10.10
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,14 +12,25 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
 SET default_tablespace = '';
 
+-- booleen_val booleen_val_pkey
+ALTER TABLE ONLY veloroutes.booleen_val
+    ADD CONSTRAINT booleen_val_pkey PRIMARY KEY (id);
+
+
 -- niveau_administratif_val code1
 ALTER TABLE ONLY veloroutes.niveau_administratif_val
     ADD CONSTRAINT code1 UNIQUE (code);
+
+
+-- booleen_val code10
+ALTER TABLE ONLY veloroutes.booleen_val
+    ADD CONSTRAINT code10 UNIQUE (code);
 
 
 -- poi_acces_val code2
@@ -202,6 +213,11 @@ ALTER TABLE ONLY veloroutes.element
     ADD CONSTRAINT element_segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_segment);
 
 
+-- itineraire est_inscrit_booleen
+ALTER TABLE ONLY veloroutes.itineraire
+    ADD CONSTRAINT est_inscrit_booleen FOREIGN KEY (est_inscrit) REFERENCES veloroutes.booleen_val(code);
+
+
 -- etape etape_itineraire_portion
 ALTER TABLE ONLY veloroutes.etape
     ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_iti);
@@ -210,6 +226,11 @@ ALTER TABLE ONLY veloroutes.etape
 -- etape etape_portion_segment
 ALTER TABLE ONLY veloroutes.etape
     ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
+
+
+-- segment geometrie_fictive_booleen
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT geometrie_fictive_booleen FOREIGN KEY (geometrie_fictive) REFERENCES veloroutes.booleen_val(code);
 
 
 -- itineraire niveau_schema
@@ -245,6 +266,11 @@ ALTER TABLE ONLY veloroutes.liaison
 -- segment revetement
 ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT revetement FOREIGN KEY (revetement) REFERENCES veloroutes.revetement_val(code);
+
+
+-- segment sens_unique_booleen
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT sens_unique_booleen FOREIGN KEY (sens_unique) REFERENCES veloroutes.booleen_val(code);
 
 
 -- segment statut
