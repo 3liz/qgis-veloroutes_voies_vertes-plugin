@@ -83,8 +83,43 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
 	END IF;
 
-	IF table_name = 'itineraire' THEN
-		RAISE NOTICE 'Cas itineraire, aucune importation n est réalisée';
+    IF table_name = 'itineraire' THEN
+
+		INSERT INTO veloroutes.itineraire(
+			site_web,
+			numero,
+			nom_usage,
+			nom_officiel,
+			--niveau_schema,
+			est_inscrit,
+			depart,
+			arrivee,
+			annee_inscription,
+			annee_subv,
+			mont_subv)
+		SELECT
+			site_web,
+			numero,
+			nom_usage,
+			nom_officiel,
+			--niveau_schema,
+			est_inscrit,
+			depart,
+			arrivee,
+			CASE
+				WHEN substring(annee_inscription from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
+				WHEN substring(annee_inscription from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
+			END AS annee_inscription,
+			CASE
+				WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+				WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+			END AS annee_subv,
+			CAST (mont_subv AS real)
+		FROM imports.import_itineraire
+		WHERE numero IS NOT NULL;
+		--WHERE EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema);
+
+		RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';
 	END IF;
 
 	RETURN TRUE;
