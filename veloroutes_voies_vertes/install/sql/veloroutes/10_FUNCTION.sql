@@ -62,8 +62,25 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		RAISE NOTICE 'segment a été importé dans veloroutes';
 	END IF;
 
-	IF table_name = 'portion' THEN
-		RAISE NOTICE 'Cas portion, aucune importation n est réalisée';
+    IF table_name = 'portion' THEN
+
+		INSERT INTO veloroutes.portion(
+		type_portion,
+		mont_subv,
+		annee_subv
+		)
+		SELECT
+		type_portion,
+		CAST (mont_subv AS real),
+		CASE
+			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+		END AS annee_subv
+		FROM imports.import_portion
+		WHERE type_portion IS NOT NULL
+		AND EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion);
+
+		RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
 	END IF;
 
 	IF table_name = 'itineraire' THEN
@@ -267,4 +284,3 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
-
