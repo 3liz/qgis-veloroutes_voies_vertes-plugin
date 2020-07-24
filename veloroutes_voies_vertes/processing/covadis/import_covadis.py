@@ -129,7 +129,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
                     "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-                    "mont_subv", "ANNE_SUBVENTION", "annee_subv", 
+                    "mont_subv", "ANNE_SUBVENTION", "annee_subv",
                     "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
         )
         self.addParameter(table)
@@ -253,9 +253,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 c['length']=field.length()
                 ccopy= c.copy()
                 field_map.append(ccopy)
-        
+
         k = matrix.index('lien_itin')
-        l = matrix.index('lien_segm')
+        m = matrix.index('lien_segm')
         c_lien_itin = {
             'expression': matrix[k-1],  # champs d'entrée
             'length': 0,  # longueur de destinaion
@@ -264,7 +264,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'type': 2  # type de destination
         }
         c_lien_segm = {
-            'expression': matrix[l-1],  # champs d'entrée
+            'expression': matrix[m-1],  # champs d'entrée
             'length': 0,  # longueur de destinaion
             'name': 'lien_segm',  # champs de destination
             'precision': 0,  # precision de destinaton
