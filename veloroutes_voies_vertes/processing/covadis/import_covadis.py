@@ -128,11 +128,19 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
-                    "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-                    "mont_subv", "ANNE_SUBVENTION", "annee_subv",
-                    "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
+                    "ID_LOCAL", "id_local", "ID_ON3V", "id_on3v", "STATUT", "statut", "AVENCEMENT",
+                    "avancement", "REVETEMENT", "revetement", "GESTION",
+                    "gestionnaire", "PROPRIETE", "proprietaire", "DATE_SAISIE", "date_saisie",
+                    "FICTIF", "geometrie_fictive", "PRECISION", "precision", "SRC_GEOM", "src_geom",
+                    "SRC_ANNEE", "src_annee", "SENSUNIQUE", "sens_unique"]
         )
         self.addParameter(table)
+        # Autre jeu de donnée segment test
+        # ["ID_LOCAL","id_local","ID_ON3V", "id_on3v","STATUT", "statut","AVENCEMENT",
+        # "avancement", "REVETEMENT", "revetement","GESTION",
+        # "gestionnaire", "PROPRIETE", "proprietaire","DATE_SAISIE", "date_saisie",
+        # "FICTIF", "geometrie_fictive","PRECISION", "precision","SRC_GEOM", "src_geom",
+        # "SRC_ANNEE", "src_annee"]
 #        # segment
     #    ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
     #     "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
@@ -254,34 +262,33 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 ccopy= c.copy()
                 field_map.append(ccopy)
 
-        k = matrix.index('lien_itin')
-        m = matrix.index('lien_segm')
-        c_lien_itin = {
-            'expression': matrix[k-1],  # champs d'entrée
-            'length': 0,  # longueur de destinaion
-            'name': 'lien_itin',  # champs de destination
-            'precision': 0,  # precision de destinaton
-            'type': 2  # type de destination
-        }
-        c_lien_segm = {
-            'expression': matrix[m-1],  # champs d'entrée
-            'length': 0,  # longueur de destinaion
-            'name': 'lien_segm',  # champs de destination
-            'precision': 0,  # precision de destinaton
-            'type': 2  # type de destination
-        }
-        c_id_import = {
-            'expression': 'fid',  # champs d'entrée
-            'length': 0,  # longueur de destinaion
-            'name': 'id_import',  # champs de destination
-            'precision': 0,  # precision de destinaton
-            'type': 2  # type de destination
-        }
-        field_map.append(c_lien_itin)
-        field_map.append(c_lien_segm)
-        field_map.append(c_id_import)
-
-        print(field_map)
+        if table=='portion':
+            k = matrix.index('lien_itin')
+            m = matrix.index('lien_segm')
+            c_lien_itin = {
+                'expression': matrix[k-1],  # champs d'entrée
+                'length': 0,  # longueur de destinaion
+                'name': 'lien_itin',  # champs de destination
+                'precision': 0,  # precision de destinaton
+                'type': 2  # type de destination
+            }
+            c_lien_segm = {
+                'expression': matrix[m-1],  # champs d'entrée
+                'length': 0,  # longueur de destinaion
+                'name': 'lien_segm',  # champs de destination
+                'precision': 0,  # precision de destinaton
+                'type': 2  # type de destination
+            }
+            c_id_import = {
+                'expression': 'fid',  # champs d'entrée
+                'length': 0,  # longueur de destinaion
+                'name': 'id_import',  # champs de destination
+                'precision': 0,  # precision de destinaton
+                'type': 2  # type de destination
+            }
+            field_map.append(c_lien_itin)
+            field_map.append(c_lien_segm)
+            field_map.append(c_id_import)
 
         # Refactorisation des champs
         refact_params = {
