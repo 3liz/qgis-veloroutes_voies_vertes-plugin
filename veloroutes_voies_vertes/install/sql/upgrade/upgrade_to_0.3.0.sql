@@ -77,6 +77,62 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 
 	IF table_name = 'portion' THEN
 
+        --creation des tables element et etape
+        -- import_element
+        CREATE TABLE imports.import_element(
+            id integer NOT NULL,
+            id_portion integer,
+            id_segment integer);
+        -- import_element_id_seq
+        CREATE SEQUENCE imports.import_element_id_seq
+            AS integer
+            START WITH 1
+            INCREMENT BY 1
+            NO MINVALUE
+            NO MAXVALUE
+            CACHE 1;
+        -- import_element_id_seq
+        ALTER SEQUENCE imports.import_element_id_seq OWNED BY imports.import_element.id;
+        ALTER TABLE ONLY imports.import_element ALTER COLUMN id SET DEFAULT nextval('imports.import_element_id_seq'::regclass);
+
+        -- import_etape
+        CREATE TABLE imports.import_etape(
+            id_portion integer,
+            id_itineraire integer,
+            id integer NOT NULL);
+        -- import_etape_id_seq
+        CREATE SEQUENCE imports.import_etape_id_seq
+            AS integer
+            START WITH 1
+            INCREMENT BY 1
+            NO MINVALUE
+            NO MAXVALUE
+            CACHE 1;
+        -- import_etape_id_seq
+        ALTER SEQUENCE imports.import_etape_id_seq OWNED BY imports.import_etape.id;
+        ALTER TABLE ONLY imports.import_etape ALTER COLUMN id SET DEFAULT nextval('imports.import_etape_id_seq'::regclass);
+
+        -- remplissage de import_etape
+        INSERT INTO imports.import_etape(
+        id_portion,
+        id_itineraire)
+        SELECT
+        id_import,
+        lien_itin
+        FROM imports.import_portion
+        WHERE imports.import_portion.lien_itin IS NOT NULL;
+
+        -- remplissage de element_import
+        INSERT INTO imports.import_element(
+        id_portion,
+        id_segment)
+        SELECT
+        id_import,
+        lien_segm
+        FROM imports.import_portion
+        WHERE imports.import_portion.lien_segm IS NOT NULL;
+
+        -- adaptation et insertion des portions dans véloroutes
 		INSERT INTO veloroutes.portion(
 		type_portion,
 		mont_subv,

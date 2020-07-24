@@ -83,7 +83,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            'segment',
+            'portion',
             optional=True
         )
         table_param.setMetadata(
@@ -102,7 +102,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
             defaultValue=('/Users/enolasengeissen/Documents/Stage_3Liz/'
-                          'data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg')
+                          'data/cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg')
         )
         self.addParameter(couche)
 
@@ -128,13 +128,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
-                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-                    "avancement", "REVETEMENT_COVADIS", "revetement",
-                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-                    "gestionnaire", "PRECISION_COVADIS", "precision",
-                    "SOURCE", "src_geom", "SENS", "sens_unique",
-                    "DATE_MODIF", "date_saisie"]
+                    "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
+                    "mont_subv", "ANNE_SUBVENTION", "annee_subv", 
+                    "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
         )
         self.addParameter(table)
 #        # segment
@@ -155,7 +151,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
 #
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-#         "mont_subv", "ANNE_SUBVENTION", "annee_subv"]
+#         "mont_subv", "ANNE_SUBVENTION", "annee_subv",
+#         "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
 
         outparam = QgsProcessingParameterFeatureSink(
                 self.OUTPUT,
@@ -204,7 +201,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
         Fonction qui adapte les données si besoin
         et insère la table dans le schéma veloroutes
         """
-
         try:
             sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
             connection.executeSql(sql)
@@ -230,6 +226,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         uri = uri_from_name(connection)
         uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], geom, "")
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
+        table=layer.name()
 
         # Création du dictionnaire de correspondance des champs
         # Format générique d'une correspondance entre champs
@@ -256,6 +253,35 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 c['length']=field.length()
                 ccopy= c.copy()
                 field_map.append(ccopy)
+        
+        k = matrix.index('lien_itin')
+        l = matrix.index('lien_segm')
+        c_lien_itin = {
+            'expression': matrix[k-1],  # champs d'entrée
+            'length': 0,  # longueur de destinaion
+            'name': 'lien_itin',  # champs de destination
+            'precision': 0,  # precision de destinaton
+            'type': 2  # type de destination
+        }
+        c_lien_segm = {
+            'expression': matrix[l-1],  # champs d'entrée
+            'length': 0,  # longueur de destinaion
+            'name': 'lien_segm',  # champs de destination
+            'precision': 0,  # precision de destinaton
+            'type': 2  # type de destination
+        }
+        c_id_import = {
+            'expression': 'fid',  # champs d'entrée
+            'length': 0,  # longueur de destinaion
+            'name': 'id_import',  # champs de destination
+            'precision': 0,  # precision de destinaton
+            'type': 2  # type de destination
+        }
+        field_map.append(c_lien_itin)
+        field_map.append(c_lien_segm)
+        field_map.append(c_id_import)
+
+        print(field_map)
 
         # Refactorisation des champs
         refact_params = {
@@ -272,7 +298,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
             is_child_algorithm=True)
 
         results['couchecov'] = outputs['RefactoriserLesChamps']['OUTPUT']
-        table=layer.name()
 
         # Exporter dans PostgreSQL
         self.toPostgres(
