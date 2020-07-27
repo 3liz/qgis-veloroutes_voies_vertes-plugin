@@ -23,8 +23,8 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 
 		INSERT INTO veloroutes.segment(
 		geom,
-		--id_local,
-		--id_on3v,
+		id_local,
+		id_on3v,
 		statut,
 		avancement,
 		revetement,
@@ -35,9 +35,12 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 		sens_unique,
 		date_saisie)
 		SELECT
-		geom,
-		--id_local,
-		--id_on3v,
+		CASE
+			WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
+			ELSE geom
+		END AS geom,
+		id_local,
+		id_on3v,
 		CASE
 			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
 			THEN statut
@@ -88,7 +91,8 @@ CREATE FUNCTION veloroutes.insert_in_veloroutes(table_name text) RETURNS boolean
 			 OR revetement IS NULL)
 		AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
 			 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
-			 OR sens_unique IS NULL);
+			 OR sens_unique IS NULL)
+		;
 
 		RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
 	END IF;

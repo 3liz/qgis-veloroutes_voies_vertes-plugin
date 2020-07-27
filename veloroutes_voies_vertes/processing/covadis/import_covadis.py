@@ -83,7 +83,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            'portion',
+            'segment',
             optional=True
         )
         table_param.setMetadata(
@@ -101,8 +101,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue=('/Users/enolasengeissen/Documents/Stage_3Liz/'
-                          'data/cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg')
+            defaultValue=''
+            # '/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg')
         )
         self.addParameter(couche)
 
@@ -128,14 +128,16 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
-                    "ID_LOCAL", "id_local", "ID_ON3V", "id_on3v", "STATUT", "statut", "AVENCEMENT",
-                    "avancement", "REVETEMENT", "revetement", "GESTION",
-                    "gestionnaire", "PROPRIETE", "proprietaire", "DATE_SAISIE", "date_saisie",
-                    "FICTIF", "geometrie_fictive", "PRECISION", "precision", "SRC_GEOM", "src_geom",
-                    "SRC_ANNEE", "src_annee", "SENSUNIQUE", "sens_unique"]
+                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+                    "avancement", "REVETEMENT_COVADIS", "revetement",
+                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+                    "gestionnaire", "PRECISION_COVADIS", "precision",
+                    "SOURCE", "src_geom", "SENS", "sens_unique",
+                    "DATE_MODIF", "date_saisie"]
         )
         self.addParameter(table)
-        # Autre jeu de donnée segment test
+#        # Autre jeu de donnée segment test
         # ["ID_LOCAL","id_local","ID_ON3V", "id_on3v","STATUT", "statut","AVENCEMENT",
         # "avancement", "REVETEMENT", "revetement","GESTION",
         # "gestionnaire", "PROPRIETE", "proprietaire","DATE_SAISIE", "date_saisie",
@@ -159,8 +161,13 @@ class ImportCovadis(BaseProcessingAlgorithm):
 #
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-#         "mont_subv", "ANNE_SUBVENTION", "annee_subv",
+#         "mont_subv", "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
 #         "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
+        # Autre jeu de test portion
+        # ["TYPE", "type_portion", "NOM", "nom",
+        # "ID_ITI", "lien_itin", "ORDRE_ETAP", "etape",
+        # "DESCRIPT", "description",
+        # "ID_LOCAL", "id_local","ID_ON3V", "id_on3v"]
 
         outparam = QgsProcessingParameterFeatureSink(
                 self.OUTPUT,
@@ -182,10 +189,10 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et importe les fichiers dans un schema imports
         """
 
-        table_name = 'import_'+table
+        table_name = 'import2_'+table
 
         export_params = {
-            'CREATEINDEX': True,
+            'CREATEINDEX': False,
             'DATABASE': db,
             'DROP_STRING_LENGTH': True,
             'ENCODING': 'UTF-8',
@@ -193,7 +200,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'GEOMETRY_COLUMN': "geom",
             'INPUT': refact,
             'LOWERCASE_NAMES': True,
-            'OVERWRITE': True,
+            'OVERWRITE': False,
             'PRIMARY_KEY': None,
             'SCHEMA': 'imports',
             'TABLENAME': table_name
@@ -264,7 +271,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         if table=='portion':
             k = matrix.index('lien_itin')
-            m = matrix.index('lien_segm')
             c_lien_itin = {
                 'expression': matrix[k-1],  # champs d'entrée
                 'length': 0,  # longueur de destinaion
@@ -272,23 +278,27 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'precision': 0,  # precision de destinaton
                 'type': 2  # type de destination
             }
-            c_lien_segm = {
-                'expression': matrix[m-1],  # champs d'entrée
-                'length': 0,  # longueur de destinaion
-                'name': 'lien_segm',  # champs de destination
-                'precision': 0,  # precision de destinaton
-                'type': 2  # type de destination
-            }
-            c_id_import = {
-                'expression': 'fid',  # champs d'entrée
-                'length': 0,  # longueur de destinaion
-                'name': 'id_import',  # champs de destination
-                'precision': 0,  # precision de destinaton
-                'type': 2  # type de destination
-            }
             field_map.append(c_lien_itin)
-            field_map.append(c_lien_segm)
-            field_map.append(c_id_import)
+            if 'lien_segm' in matrix:
+                m = matrix.index('lien_segm')
+                c_lien_segm = {
+                    'expression': matrix[m-1],  # champs d'entrée
+                    'length': 0,  # longueur de destinaion
+                    'name': 'lien_segm',  # champs de destination
+                    'precision': 0,  # precision de destinaton
+                    'type': 2  # type de destination
+                }
+                field_map.append(c_lien_segm)
+            if 'id_import' in matrix:
+                n = matrix.index('id_import')
+                c_id_import = {
+                    'expression': matrix[n-1],  # champs d'entrée
+                    'length': 0,  # longueur de destinaion
+                    'name': 'id_import',  # champs de destination
+                    'precision': 0,  # precision de destinaton
+                    'type': 2  # type de destination
+                }
+                field_map.append(c_id_import)
 
         # Refactorisation des champs
         refact_params = {
