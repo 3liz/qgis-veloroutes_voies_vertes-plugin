@@ -83,7 +83,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            'segment',
+            'portion',
             optional=True
         )
         table_param.setMetadata(
@@ -102,7 +102,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
             defaultValue=''
-            # '/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg')
+            # '/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg'
         )
         self.addParameter(couche)
 
@@ -128,16 +128,27 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
                 defaultValue=[
-                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-                    "avancement", "REVETEMENT_COVADIS", "revetement",
-                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-                    "gestionnaire", "PRECISION_COVADIS", "precision",
-                    "SOURCE", "src_geom", "SENS", "sens_unique",
-                    "DATE_MODIF", "date_saisie"]
+                    "SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
+                    "nom_usage", "NOM_ITIN", "nom_officiel", "NIV_INSCRIPTION", "niveau_schema",
+                    "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
+                    "ANNEE_INSCRIPTION", "annee_inscription",
+                    "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
         )
         self.addParameter(table)
 #        # Autre jeu de donnée segment test
+    #    ["id_local", "id_local",#--ok
+    #     "annee_ouverture","annee_ouverture",
+    #     "date_saisie","date_saisie",
+    #     "src_geom", "src_geom", #--ok
+    #     "src_annee", "src_annee",#--ok
+    #     "avancement", "avancement",#--ok
+    #     "revetement", "revetement",#--ok
+    #     "statut", "statut",#--ok
+    #     "gestionnaire", "gestionnaire",
+    #     "proprietaire", "proprietaire",
+    #     "precision", "precision",#--ok
+    #     "sens_unique", "sens_unique",
+    #     "geometrie_fictive","geometrie_fictive"]
         # ["ID_LOCAL","id_local","ID_ON3V", "id_on3v","STATUT", "statut","AVENCEMENT",
         # "avancement", "REVETEMENT", "revetement","GESTION",
         # "gestionnaire", "PROPRIETE", "proprietaire","DATE_SAISIE", "date_saisie",
@@ -189,7 +200,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et importe les fichiers dans un schema imports
         """
 
-        table_name = 'import2_'+table
+        table_name = 'import_'+table
 
         export_params = {
             'CREATEINDEX': False,
@@ -200,8 +211,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'GEOMETRY_COLUMN': "geom",
             'INPUT': refact,
             'LOWERCASE_NAMES': True,
-            'OVERWRITE': False,
-            'PRIMARY_KEY': None,
+            'OVERWRITE': True,
+            'PRIMARY_KEY': 'id',
             'SCHEMA': 'imports',
             'TABLENAME': table_name
         }
@@ -217,7 +228,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et insère la table dans le schéma veloroutes
         """
         try:
-            sql = "SELECT veloroutes.insert_in_veloroutes('{}')".format(table)
+            sql = "SELECT veloroutes.insert_veloroutes_{}()".format(table)
             connection.executeSql(sql)
         except Exception as e:
             msg = e.args[0]
@@ -257,14 +268,24 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Création du mapping de champs
         for field in layer.fields():
+            # Champs fournis par l'utilisateur
             name=field.displayName()
-            if name in matrix:
-                i = matrix.index(name)
+            if name in matrix[1::2]:
+                i = len(matrix) - 1 - matrix[::-1].index(name)
                 c = champs
                 c['expression'] = matrix[i-1]
                 c['name']=name
                 c['precision']= field.precision()
-#                c['type']=field.type()  # issues for date type where input data don't fits
+                c['length']=field.length()
+                # c['type']=field.type()
+                ccopy= c.copy()
+                field_map.append(ccopy)
+            else:
+                # Champs éventuellement non fournis par l'utilisateur
+                c = champs
+                c['expression'] = ""
+                c['name']=name
+                c['precision']= field.precision()
                 c['length']=field.length()
                 ccopy= c.copy()
                 field_map.append(ccopy)
