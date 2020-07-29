@@ -333,8 +333,8 @@ DROP SEQUENCE IF EXISTS veloroutes.poi_tourisme_id_local_seq CASCADE;
 
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS repere_pkey CASCADE;
-ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS x;
-ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS y;
+ALTER TABLE veloroutes.repere DROP COLUMN IF EXISTS x;
+ALTER TABLE veloroutes.repere DROP COLUMN IF EXISTS y;
 ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
 ALTER TABLE veloroutes.repere ALTER COLUMN id_local TYPE text;
 ALTER TABLE veloroutes.repere ALTER COLUMN id_local DROP NOT NULL;
@@ -398,3 +398,14 @@ COMMENT ON COLUMN veloroutes.poi_tourisme.id_local IS 'Identifiant du point d''i
 
 COMMENT ON COLUMN veloroutes.repere.id_local IS NULL;
 COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
+
+COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
+COMMENT ON TABLE veloroutes.poi_tourisme IS 'Points d’intérêt touristique';
+
+COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
+COMMENT ON COLUMN veloroutes.poi_service.description IS 'Renseignement ou description complémentaire sur le point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_service.type IS 'Nature du point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_service.geom IS 'Géométrie';
+COMMENT ON COLUMN veloroutes.poi_tourisme.description IS 'Renseignement ou description complémentaire sur le point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_tourisme.type IS 'Nature du point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_tourisme.geom IS 'Géométrie';
