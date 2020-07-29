@@ -275,15 +275,15 @@ INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES (NULL, 'Non rensei
 
 SELECT pg_catalog.setval('veloroutes.booleen_val_id_seq', 4, true);
 
-ALTER TABLE veloroutes.portion DROP IF EXISTS CONSTRAINT portion_id_local;
-ALTER TABLE veloroutes.portion DROP IF EXISTS CONSTRAINT portion_id_on3v;
+ALTER TABLE veloroutes.portion DROP CONSTRAINT IF EXISTS portion_id_local;
+ALTER TABLE veloroutes.portion DROP CONSTRAINT IF EXISTS portion_id_on3v;
 
-ALTER TABLE veloroutes.segment DROP IF EXISTS CONSTRAINT segment_id_local;
-ALTER TABLE veloroutes.segment DROP IF EXISTS CONSTRAINT segment_id_on3v;
+ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_local;
+ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_on3v;
 
 --
 
-ALTER TABLE veloroutes.liaison DROP IF EXISTS COLUMN id_local CASCADE;
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison integer NOT NULL;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_local text;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
@@ -298,7 +298,7 @@ CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
     CACHE 1;
 ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_liaison;
 
-ALTER TABLE veloroutes.poi DROP IF EXISTS COLUMN id_local CASCADE;
+ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.poi ADD COLUMN id_poi integer NOT NULL;
 ALTER TABLE veloroutes.poi ADD COLUMN id_local text;
 ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
@@ -325,9 +325,9 @@ CREATE TABLE veloroutes.poi_tourisme (
 INHERITS (veloroutes.poi);
 DROP SEQUENCE IF EXISTS veloroutes.poi_tourisme_id_local_seq CASCADE;
 
-ALTER TABLE veloroutes.repere DROP IF EXISTS COLUMN id_local CASCADE;
-ALTER TABLE veloroutes.repere DROP IF EXISTS COLUMN x;
-ALTER TABLE veloroutes.repere DROP IF EXISTS COLUMN y;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS x;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS y;
 ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
 ALTER TABLE veloroutes.repere ADD COLUMN id_local text;
 ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
