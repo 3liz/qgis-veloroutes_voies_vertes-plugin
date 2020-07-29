@@ -180,8 +180,8 @@ COMMENT ON COLUMN veloroutes.liaison.src_geom IS 'Type de la source de géoréf�
 COMMENT ON COLUMN veloroutes.liaison.src_annee IS 'Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique';
 
 
--- liaison.id_local
-COMMENT ON COLUMN veloroutes.liaison.id_local IS 'Identifiant de la liaison cyclable';
+-- liaison.id_liaison
+COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
 
 
 -- liaison.id_repere
@@ -240,12 +240,20 @@ COMMENT ON COLUMN veloroutes.poi.description IS 'Renseignement ou description co
 COMMENT ON COLUMN veloroutes.poi.type IS 'Nature du point d’intérêt';
 
 
--- poi.id_local
-COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant du point d''intérêt';
+-- poi.id_poi
+COMMENT ON COLUMN veloroutes.poi.id_poi IS 'Clé primaire';
 
 
 -- poi.geom
 COMMENT ON COLUMN veloroutes.poi.geom IS 'Géométrie';
+
+
+-- poi.id_local
+COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant créé et géré par l organisme local';
+
+
+-- poi.id_on3v
+COMMENT ON COLUMN veloroutes.poi.id_on3v IS 'Identifiant créé et géré par l ON3V';
 
 
 -- poi_acces
@@ -260,12 +268,12 @@ COMMENT ON COLUMN veloroutes.poi_acces.description IS 'Renseignement ou descript
 COMMENT ON COLUMN veloroutes.poi_acces.type IS 'Nature du point d’intérêt';
 
 
--- poi_acces.id_local
-COMMENT ON COLUMN veloroutes.poi_acces.id_local IS 'Identifiant du point d''intérêt';
-
-
 -- poi_acces.geom
 COMMENT ON COLUMN veloroutes.poi_acces.geom IS 'Géométrie';
+
+
+-- poi_acces.id_local
+COMMENT ON COLUMN veloroutes.poi_acces.id_local IS 'Identifiant du point d''intérêt';
 
 
 -- poi_acces_val
@@ -296,12 +304,12 @@ COMMENT ON COLUMN veloroutes.poi_service.description IS 'Renseignement ou descri
 COMMENT ON COLUMN veloroutes.poi_service.type IS 'Nature du point d’intérêt';
 
 
--- poi_service.id_local
-COMMENT ON COLUMN veloroutes.poi_service.id_local IS 'Identifiant du point d''intérêt';
-
-
 -- poi_service.geom
 COMMENT ON COLUMN veloroutes.poi_service.geom IS 'Géométrie';
+
+
+-- poi_service.id_local
+COMMENT ON COLUMN veloroutes.poi_service.id_local IS 'Identifiant du point d''intérêt';
 
 
 -- poi_service_val
@@ -332,12 +340,12 @@ COMMENT ON COLUMN veloroutes.poi_tourisme.description IS 'Renseignement ou descr
 COMMENT ON COLUMN veloroutes.poi_tourisme.type IS 'Nature du point d’intérêt';
 
 
--- poi_tourisme.id_local
-COMMENT ON COLUMN veloroutes.poi_tourisme.id_local IS 'Identifiant du point d''intérêt';
-
-
 -- poi_tourisme.geom
 COMMENT ON COLUMN veloroutes.poi_tourisme.geom IS 'Géométrie';
+
+
+-- poi_tourisme.id_local
+COMMENT ON COLUMN veloroutes.poi_tourisme.id_local IS 'Identifiant du point d''intérêt';
 
 
 -- poi_tourisme_val
@@ -420,8 +428,8 @@ COMMENT ON COLUMN veloroutes.repere.libelle IS 'Numéro, nom ou description util
 COMMENT ON COLUMN veloroutes.repere.numero_serie IS 'Numéro de série du capteur utilisé pour l’identifier sur la plateforme nationale des fréquentations';
 
 
--- repere.id_local
-COMMENT ON COLUMN veloroutes.repere.id_local IS 'Identifiant du point de repère cyclable';
+-- repere.id_repere
+COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
 
 
 -- repere.type_noeud

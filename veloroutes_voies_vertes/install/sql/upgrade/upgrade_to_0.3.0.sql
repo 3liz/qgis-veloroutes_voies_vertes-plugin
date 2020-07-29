@@ -280,3 +280,62 @@ ALTER TABLE veloroutes.portion DROP CONSTRAINT portion_id_on3v;
 
 ALTER TABLE veloroutes.segment DROP CONSTRAINT segment_id_local;
 ALTER TABLE veloroutes.segment DROP CONSTRAINT segment_id_on3v;
+
+ALTER TABLE veloroutes.liaison DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison serial;
+ALTER TABLE veloroutes.liaison ADD COLUMN id_local text;
+ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
+
+ALTER TABLE veloroutes.poi DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.poi ADD COLUMN id_poi serial;
+ALTER TABLE veloroutes.poi ADD COLUMN id_local text;
+ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
+
+ALTER TABLE veloroutes.repere DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.repere DROP COLUMN x;
+ALTER TABLE veloroutes.repere DROP COLUMN y;
+ALTER TABLE veloroutes.repere ADD COLUMN id_liaison serial;
+ALTER TABLE veloroutes.repere ADD COLUMN id_local text;
+ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
+
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT liaison_pkey;
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_liaison);
+
+ALTER TABLE ONLY veloroutes.poi_acces ADD CONSTRAINT poi_acces_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT poi_pkey;
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT poi_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT poi_service_pkey;
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT poi_service_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT poi_tourisme_pkey;
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT poi_tourisme_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT repere_pkey;
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT repere_pkey PRIMARY KEY (id_repere);
+
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT poi;
+ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT poi FOREIGN KEY (id_poi) REFERENCES veloroutes.poi(id_poi);
+
+ALTER TABLE ONLY veloroutes.frequentation DROP CONSTRAINT repere;
+
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT repere;
+ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
+
+ALTER TABLE ONLY veloroutes.poi_service DROP CONSTRAINT type;
+ALTER TABLE ONLY veloroutes.poi_service ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_service_val(code);
+
+ALTER TABLE ONLY veloroutes.poi_tourisme DROP CONSTRAINT type;
+ALTER TABLE ONLY veloroutes.poi_tourisme ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_tourisme_val(code);
+
+COMMENT ON COLUMN veloroutes.liaison.id_local IS NULL;
+COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
+COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant créé et géré par l organisme local';
+COMMENT ON COLUMN veloroutes.poi.id_poi IS 'Clé primaire';
+COMMENT ON COLUMN veloroutes.poi.id_on3v IS 'Identifiant créé et géré par l ON3V';
+COMMENT ON COLUMN veloroutes.poi_acces.id_local IS 'Identifiant du point d''intérêt';
+COMMENT ON COLUMN veloroutes.poi_service.id_local IS 'Identifiant du point d''intérêt';
+COMMENT ON COLUMN veloroutes.poi_tourisme.id_local IS 'Identifiant du point d''intérêt';
+COMMENT ON COLUMN veloroutes.repere.id_local IS NULL;
+COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
