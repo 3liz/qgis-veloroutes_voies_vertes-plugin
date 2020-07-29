@@ -78,7 +78,7 @@ CREATE FUNCTION veloroutes.insert_veloroutes_itineraire() RETURNS boolean
 		 OR est_inscrit IS NULL);
 
 	RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';
-	RETURN 1;			 
+    RETURN 1;
 END$$;
 
 

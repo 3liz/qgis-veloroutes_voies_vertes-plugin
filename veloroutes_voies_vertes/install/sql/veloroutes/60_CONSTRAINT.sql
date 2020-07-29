@@ -257,6 +257,11 @@ ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT statut FOREIGN KEY (statut) REFERENCES veloroutes.statut_segment_val(code);
 
 
+-- poi_acces type
+ALTER TABLE ONLY veloroutes.poi_acces
+    ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_acces_val(code);
+
+
 -- poi_service type
 ALTER TABLE ONLY veloroutes.poi_service
     ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_service_val(code);
@@ -265,11 +270,6 @@ ALTER TABLE ONLY veloroutes.poi_service
 -- poi_tourisme type
 ALTER TABLE ONLY veloroutes.poi_tourisme
     ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_tourisme_val(code);
-
-
--- poi_acces type
-ALTER TABLE ONLY veloroutes.poi_acces
-    ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_acces_val(code);
 
 
 -- portion type_portion

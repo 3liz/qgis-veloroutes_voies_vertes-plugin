@@ -176,12 +176,12 @@ CREATE TABLE veloroutes.liaison (
     "precision" text,
     src_geom text,
     src_annee text,
-    id_liaison integer NOT NULL,
     id_local text,
-    id_on3v text,
     id_repere integer,
     id_poi integer,
-    geom public.geometry(MultiLineString,2154)
+    geom public.geometry(MultiLineString,2154),
+    id_liaison integer NOT NULL,
+    id_on3v text
 );
 
 
@@ -259,9 +259,9 @@ ALTER SEQUENCE veloroutes.niveau_administratif_val_id_seq OWNED BY veloroutes.ni
 CREATE TABLE veloroutes.poi (
     description text,
     type text,
-    id_poi integer NOT NULL,
-    geom public.geometry(Point,2154),
     id_local text,
+    geom public.geometry(Point,2154),
+    id_poi integer NOT NULL,
     id_on3v text
 );
 
@@ -453,11 +453,11 @@ ALTER SEQUENCE veloroutes.portion_val_id_seq OWNED BY veloroutes.portion_val.id;
 CREATE TABLE veloroutes.repere (
     libelle text,
     numero_serie text,
-    id_repere integer NOT NULL,
     id_local text,
-    id_on3v text,
     type_noeud text NOT NULL,
-    geom public.geometry(Point,2154)
+    geom public.geometry(Point,2154),
+    id_repere integer NOT NULL,
+    id_on3v text
 );
 
 
