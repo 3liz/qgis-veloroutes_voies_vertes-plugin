@@ -285,7 +285,8 @@ ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_on3v;
 
 ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison integer NOT NULL;
-ALTER TABLE veloroutes.liaison ADD COLUMN id_local text;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.liaison_id_local_seq CASCADE;
@@ -300,7 +301,8 @@ ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_
 
 ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.poi ADD COLUMN id_poi integer NOT NULL;
-ALTER TABLE veloroutes.poi ADD COLUMN id_local text;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.poi_id_local_seq CASCADE;
@@ -329,7 +331,8 @@ ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS x;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS y;
 ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
-ALTER TABLE veloroutes.repere ADD COLUMN id_local text;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.repere_id_local_seq CASCADE;
