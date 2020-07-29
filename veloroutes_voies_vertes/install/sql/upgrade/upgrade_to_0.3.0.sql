@@ -349,7 +349,7 @@ CREATE SEQUENCE veloroutes.repere_id_repere_seq
     NO MAXVALUE
     CACHE 1;
 ALTER SEQUENCE veloroutes.repere_id_repere_seq OWNED BY veloroutes.repere.id_repere;
-
+--
 ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_liaison SET DEFAULT nextval('veloroutes.liaison_id_liaison_seq'::regclass);
 ALTER TABLE ONLY veloroutes.poi ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 ALTER TABLE ONLY veloroutes.poi_acces ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
