@@ -283,12 +283,12 @@ ALTER TABLE veloroutes.segment DROP CONSTRAINT segment_id_on3v;
 
 --
 
-ALTER TABLE veloroutes.liaison DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.liaison DROP COLUMN id_local CASCADE;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison integer NOT NULL;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_local text;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
 
-DROP SEQUENCE CASCADE veloroutes.liaison_id_local_seq ;
+DROP SEQUENCE veloroutes.liaison_id_local_seq CASCADE;
 CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
     AS integer
     START WITH 1
@@ -298,13 +298,13 @@ CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
     CACHE 1;
 ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_liaison;
 
-ALTER TABLE veloroutes.poi DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.poi DROP COLUMN id_local CASCADE;
 ALTER TABLE veloroutes.poi ADD COLUMN id_poi integer NOT NULL;
 ALTER TABLE veloroutes.poi ADD COLUMN id_local text;
 ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
 
-DROP SEQUENCE CASCADE veloroutes.poi_id_local_seq ;
-CREATE SEQUENCE veloroutes.veloroutes.poi_id_poi_seq
+DROP SEQUENCE veloroutes.poi_id_local_seq CASCADE;
+CREATE SEQUENCE veloroutes.poi_id_poi_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -313,26 +313,26 @@ CREATE SEQUENCE veloroutes.veloroutes.poi_id_poi_seq
     CACHE 1;
 ALTER SEQUENCE veloroutes.poi_id_poi_seq OWNED BY veloroutes.poi.id_poi;
 
-DROP TABLE CASCADE veloroutes.poi_service;
+DROP TABLE veloroutes.poi_service CASCADE;
 CREATE TABLE veloroutes.poi_service (
 )
 INHERITS (veloroutes.poi);
-DROP SEQUENCE CASCADE veloroutes.poi_service_id_local_seq ;
+DROP SEQUENCE veloroutes.poi_service_id_local_seq CASCADE;
 
-DROP TABLE CASCADE veloroutes.poi_tourisme;
+DROP TABLE veloroutes.poi_tourisme CASCADE;
 CREATE TABLE veloroutes.poi_tourisme (
 )
 INHERITS (veloroutes.poi);
-DROP SEQUENCE CASCADE veloroutes.poi_tourisme_id_local_seq ;
+DROP SEQUENCE veloroutes.poi_tourisme_id_local_seq CASCADE;
 
-ALTER TABLE veloroutes.repere DROP COLUMN CASCADE id_local;
+ALTER TABLE veloroutes.repere DROP COLUMN id_local CASCADE;
 ALTER TABLE veloroutes.repere DROP COLUMN x;
 ALTER TABLE veloroutes.repere DROP COLUMN y;
 ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
 ALTER TABLE veloroutes.repere ADD COLUMN id_local text;
 ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
 
-DROP SEQUENCE CASCADE veloroutes.repere_id_local_seq;
+DROP SEQUENCE veloroutes.repere_id_local_seq CASCADE;
 CREATE SEQUENCE veloroutes.repere_id_repere_seq
     AS integer
     START WITH 1
@@ -349,36 +349,36 @@ ALTER TABLE ONLY veloroutes.poi_service ALTER COLUMN id_poi SET DEFAULT nextval(
 ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_repere SET DEFAULT nextval('veloroutes.repere_id_repere_seq'::regclass);
 
-ALTER TABLE veloroutes.liaison DROP CONSTRAINT liaison_pkey;
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT liaison_pkey CASCADE;
 ALTER TABLE veloroutes.liaison ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_liaison);
 
 ALTER TABLE ONLY veloroutes.poi_acces ADD CONSTRAINT poi_acces_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi DROP CONSTRAINT poi_pkey;
+ALTER TABLE veloroutes.poi DROP CONSTRAINT poi_pkey CASCADE;
 ALTER TABLE veloroutes.poi ADD CONSTRAINT poi_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi_service DROP CONSTRAINT poi_service_pkey;
+ALTER TABLE veloroutes.poi_service DROP CONSTRAINT poi_service_pkey CASCADE;
 ALTER TABLE veloroutes.poi_service ADD CONSTRAINT poi_service_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi_tourisme DROP CONSTRAINT poi_tourisme_pkey;
+ALTER TABLE veloroutes.poi_tourisme DROP CONSTRAINT poi_tourisme_pkey CASCADE;
 ALTER TABLE veloroutes.poi_tourisme ADD CONSTRAINT poi_tourisme_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.repere DROP CONSTRAINT repere_pkey;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT repere_pkey CASCADE;
 ALTER TABLE veloroutes.repere ADD CONSTRAINT repere_pkey PRIMARY KEY (id_repere);
 
-ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT poi;
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT poi CASCADE;
 ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT poi FOREIGN KEY (id_poi) REFERENCES veloroutes.poi(id_poi);
 
-ALTER TABLE ONLY veloroutes.frequentation DROP CONSTRAINT repere;
+ALTER TABLE ONLY veloroutes.frequentation DROP CONSTRAINT repere CASCADE;
 
-ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT repere;
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT repere CASCADE;
 ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
 
 
-ALTER TABLE ONLY veloroutes.poi_service DROP CONSTRAINT type;
+ALTER TABLE ONLY veloroutes.poi_service DROP CONSTRAINT type CASCADE;
 ALTER TABLE ONLY veloroutes.poi_service ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_service_val(code);
 
-ALTER TABLE ONLY veloroutes.poi_tourisme DROP CONSTRAINT type;
+ALTER TABLE ONLY veloroutes.poi_tourisme DROP CONSTRAINT type CASCADE;
 ALTER TABLE ONLY veloroutes.poi_tourisme ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_tourisme_val(code);
 
 COMMENT ON COLUMN veloroutes.liaison.id_local IS NULL;
