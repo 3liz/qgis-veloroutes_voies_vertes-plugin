@@ -282,10 +282,11 @@ ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_local;
 ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_on3v;
 
 --
-
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS liaison_pkey CASCADE;
 ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison integer NOT NULL;
-ALTER TABLE veloroutes.liaison ADD COLUMN id_local text;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.liaison_id_local_seq CASCADE;
@@ -298,9 +299,14 @@ CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
     CACHE 1;
 ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_liaison;
 
+ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS poi_pkey CASCADE;
+ALTER TABLE veloroutes.poi_service DROP CONSTRAINT IF EXISTS poi_service_pkey CASCADE;
+ALTER TABLE veloroutes.poi_tourisme DROP CONSTRAINT IF EXISTS poi_tourisme_pkey CASCADE;
+
 ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.poi ADD COLUMN id_poi integer NOT NULL;
-ALTER TABLE veloroutes.poi ADD COLUMN id_local text;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.poi_id_local_seq CASCADE;
@@ -326,10 +332,12 @@ INHERITS (veloroutes.poi);
 DROP SEQUENCE IF EXISTS veloroutes.poi_tourisme_id_local_seq CASCADE;
 
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS repere_pkey CASCADE;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS x;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS y;
 ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
-ALTER TABLE veloroutes.repere ADD COLUMN id_local text;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local DROP NOT NULL;
 ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
 
 DROP SEQUENCE IF EXISTS veloroutes.repere_id_local_seq CASCADE;
@@ -349,21 +357,16 @@ ALTER TABLE ONLY veloroutes.poi_service ALTER COLUMN id_poi SET DEFAULT nextval(
 ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_repere SET DEFAULT nextval('veloroutes.repere_id_repere_seq'::regclass);
 
-ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS liaison_pkey CASCADE;
 ALTER TABLE veloroutes.liaison ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_liaison);
 
 ALTER TABLE ONLY veloroutes.poi_acces ADD CONSTRAINT poi_acces_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS poi_pkey CASCADE;
 ALTER TABLE veloroutes.poi ADD CONSTRAINT poi_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi_service DROP CONSTRAINT IF EXISTS poi_service_pkey CASCADE;
 ALTER TABLE veloroutes.poi_service ADD CONSTRAINT poi_service_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.poi_tourisme DROP CONSTRAINT IF EXISTS poi_tourisme_pkey CASCADE;
 ALTER TABLE veloroutes.poi_tourisme ADD CONSTRAINT poi_tourisme_pkey PRIMARY KEY (id_poi);
 
-ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS repere_pkey CASCADE;
 ALTER TABLE veloroutes.repere ADD CONSTRAINT repere_pkey PRIMARY KEY (id_repere);
 
 ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT IF EXISTS poi CASCADE;
@@ -373,7 +376,6 @@ ALTER TABLE ONLY veloroutes.frequentation DROP CONSTRAINT IF EXISTS repere CASCA
 
 ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT IF EXISTS repere CASCADE;
 ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
-
 
 ALTER TABLE ONLY veloroutes.poi_service DROP CONSTRAINT IF EXISTS type CASCADE;
 ALTER TABLE ONLY veloroutes.poi_service ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_service_val(code);
