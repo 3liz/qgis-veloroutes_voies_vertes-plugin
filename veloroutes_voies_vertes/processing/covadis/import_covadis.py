@@ -101,7 +101,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue='/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg'
+            defaultValue=''
+            # /Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg'
         )
         self.addParameter(couche)
 
@@ -126,8 +127,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
-                defaultValue=
-                    ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+                defaultValue=[
+                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
                     "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
                     "avancement", "REVETEMENT_COVADIS", "revetement",
                     "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
@@ -312,7 +313,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 }
                 field_map.append(c_lien_segm)
 
-        if table in ['itineraire','portion','segment']:
+        if table in ['itineraire', 'portion', 'segment']:
             if 'id_import' in matrix:
                 n = matrix.index('id_import')
                 c_id_import = {
@@ -321,9 +322,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
                     'name': 'id_import',  # champs de destination
                     'precision': 0,  # precision de destinaton
                     'type': 2  # type de destination
-                    }
+                }
                 field_map.append(c_id_import)
-            
 
         # Refactorisation des champs
         refact_params = {
