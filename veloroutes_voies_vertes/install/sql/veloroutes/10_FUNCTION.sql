@@ -72,7 +72,7 @@ BEGIN
 	FROM imports.import_itineraire as ii
 	WHERE ii.id_import = idimport
 	RETURNING id_iti into id_veloroutes;
-
+	
 	RETURN id_veloroutes;
 END;
 	$$;
@@ -111,7 +111,7 @@ BEGIN
 	FROM imports.import_portion as ip
 	WHERE ip.id_import = idimport
 	RETURNING id_portion into id_veloroutes;
-
+	
 	RETURN id_veloroutes;
 END;
 	$$;
@@ -120,7 +120,7 @@ END;
 -- id_segm_veloroutes(integer)
 CREATE FUNCTION veloroutes.id_segm_veloroutes(idimport integer) RETURNS integer
     LANGUAGE plpgsql
-    AS $$DECLARE id_veloroutes integer;
+    AS $$DECLARE id_veloroutes integer; seg record;
 BEGIN
 	INSERT INTO veloroutes.segment(
 		geom,
@@ -198,6 +198,7 @@ BEGIN
 	RETURNING id_segment into id_veloroutes;
 
 	RETURN id_veloroutes;
+
 END;
 	$$;
 
@@ -216,14 +217,14 @@ CREATE FUNCTION veloroutes.insert_veloroutes_itineraire() RETURNS boolean
 	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
 		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
 		 OR est_inscrit IS NULL);
-
-
+		
+		
 	RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';
 
 	--mise à jour de etape avec les id_itineraire de veloroutes
 	IF EXISTS (
 		SELECT 1
-        FROM information_schema.tables
+        FROM information_schema.tables 
         WHERE table_schema = 'imports'
         AND table_name = 'import_etape')
 	THEN
@@ -232,19 +233,67 @@ CREATE FUNCTION veloroutes.insert_veloroutes_itineraire() RETURNS boolean
 		SELECT CAST(ii.id_iti AS integer)
 		FROM imports.import_itineraire as ii
 		WHERE ii.id_import = imports.import_etape.id_itineraire);
-
+	
 	RAISE NOTICE 'La table etape a été mise à jour dans le schéma d import';
-
+	
 	INSERT INTO veloroutes.etape(id_portion, id_itineraire)
 	SELECT id_portion, id_itineraire
 	FROM imports.import_etape as iet
 	WHERE iet.id_portion IS NOT NULL
 	AND iet.id_itineraire IS NOT NULL;
-
+	
 	RAISE NOTICE 'La table étape a été importée dans veloroutes';
 
 	END IF;
     RETURN 1;
+END$$;
+
+
+-- insert_veloroutes_liaison()
+CREATE FUNCTION veloroutes.insert_veloroutes_liaison() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	INSERT INTO veloroutes.liaison(
+	"precision", src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v)
+	SELECT 
+		precision, src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v
+	FROM imports.import_liaison;
+	 
+	RAISE NOTICE 'Les lignes correctes de liaison ont été importées dans veloroutes';
+
+	RETURN 1;
+END$$;
+
+
+-- insert_veloroutes_poi(text)
+CREATE FUNCTION veloroutes.insert_veloroutes_poi(poitype text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	EXECUTE format('
+		INSERT INTO veloroutes.%s(
+			description, "type", id_local, geom, id_poi, id_on3v)
+		SELECT 
+			description,
+			CASE
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+				THEN type
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+				THEN (SELECT code FROM veloroutes.%s_val as v WHERE v.libelle = type LIMIT 1)
+			END AS type,
+			id_local,
+			geom,
+			id_poi,
+			id_on3v
+		FROM imports.import_%s
+		WHERE (EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+		OR EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+		OR type IS NULL)', poitype, poitype, poitype, poitype, poitype, poitype, poitype);
+
+	RAISE NOTICE 'Les lignes correctes de % ont été importées dans veloroutes', poitype;
+
+	RETURN 1;
 END$$;
 
 
@@ -273,7 +322,7 @@ CREATE FUNCTION veloroutes.insert_veloroutes_portion() RETURNS boolean
 		OR EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion));
 
 	RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
-
+	
 	-- remplissage de import_etape
 	INSERT INTO imports.import_etape(
         id_portion,
@@ -295,6 +344,36 @@ CREATE FUNCTION veloroutes.insert_veloroutes_portion() RETURNS boolean
     FROM imports.import_portion
     WHERE imports.import_portion.lien_segm IS NOT NULL
 	AND id_portion IS NOT NULL;
+	
+	RETURN 1;
+END$$;
+
+
+-- insert_veloroutes_repere()
+CREATE FUNCTION veloroutes.insert_veloroutes_repere() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	INSERT INTO veloroutes.repere(
+	libelle, numero_serie, id_local, type_noeud, geom, id_repere, id_on3v)
+	SELECT 
+		libelle,
+		numero_serie,
+		id_local,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+			THEN type_noeud
+			WHEN EXISTS (SELECT 1 FROM veloroutes.reperef_val WHERE libelle = type_noeud)
+			THEN (SELECT code FROM veloroutes.repere_val as v WHERE v.libelle = type_noeud LIMIT 1)
+		END AS type_noeud,
+		geom,
+		id_repere,
+		id_on3v
+	FROM imports.import_repere
+	WHERE (EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+		OR EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE libelle = type_noeud));
+	 
+	RAISE NOTICE 'Les lignes correctes de repere ont été importées dans veloroutes';
 
 	RETURN 1;
 END$$;
@@ -322,13 +401,13 @@ CREATE FUNCTION veloroutes.insert_veloroutes_segment() RETURNS boolean
 	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = geometrie_fictive)
 		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = geometrie_fictive)
 		 OR geometrie_fictive IS NULL);
-
+		 
 	RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
 
 	--mise à jour de element avec les id_segment de veloroutes
 	IF EXISTS (
 		SELECT 1
-        FROM information_schema.tables
+        FROM information_schema.tables 
         WHERE table_schema = 'imports'
         AND table_name = 'import_element')
 	THEN
@@ -339,13 +418,13 @@ CREATE FUNCTION veloroutes.insert_veloroutes_segment() RETURNS boolean
 		WHERE iis.id_import = imports.import_element.id_segment);
 
 	RAISE NOTICE 'La table element a été mise à jour dans le schéma d import';
-
+	
 	INSERT INTO veloroutes.element(id_portion, id_segment)
 		SELECT id_portion, id_segment
 		FROM imports.import_element as iel
 		WHERE iel.id_portion IS NOT NULL
 		AND iel.id_segment IS NOT NULL;
-
+		
 	RAISE NOTICE 'La table element a été insérée dans véloroutes';
 
 	END IF;

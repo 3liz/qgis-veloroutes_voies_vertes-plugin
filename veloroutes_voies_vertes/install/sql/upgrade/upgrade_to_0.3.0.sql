@@ -102,7 +102,7 @@ END;
 -- id_segm_veloroutes(integer)
 CREATE FUNCTION veloroutes.id_segm_veloroutes(idimport integer) RETURNS integer
     LANGUAGE plpgsql
-    AS $$DECLARE id_veloroutes integer;
+    AS $$DECLARE id_veloroutes integer; seg record;
 BEGIN
 	INSERT INTO veloroutes.segment(
 		geom,
@@ -331,6 +331,80 @@ CREATE FUNCTION veloroutes.insert_veloroutes_segment() RETURNS boolean
 	RAISE NOTICE 'La table element a été insérée dans véloroutes';
 
 	END IF;
+
+	RETURN 1;
+END$$;
+
+CREATE FUNCTION veloroutes.insert_veloroutes_liaison() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	INSERT INTO veloroutes.liaison(
+	"precision", src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v)
+	SELECT
+		precision, src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v
+	FROM imports.import_liaison;
+
+	RAISE NOTICE 'Les lignes correctes de liaison ont été importées dans veloroutes';
+
+	RETURN 1;
+END$$;
+
+
+-- insert_veloroutes_poi(text)
+CREATE FUNCTION veloroutes.insert_veloroutes_poi(poitype text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	EXECUTE format('
+		INSERT INTO veloroutes.%s(
+			description, "type", id_local, geom, id_poi, id_on3v)
+		SELECT
+			description,
+			CASE
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+				THEN type
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+				THEN (SELECT code FROM veloroutes.%s_val as v WHERE v.libelle = type LIMIT 1)
+			END AS type,
+			id_local,
+			geom,
+			id_poi,
+			id_on3v
+		FROM imports.import_%s
+		WHERE (EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+		OR EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+		OR type IS NULL)', poitype, poitype, poitype, poitype, poitype, poitype, poitype);
+
+	RAISE NOTICE 'Les lignes correctes de % ont été importées dans veloroutes', poitype;
+
+	RETURN 1;
+END$$;
+
+CREATE FUNCTION veloroutes.insert_veloroutes_repere() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	INSERT INTO veloroutes.repere(
+	libelle, numero_serie, id_local, type_noeud, geom, id_repere, id_on3v)
+	SELECT
+		libelle,
+		numero_serie,
+		id_local,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+			THEN type_noeud
+			WHEN EXISTS (SELECT 1 FROM veloroutes.reperef_val WHERE libelle = type_noeud)
+			THEN (SELECT code FROM veloroutes.repere_val as v WHERE v.libelle = type_noeud LIMIT 1)
+		END AS type_noeud,
+		geom,
+		id_repere,
+		id_on3v
+	FROM imports.import_repere
+	WHERE (EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+		OR EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE libelle = type_noeud));
+
+	RAISE NOTICE 'Les lignes correctes de repere ont été importées dans veloroutes';
 
 	RETURN 1;
 END$$;

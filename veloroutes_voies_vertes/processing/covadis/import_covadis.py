@@ -8,7 +8,6 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
     QgsProcessingOutputString,
     QgsProcessingParameterMatrix,
-    QgsProcessingParameterFeatureSink,
     QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer,
@@ -30,7 +29,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
     INPUT="INPUT"
     TABLE="TABLE"
-    OUTPUT="OUTPUT"  # à retirer plus tard
     OUTPUT_MSG="OUTPUT MSG"
     SCHEMA="veloroutes"
     DATABASE="vvv"
@@ -83,7 +81,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            'segment',
+            '',
             optional=True
         )
         table_param.setMetadata(
@@ -102,94 +100,17 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
             defaultValue=''
-            # /Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg'
         )
         self.addParameter(couche)
-
-        # Liste des champs de la couche à importer --> fonctionne
-        # field_or = QgsProcessingParameterField(
-        #        'or_field',
-        #        'Champs d\'origine',
-        #        '',
-        #        self.INPUT)
-        # self.addParameter(field_or)
-
-        # Liste des champs de destination --> fonctionne pas
-        # field_dest = QgsProcessingParameterField(
-        #        'dest_field',
-        #        'Champs de destination',
-        #        '',
-        #        self.TABLE)
-        # self.addParameter(field_dest)
 
         # Paramètre pour le mapping de champs
         table = QgsProcessingParameterMatrix(
                 'matrix',
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
-                defaultValue=[
-                    "NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-                    "avancement", "REVETEMENT_COVADIS", "revetement",
-                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-                    "gestionnaire", "PRECISION_COVADIS", "precision",
-                    "SOURCE", "src_geom", "SENS", "sens_unique",
-                    "DATE_MODIF", "date_saisie", "fid", "id_import"]
+                defaultValue=[]
         )
         self.addParameter(table)
-#        # Autre jeu de donnée segment test
-    #    ["id_local", "id_local",#--ok
-    #     "annee_ouverture","annee_ouverture",
-    #     "date_saisie","date_saisie",
-    #     "src_geom", "src_geom", #--ok
-    #     "src_annee", "src_annee",#--ok
-    #     "avancement", "avancement",#--ok
-    #     "revetement", "revetement",#--ok
-    #     "statut", "statut",#--ok
-    #     "gestionnaire", "gestionnaire",
-    #     "proprietaire", "proprietaire",
-    #     "precision", "precision",#--ok
-    #     "sens_unique", "sens_unique",
-    #     "geometrie_fictive","geometrie_fictive"]
-        # ["ID_LOCAL","id_local","ID_ON3V", "id_on3v","STATUT", "statut","AVENCEMENT",
-        # "avancement", "REVETEMENT", "revetement","GESTION",
-        # "gestionnaire", "PROPRIETE", "proprietaire","DATE_SAISIE", "date_saisie",
-        # "FICTIF", "geometrie_fictive","PRECISION", "precision","SRC_GEOM", "src_geom",
-        # "SRC_ANNEE", "src_annee"]
-#        # segment
-    #    ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
-    #     "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
-    #     "avancement", "REVETEMENT_COVADIS", "revetement",
-    #     "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
-    #     "gestionnaire", "PRECISION_COVADIS", "precision",
-    #     "SOURCE", "src_geom", "SENS", "sens_unique",
-    #     "DATE_MODIF", "date_saisie", "fid", "id_import"]
-#
-#        # itineraires
-    #    ["SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
-    #     "nom_usage", "NOM_ITIN", "nom_officiel","NIV_INSCRIPTION", "niveau_schema",
-    #     "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
-    #     "ANNEE_INSCRIPTION", "annee_inscription", "fid", "id_import",
-    #     "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
-#
-#        # portions
-#        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-#         "mont_subv", "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
-#         "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
-        # Autre jeu de test portion
-        # ["TYPE", "type_portion", "NOM", "nom",
-        # "ID_ITI", "lien_itin", "ORDRE_ETAP", "etape",
-        # "DESCRIPT", "description",
-        # "ID_LOCAL", "id_local","ID_ON3V", "id_on3v"]
-
-        outparam = QgsProcessingParameterFeatureSink(
-                self.OUTPUT,
-                '[temporaire]',
-                type=QgsProcessing.TypeVectorAnyGeometry,
-                createByDefault=True,
-                defaultValue=None
-        )
-        self.addParameter(outparam)
 
         # OUTPUTS
         self.addOutput(
@@ -223,15 +144,20 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 export_params,
                 context=context, feedback=feedback, is_child_algorithm=True
         )
+        feedback.pushInfo(tr("Insertion des données dans la base faite"))
 
-    def toVeloroutes(self, connection, table):
+    def toVeloroutes(self, connection, table, feedback):
         """
         Fonction qui adapte les données si besoin
         et insère la table dans le schéma veloroutes
         """
         try:
-            sql = "SELECT veloroutes.insert_veloroutes_{}()".format(table)
+            if 'poi' in table:
+                sql = "SELECT veloroutes.insert_veloroutes_poi({})".format(table)
+            else:
+                sql = "SELECT veloroutes.insert_veloroutes_{}()".format(table)
             connection.executeSql(sql)
+            feedback.pushInfo(tr("Insertion des données dans le schéma veloroutes fait"))
         except Exception as e:
             msg = e.args[0]
             QgsMessageLog.logMessage(msg, 'VéloroutesPlugin', Qgis.Critical)
@@ -239,8 +165,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
         msg = ""
-        results = {}
-        outputs = {}
 
         connection = self.parameterAsString(parameters, self.DATABASE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
@@ -279,7 +203,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 c['name']=name
                 c['precision']= field.precision()
                 c['length']=field.length()
-                # c['type']=field.type()
                 ccopy= c.copy()
                 field_map.append(ccopy)
             else:
@@ -329,26 +252,25 @@ class ImportCovadis(BaseProcessingAlgorithm):
         refact_params = {
             'FIELDS_MAPPING': field_map,
             'INPUT': parameters[self.INPUT],
-            'OUTPUT': parameters[self.OUTPUT]
-        }
+            'OUTPUT': 'memory:'}
 
-        outputs['RefactoriserLesChamps'] = processing.run(  # à retirer plus tard
+        algresult = processing.run(
             'qgis:refactorfields',
             refact_params,
             context=context,
             feedback=feedback,
             is_child_algorithm=True)
 
-        results['couchecov'] = outputs['RefactoriserLesChamps']['OUTPUT']
+        feedback.pushInfo(tr("Refactoring des champs fait"))
 
         # Exporter dans PostgreSQL
         self.toPostgres(
                 parameters[self.DATABASE],
                 table,
-                outputs['RefactoriserLesChamps']['OUTPUT'],
+                algresult['OUTPUT'],
                 context, feedback)
 
         # Importer la table dans veloroutes
-        self.toVeloroutes(conn, table)
+        self.toVeloroutes(conn, table, feedback)
 
-        return {self.OUTPUT_MSG: msg, self.OUTPUT: results}
+        return {self.OUTPUT_MSG: msg}
