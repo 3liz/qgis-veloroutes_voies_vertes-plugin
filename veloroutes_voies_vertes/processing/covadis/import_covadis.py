@@ -83,7 +83,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            'portion',
+            'segment',
             optional=True
         )
         table_param.setMetadata(
@@ -101,8 +101,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue=''
-            # '/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg'
+            defaultValue='/Users/enolasengeissen/Documents/Stage_3Liz/data/cd66-3V/Export_PC_Pour_3Liz/Tables/segments.gpkg'
         )
         self.addParameter(couche)
 
@@ -127,12 +126,14 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
-                defaultValue=[
-                    "SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
-                    "nom_usage", "NOM_ITIN", "nom_officiel", "NIV_INSCRIPTION", "niveau_schema",
-                    "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
-                    "ANNEE_INSCRIPTION", "annee_inscription",
-                    "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
+                defaultValue=
+                    ["NUM_LOCAL", "id_local", "ID_ON3V", "id_on3v",
+                    "STATUT_COVADIS", "statut", "AVENCEMENT_COVADIS",
+                    "avancement", "REVETEMENT_COVADIS", "revetement",
+                    "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
+                    "gestionnaire", "PRECISION_COVADIS", "precision",
+                    "SOURCE", "src_geom", "SENS", "sens_unique",
+                    "DATE_MODIF", "date_saisie", "fid", "id_import"]
         )
         self.addParameter(table)
 #        # Autre jeu de donnée segment test
@@ -161,14 +162,14 @@ class ImportCovadis(BaseProcessingAlgorithm):
     #     "MAITRE_OUVRAGE", "proprietaire", "GESTIONNAIRE",
     #     "gestionnaire", "PRECISION_COVADIS", "precision",
     #     "SOURCE", "src_geom", "SENS", "sens_unique",
-    #     "DATE_MODIF", "date_saisie"]
+    #     "DATE_MODIF", "date_saisie", "fid", "id_import"]
 #
 #        # itineraires
-#        ["SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
-#         "nom_usage", "NOM_ITIN", "nom_officiel","NIV_INSCRIPTION", "niveau_schema",
-#         "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
-#         "ANNEE_INSCRIPTION", "annee_inscription",
-#         "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
+    #    ["SITE_WEB", "site_web", "NUMERO_ITIN", "numero", "NOM_USAGE",
+    #     "nom_usage", "NOM_ITIN", "nom_officiel","NIV_INSCRIPTION", "niveau_schema",
+    #     "EST_INSCRIT", "est_inscrit", "DEPART", "depart", "ARRIVEE", "arrivee",
+    #     "ANNEE_INSCRIPTION", "annee_inscription", "fid", "id_import",
+    #     "ANNE_SUBVENTION_ITIN", "annee_subv", "MONTANT_SUBVENTION_ITIN", "mont_subv"]
 #
 #        # portions
 #        ["TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
@@ -310,6 +311,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
                     'type': 2  # type de destination
                 }
                 field_map.append(c_lien_segm)
+
+        if table in ['itineraire','portion','segment']:
             if 'id_import' in matrix:
                 n = matrix.index('id_import')
                 c_id_import = {
@@ -318,8 +321,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
                     'name': 'id_import',  # champs de destination
                     'precision': 0,  # precision de destinaton
                     'type': 2  # type de destination
-                }
+                    }
                 field_map.append(c_id_import)
+            
 
         # Refactorisation des champs
         refact_params = {
