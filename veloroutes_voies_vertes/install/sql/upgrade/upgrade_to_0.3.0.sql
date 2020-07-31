@@ -493,17 +493,26 @@ CREATE SEQUENCE veloroutes.poi_id_poi_seq
     CACHE 1;
 ALTER SEQUENCE veloroutes.poi_id_poi_seq OWNED BY veloroutes.poi.id_poi;
 
+-- DROP et re creation car l'heritage était mal fait
+CREATE TABLE veloroutes.poi_service_stockage AS (SELECT * FROM veloroutes.poi_service);
 DROP TABLE IF EXISTS veloroutes.poi_service CASCADE;
 CREATE TABLE veloroutes.poi_service (
 )
 INHERITS (veloroutes.poi);
 DROP SEQUENCE IF EXISTS veloroutes.poi_service_id_local_seq CASCADE;
+INSERT INTO veloroutes.poi_service(description, type, id_local, geom, id_poi, id_on3v)
+SELECT * FROM veloroutes.poi_service_stockage;
+DROP TABLE veloroutes.poi_service_stockage;
 
+CREATE TABLE veloroutes.poi_tourisme_stockage AS (SELECT * FROM veloroutes.poi_tourisme);
 DROP TABLE IF EXISTS veloroutes.poi_tourisme CASCADE;
 CREATE TABLE veloroutes.poi_tourisme (
 )
 INHERITS (veloroutes.poi);
 DROP SEQUENCE IF EXISTS veloroutes.poi_tourisme_id_local_seq CASCADE;
+INSERT INTO veloroutes.poi_tourisme(description, type, id_local, geom, id_poi, id_on3v)
+SELECT * FROM veloroutes.poi_tourisme_stockage;
+DROP TABLE veloroutes.poi_tourisme_stockage;
 
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
 ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS repere_pkey CASCADE;
