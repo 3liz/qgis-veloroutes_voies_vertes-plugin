@@ -6,7 +6,7 @@ author=3Liz
 email=info@3liz.com
 about=Standard COVADIS véloroutes et voies vertes
 
-version=0.2.0
+version=master
 
 tracker=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
 repository=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
