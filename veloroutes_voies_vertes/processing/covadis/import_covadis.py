@@ -30,8 +30,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
     INPUT="INPUT"
     TABLE="TABLE"
     OUTPUT_MSG="OUTPUT MSG"
-    SCHEMA="veloroutes"
-    DATABASE="vvv"
+    SCHEMA="SCHEMA"
+    DATABASE="DATABASE"
 
     def name(self):
         return "import_covadis"
