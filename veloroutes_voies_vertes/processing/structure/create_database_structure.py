@@ -220,7 +220,6 @@ class CreateDatabaseStructure(BaseProcessingAlgorithm):
             metadata_version = (
                 last_migration.replace("upgrade_to_", "").replace(".sql", "").strip()
             )
-            # metadata_version = '0.2.0'
             feedback.reportError("Latest migration is {}".format(metadata_version))
 
         sql = """
