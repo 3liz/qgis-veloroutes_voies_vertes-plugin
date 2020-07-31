@@ -135,7 +135,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
         print(layer.isValid())
         if not layer.isValid():
             return False
-        depname="066"
         # if layer.geometryType == LineGeometry:
         #     geomtype="L"
         geomtype =""
