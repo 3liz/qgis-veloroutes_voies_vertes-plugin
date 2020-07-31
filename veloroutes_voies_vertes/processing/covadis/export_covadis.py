@@ -11,7 +11,8 @@ from qgis.core import (
     QgsMessageLog,
     Qgis,
     QgsProcessingContext,
-    QgsProcessing
+    QgsProcessing,
+    QgsProcessingOutputMultipleLayers
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -28,6 +29,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
     DATABASE = "DATABASE"
     SCHEMA = "SCHEMA"
     TABLE = "TABLE"
+    DPT = "DPT"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
 
@@ -69,7 +71,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             {
                 "widget_wrapper": {
                     "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE,
+                    "connection_param": self.DATABASE
                 }
             }
         )
@@ -79,7 +81,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Donnée à exporter"),
-            'segment',
+            'portion',
             optional=False
         )
         table_param.setMetadata(
@@ -92,6 +94,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
         )
         self.addParameter(table_param)
 
+        # Non du departement pour le fichier d'export
+        depparam= QgsProcessingParameterString(
+            self.DPT,
+            tr("Departement au format XXX"),
+            '066',
+            optional=False
+        )
+        self.addParameter(depparam)
+
         # Chemin de destination
         outparam = QgsProcessingParameterFeatureSink(
                 self.OUTPUT,
@@ -102,26 +113,37 @@ class ExportCovadis(BaseProcessingAlgorithm):
         )
         self.addParameter(outparam)
 
+        # OUTPUTS
+        self.addOutput(
+            QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
+        )
+
     def createExportTable(self, table, connection):
 
         try:
-            sql = "SELECT veloroutes.export_table('{}')".format(table)
+            sql = "SELECT veloroutes.export_table_{}()".format(table)
             connection.executeSql(sql)
         except Exception as e:
             msg = e.args[0]
             QgsMessageLog.logMessage(msg, 'VéloroutesPlugin', Qgis.Critical)
 
-    def toSHP(self, context, table, uri, schema, geom, sql, pkey=None):
-        uri.setDataSource(schema, table, geom, sql)
+    def toSHP(self, context, table, dpt, uri, geom, sql, pkey=None):
+        uri.setDataSource('exports', table, geom, sql)
         if pkey:
-            uri.setDataSource(schema, table, geom, sql, pkey)
+            uri.setDataSource('exports', table, geom, sql, pkey)
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
+        print(layer.isValid())
         if not layer.isValid():
             return False
+        depname="066"
+        # if layer.geometryType == LineGeometry:
+        #     geomtype="L"
+        geomtype =""
+        filename="N_3V_"+table.upper()+ "_" + geomtype + "_" + dpt
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
             layer.id(),
-            QgsProcessingContext.LayerDetails(table, context.project(), self.OUTPUT)
+            QgsProcessingContext.LayerDetails(filename, context.project(), self.OUTPUT)
         )
         return layer
         print("call toSHP")
@@ -140,48 +162,18 @@ class ExportCovadis(BaseProcessingAlgorithm):
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
         table=layer.name()
 
-        schema = self.parameterAsString(parameters, self.SCHEMA, context)
+        dpt = self.parameterAsString(parameters, self.DPT, context)
+
+        # schema = self.parameterAsString(parameters, self.SCHEMA, context)
         feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
         self.createExportTable(table, conn)
-
-        self.toSHP(context, table, uri, schema, 'geom', "", pkey=None)
-        # for x in layers_name:
-        #     if not context.project().mapLayersByName(x):
-        #         result = self.initLayer(context, uri, schema, x, "geom", "")
-        #         if not result:
-        #             feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-        #         else:
-        #             output_layers.append(result.id())
-        # # add views
-        # for x in layers_v_name:
-        #     if x == "v_portion":
-        #         pkey= "id_portion"
-        #     if x == "v_itineraire":
-        #         pkey = "id_iti"
-        #     if not context.project().mapLayersByName(x):
-        #         result= self.initLayer(
-        #                 context, uri, schema, x, "geom", "", None, pkey
-        #         )
-        #         if not result:
-        #             feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-        # # add raster
-        # raster = self.parameterAsBool(parameters, self.RASTER, context)
-        # if raster:
-        #     if not context.project().mapLayersByName("OpenStreetMap"):
-        #         urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/'
-        #                          '%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857')
-        #         result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
-        #         output_layers.append(result.id())
-
-        # # add attribute tables
-        # for x in tables_name:
-        #     if not context.project().mapLayersByName(x):
-        #         result = self.initLayer(context, uri, schema, x, None, "")
-        #         if not result:
-        #             feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-        #         else:
-        #             output_layers.append(result.id())
+        if table =='itineraire':
+            geom = None
+        else:
+            geom = "geom"
+        result = self.toSHP(context, table, dpt, uri, geom, "")
+        output_layers.append(result.id())
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
