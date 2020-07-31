@@ -8,11 +8,11 @@ from qgis.core import (
     QgsProcessingParameterVectorLayer,
     QgsProcessingOutputString,
     QgsProcessingParameterMatrix,
+    QgsProviderConnectionException,
     QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer,
-    Qgis,
-    QgsMessageLog
+    QgsProcessingException
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -81,7 +81,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         table_param = QgsProcessingParameterString(
             self.TABLE,
             tr("Table de destination"),
-            '',
+            'portion',
             optional=True
         )
         table_param.setMetadata(
@@ -99,7 +99,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue=''
+            defaultValue=(
+                '/Users/enolasengeissen/Documents/Stage_3Liz/data/'
+                'cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg')
         )
         self.addParameter(couche)
 
@@ -108,7 +110,10 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 'matrix',
                 'matrix',
                 headers=['Champs source', 'Champs destination'],
-                defaultValue=[]
+                defaultValue=[
+                    "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
+                    "mont_subv", "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
+                    "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
         )
         self.addParameter(table)
 
@@ -117,7 +122,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def toPostgres(self, db, table, refact, context, feedback):
+    @staticmethod
+    def toPostgres(db, table, refact, context, feedback):
         """
         Fonction qui refactorise les champs
         et importe les fichiers dans un schema imports
@@ -146,7 +152,8 @@ class ImportCovadis(BaseProcessingAlgorithm):
         )
         feedback.pushInfo(tr("Insertion des données dans la base faite"))
 
-    def toVeloroutes(self, connection, table, feedback):
+    @staticmethod
+    def toVeloroutes(connection, table, feedback):
         """
         Fonction qui adapte les données si besoin
         et insère la table dans le schéma veloroutes
@@ -158,9 +165,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 sql = "SELECT veloroutes.insert_veloroutes_{}()".format(table)
             connection.executeSql(sql)
             feedback.pushInfo(tr("Insertion des données dans le schéma veloroutes fait"))
-        except Exception as e:
+        except QgsProviderConnectionException as e:
             msg = e.args[0]
-            QgsMessageLog.logMessage(msg, 'VéloroutesPlugin', Qgis.Critical)
+            raise QgsProcessingException(msg)
 
     def processAlgorithm(self, parameters, context, feedback):
         _ = parameters
