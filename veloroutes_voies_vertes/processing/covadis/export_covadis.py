@@ -12,7 +12,8 @@ from qgis.core import (
     Qgis,
     QgsProcessingContext,
     QgsProcessing,
-    QgsProcessingOutputMultipleLayers
+    QgsProcessingOutputMultipleLayers,
+    QgsWkbTypes
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -118,10 +119,13 @@ class ExportCovadis(BaseProcessingAlgorithm):
             QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
         )
 
-    def createExportTable(self, table, connection):
-
-        try:
+    @staticmethod
+    def createExportTable(table, connection):
+        if "val" in table:
+            sql = "SELECT veloroutes.export_table('{}')".format(table)
+        else :
             sql = "SELECT veloroutes.export_table_{}()".format(table)
+        try:
             connection.executeSql(sql)
         except Exception as e:
             msg = e.args[0]
@@ -132,20 +136,40 @@ class ExportCovadis(BaseProcessingAlgorithm):
         if pkey:
             uri.setDataSource('exports', table, geom, sql, pkey)
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
-        print(layer.isValid())
         if not layer.isValid():
             return False
-        # if layer.geometryType == LineGeometry:
-        #     geomtype="L"
-        geomtype =""
-        filename="N_3V_"+table.upper()+ "_" + geomtype + "_" + dpt
+
+        # Construction filename
+        prefixe="N_3V_"
+        suffixe = "_" + dpt
+        tablename= table.upper()
+        if table == 'element':
+            tablename= 'R_'+tablename +'_PORTION'
+        if 'poi' in table:
+            tablename= tablename[4:]
+        if "val" in table:
+            prefixe="3V_"
+            suffixe=""
+            if "avancement" in table:
+                tablename = "AVANCEMENT_VAL"
+            if "statut" in table:
+                tablename = "STATUT_VAL"
+            if "portion" in table or "repere" in table:
+                tablename="TYPE"+tablename
+        geomtype = {
+            QgsWkbTypes.LineGeometry:'_L',
+            QgsWkbTypes.PointGeometry:'_P',
+            QgsWkbTypes.NullGeometry: ''
+        }
+        geomcode = geomtype[layer.geometryType()]
+        filename=prefixe +tablename + geomcode + suffixe
+
         context.temporaryLayerStore().addMapLayer(layer)
         context.addLayerToLoadOnCompletion(
             layer.id(),
             QgsProcessingContext.LayerDetails(filename, context.project(), self.OUTPUT)
         )
         return layer
-        print("call toSHP")
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
@@ -168,10 +192,11 @@ class ExportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
         self.createExportTable(table, conn)
-        if table =='itineraire':
+        if table =='itineraire' or table =='element' or "val" in table:
             geom = None
         else:
             geom = "geom"
+        print(geom)
         result = self.toSHP(context, table, dpt, uri, geom, "")
         output_layers.append(result.id())
 
