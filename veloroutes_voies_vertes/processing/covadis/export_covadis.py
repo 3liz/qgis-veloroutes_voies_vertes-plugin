@@ -91,6 +91,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
                     "class": "processing.gui.wrappers_postgis.TableWidgetWrapper",
                     "schema_param": self.SCHEMA
                 }
+                
             }
         )
         self.addParameter(table_param)
@@ -123,8 +124,8 @@ class ExportCovadis(BaseProcessingAlgorithm):
     def createExportTable(table, connection):
         if "val" in table:
             sql = "SELECT veloroutes.export_table('{}')".format(table)
-        else:
-            sql = "SELECT veloroutes.export_table_{}()".format(table)
+        else :
+            sql = "SELECT veloroutes.export_{}()".format(table)
         try:
             connection.executeSql(sql)
         except Exception as e:
@@ -157,8 +158,8 @@ class ExportCovadis(BaseProcessingAlgorithm):
             if "portion" in table or "repere" in table:
                 tablename="TYPE"+tablename
         geomtype = {
-            QgsWkbTypes.LineGeometry: '_L',
-            QgsWkbTypes.PointGeometry: '_P',
+            QgsWkbTypes.LineGeometry:'_L',
+            QgsWkbTypes.PointGeometry:'_P',
             QgsWkbTypes.NullGeometry: ''
         }
         geomcode = geomtype[layer.geometryType()]
@@ -196,7 +197,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
             geom = None
         else:
             geom = "geom"
-        print(geom)
         result = self.toSHP(context, table, dpt, uri, geom, "")
         output_layers.append(result.id())
 
