@@ -91,7 +91,10 @@ class ExportCovadis(BaseProcessingAlgorithm):
                     "class": "processing.gui.wrappers_postgis.TableWidgetWrapper",
                     "schema_param": self.SCHEMA
                 }
+<<<<<<< HEAD
                 
+=======
+>>>>>>> 40b13a131e196ca708f0169a0bd4f295103d6a70
             }
         )
         self.addParameter(table_param)
@@ -158,8 +161,13 @@ class ExportCovadis(BaseProcessingAlgorithm):
             if "portion" in table or "repere" in table:
                 tablename="TYPE"+tablename
         geomtype = {
+<<<<<<< HEAD
             QgsWkbTypes.LineGeometry:'_L',
             QgsWkbTypes.PointGeometry:'_P',
+=======
+            QgsWkbTypes.LineGeometry: '_L',
+            QgsWkbTypes.PointGeometry: '_P',
+>>>>>>> 40b13a131e196ca708f0169a0bd4f295103d6a70
             QgsWkbTypes.NullGeometry: ''
         }
         geomcode = geomtype[layer.geometryType()]
