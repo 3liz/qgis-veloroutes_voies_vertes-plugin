@@ -15,8 +15,6 @@ from .config.configure import ConfigurePlugin
 from .covadis.import_covadis import ImportCovadis
 from .covadis.export_covadis import ExportCovadis
 
- 
-
 
 class VeloroutesProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
