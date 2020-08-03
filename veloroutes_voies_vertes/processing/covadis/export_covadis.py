@@ -123,7 +123,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
     @staticmethod
     def createExportTable(table, connection):
         if "val" in table:
-            sql = "SELECT veloroutes.export_table('{}')".format(table)
+            sql = "SELECT veloroutes.export_('{}')".format(table)
         else :
             sql = "SELECT veloroutes.export_{}()".format(table)
         try:
