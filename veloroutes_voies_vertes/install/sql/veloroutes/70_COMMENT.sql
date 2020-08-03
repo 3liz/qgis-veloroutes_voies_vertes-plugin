@@ -180,10 +180,6 @@ COMMENT ON COLUMN veloroutes.liaison.src_geom IS 'Type de la source de géoréf�
 COMMENT ON COLUMN veloroutes.liaison.src_annee IS 'Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique';
 
 
--- liaison.id_local
-COMMENT ON COLUMN veloroutes.liaison.id_local IS 'Identifiant de la liaison cyclable';
-
-
 -- liaison.id_repere
 COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repère que la liaison connecte à un point d''intérêt (clé étrangère)';
 
@@ -194,6 +190,10 @@ COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérê
 
 -- liaison.geom
 COMMENT ON COLUMN veloroutes.liaison.geom IS 'Géométrie';
+
+
+-- liaison.id_liaison
+COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
 
 
 -- metadata
@@ -241,11 +241,19 @@ COMMENT ON COLUMN veloroutes.poi.type IS 'Nature du point d’intérêt';
 
 
 -- poi.id_local
-COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant du point d''intérêt';
+COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant créé et géré par l organisme local';
 
 
 -- poi.geom
 COMMENT ON COLUMN veloroutes.poi.geom IS 'Géométrie';
+
+
+-- poi.id_poi
+COMMENT ON COLUMN veloroutes.poi.id_poi IS 'Clé primaire';
+
+
+-- poi.id_on3v
+COMMENT ON COLUMN veloroutes.poi.id_on3v IS 'Identifiant créé et géré par l ON3V';
 
 
 -- poi_acces
@@ -420,16 +428,16 @@ COMMENT ON COLUMN veloroutes.repere.libelle IS 'Numéro, nom ou description util
 COMMENT ON COLUMN veloroutes.repere.numero_serie IS 'Numéro de série du capteur utilisé pour l’identifier sur la plateforme nationale des fréquentations';
 
 
--- repere.id_local
-COMMENT ON COLUMN veloroutes.repere.id_local IS 'Identifiant du point de repère cyclable';
-
-
 -- repere.type_noeud
 COMMENT ON COLUMN veloroutes.repere.type_noeud IS 'Valeur indiquant le rôle que joue le point de repère dans l’itinéraire cyclable';
 
 
 -- repere.geom
 COMMENT ON COLUMN veloroutes.repere.geom IS 'Géométrie';
+
+
+-- repere.id_repere
+COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
 
 
 -- repere_val

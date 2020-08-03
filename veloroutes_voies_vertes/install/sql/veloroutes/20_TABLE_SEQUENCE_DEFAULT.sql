@@ -19,6 +19,28 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+-- booleen_val
+CREATE TABLE veloroutes.booleen_val (
+    code text,
+    libelle text,
+    id integer NOT NULL
+);
+
+
+-- booleen_val_id_seq
+CREATE SEQUENCE veloroutes.booleen_val_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- booleen_val_id_seq
+ALTER SEQUENCE veloroutes.booleen_val_id_seq OWNED BY veloroutes.booleen_val.id;
+
+
 -- element
 CREATE TABLE veloroutes.element (
     id integer NOT NULL,
@@ -154,10 +176,12 @@ CREATE TABLE veloroutes.liaison (
     "precision" text,
     src_geom text,
     src_annee text,
-    id_local integer NOT NULL,
+    id_local text,
     id_repere integer,
     id_poi integer,
-    geom public.geometry(MultiLineString,2154)
+    geom public.geometry(MultiLineString,2154),
+    id_liaison integer NOT NULL,
+    id_on3v text
 );
 
 
@@ -165,8 +189,8 @@ CREATE TABLE veloroutes.liaison (
 COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
 
 
--- liaison_id_local_seq
-CREATE SEQUENCE veloroutes.liaison_id_local_seq
+-- liaison_id_liaison_seq
+CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -175,8 +199,8 @@ CREATE SEQUENCE veloroutes.liaison_id_local_seq
     CACHE 1;
 
 
--- liaison_id_local_seq
-ALTER SEQUENCE veloroutes.liaison_id_local_seq OWNED BY veloroutes.liaison.id_local;
+-- liaison_id_liaison_seq
+ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_liaison;
 
 
 -- metadata
@@ -235,8 +259,10 @@ ALTER SEQUENCE veloroutes.niveau_administratif_val_id_seq OWNED BY veloroutes.ni
 CREATE TABLE veloroutes.poi (
     description text,
     type text,
-    id_local integer NOT NULL,
-    geom public.geometry(Point,2154)
+    id_local text,
+    geom public.geometry(Point,2154),
+    id_poi integer NOT NULL,
+    id_on3v text
 );
 
 
@@ -280,8 +306,8 @@ CREATE SEQUENCE veloroutes.poi_acces_val_id_seq
 ALTER SEQUENCE veloroutes.poi_acces_val_id_seq OWNED BY veloroutes.poi_acces_val.id;
 
 
--- poi_id_local_seq
-CREATE SEQUENCE veloroutes.poi_id_local_seq
+-- poi_id_poi_seq
+CREATE SEQUENCE veloroutes.poi_id_poi_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -290,35 +316,18 @@ CREATE SEQUENCE veloroutes.poi_id_local_seq
     CACHE 1;
 
 
--- poi_id_local_seq
-ALTER SEQUENCE veloroutes.poi_id_local_seq OWNED BY veloroutes.poi.id_local;
+-- poi_id_poi_seq
+ALTER SEQUENCE veloroutes.poi_id_poi_seq OWNED BY veloroutes.poi.id_poi;
 
 
 -- poi_service
 CREATE TABLE veloroutes.poi_service (
-    description text,
-    type text,
-    id_local integer
 )
 INHERITS (veloroutes.poi);
 
 
 -- poi_service
 COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
-
-
--- poi_service_id_local_seq
-CREATE SEQUENCE veloroutes.poi_service_id_local_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- poi_service_id_local_seq
-ALTER SEQUENCE veloroutes.poi_service_id_local_seq OWNED BY veloroutes.poi_service.id_local;
 
 
 -- poi_service_val
@@ -349,29 +358,12 @@ ALTER SEQUENCE veloroutes.poi_service_val_id_seq OWNED BY veloroutes.poi_service
 
 -- poi_tourisme
 CREATE TABLE veloroutes.poi_tourisme (
-    description text,
-    type text,
-    id_local integer
 )
 INHERITS (veloroutes.poi);
 
 
 -- poi_tourisme
 COMMENT ON TABLE veloroutes.poi_tourisme IS 'Points d’intérêt touristique';
-
-
--- poi_tourisme_id_local_seq
-CREATE SEQUENCE veloroutes.poi_tourisme_id_local_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
--- poi_tourisme_id_local_seq
-ALTER SEQUENCE veloroutes.poi_tourisme_id_local_seq OWNED BY veloroutes.poi_tourisme.id_local;
 
 
 -- poi_tourisme_val
@@ -461,11 +453,11 @@ ALTER SEQUENCE veloroutes.portion_val_id_seq OWNED BY veloroutes.portion_val.id;
 CREATE TABLE veloroutes.repere (
     libelle text,
     numero_serie text,
-    id_local integer NOT NULL,
+    id_local text,
     type_noeud text NOT NULL,
     geom public.geometry(Point,2154),
-    x double precision,
-    y double precision
+    id_repere integer NOT NULL,
+    id_on3v text
 );
 
 
@@ -473,8 +465,8 @@ CREATE TABLE veloroutes.repere (
 COMMENT ON TABLE veloroutes.repere IS 'Point de repère cyclable, nœud cyclable particulier';
 
 
--- repere_id_local_seq
-CREATE SEQUENCE veloroutes.repere_id_local_seq
+-- repere_id_repere_seq
+CREATE SEQUENCE veloroutes.repere_id_repere_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -483,8 +475,8 @@ CREATE SEQUENCE veloroutes.repere_id_local_seq
     CACHE 1;
 
 
--- repere_id_local_seq
-ALTER SEQUENCE veloroutes.repere_id_local_seq OWNED BY veloroutes.repere.id_local;
+-- repere_id_repere_seq
+ALTER SEQUENCE veloroutes.repere_id_repere_seq OWNED BY veloroutes.repere.id_repere;
 
 
 -- repere_val
@@ -553,8 +545,8 @@ CREATE TABLE veloroutes.segment (
     proprietaire text,
     geom public.geometry(LineString,2154),
     "precision" text,
-    sens_unique text,
-    geometrie_fictive text,
+    sens_unique text DEFAULT 'F'::text,
+    geometrie_fictive text DEFAULT 'F'::text,
     id_on3v text,
     id_local text
 );
@@ -604,6 +596,10 @@ CREATE SEQUENCE veloroutes.statut_segment_val_id_seq
 ALTER SEQUENCE veloroutes.statut_segment_val_id_seq OWNED BY veloroutes.statut_segment_val.id;
 
 
+-- booleen_val id
+ALTER TABLE ONLY veloroutes.booleen_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.booleen_val_id_seq'::regclass);
+
+
 -- element id
 ALTER TABLE ONLY veloroutes.element ALTER COLUMN id SET DEFAULT nextval('veloroutes.element_id_seq'::regclass);
 
@@ -620,8 +616,8 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val ALTER COLUMN id SET DEFAULT next
 ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_iti SET DEFAULT nextval('veloroutes.itineraire_id_iti_seq'::regclass);
 
 
--- liaison id_local
-ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.liaison_id_local_seq'::regclass);
+-- liaison id_liaison
+ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_liaison SET DEFAULT nextval('veloroutes.liaison_id_liaison_seq'::regclass);
 
 
 -- metadata id
@@ -632,28 +628,28 @@ ALTER TABLE ONLY veloroutes.metadata ALTER COLUMN id SET DEFAULT nextval('veloro
 ALTER TABLE ONLY veloroutes.niveau_administratif_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.niveau_administratif_val_id_seq'::regclass);
 
 
--- poi id_local
-ALTER TABLE ONLY veloroutes.poi ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.poi_id_local_seq'::regclass);
+-- poi id_poi
+ALTER TABLE ONLY veloroutes.poi ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 
 
--- poi_acces id_local
-ALTER TABLE ONLY veloroutes.poi_acces ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.poi_id_local_seq'::regclass);
+-- poi_acces id_poi
+ALTER TABLE ONLY veloroutes.poi_acces ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 
 
 -- poi_acces_val id
 ALTER TABLE ONLY veloroutes.poi_acces_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.poi_acces_val_id_seq'::regclass);
 
 
--- poi_service id_local
-ALTER TABLE ONLY veloroutes.poi_service ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.poi_service_id_local_seq'::regclass);
+-- poi_service id_poi
+ALTER TABLE ONLY veloroutes.poi_service ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 
 
 -- poi_service_val id
 ALTER TABLE ONLY veloroutes.poi_service_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.poi_service_val_id_seq'::regclass);
 
 
--- poi_tourisme id_local
-ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.poi_tourisme_id_local_seq'::regclass);
+-- poi_tourisme id_poi
+ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
 
 
 -- poi_tourisme_val id
@@ -668,8 +664,8 @@ ALTER TABLE ONLY veloroutes.portion ALTER COLUMN id_portion SET DEFAULT nextval(
 ALTER TABLE ONLY veloroutes.portion_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.portion_val_id_seq'::regclass);
 
 
--- repere id_local
-ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_local SET DEFAULT nextval('veloroutes.repere_id_local_seq'::regclass);
+-- repere id_repere
+ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_repere SET DEFAULT nextval('veloroutes.repere_id_repere_seq'::regclass);
 
 
 -- repere_val id

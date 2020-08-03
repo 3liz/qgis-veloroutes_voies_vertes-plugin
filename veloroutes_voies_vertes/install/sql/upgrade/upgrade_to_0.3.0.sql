@@ -1,20 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
-
-SET statement_timeout = 0;
-SET lock_timeout = 0;
-
-SET client_encoding = 'UTF8';
-SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
-SET check_function_bodies = false;
-SET client_min_messages = warning;
-SET row_security = off;
-
 -- import_veloroutes_itineraire()
 CREATE FUNCTION veloroutes.import_veloroutes_itineraire() RETURNS boolean
     LANGUAGE plpgsql
@@ -431,198 +414,186 @@ BEGIN
 END;
 	$$;
 
-
--- numserie()
-CREATE FUNCTION veloroutes.numserie() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$    BEGIN
-        IF NEW.type_noeud = 'CPT' THEN
-            IF NEW.numero_serie IS NULL THEN
-				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
-			END IF;
-		END IF;
-        RETURN NEW;
-    END;
-$$;
+CREATE TABLE veloroutes.booleen_val (
+    code text,
+    libelle text,
+    id integer NOT NULL
+);
 
 
--- FUNCTION numserie()
-COMMENT ON FUNCTION veloroutes.numserie() IS 'Empêche que le numéro de série soit NULL si le noeud est un capteur';
+-- booleen_val_id_seq
+CREATE SEQUENCE veloroutes.booleen_val_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
 
 
--- revet()
-CREATE FUNCTION veloroutes.revet() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$
-    BEGIN
-        IF NEW.avancement = 1 THEN
-			IF NEW.revetement IS NOT NULL THEN
-            	RAISE EXCEPTION 'revetement ne peut pas prendre de valeur si avancement vaut 1';
-			END IF;
-        END IF;
-        IF NEW.geometrie_fictive ='T' THEN
-            IF NEW.revetement IS NOT NULL THEN
-            	RAISE EXCEPTION 'revetement ne peut pas prendre de valeur si la geom est fictive';
-			END IF;
-        END IF;
-        RETURN NEW;
-    END;
-$$;
+-- booleen_val_id_seq
+ALTER SEQUENCE veloroutes.booleen_val_id_seq OWNED BY veloroutes.booleen_val.id;
 
+ALTER TABLE ONLY veloroutes.booleen_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.booleen_val_id_seq'::regclass);
 
--- FUNCTION revet()
-COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si le segment est en projet ou fictif';
+ALTER TABLE veloroutes.segment ALTER COLUMN sens_unique SET DEFAULT 'F';
+ALTER TABLE veloroutes.segment ALTER COLUMN geometrie_fictive SET DEFAULT 'F';
 
+ALTER TABLE ONLY veloroutes.booleen_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.booleen_val_id_seq'::regclass);
+ALTER TABLE ONLY veloroutes.booleen_val ADD CONSTRAINT booleen_val_pkey PRIMARY KEY (id);
+ALTER TABLE ONLY veloroutes.booleen_val ADD CONSTRAINT code10 UNIQUE (code);
 
--- split(integer, real, real)
-CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
-    LANGUAGE plpgsql
-    AS $$DECLARE
-	seg record;
-	cut geometry;
-    geom_init geometry;
-    geom_term geometry;
-	id_new_seg integer;
+ALTER TABLE ONLY veloroutes.itineraire ADD CONSTRAINT est_inscrit_booleen FOREIGN KEY (est_inscrit) REFERENCES veloroutes.booleen_val(code);
+ALTER TABLE ONLY veloroutes.segment ADD CONSTRAINT geometrie_fictive_booleen FOREIGN KEY (geometrie_fictive) REFERENCES veloroutes.booleen_val(code);
+ALTER TABLE ONLY veloroutes.segment ADD CONSTRAINT sens_unique_booleen FOREIGN KEY (sens_unique) REFERENCES veloroutes.booleen_val(code);
 
-BEGIN
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('N', 'Ne sais pas', 1);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('F', 'False', 2);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('T', 'True', 3);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES (NULL, 'Non renseigné', 4);
 
-	-- Récupération du point cliqué
-	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
+SELECT pg_catalog.setval('veloroutes.booleen_val_id_seq', 4, true);
 
-	-- Récupération du segment cliqué
-	SELECT *
-	FROM veloroutes.segment
-	WHERE veloroutes.segment.id_segment=id_seg
-	INTO seg;
+ALTER TABLE veloroutes.portion DROP CONSTRAINT IF EXISTS portion_id_local;
+ALTER TABLE veloroutes.portion DROP CONSTRAINT IF EXISTS portion_id_on3v;
 
-	-- Vérification que le clique ne se situe pas trop loin d'un segment
-	IF ST_Distance(cut, seg.geom)> 5 THEN
-		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic : Distance > 5m ';
-	END IF;
-
-	-- Création des nouvelles géométries
-	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
-    geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
-
-	-- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
-	IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
-		RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
-	END IF;
-
-	-- Modification du segment :
-    -- OA----------(O)----------OB devient  OA----------(O)
-	UPDATE veloroutes.segment s
-	SET
-		geom = geom_init
-	WHERE id_segment = seg.id_segment;
-
-	-- Création d'un nouveau segment :
-    -- (O)----------OB
-    -- On récupère les valeurs issues du segment d'origine
-	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
-	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
-	RETURNING id_segment into id_new_seg;
-
-	-- Création des nouveaux elements de portion si besoin
-	INSERT INTO veloroutes.element(id_portion,id_segment)
-    SELECT veloroutes.element.id_portion, id_new_seg
-	FROM veloroutes.element
-	WHERE veloroutes.element.id_segment = id_seg;
-
-	-- Return 1
-    RETURN 1;
-
-END;$$;
-
-
--- v_itineraire_insert()
-CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$DECLARE iti_id int; ids text;
-
-BEGIN
-
-	--INSERT a new row in itineraire
-    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
-    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_iti into iti_id;
-
-	--INSERT stages of the itineray in etape
-	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
-    SELECT iti_id, vp.id_portion
-	FROM veloroutes.v_portion vp
-	--segments must be around the new geometry
-	WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
-	--segments that share just one vertex with the new geom are eliminated
-	AND ST_Within(vp.geom,ST_Buffer(NEW.geom,1));
-
-	--Warning for the user if the selection includes a piece of portion
-	--The selection should only be composed by full portions
-	FOR ids IN
-		SELECT veloroutes.v_portion.id_portion
-		FROM veloroutes.v_portion
-		--Optional
-		WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
-		--Portions whose geometry is only partially included in the selection
-		AND ST_Overlaps(veloroutes.v_portion.geom,NEW.geom)
-	LOOP
-      RAISE NOTICE 'La portion (%) ne peut pas être partiellement séléctionnée',ids;
-   	END LOOP;
- 	RETURN NEW;
-
-END;
-
-
-$$;
-
-
--- FUNCTION v_itineraire_insert()
-COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire';
-
-
--- v_portion_insert()
-CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
-    LANGUAGE plpgsql
-    AS $$DECLARE pid int; geo geometry;ids text;
-
-BEGIN
-	--INSERT a new portion
-    INSERT INTO veloroutes.portion(nom, description,type_portion)
-    VALUES(NEW.nom, NEW.description, NEW.type_portion)
-    RETURNING id_portion into pid;
-
-	--INSERT in element elements of the new portion
-	INSERT INTO veloroutes.element(id_portion,id_segment)
-    SELECT pid, veloroutes.segment.id_segment
-	FROM veloroutes.segment
-	--segments must be around the new geometry
-	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
-	--segments that share just one vertex with the new geom are eliminated
-	AND ST_Within(veloroutes.segment.geom,ST_Buffer(NEW.geom,1));
-
-	--Warning for the user if the selection includes a piece of segment
-	--The selection should only be composed by full segments
-	FOR ids IN
-		SELECT veloroutes.segment.id_segment
-		FROM veloroutes.segment
-		--Optional
-		WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
-		--Segments whose geometry is only partially included in the selection
-		AND ST_Overlaps(veloroutes.segment.geom,NEW.geom)
-	LOOP
-      RAISE NOTICE 'Le segment (%) ne peut pas être partiellement séléctionné',ids;
-   	END LOOP;
-
- 	RETURN NEW;
-
-END;$$;
-
-
--- FUNCTION v_portion_insert()
-COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion';
-
+ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_local;
+ALTER TABLE veloroutes.segment DROP CONSTRAINT IF EXISTS segment_id_on3v;
 
 --
--- PostgreSQL database dump complete
---
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS liaison_pkey CASCADE;
+ALTER TABLE veloroutes.liaison DROP CONSTRAINT IF EXISTS id_local CASCADE;
+ALTER TABLE veloroutes.liaison ADD COLUMN id_liaison integer NOT NULL;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.liaison ALTER COLUMN id_local DROP NOT NULL;
+ALTER TABLE veloroutes.liaison ADD COLUMN id_on3v text;
 
+DROP SEQUENCE IF EXISTS veloroutes.liaison_id_local_seq CASCADE;
+CREATE SEQUENCE veloroutes.liaison_id_liaison_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE veloroutes.liaison_id_liaison_seq OWNED BY veloroutes.liaison.id_liaison;
+
+ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS poi_pkey CASCADE;
+ALTER TABLE veloroutes.poi_service DROP CONSTRAINT IF EXISTS poi_service_pkey CASCADE;
+ALTER TABLE veloroutes.poi_tourisme DROP CONSTRAINT IF EXISTS poi_tourisme_pkey CASCADE;
+
+ALTER TABLE veloroutes.poi DROP CONSTRAINT IF EXISTS id_local CASCADE;
+ALTER TABLE veloroutes.poi ADD COLUMN id_poi integer NOT NULL;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.poi ALTER COLUMN id_local DROP NOT NULL;
+ALTER TABLE veloroutes.poi ADD COLUMN id_on3v text;
+
+DROP SEQUENCE IF EXISTS veloroutes.poi_id_local_seq CASCADE;
+CREATE SEQUENCE veloroutes.poi_id_poi_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE veloroutes.poi_id_poi_seq OWNED BY veloroutes.poi.id_poi;
+
+-- DROP et re creation car l'heritage était mal fait
+CREATE TABLE veloroutes.poi_service_stockage AS (SELECT * FROM veloroutes.poi_service);
+DROP TABLE IF EXISTS veloroutes.poi_service CASCADE;
+CREATE TABLE veloroutes.poi_service (
+)
+INHERITS (veloroutes.poi);
+DROP SEQUENCE IF EXISTS veloroutes.poi_service_id_local_seq CASCADE;
+INSERT INTO veloroutes.poi_service(description, type, id_local, geom, id_poi, id_on3v)
+SELECT * FROM veloroutes.poi_service_stockage;
+DROP TABLE veloroutes.poi_service_stockage;
+
+CREATE TABLE veloroutes.poi_tourisme_stockage AS (SELECT * FROM veloroutes.poi_tourisme);
+DROP TABLE IF EXISTS veloroutes.poi_tourisme CASCADE;
+CREATE TABLE veloroutes.poi_tourisme (
+)
+INHERITS (veloroutes.poi);
+DROP SEQUENCE IF EXISTS veloroutes.poi_tourisme_id_local_seq CASCADE;
+INSERT INTO veloroutes.poi_tourisme(description, type, id_local, geom, id_poi, id_on3v)
+SELECT * FROM veloroutes.poi_tourisme_stockage;
+DROP TABLE veloroutes.poi_tourisme_stockage;
+
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS id_local CASCADE;
+ALTER TABLE veloroutes.repere DROP CONSTRAINT IF EXISTS repere_pkey CASCADE;
+ALTER TABLE veloroutes.repere DROP COLUMN IF EXISTS x;
+ALTER TABLE veloroutes.repere DROP COLUMN IF EXISTS y;
+ALTER TABLE veloroutes.repere ADD COLUMN id_repere integer NOT NULL;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local TYPE text;
+ALTER TABLE veloroutes.repere ALTER COLUMN id_local DROP NOT NULL;
+ALTER TABLE veloroutes.repere ADD COLUMN id_on3v text;
+
+DROP SEQUENCE IF EXISTS veloroutes.repere_id_local_seq CASCADE;
+CREATE SEQUENCE veloroutes.repere_id_repere_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+ALTER SEQUENCE veloroutes.repere_id_repere_seq OWNED BY veloroutes.repere.id_repere;
+--
+ALTER TABLE ONLY veloroutes.liaison ALTER COLUMN id_liaison SET DEFAULT nextval('veloroutes.liaison_id_liaison_seq'::regclass);
+ALTER TABLE ONLY veloroutes.poi ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
+ALTER TABLE ONLY veloroutes.poi_acces ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
+ALTER TABLE ONLY veloroutes.poi_service ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
+ALTER TABLE ONLY veloroutes.poi_tourisme ALTER COLUMN id_poi SET DEFAULT nextval('veloroutes.poi_id_poi_seq'::regclass);
+ALTER TABLE ONLY veloroutes.repere ALTER COLUMN id_repere SET DEFAULT nextval('veloroutes.repere_id_repere_seq'::regclass);
+
+ALTER TABLE veloroutes.liaison ADD CONSTRAINT liaison_pkey PRIMARY KEY (id_liaison);
+
+ALTER TABLE ONLY veloroutes.poi_acces ADD CONSTRAINT poi_acces_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.poi ADD CONSTRAINT poi_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.poi_service ADD CONSTRAINT poi_service_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.poi_tourisme ADD CONSTRAINT poi_tourisme_pkey PRIMARY KEY (id_poi);
+
+ALTER TABLE veloroutes.repere ADD CONSTRAINT repere_pkey PRIMARY KEY (id_repere);
+
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT IF EXISTS poi CASCADE;
+ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT poi FOREIGN KEY (id_poi) REFERENCES veloroutes.poi(id_poi);
+
+ALTER TABLE ONLY veloroutes.frequentation DROP CONSTRAINT IF EXISTS repere CASCADE;
+
+ALTER TABLE ONLY veloroutes.liaison DROP CONSTRAINT IF EXISTS repere CASCADE;
+ALTER TABLE ONLY veloroutes.liaison ADD CONSTRAINT repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
+
+ALTER TABLE ONLY veloroutes.poi_service DROP CONSTRAINT IF EXISTS type CASCADE;
+ALTER TABLE ONLY veloroutes.poi_service ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_service_val(code);
+
+ALTER TABLE ONLY veloroutes.poi_tourisme DROP CONSTRAINT IF EXISTS type CASCADE;
+ALTER TABLE ONLY veloroutes.poi_tourisme ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_tourisme_val(code);
+
+COMMENT ON COLUMN veloroutes.liaison.id_local IS NULL;
+COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
+
+COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant créé et géré par l organisme local';
+COMMENT ON COLUMN veloroutes.poi.id_poi IS 'Clé primaire';
+COMMENT ON COLUMN veloroutes.poi.id_on3v IS 'Identifiant créé et géré par l ON3V';
+
+COMMENT ON COLUMN veloroutes.poi_acces.id_local IS 'Identifiant du point d''intérêt';
+
+COMMENT ON COLUMN veloroutes.poi_service.id_local IS 'Identifiant du point d''intérêt';
+
+COMMENT ON COLUMN veloroutes.poi_tourisme.id_local IS 'Identifiant du point d''intérêt';
+
+COMMENT ON COLUMN veloroutes.repere.id_local IS NULL;
+COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
+
+COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
+COMMENT ON TABLE veloroutes.poi_tourisme IS 'Points d’intérêt touristique';
+
+COMMENT ON TABLE veloroutes.poi_service IS 'Services présentant un intérêt pour le cyclotourisme';
+COMMENT ON COLUMN veloroutes.poi_service.description IS 'Renseignement ou description complémentaire sur le point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_service.type IS 'Nature du point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_service.geom IS 'Géométrie';
+COMMENT ON COLUMN veloroutes.poi_tourisme.description IS 'Renseignement ou description complémentaire sur le point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_tourisme.type IS 'Nature du point d’intérêt';
+COMMENT ON COLUMN veloroutes.poi_tourisme.geom IS 'Géométrie';

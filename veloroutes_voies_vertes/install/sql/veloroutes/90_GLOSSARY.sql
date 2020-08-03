@@ -16,6 +16,16 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Data for Name: booleen_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
+--
+
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('N', 'Ne sais pas', 1);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('F', 'False', 2);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('T', 'True', 3);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES (NULL, 'Non renseigné', 4);
+
+
+--
 -- Data for Name: etat_avancement_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
 --
 
@@ -113,6 +123,13 @@ INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (3, 'ASP', 
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (4, 'RTE', 'Route');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (5, 'BCY', 'Bande cyclable');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (6, 'ICA', 'Itinéraire à circulation apaisée');
+
+
+--
+-- Name: booleen_val_id_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: -
+--
+
+SELECT pg_catalog.setval('veloroutes.booleen_val_id_seq', 4, true);
 
 
 --
