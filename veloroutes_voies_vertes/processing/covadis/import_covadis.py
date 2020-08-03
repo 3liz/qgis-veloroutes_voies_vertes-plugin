@@ -160,9 +160,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
         """
         try:
             if 'poi' in table:
-                sql = "SELECT veloroutes.insert_veloroutes_poi({})".format(table)
+                sql = "SELECT veloroutes.import_veloroutes_poi({})".format(table)
             else:
-                sql = "SELECT veloroutes.insert_veloroutes_{}()".format(table)
+                sql = "SELECT veloroutes.import_veloroutes_{}()".format(table)
             connection.executeSql(sql)
             feedback.pushInfo(tr("Insertion des données dans le schéma veloroutes fait"))
         except QgsProviderConnectionException as e:
