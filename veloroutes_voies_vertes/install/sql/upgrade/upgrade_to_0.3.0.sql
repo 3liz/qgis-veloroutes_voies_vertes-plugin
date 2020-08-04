@@ -63,7 +63,6 @@ END;$$;
 CREATE FUNCTION veloroutes.export_poi_acces() RETURNS boolean
     LANGUAGE plpgsql
     AS $$BEGIN
-	PERFORM veloroutes.export_poi_portion();
 	DROP TABLE IF EXISTS exports.poi_acces;
 	CREATE TABLE exports.poi_acces AS
 	(SELECT

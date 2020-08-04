@@ -80,7 +80,6 @@ END;$$;
 CREATE FUNCTION veloroutes.export_poi_acces() RETURNS boolean
     LANGUAGE plpgsql
     AS $$BEGIN
-	PERFORM veloroutes.export_poi_portion();
 	DROP TABLE IF EXISTS exports.poi_acces;
 	CREATE TABLE exports.poi_acces AS
 	(SELECT
@@ -88,7 +87,7 @@ CREATE FUNCTION veloroutes.export_poi_acces() RETURNS boolean
 	 	id_on3V AS ID_ON3V,
 	 	(SELECT av.libelle FROM veloroutes.poi_acces_val AS av WHERE av.code = type) AS TYPE,
 	 	description AS DESCRIPT,
-	 	CASE
+	 	CASE 
 	 		WHEN EXISTS (SELECT 1 FROM exports.poi_portion AS pp WHERE pp.id_poi = poi.id_poi)
 	 		THEN (SELECT etp.etape
 				  FROM veloroutes.etape as etp
@@ -107,7 +106,7 @@ END;$$;
 CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
     LANGUAGE plpgsql
     AS $$BEGIN
-
+	
 	DROP TABLE IF EXISTS exports.poi_portion;
 	CREATE TABLE exports.poi_portion (
 		id serial,
@@ -116,7 +115,7 @@ CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
 
 	ALTER TABLE exports.poi_portion
     OWNER to enolasengeissen;
-
+	
 	-- On remplit avec les poi à moins de 100m d'une portion cyclable
 	INSERT INTO exports.poi_portion(id_poi, id_portion)
 	SELECT
@@ -124,7 +123,7 @@ CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
 		vp.id_portion AS ID_PORTION
 	FROM veloroutes.v_portion as vp, veloroutes.poi_service as poi
 	WHERE ST_Distance(poi.geom, vp.geom)< 100;
-
+	
 	--Insert FROM poi_acces
 	INSERT INTO exports.poi_portion(id_poi, id_portion)
 	SELECT
@@ -132,7 +131,7 @@ CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
 		vp.id_portion AS ID_PORTION
 	FROM veloroutes.v_portion as vp, veloroutes.poi_acces as poi
 	WHERE ST_Distance(poi.geom, vp.geom)< 100;
-
+	
 	--Insert FROM poi_tourisme
 	INSERT INTO exports.poi_portion(id_poi, id_portion)
 	SELECT
@@ -194,12 +193,12 @@ CREATE FUNCTION veloroutes.export_portion() RETURNS boolean
 		--id dans veloroutes
 		vp.id_portion AS id,
 	 	--id dans veloroutes
-	 	CASE
+	 	CASE 
 	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
 	 		THEN (SELECT etp.id_itineraire FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
 	 		ELSE NULL
 	 	END AS ID_ITI,
-		CASE
+		CASE 
 	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
 	 		THEN (SELECT etp.etape FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
 	 		ELSE NULL
