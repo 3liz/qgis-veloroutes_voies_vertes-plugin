@@ -34,7 +34,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
     TABLE = "TABLE"
     DPT = "DPT"
     OUTPUT = "OUTPUT"
-    OUTPUT2 = "OUTPUT2"
     OUTPUT_MSG = "OUTPUT MSG"
     EXPORTABLES =[
         "itineraire", "portion", "element",
@@ -109,7 +108,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         outparam = QgsProcessingParameterFolderDestination(
             self.PROJECTS_FOLDER,
-            tr("chemin de destination"),
+            tr("Chemin de destination"),
             defaultValue=False,
             optional=False,
             createByDefault=False)
@@ -170,16 +169,20 @@ class ExportCovadis(BaseProcessingAlgorithm):
         }
         geomcode = geomtype[layer.geometryType()]
         filename= prefixe +tablename + geomcode + suffixe
+        transformContext = context.project().transformContext()
+        options = QgsVectorFileWriter.SaveVectorOptions()
+        options.driverName = "ESRI ShapeFile"
+        options.fileEncoding = "utf-8"
 
         # Enregistrement du fichier shape
-        error = QgsVectorFileWriter.writeAsVectorFormat(
+        error = QgsVectorFileWriter.writeAsVectorFormatV2(
             layer=layer,
             fileName=dirname+'/'+filename+ ".shp",
-            fileEncoding="CP1250",
-            driverName="ESRI Shapefile"
+            transformContext=transformContext,
+            options=options
         )
-        if error == QgsVectorFileWriter.NoError:
-            print("success!")
+        if error != QgsVectorFileWriter.NoError:
+            raise QgsProcessingException("Erreur lors de l'enregistrement")
 
         # Chargement de la couche corrrespondante dans le projet
         if charger:
@@ -212,7 +215,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
         self.createExportTable(table, conn)
-        if table =='itineraire' or table =='element' or table=='poi_portion' or "val" in table:
+        if table in ['itineraire', 'element', 'poi_portion'] or "val" in table:
             geom = None
         else:
             geom = "geom"
