@@ -15,6 +15,259 @@ SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
 
+-- export_element()
+CREATE FUNCTION veloroutes.export_element() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.element;
+	CREATE TABLE exports.element AS
+	(SELECT
+	 	--identifiant de veloroutes à retransformer?
+		id_portion AS ID_PORTION,
+	 	--identifiant de veloroutes à retrasnformer?
+	 	id_segment AS ID_SEGMENT
+	FROM veloroutes.element);
+	RETURN 1;
+END;$$;
+
+
+-- export_itineraire()
+CREATE FUNCTION veloroutes.export_itineraire() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.itineraire;
+	CREATE TABLE exports.itineraire AS
+	SELECT
+		--ici c'est l'identifiant de veloroutes
+		id_iti AS ID_ITI,
+		-- ici on remettrait l'ancien identifiant ?
+		--(SELECT id_import FROM imports.import_itineraire WHERE id_iti=id_iti)
+		--AS ID_ITI,
+		numero AS NUMERO,
+		nom_officiel AS NOM_OFF,
+		nom_usage AS NOM_USAGE,
+		depart AS DEPART,
+		arrivee AS ARRIVEE,
+		est_inscrit AS EST_INSCRIT,
+		niveau_schema AS NIV_INSCRI,
+		annee_inscription AS AN_INSCRI,
+		site_web AS SITE_WEB,
+		annee_ouverture AS AN_OUVERT
+	FROM veloroutes.itineraire;
+	RETURN 1;
+END;$$;
+
+
+-- export_liaison()
+CREATE FUNCTION veloroutes.export_liaison() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.liaison;
+	CREATE TABLE exports.liaison AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	precision AS PRECISION,
+	 	src_geom AS SRC_GEOM,
+	 	src_annee AS SRC_ANNEE,
+	 	geom
+	FROM veloroutes.liaison);
+	RETURN 1;
+END;$$;
+
+
+-- export_poi_acces()
+CREATE FUNCTION veloroutes.export_poi_acces() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.poi_acces;
+	CREATE TABLE exports.poi_acces AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT av.libelle FROM veloroutes.poi_acces_val AS av WHERE av.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	CASE
+	 		WHEN EXISTS (SELECT 1 FROM exports.poi_portion AS pp WHERE pp.id_poi = poi.id_poi)
+	 		THEN (SELECT etp.etape
+				  FROM veloroutes.etape as etp
+				  JOIN exports.poi_portion as pp ON pp.id_portion = etp.id_portion
+				  WHERE pp.id_poi = poi.id_poi
+				  )
+	 		ELSE NULL
+	 	END AS ID_ETAPE,
+	 	geom
+	FROM veloroutes.poi_acces as poi);
+	RETURN 1;
+END;$$;
+
+
+-- export_poi_portion()
+CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+
+	DROP TABLE IF EXISTS exports.poi_portion;
+	CREATE TABLE exports.poi_portion (
+		id serial,
+    	ID_POI integer,
+		ID_PORTION integer);
+
+	ALTER TABLE exports.poi_portion
+    OWNER to enolasengeissen;
+
+	-- On remplit avec les poi à moins de 100m d'une portion cyclable
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_service as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	--Insert FROM poi_acces
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_acces as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	--Insert FROM poi_tourisme
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_tourisme as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	RETURN 1;
+END;$$;
+
+
+-- export_poi_service()
+CREATE FUNCTION veloroutes.export_poi_service() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.poi_service;
+	CREATE TABLE exports.poi_service AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+		(SELECT sv.libelle FROM veloroutes.poi_service_val AS sv WHERE sv.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	geom
+	FROM veloroutes.poi_service);
+	RETURN 1;
+END;$$;
+
+
+-- export_poi_tourisme()
+CREATE FUNCTION veloroutes.export_poi_tourisme() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.poi_tourisme;
+	CREATE TABLE exports.poi_tourisme AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT tv.libelle FROM veloroutes.poi_tourisme_val AS tv WHERE tv.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	geom
+	FROM veloroutes.poi_tourisme);
+	RETURN 1;
+END;$$;
+
+
+-- export_portion()
+CREATE FUNCTION veloroutes.export_portion() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.portion;
+	CREATE TABLE exports.portion AS
+	(SELECT
+		vp.id_local AS ID_LOCAL,
+		vp.id_on3v AS ID_ON3V,
+		vp.nom AS NOM,
+		(SELECT pv.libelle FROM veloroutes.portion_val AS pv WHERE pv.code = vp.type_portion) AS TYPE,
+		vp.description AS DESCRIPTION,
+		--id dans veloroutes
+		vp.id_portion AS id,
+	 	--id dans veloroutes
+	 	CASE
+	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		THEN (SELECT etp.id_itineraire FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		ELSE NULL
+	 	END AS ID_ITI,
+		CASE
+	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		THEN (SELECT etp.etape FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		ELSE NULL
+	 	END AS ORDRE_ETAP,
+		vp.geom
+	FROM veloroutes.v_portion as vp);
+	RETURN 1;
+END;$$;
+
+
+-- export_repere()
+CREATE FUNCTION veloroutes.export_repere() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.repere;
+	CREATE TABLE exports.repere AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	libelle AS LIBELLE,
+	 	(SELECT r.libelle FROM veloroutes.repere_val AS r WHERE r.code = type_noeud) AS TYPE_NOEUD,
+	 	geom
+	FROM veloroutes.repere);
+	RETURN 1;
+END;$$;
+
+
+-- export_segment()
+CREATE FUNCTION veloroutes.export_segment() RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	DROP TABLE IF EXISTS exports.segment;
+	CREATE TABLE exports.segment AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT ss.libelle FROM veloroutes.statut_segment_val AS ss WHERE ss.code = statut) as STATUT,
+	 	(SELECT av.libelle FROM veloroutes.etat_avancement_val AS av WHERE av.code = avancement) AS AVANCEMENT,
+	 	annee_ouverture AS AN_OUVERT,
+	 	sens_unique AS SENSUNIQUE,
+	 	(SELECT rvt.libelle FROM veloroutes.revetement_val AS rvt WHERE rvt.code = revetement) AS REVETEMENT,
+	 	gestionnaire AS GESTION,
+	 	proprietaire AS PROPRIETE,
+	 	date_saisie AS DATESAISIE,
+	 	geometrie_fictive AS FICTIF,
+	 	precision AS PRECISION,
+	 	src_geom AS SRC_GEOM,
+	 	src_annee AS SRC_ANNEE,
+	 	geom
+	FROM veloroutes.segment);
+	RETURN 1;
+END;$$;
+
+
+-- export_table(text)
+CREATE FUNCTION veloroutes.export_table(tablename text) RETURNS boolean
+    LANGUAGE plpgsql
+    AS $$BEGIN
+	EXECUTE format('
+	DROP TABLE IF EXISTS exports.%s;
+	CREATE TABLE exports.%s AS
+	(SELECT
+		libelle AS LIBELLE,
+		code AS CODE
+	FROM veloroutes.%s)',tablename,tablename,tablename);
+	RETURN 1;
+END;$$;
+
+
 -- import_veloroutes_itineraire()
 CREATE FUNCTION veloroutes.import_veloroutes_itineraire() RETURNS boolean
     LANGUAGE plpgsql
