@@ -35,7 +35,7 @@ jobs:
       if: tag IS present
       name: Create release
       install:
-        - pip3 install git+https://github.com/Gustry/qgis-plugin-ci.git
+        - pip3 install qgis-plugin-ci==1.8.2
       before_deploy:
         - export RELEASE_TITLE="$TRAVIS_TAG"
         - qgis-plugin-ci changelog $TRAVIS_TAG > ../release.md
