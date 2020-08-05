@@ -7,6 +7,7 @@ from qgis.core import (
     QgsProcessingParameterString,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingParameterFolderDestination,
+    QgsProcessingParameterBoolean
 )
 
 import processing
@@ -20,13 +21,14 @@ class ExportCovadisAll(BaseProcessingAlgorithm):
     conformement au standard Covadis
     """
 
-    DATABASE = "DATABASE2"
+    DATABASE = "DATABASE"
     SCHEMA = "SCHEMA"
     TABLE = "TABLE"
     DPT = "DPT"
     OUTPUT = "OUTPUT"
-    OUTPUT_MSG = "OUTPUT MSG"
+    OUTPUT_MSG = "OUTPUT_MSG"
     PROJECTS_FOLDER="FOLDER"
+    CHARGER="CHARGER"
 
     def name(self):
         return "export_all_covadis"
@@ -91,6 +93,15 @@ class ExportCovadisAll(BaseProcessingAlgorithm):
         )
         self.addParameter(outparam)
 
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.CHARGER,
+                tr("Charger les couches dans le projet"),
+                defaultValue=False,
+                optional=False,
+            )
+        )
+
         self.addOutput(
             QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
         )
@@ -106,10 +117,10 @@ class ExportCovadisAll(BaseProcessingAlgorithm):
                 "TABLE": i,
                 "DPT": self.parameterAsString(parameters, self.DPT, context),
                 "FOLDER": self.parameterAsString(parameters, self.PROJECTS_FOLDER, context),
-                "CHARGER": False  # Qgis plante si on charge toutes les couches dans le projet
+                "CHARGER": self.parameterAsBool(parameters, self.CHARGER, context)
             }
             alg = "{}:export_covadis".format(self.provider().id())
-            layer = processing.run(alg, params, feedback=feedback)
+            layer = processing.run(alg, params, context=context, feedback=feedback, is_child_algorithm=True)
             output_layers.append(layer["OUTPUT"])
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
