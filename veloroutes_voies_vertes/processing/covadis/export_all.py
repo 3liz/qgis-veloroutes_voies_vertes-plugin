@@ -4,23 +4,14 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
-    QgsProviderRegistry,
     QgsProcessingParameterString,
-    QgsVectorLayer,
-    QgsProcessingContext,
-    QgsProcessingException,
     QgsProcessingOutputMultipleLayers,
-    QgsWkbTypes,
-    QgsProviderConnectionException,
-    QgsVectorFileWriter,
     QgsProcessingParameterFolderDestination,
-    QgsProcessingParameterBoolean
 )
 
 import processing
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
-from processing.tools.postgis import uri_from_name
 
 
 class ExportCovadisAll(BaseProcessingAlgorithm):
@@ -114,8 +105,8 @@ class ExportCovadisAll(BaseProcessingAlgorithm):
                 "SCHEMA": self.parameterAsString(parameters, self.SCHEMA, context),
                 "TABLE": i,
                 "DPT": self.parameterAsString(parameters, self.DPT, context),
-                "FOLDER" : self.parameterAsString(parameters, self.PROJECTS_FOLDER, context),
-                "CHARGER": False # Qgis plante si on charge toutes les couches dans le projet
+                "FOLDER": self.parameterAsString(parameters, self.PROJECTS_FOLDER, context),
+                "CHARGER": False  # Qgis plante si on charge toutes les couches dans le projet
             }
             alg = "{}:export_covadis".format(self.provider().id())
             layer = processing.run(alg, params, feedback=feedback)
