@@ -4,6 +4,7 @@ __pycache__/
 .DS_Store
 .idea/
 
-veloroutes-voies-vertes.*.zip
+plugins.xml
+veloroutes_voies_vertes.*.zip
 
 export_database_structure_to_SQL_mac.sh
