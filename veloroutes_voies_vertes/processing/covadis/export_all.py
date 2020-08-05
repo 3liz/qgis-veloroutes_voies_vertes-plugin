@@ -120,7 +120,9 @@ class ExportCovadisAll(BaseProcessingAlgorithm):
                 "CHARGER": self.parameterAsBool(parameters, self.CHARGER, context)
             }
             alg = "{}:export_covadis".format(self.provider().id())
-            layer = processing.run(alg, params, context=context, feedback=feedback, is_child_algorithm=True)
+            layer = processing.run(
+                alg, params, context=context, feedback=feedback, is_child_algorithm=True
+            )
             output_layers.append(layer["OUTPUT"])
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
