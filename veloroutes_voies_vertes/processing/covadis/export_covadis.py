@@ -9,7 +9,7 @@ from qgis.core import (
     QgsVectorLayer,
     QgsProcessingContext,
     QgsProcessingException,
-    QgsProcessingOutputMultipleLayers,
+    QgsProcessingOutputVectorLayer,
     QgsWkbTypes,
     QgsProviderConnectionException,
     QgsProcessingParameterEnum,
@@ -25,7 +25,7 @@ from processing.tools.postgis import uri_from_name
 
 class ExportCovadis(BaseProcessingAlgorithm):
     """
-    Export des données dans le format d’échage shape d’ESRI
+    Export des données dans le format d’échange shape d’ESRI
     conformement au standard Covadis
     """
 
@@ -106,12 +106,14 @@ class ExportCovadis(BaseProcessingAlgorithm):
         )
         self.addParameter(depparam)
 
+        # Chemin du dossier de destination
         outparam = QgsProcessingParameterFolderDestination(
             self.PROJECTS_FOLDER,
             tr("Chemin de destination"),
-            defaultValue=False,
-            optional=False,
-            createByDefault=False)
+            '',
+            False,
+            False
+        )
         self.addParameter(outparam)
 
         self.addParameter(
@@ -124,7 +126,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         )
 
         self.addOutput(
-            QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
+            QgsProcessingOutputVectorLayer(self.OUTPUT, tr("Couches de sortie"))
         )
 
     @staticmethod
@@ -169,6 +171,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         }
         geomcode = geomtype[layer.geometryType()]
         filename= prefixe +tablename + geomcode + suffixe
+
         transformContext = context.project().transformContext()
         options = QgsVectorFileWriter.SaveVectorOptions()
         options.driverName = "ESRI ShapeFile"
@@ -181,8 +184,13 @@ class ExportCovadis(BaseProcessingAlgorithm):
             transformContext=transformContext,
             options=options
         )
-        if error != QgsVectorFileWriter.NoError:
-            raise QgsProcessingException("Erreur lors de l'enregistrement")
+        print(error)
+        if error[0] == QgsVectorFileWriter.ErrCreateLayer:
+            raise QgsProcessingException(
+                "Erreur lors de l'écriture du fichier :\n"
+                "Vérifiez que le chemin de destination est valide")
+        if error[0] != QgsVectorFileWriter.NoError:
+            raise QgsProcessingException("Erreur lors de l'écriture du fichier :" + error[1])
 
         # Chargement de la couche corrrespondante dans le projet
         if charger:
@@ -195,8 +203,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
-        output_layers = []
-
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
         connection = self.parameterAsString(parameters, self.DATABASE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
@@ -220,6 +226,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
         else:
             geom = "geom"
         result = self.toSHP(context, table, dpt, dirname, uri, geom, charger)
-        output_layers.append(result.id())
+        output_layer = result.id()
 
-        return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
+        return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layer}
