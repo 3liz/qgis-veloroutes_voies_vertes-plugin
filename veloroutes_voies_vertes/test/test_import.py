@@ -93,19 +93,17 @@ class TestImport(DatabaseTestCase):
         expected_row=('01-01-2010', None)
         self.assertTupleEqual(expected_row, result[0])
 
-    # def test_check_enumtype(self):
-    #     """ Test that toVeloroutes accept enumtypes that are equal to code or libelle"""
-    #     self.cursor.execute(self.imp_seg)
-    #     insert = """
-    #     INSERT INTO imports.import_segment(
-    #         avancement, id_import)
-    #     VALUES (
-    #         'Tracé arrêté',2);
-    #     """
-    #     self.cursor.execute(insert)
-    #     self.cursor.execute("SELECT veloroutes.import_veloroutes_segment()")
-
-    #     self.cursor.execute("SELECT avancement FROM veloroutes.segment")
-    #     result = self.cursor.fetchall()
-    #     expected=2
-    #     self.assertEqual(2, result[-1][0])
+    def test_check_enumtype(self):
+        """ Test that toVeloroutes accept enumtypes that are equal to code or libelle"""
+        self.cursor.execute(self.imp_seg)
+        insert = """
+        INSERT INTO imports.import_segment(
+            avancement, statut, id_import)
+        VALUES (
+            'Tracé arrêté','VV', 2);
+        """
+        self.cursor.execute(insert)
+        self.cursor.execute("SELECT veloroutes.import_veloroutes_segment()")
+        self.cursor.execute("SELECT avancement FROM veloroutes.segment")
+        result = self.cursor.fetchall()
+        self.assertEqual(2, result[0][0])
