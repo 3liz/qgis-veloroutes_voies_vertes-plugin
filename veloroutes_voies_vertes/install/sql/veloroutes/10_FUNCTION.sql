@@ -369,11 +369,13 @@ CREATE FUNCTION veloroutes.import_veloroutes_portion() RETURNS boolean
 
 	--creation des tables element et etape
     -- import_element
+    DROP TABLE IF EXISTS imports.import_element;
     CREATE TABLE imports.import_element(
 		id serial,
         id_portion integer,
         id_segment integer);
      -- import_etape
+    DROP TABLE IF EXISTS imports.import_etape;
     CREATE TABLE imports.import_etape(
 		id serial,
         id_portion integer,
@@ -878,3 +880,4 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 --
 -- PostgreSQL database dump complete
 --
+
