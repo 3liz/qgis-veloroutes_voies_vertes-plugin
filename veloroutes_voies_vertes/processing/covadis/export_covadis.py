@@ -184,7 +184,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
             transformContext=transformContext,
             options=options
         )
-        print(error)
         if error[0] == QgsVectorFileWriter.ErrCreateLayer:
             raise QgsProcessingException(
                 "Erreur lors de l'écriture du fichier :\n"
