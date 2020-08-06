@@ -375,7 +375,7 @@ CREATE FUNCTION veloroutes.import_veloroutes_portion() RETURNS boolean
         id_portion integer,
         id_segment integer);
      -- import_etape
-    DROP TABLE IF EXISTS imports.import_etape;
+     DROP TABLE IF EXISTS imports.import_etape;
     CREATE TABLE imports.import_etape(
 		id serial,
         id_portion integer,
