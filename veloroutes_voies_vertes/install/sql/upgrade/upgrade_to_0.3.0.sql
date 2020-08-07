@@ -352,11 +352,13 @@ CREATE FUNCTION veloroutes.import_veloroutes_portion() RETURNS boolean
 
 	--creation des tables element et etape
     -- import_element
+    DROP TABLE IF EXISTS imports.import_element;
     CREATE TABLE imports.import_element(
 		id serial,
         id_portion integer,
         id_segment integer);
      -- import_etape
+     DROP TABLE IF EXISTS imports.import_etape;
     CREATE TABLE imports.import_etape(
 		id serial,
         id_portion integer,
@@ -436,7 +438,7 @@ CREATE FUNCTION veloroutes.import_veloroutes_segment() RETURNS boolean
 	WHERE avancement IS NOT null
 	AND statut IS NOT null
 	-- check that enumerate types are correct
-	AND (EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE code = CAST (avancement AS INTEGER))
+	AND (EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
 		 OR EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement))
 	AND (EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
 		 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut))
@@ -618,7 +620,7 @@ BEGIN
 			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE v.libelle = statut LIMIT 1)
 		END AS statut,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE code = CAST (avancement AS INTEGER))
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
 			THEN CAST (avancement AS INTEGER)
 			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement)
 			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE v.libelle = avancement LIMIT 1)
