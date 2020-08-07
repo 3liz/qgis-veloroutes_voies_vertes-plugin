@@ -65,7 +65,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Schema de destination
         schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "veloroutes", False, True
+            self.SCHEMA, tr("Schéma"), "veloroutes", False, False
         )
         schema_param.setMetadata(
             {
@@ -82,7 +82,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.TABLE,
             tr("Table de destination"),
             'portion',
-            optional=True
+            False
         )
         table_param.setMetadata(
             {
