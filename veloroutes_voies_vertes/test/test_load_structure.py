@@ -38,7 +38,7 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
-    def xtest_load_structure_with_migration(self):
+    def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
         QgsApplication.processingRegistry().addProvider(provider)
@@ -147,6 +147,7 @@ class TestProcessing(unittest.TestCase):
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
         expected = [
+            "booleen_val",
             "element",
             "etape",
             "etat_avancement_val",
