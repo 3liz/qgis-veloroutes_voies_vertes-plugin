@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### 0.3.0 - 07/08/2020
+
+* Adding Import Algorithm
+  * Imports a file into a chosen table of the DB
+  * User choose how to map fields in a matrix paramter
+  * Data can be adapted, to a certain extend, to fit the COVADIS
+* Adding Export Algorithm
+  * Export one chosen table or all files at the same time in shapefile format
+  * User can choose to load the corresponding layer(s) in the project
+  * Possibility to export the 16 files described in the COVADIS
+* Adding some fields in database
+
 ### 0.2.0 - 20/06/2020
 
 * Adding features to manipulate data
