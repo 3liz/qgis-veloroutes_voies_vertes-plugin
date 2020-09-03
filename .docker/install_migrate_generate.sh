@@ -30,5 +30,5 @@ docker exec postgis bash -c "cd /tests_directory/${PLUGIN_NAME}/install/sql/ && 
 docker exec postgis bash -c "cd /tests_directory/${PLUGIN_NAME}/install/sql/${SCHEMA} && chmod 777 *.sql"
 
 git diff
-[[ -z $(git status -s) ]]
+[[ -z $(git status --porcelain -uno) ]]
 exit $?
