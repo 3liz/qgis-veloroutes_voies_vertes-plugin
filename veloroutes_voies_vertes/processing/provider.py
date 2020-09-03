@@ -5,7 +5,6 @@ __revision__ = "$Format:%H$"
 
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
-# from .example_processing_algorithm import ExampleProcessingAlgorithm
 from .structure.create_database_structure import CreateDatabaseStructure
 from .structure.upgrade_database_structure import UpgradeDatabaseStructure
 from .chargement.load_layers import LoadLayersAlgorithm
@@ -19,7 +18,6 @@ from .covadis.export_all import ExportCovadisAll
 
 class VeloroutesProvider(QgsProcessingProvider):
     def loadAlgorithms(self):
-        # self.addAlgorithm(ExampleProcessingAlgorithm())
         self.addAlgorithm(ConfigurePlugin())
         self.addAlgorithm(CreateDatabaseStructure())
         self.addAlgorithm(UpgradeDatabaseStructure())
