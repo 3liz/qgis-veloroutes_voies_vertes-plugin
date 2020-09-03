@@ -85,12 +85,12 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         """
         Here is where the processing itself takes place.
         """
-        connection_name = parameters[self.CONNECTION_NAME]
+        connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
 
         # Set global variable
         # noinspection PyCallByClass,PyArgumentList
         QgsExpressionContextUtils.setProjectVariable(
-                context.project(), 'veloroutes_connection_name', connection_name
+            context.project(), 'veloroutes_connection_name', connection_name
         )
         feedback.pushInfo('Connection PostgreSQL à la base vvv "{}"'.format(connection_name))
 
