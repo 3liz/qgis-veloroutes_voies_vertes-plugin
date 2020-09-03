@@ -90,7 +90,8 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def initLayer(self, context, uri, schema, table, geom, sql, pk=None, pkey=None):
+    def initLayer(self, context, uri, schema, table, geom, sql, pkey=None):
+
         uri.setDataSource(schema, table, geom, sql)
         if pkey:
             uri.setDataSource(schema, table, geom, sql, pkey)
@@ -145,12 +146,12 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         # add views
         for x in layers_v_name:
             if x == "v_portion":
-                pkey= "id_portion"
+                pkey = "id_portion"
             if x == "v_itineraire":
                 pkey = "id_iti"
             if not context.project().mapLayersByName(x):
-                result= self.initLayer(
-                        context, uri, schema, x, "geom", "", None, pkey
+                result = self.initLayer(
+                    context, uri, schema, x, "geom", "", pkey
                 )
                 if not result:
                     feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
@@ -158,9 +159,10 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         raster = self.parameterAsBool(parameters, self.RASTER, context)
         if raster:
             if not context.project().mapLayersByName("OpenStreetMap"):
-                urlWithParams = ('type=xyz&url=http://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/'
-                                 '%7By%7D.png&zmax=19&zmin=0&crs=EPSG3857')
-                result= self.XYZ(context, urlWithParams, 'OpenStreetMap')
+                url_with_params = (
+                    'type=xyz&url=http://tile.openstreetmap.org/%7Bz%7D/%7Bx%7D/%7By%7D.png&'
+                    'zmax=19&zmin=0&crs=EPSG3857')
+                result = self.XYZ(context, url_with_params, 'OpenStreetMap')
                 output_layers.append(result.id())
 
         # add attribute tables

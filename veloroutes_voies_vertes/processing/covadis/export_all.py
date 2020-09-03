@@ -29,7 +29,7 @@ class ExportCovadisAll(ExportCovadis):
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
-        output_layers=[]
+        output_layers = []
 
         for i in range(15):
             params = {

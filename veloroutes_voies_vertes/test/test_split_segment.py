@@ -1,10 +1,4 @@
 """
-Created on Wed Jul  8 16:57:23 2020
-
-@author: enola sengeissen
-"""
-
-"""
 Created on Fri Jun  5 12:06:30 2020
 
 @author: enolasengeissen
@@ -31,10 +25,10 @@ class TestActions(DatabaseTestCase):
         self.assertEqual(nbseg[0], 2505)
 
         # Coordinates of a click on a segment that is also part of a portion
-        id_seg=17980
-        xnode=898898
-        ynode=6799452
-        id_portion=7
+        id_seg = 17980
+        xnode = 898898
+        ynode = 6799452
+        id_portion = 7
 
         # Counts how many elements are related to This portion
         # before split
@@ -50,7 +44,7 @@ class TestActions(DatabaseTestCase):
         self.assertEqual(nbelem[0], 5)
 
         # Call split function
-        sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
+        sql = """SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
         self.cursor.execute(sql)
 
         # Counts how many segment are in the db after the split
@@ -58,7 +52,7 @@ class TestActions(DatabaseTestCase):
         new_nbseg = self.cursor.fetchone()
 
         # Check that one segment is added in segment
-        self.assertEqual(new_nbseg[0], nbseg[0]+1)
+        self.assertEqual(new_nbseg[0], nbseg[0] + 1)
 
         # Counts how many elements are related to This portion
         # after split
@@ -71,42 +65,41 @@ class TestActions(DatabaseTestCase):
         new_nbelem = self.cursor.fetchone()
 
         # Check that one element is added
-        self.assertEqual(new_nbelem[0], nbelem[0]+1)
+        self.assertEqual(new_nbelem[0], nbelem[0] + 1)
 
     def test_split_duplicate_segment(self):
-
         # Get the last id given in segment
-        curr_id="""SELECT max(veloroutes.segment.id_segment) FROM veloroutes.segment"""
+        curr_id = """SELECT max(veloroutes.segment.id_segment) FROM veloroutes.segment"""
         self.cursor.execute(curr_id)
         # Id expected for the next insert in segment
-        last_id = self.cursor.fetchone()[0]+1
+        last_id = self.cursor.fetchone()[0] + 1
 
         # Coordinates of a click on a segment
-        id_seg=17980
-        xnode=898898
-        ynode=6799452
+        id_seg = 17980
+        xnode = 898898
+        ynode = 6799452
 
         # Collect information about this segment
-        seg="""
+        seg = """
             SELECT *
             FROM veloroutes.segment s
             WHERE s.id_segment={}
         """.format(id_seg)
         self.cursor.execute(seg)
-        info=self.cursor.fetchall()
+        info = self.cursor.fetchall()
 
         # Call split function
-        sql="""SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
+        sql = """SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
         self.cursor.execute(sql)
 
         # Collect information about the new segment
-        new="""
+        new = """
             SELECT *
             FROM veloroutes.segment s
             WHERE s.id_segment={}
         """.format(last_id)
         self.cursor.execute(new)
-        new_info=self.cursor.fetchall()
+        new_info = self.cursor.fetchall()
 
         # Check that the new row has the same attributes
         # (except id_segment) than the chosen segment

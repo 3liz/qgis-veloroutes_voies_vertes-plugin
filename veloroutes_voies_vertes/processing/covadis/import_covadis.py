@@ -27,11 +27,11 @@ class ImportCovadis(BaseProcessingAlgorithm):
     Import des données conformément au standard COVADIS
     """
 
-    INPUT="INPUT"
-    TABLE="TABLE"
-    OUTPUT_MSG="OUTPUT MSG"
-    SCHEMA="SCHEMA"
-    DATABASE="DATABASE"
+    INPUT = "INPUT"
+    TABLE = "TABLE"
+    OUTPUT_MSG = "OUTPUT MSG"
+    SCHEMA = "SCHEMA"
+    DATABASE = "DATABASE"
 
     def name(self):
         return "import_covadis"
@@ -107,13 +107,13 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Paramètre pour le mapping de champs
         table = QgsProcessingParameterMatrix(
-                'matrix',
-                'matrix',
-                headers=['Champs source', 'Champs destination'],
-                defaultValue=[
-                    "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
-                    "mont_subv", "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
-                    "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
+            'matrix',
+            'matrix',
+            headers=['Champs source', 'Champs destination'],
+            defaultValue=[
+                "TYPE_PORTION_COVADIS", "type_portion", "MONTANT_SUBVENTION",
+                "mont_subv", "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
+                "LIEN_ITIN", "lien_itin", "LIEN_CYCLO", "lien_segm"]
         )
         self.addParameter(table)
 
@@ -129,7 +129,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         et importe les fichiers dans un schema imports
         """
 
-        table_name = 'import_'+table
+        table_name = 'import_' + table
 
         export_params = {
             'CREATEINDEX': False,
@@ -146,9 +146,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'TABLENAME': table_name
         }
         processing.run(
-                'qgis:importintopostgis',
-                export_params,
-                context=context, feedback=feedback, is_child_algorithm=True
+            'qgis:importintopostgis',
+            export_params,
+            context=context, feedback=feedback, is_child_algorithm=True
         )
         feedback.pushInfo(tr("Insertion des données dans la base faite"))
 
@@ -178,18 +178,18 @@ class ImportCovadis(BaseProcessingAlgorithm):
         conn = metadata.findConnection(connection)
 
         geom = None
-        geomlayer=["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
+        geomlayer = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         if parameters[self.TABLE] in geomlayer:
             geom = "geom"
 
         uri = uri_from_name(connection)
         uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], geom, "")
         layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
-        table=layer.name()
+        table = layer.name()
 
         # Création du dictionnaire de correspondance des champs
         # Format générique d'une correspondance entre champs
-        champs= {
+        champs = {
             'expression': '',  # champs d'entrée
             'length': 0,  # longueur de destinaion
             'name': '',  # champs de destination
@@ -197,35 +197,35 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'type': 10  # type de destination
         }
         matrix = parameters['matrix']
-        field_map=[]
+        field_map = []
 
         # Création du mapping de champs
         for field in layer.fields():
             # Champs fournis par l'utilisateur
-            name=field.displayName()
+            name = field.displayName()
             if name in matrix[1::2]:
                 i = len(matrix) - 1 - matrix[::-1].index(name)
                 c = champs
-                c['expression'] = matrix[i-1]
-                c['name']=name
-                c['precision']= field.precision()
-                c['length']=field.length()
-                ccopy= c.copy()
+                c['expression'] = matrix[i - 1]
+                c['name'] = name
+                c['precision'] = field.precision()
+                c['length'] = field.length()
+                ccopy = c.copy()
                 field_map.append(ccopy)
             else:
                 # Champs éventuellement non fournis par l'utilisateur
                 c = champs
                 c['expression'] = ""
-                c['name']=name
-                c['precision']= field.precision()
-                c['length']=field.length()
-                ccopy= c.copy()
+                c['name'] = name
+                c['precision'] = field.precision()
+                c['length'] = field.length()
+                ccopy = c.copy()
                 field_map.append(ccopy)
 
-        if table=='portion':
+        if table == 'portion':
             k = matrix.index('lien_itin')
             c_lien_itin = {
-                'expression': matrix[k-1],  # champs d'entrée
+                'expression': matrix[k - 1],  # champs d'entrée
                 'length': 0,  # longueur de destinaion
                 'name': 'lien_itin',  # champs de destination
                 'precision': 0,  # precision de destinaton
@@ -235,7 +235,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             if 'lien_segm' in matrix:
                 m = matrix.index('lien_segm')
                 c_lien_segm = {
-                    'expression': matrix[m-1],  # champs d'entrée
+                    'expression': matrix[m - 1],  # champs d'entrée
                     'length': 0,  # longueur de destinaion
                     'name': 'lien_segm',  # champs de destination
                     'precision': 0,  # precision de destinaton
@@ -247,7 +247,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             if 'id_import' in matrix:
                 n = matrix.index('id_import')
                 c_id_import = {
-                    'expression': matrix[n-1],  # champs d'entrée
+                    'expression': matrix[n - 1],  # champs d'entrée
                     'length': 0,  # longueur de destinaion
                     'name': 'id_import',  # champs de destination
                     'precision': 0,  # precision de destinaton
@@ -272,10 +272,10 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Exporter dans PostgreSQL
         self.toPostgres(
-                parameters[self.DATABASE],
-                table,
-                algresult['OUTPUT'],
-                context, feedback)
+            parameters[self.DATABASE],
+            table,
+            algresult['OUTPUT'],
+            context, feedback)
 
         # Importer la table dans veloroutes
         self.toVeloroutes(conn, table, feedback)
