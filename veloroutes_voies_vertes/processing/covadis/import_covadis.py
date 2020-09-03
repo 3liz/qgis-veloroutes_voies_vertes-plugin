@@ -28,6 +28,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
     """
 
     INPUT = "INPUT"
+    MATRIX = "MATRIX"
     TABLE = "TABLE"
     OUTPUT_MSG = "OUTPUT MSG"
     SCHEMA = "SCHEMA"
@@ -107,7 +108,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
 
         # Paramètre pour le mapping de champs
         table = QgsProcessingParameterMatrix(
-            'matrix',
+            self.MATRIX,
             'matrix',
             headers=['Champs source', 'Champs destination'],
             defaultValue=[
@@ -123,7 +124,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         )
 
     @staticmethod
-    def toPostgres(db, table, refact, context, feedback):
+    def to_postgresql(db, table, refact, context, feedback):
         """
         Fonction qui refactorise les champs
         et importe les fichiers dans un schema imports
@@ -153,7 +154,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo(tr("Insertion des données dans la base faite"))
 
     @staticmethod
-    def toVeloroutes(connection, table, feedback):
+    def update_to_veloroutes(connection, table, feedback):
         """
         Fonction qui adapte les données si besoin
         et insère la table dans le schéma veloroutes
@@ -170,22 +171,24 @@ class ImportCovadis(BaseProcessingAlgorithm):
             raise QgsProcessingException(msg)
 
     def processAlgorithm(self, parameters, context, feedback):
-        _ = parameters
         msg = ""
 
         connection = self.parameterAsString(parameters, self.DATABASE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
         conn = metadata.findConnection(connection)
+        schema = self.parameterAsString(parameters, self.SCHEMA, context)
+        table = self.parameterAsString(parameters, self.TABLE, context)
+        input_layer = self.parameterAsVectorLayer(parameters, self.INPUT, context)
 
         geom = None
         geomlayer = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
-        if parameters[self.TABLE] in geomlayer:
+        if table in geomlayer:
             geom = "geom"
 
         uri = uri_from_name(connection)
-        uri.setDataSource(parameters[self.SCHEMA], parameters[self.TABLE], geom, "")
-        layer = QgsVectorLayer(uri.uri(), parameters[self.TABLE], "postgres")
-        table = layer.name()
+        uri.setDataSource(schema, table, geom, "")
+        layer = QgsVectorLayer(uri.uri(), table, "postgres")
+        layer_name = layer.name()
 
         # Création du dictionnaire de correspondance des champs
         # Format générique d'une correspondance entre champs
@@ -196,7 +199,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
             'precision': 0,  # precision de destinaton
             'type': 10  # type de destination
         }
-        matrix = parameters['matrix']
+        matrix = self.parameterAsMatrix(parameters, self.MATRIX, context)
         field_map = []
 
         # Création du mapping de champs
@@ -222,7 +225,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 ccopy = c.copy()
                 field_map.append(ccopy)
 
-        if table == 'portion':
+        if layer_name == 'portion':
             k = matrix.index('lien_itin')
             c_lien_itin = {
                 'expression': matrix[k - 1],  # champs d'entrée
@@ -243,7 +246,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 }
                 field_map.append(c_lien_segm)
 
-        if table in ['itineraire', 'portion', 'segment']:
+        if layer_name in ['itineraire', 'portion', 'segment']:
             if 'id_import' in matrix:
                 n = matrix.index('id_import')
                 c_id_import = {
@@ -258,7 +261,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         # Refactorisation des champs
         refact_params = {
             'FIELDS_MAPPING': field_map,
-            'INPUT': parameters[self.INPUT],
+            'INPUT': input_layer,
             'OUTPUT': 'memory:'}
 
         algresult = processing.run(
@@ -271,13 +274,13 @@ class ImportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo(tr("Refactoring des champs fait"))
 
         # Exporter dans PostgreSQL
-        self.toPostgres(
-            parameters[self.DATABASE],
-            table,
+        self.to_postgresql(
+            connection,
+            layer_name,
             algresult['OUTPUT'],
             context, feedback)
 
         # Importer la table dans veloroutes
-        self.toVeloroutes(conn, table, feedback)
+        self.update_to_veloroutes(conn, layer_name, feedback)
 
         return {self.OUTPUT_MSG: msg}

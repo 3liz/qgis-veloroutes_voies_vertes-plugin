@@ -141,7 +141,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             msg = e.args[0]
             raise QgsProcessingException(msg)
 
-    def toSHP(self, context, table, dpt, dirname, uri, geom, charger):
+    def to_shapefile(self, context, table, dpt, dirname, uri, geom, charger):
         uri.setDataSource('exports', table, geom, "")
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
         if not layer.isValid():
@@ -208,11 +208,16 @@ class ExportCovadis(BaseProcessingAlgorithm):
         connection = self.parameterAsString(parameters, self.DATABASE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
         conn = metadata.findConnection(connection)
+        table_int = self.parameterAsEnum(parameters, self.TABLE, context)
+        table_name = self.EXPORTABLES[table_int]
 
         uri = uri_from_name(connection)
-        uri.setDataSource(parameters[self.SCHEMA], self.EXPORTABLES[parameters[self.TABLE]], "geom", "")
-        layer = QgsVectorLayer(uri.uri(), self.EXPORTABLES[parameters[self.TABLE]], "postgres")
-        table = layer.name()
+        uri.setDataSource(
+            self.parameterAsString(parameters, self.SCHEMA, context),
+            table_name,
+            "geom", "")
+        layer = QgsVectorLayer(uri.uri(), table_name, "postgres")
+        layer_name = layer.name()
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
         dirname = self.parameterAsString(parameters, self.PROJECTS_FOLDER, context)
@@ -221,12 +226,12 @@ class ExportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
-        self.createExportTable(table, conn)
-        if table in ['itineraire', 'element', 'poi_portion'] or "val" in table:
+        self.createExportTable(layer_name, conn)
+        if layer_name in ['itineraire', 'element', 'poi_portion'] or "val" in table_name:
             geom = None
         else:
             geom = "geom"
-        result = self.toSHP(context, table, dpt, dirname, uri, geom, charger)
+        result = self.to_shapefile(context, layer_name, dpt, dirname, uri, geom, charger)
         output_layer = result.id()
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layer}

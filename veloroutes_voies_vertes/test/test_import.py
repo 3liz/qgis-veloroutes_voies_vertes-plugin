@@ -208,7 +208,7 @@ class TestImport(DatabaseTestCase):
             "TABLE": "portion",
             "SCHEMA": "veloroutes",
             "DATABASE": "test",
-            'matrix': [
+            'MATRIX': [
                 "TYPE_PORTION_COVADIS", "type_portion",
                 "MONTANT_SUBVENTION", "mont_subv",
                 "ANNE_SUBVENTION", "annee_subv", "fid", "id_import",
