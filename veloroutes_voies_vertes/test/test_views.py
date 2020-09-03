@@ -18,10 +18,10 @@ class TestViews(DatabaseTestCase):
         """ Test if v_portion view is editable"""
 
         # Get the last id given in v_portion
-        curr_id="""SELECT max(veloroutes.v_portion.id_portion) FROM veloroutes.v_portion"""
+        curr_id = """SELECT max(veloroutes.v_portion.id_portion) FROM veloroutes.v_portion"""
         self.cursor.execute(curr_id)
         # Id expected for the next insert in v_portion
-        last_id= self.cursor.fetchone()[0]+1
+        last_id = self.cursor.fetchone()[0] + 1
 
         # New insert in v_portion
         sql = """
@@ -66,10 +66,10 @@ class TestViews(DatabaseTestCase):
         """ Test if v_itineraire view is editable"""
 
         # Get the last id given in v_itineraire
-        curr_id="SELECT max(veloroutes.v_itineraire.id_iti) FROM veloroutes.v_itineraire"
+        curr_id = "SELECT max(veloroutes.v_itineraire.id_iti) FROM veloroutes.v_itineraire"
         self.cursor.execute(curr_id)
         # Id expected for the next insert in v_itineraire
-        last_itid= self.cursor.fetchone()[0]+1
+        last_itid = self.cursor.fetchone()[0] + 1
 
         # New insert in v_portion
         sql = """
@@ -97,7 +97,7 @@ class TestViews(DatabaseTestCase):
         """.format(last_itid)
         self.cursor.execute(etape)
         last_etape = self.cursor.fetchall()
-        self.assertTrue(len(last_etape)>0)
+        self.assertTrue(len(last_etape) > 0)
 
         # Check that the new row was inserted in v_itineraire
         vitin = """

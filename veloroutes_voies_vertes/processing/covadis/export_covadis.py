@@ -35,14 +35,14 @@ class ExportCovadis(BaseProcessingAlgorithm):
     DPT = "DPT"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
-    EXPORTABLES =[
+    EXPORTABLES = [
         "itineraire", "portion", "element",
         "segment", "repere", "liaison", "poi_portion",
         "poi_acces", "poi_service", "poi_tourisme",
         "etat_avancement_val", "revetement_val", "statut_segment_val",
         "portion_val", "repere_val"]
-    PROJECTS_FOLDER="FOLDER"
-    CHARGER="CHARGER"
+    PROJECTS_FOLDER = "FOLDER"
+    CHARGER = "CHARGER"
 
     def name(self):
         return "export_covadis"
@@ -90,15 +90,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         # Table à exporter
         table_param = QgsProcessingParameterEnum(
-                self.TABLE,
-                tr("Donnée à exporter"),
-                options=self.EXPORTABLES,
-                defaultValue="",
+            self.TABLE,
+            tr("Donnée à exporter"),
+            options=self.EXPORTABLES,
+            defaultValue="",
         )
         self.addParameter(table_param)
 
         # Nom du département pour le fichier d'export
-        depparam= QgsProcessingParameterString(
+        depparam = QgsProcessingParameterString(
             self.DPT,
             tr("Département au format XXX"),
             '066',
@@ -148,29 +148,29 @@ class ExportCovadis(BaseProcessingAlgorithm):
             return False
 
         # Construction filename
-        prefixe="N_3V_"
+        prefixe = "N_3V_"
         suffixe = "_" + dpt
-        tablename= table.upper()
+        tablename = table.upper()
         if table == 'element':
-            tablename= 'R_'+tablename +'_PORTION'
+            tablename = 'R_' + tablename + '_PORTION'
         if 'poi' in table and 'portion' not in table:
-            tablename= tablename[4:]
+            tablename = tablename[4:]
         if "val" in table:
-            prefixe="3V_"
-            suffixe=""
+            prefixe = "3V_"
+            suffixe = ""
             if "avancement" in table:
                 tablename = "AVANCEMENT_VAL"
             if "statut" in table:
                 tablename = "STATUT_VAL"
             if "portion" in table or "repere" in table:
-                tablename="TYPE"+tablename
+                tablename = "TYPE" + tablename
         geomtype = {
             QgsWkbTypes.LineGeometry: '_L',
             QgsWkbTypes.PointGeometry: '_P',
             QgsWkbTypes.NullGeometry: ''
         }
         geomcode = geomtype[layer.geometryType()]
-        filename= prefixe +tablename + geomcode + suffixe
+        filename = prefixe + tablename + geomcode + suffixe
 
         transformContext = context.project().transformContext()
         options = QgsVectorFileWriter.SaveVectorOptions()
@@ -180,7 +180,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         # Enregistrement du fichier shape
         error = QgsVectorFileWriter.writeAsVectorFormatV2(
             layer=layer,
-            fileName=dirname+'/'+filename+ ".shp",
+            fileName=dirname + '/' + filename + ".shp",
             transformContext=transformContext,
             options=options
         )
@@ -212,7 +212,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         uri = uri_from_name(connection)
         uri.setDataSource(parameters[self.SCHEMA], self.EXPORTABLES[parameters[self.TABLE]], "geom", "")
         layer = QgsVectorLayer(uri.uri(), self.EXPORTABLES[parameters[self.TABLE]], "postgres")
-        table=layer.name()
+        table = layer.name()
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
         dirname = self.parameterAsString(parameters, self.PROJECTS_FOLDER, context)

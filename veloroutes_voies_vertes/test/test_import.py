@@ -1,4 +1,3 @@
-
 from veloroutes_voies_vertes.test.base_test_database import DatabaseTestCase
 
 __copyright__ = "Copyright 2019, 3Liz"
@@ -20,7 +19,6 @@ from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
 
 class TestImport(DatabaseTestCase):
-
     imp_seg = """
     TRUNCATE TABLE veloroutes.segment CASCADE;
         DROP TABLE IF EXISTS imports.import_segment;
@@ -93,7 +91,7 @@ class TestImport(DatabaseTestCase):
         """
         self.cursor.execute(veloroutes)
         result = self.cursor.fetchall()
-        expected_row=(
+        expected_row = (
             '01-01-2010', '01-01-2010', 'src_geom_test', '01-01-2010',
             2, 'LIS', 'VV', 'gestion_test', 'propri_test',
             'DC', 'T', 'F', '222', '333')
@@ -119,7 +117,7 @@ class TestImport(DatabaseTestCase):
         """
         self.cursor.execute(veloroutes)
         result = self.cursor.fetchall()
-        expected_row=('01-01-2010', None)
+        expected_row = ('01-01-2010', None)
         self.assertTupleEqual(expected_row, result[0])
 
     def test_check_enumtype(self):
@@ -153,8 +151,8 @@ class TestImport(DatabaseTestCase):
         SELECT id_segment FROM veloroutes.segment LIMIT 1;
         """
         self.cursor.execute(insert)
-        velo= self.cursor.fetchone()
-        imp="""
+        velo = self.cursor.fetchone()
+        imp = """
         SELECT CAST(id_segment as integer) FROM imports.import_segment LIMIT 1;
         """
         self.cursor.execute(imp)
@@ -166,14 +164,14 @@ class TestImport(DatabaseTestCase):
         and updated with import of segment
         """
         self.cursor.execute(self.imp_por)
-        inspor="""
+        inspor = """
         INSERT INTO imports.import_portion(type_portion,lien_segm, id_import)
         VALUES ('ETP', 1, 27);
         SELECT veloroutes.import_veloroutes_portion();
         SELECT CAST(id_segment as integer) FROM imports.import_element LIMIT 1;
         """
         self.cursor.execute(inspor)
-        lienseg= self.cursor.fetchone()
+        lienseg = self.cursor.fetchone()
         # Check that former id of segment is inserted in element
         self.assertEqual(1, lienseg[0])
 
@@ -186,12 +184,12 @@ class TestImport(DatabaseTestCase):
         SELECT id_segment FROM veloroutes.element LIMIT 1;
         """
         self.cursor.execute(inseg)
-        elem=self.cursor.fetchone()
+        elem = self.cursor.fetchone()
 
-        newlien="""
+        newlien = """
         SELECT id_segment FROM veloroutes.segment"""
         self.cursor.execute(newlien)
-        seg= self.cursor.fetchone()
+        seg = self.cursor.fetchone()
         # Check that element was imported with veloroute's segment's id
         self.assertEqual(seg, elem)
 
@@ -201,11 +199,11 @@ class TestImport(DatabaseTestCase):
         QgsApplication.processingRegistry().addProvider(provider)
         feedback = LoggerProcessingFeedBack(True)
         project = QgsProject()
-        context= QgsProcessingContext()
+        context = QgsProcessingContext()
         context.setProject(project)
         couche = QgsVectorLayer(plugin_test_data_path('portions.gpkg'), 'layer', 'ogr')
 
-        params={
+        params = {
             "INPUT": couche,
             "TABLE": "portion",
             "SCHEMA": "veloroutes",
@@ -222,9 +220,9 @@ class TestImport(DatabaseTestCase):
             alg, params, feedback=feedback, context=context
         )
 
-        p="""
+        p = """
         SELECT id_portion FROM imports.import_portion LIMIT 1;
         """
         self.cursor.execute(p)
-        p1= self.cursor.fetchone()
+        p1 = self.cursor.fetchone()
         self.assertIsNotNone(p1[0])

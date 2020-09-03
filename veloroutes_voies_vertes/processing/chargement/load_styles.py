@@ -53,7 +53,8 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
             QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         )
 
-    def createRelation(self, referenced, referencing, fielda, fieldb, name, setid):
+    @staticmethod
+    def createRelation(referenced, referencing, fielda, fieldb, name, setid):
         rel = QgsRelation()
         rel.setReferencedLayer(referenced)
         rel.setReferencingLayer(referencing)

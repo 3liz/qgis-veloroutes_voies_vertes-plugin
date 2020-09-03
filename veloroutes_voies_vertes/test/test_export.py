@@ -27,22 +27,22 @@ class TestExport(DatabaseTestCase):
         feedback = LoggerProcessingFeedBack()
 
         params = {
-                "DATABASE": 'test',
-                "SCHEMA": 'veloroutes',
-                "TABLE": 1,  # corresponds to portion in enum
-                "DPT": '066',
-                "FOLDER": plugin_test_data_path(),
-                "CHARGER": False
+            "DATABASE": 'test',
+            "SCHEMA": 'veloroutes',
+            "TABLE": 1,  # corresponds to portion in enum
+            "DPT": '066',
+            "FOLDER": plugin_test_data_path(),
+            "CHARGER": False
         }
         alg = "{}:export_covadis".format(provider.id())
         processing.run(
             alg, params, context=context, feedback=feedback
         )
-        path=plugin_test_data_path()+'/N_3V_PORTION_L_066.shp'
+        path = plugin_test_data_path('N_3V_PORTION_L_066.shp')
         self.assertTrue(os.path.isfile(path))
 
     def test_conversion_enumtype(self):
-        sql="""
+        sql = """
         TRUNCATE TABLE veloroutes.segment CASCADE;
         INSERT INTO veloroutes.segment(avancement, statut)
         VALUES (2,'VV');
@@ -50,8 +50,8 @@ class TestExport(DatabaseTestCase):
         SELECT avancement, statut FROM exports.segment;
         """
         self.cursor.execute(sql)
-        res= self.cursor.fetchone()
-        expected=('Tracé arrêté', 'Voie verte')
+        res = self.cursor.fetchone()
+        expected = ('Tracé arrêté', 'Voie verte')
         self.assertTupleEqual(expected, res)
 
     # def test_export_all(self):
