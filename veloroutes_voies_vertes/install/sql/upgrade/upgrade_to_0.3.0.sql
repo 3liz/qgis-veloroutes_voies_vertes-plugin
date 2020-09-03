@@ -96,9 +96,6 @@ CREATE FUNCTION veloroutes.export_poi_portion() RETURNS boolean
     	ID_POI integer,
 		ID_PORTION integer);
 
-	ALTER TABLE exports.poi_portion
-    OWNER to enolasengeissen;
-
 	-- On remplit avec les poi à moins de 100m d'une portion cyclable
 	INSERT INTO exports.poi_portion(id_poi, id_portion)
 	SELECT
