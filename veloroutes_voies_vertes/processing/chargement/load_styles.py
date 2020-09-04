@@ -4,6 +4,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
+    QgsMapLayerType,
     QgsProcessingParameterString,
     QgsProcessingOutputString,
     QgsProcessingParameterDefinition,
@@ -68,11 +69,11 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         _ = parameters
         msg = ""
 
-        lay = context.project().mapLayers()
-        layers = [layer for layer in lay.values()]
+        layers = context.project().mapLayers().values()
+        vector_layers = [layer for layer in layers if layer.type() == QgsMapLayerType.VectorLayer]
 
         manager = context.project().relationManager()
-        manager.setRelations(manager.discoverRelations([], layers))
+        manager.setRelations(manager.discoverRelations([], vector_layers))
 
         vportion = context.project().mapLayersByName("v_portion")[0]
         vitineraire = context.project().mapLayersByName("v_itineraire")[0]
