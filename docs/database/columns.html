@@ -1,0 +1,2098 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>gis Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>gis</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>Columns</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 class="box-title">Columns</h3>
+                        </div>
+                        <div class="box-body">
+                            <table id="column_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                    <tr>
+                                        <th>Table</th>
+                                        <th>Type</th>
+                                        <th>Column</th>
+                                        <th>Type</th>
+                                        <th>Size</th>
+                                        <th title='Are nulls allowed?'>Nullable</th>
+                                        <th title='Is column automatically updated?'>Auto</th>
+                                        <th title='Default value'>Default</th>
+                                        <th title='Comments' class="toggle"><span>Comments</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+                <script>
+                    var tableData = [
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>type_noeud",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Valeur indiquant le rôle que joue le point de repère dans l\u2019itinéraire cyclable<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Renseignement ou description complémentaire sur le point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "statut_segment_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "revetement_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.portion_id_portion_seq'::regclass)",
+        "comments": "<p>Clé primaire<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l organisme local<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "proprietaire",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l\u2019organisme propriétaire du segment<\/p>"
+    },
+    {
+        "tableName": "poi_acces_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "etape",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la portion cyclable à laquelle appartient l&rsquo;étape (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "etape",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "etape",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro d&rsquo;ordre de l&rsquo;étape dans l&rsquo;itinéraire<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "src_annee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "precision",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Ordre de grandeur de la précision de saisie<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>revetement",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Qualité du revêtement (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nature du point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mont_subv",
+        "type": "float4",
+        "length": 8,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_service_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_service_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_ouverture",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année d&rsquo;ouverture de l&rsquo;itinéraire sur sa partie française<\/p>"
+    },
+    {
+        "tableName": "v_itin_geom",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "collect_geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_poi",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_id_poi_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_subv",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_repere",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.repere_id_repere_seq'::regclass)",
+        "comments": "<p>Clé primaire<\/p>"
+    },
+    {
+        "tableName": "element",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_segment",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du segment cyclable auquel appartient l&rsquo;élément (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>type",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nature du point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numérotation de l&rsquo;itinéraire<\/p>"
+    },
+    {
+        "tableName": "portion_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_iti",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_repere",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point de repère que la liaison connecte à un point d&rsquo;intérêt (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "niveau_administratif_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "booleen_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "est_inscrit",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_usage",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_poi",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_id_poi_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>sens_unique",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "'F'::text",
+        "comments": "<p>Indique si le segment se parcourt dans un seul sens de circulation<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mont_subv",
+        "type": "float4",
+        "length": 8,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.metadata_id_seq'::regclass)",
+        "comments": "<p>Identifiant de la version<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_officiel",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>type_portion",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Rôle que joue la portion par rapport à l\u2019itinéraire principal auquel elle se rapporte (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Information donnant des détails sur la portion d\u2019itinéraire<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "precision",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Ordre de grandeur de la précision de saisie<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "site_web",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Référence du site internet faisant la promotion de l&rsquo;itinéraire<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "src_geom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Type de la source de géoréférencement pour la digitalisation de la géométrie<\/p>"
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "numero_serie",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro de série du capteur utilisé pour l\u2019identifier sur la plateforme nationale des fréquentations<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Numéro, nom ou description utilisé comme désignation du point de repère<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "etat_avancement_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point d&rsquo;intérêt<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mont_subv",
+        "type": "float4",
+        "length": 8,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Montant de la subvention de la portion<\/p>"
+    },
+    {
+        "tableName": "niveau_administratif_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.niveau_administratif_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_subv",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année de la subvention<\/p>"
+    },
+    {
+        "tableName": "poi_acces_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_acces_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l&rsquo;organisme local<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "arrivee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>type",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nature du point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "repere_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "date_saisie",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date de digitalisation du segment ou de sa dernière mise à jour<\/p>"
+    },
+    {
+        "tableName": "frequentation",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "period",
+        "type": "_date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Période de l\u2019observation caractérisée par une date de début et une date de fin<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_inscription",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année d\u2019approbation du premier schéma ayant inscrit l\u2019itinéraire<\/p>"
+    },
+    {
+        "tableName": "poi_tourisme_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>niveau_schema",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Niveau administratif du schéma dans lequel l\u2019itinéraire est inscrit et numéroté (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>type",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nature du point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_segment",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.segment_id_segment_seq'::regclass)",
+        "comments": "<p>Clé primaire<\/p>"
+    },
+    {
+        "tableName": "v_port_geom",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "collect_geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "me_status",
+        "type": "int2",
+        "length": 5,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "etat_avancement_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.etat_avancement_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "etape",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.etape_id_seq'::regclass)",
+        "comments": "<p>identifiant de l&rsquo;étape<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "src_annee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "arrivee",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de la localité située à l&rsquo;arrivée de l\u2019itinéraire<\/p>"
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point d&rsquo;intérêt<\/p>"
+    },
+    {
+        "tableName": "element",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.element_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point d&rsquo;intérêt<\/p>"
+    },
+    {
+        "tableName": "portion_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.portion_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l&rsquo;ON3V<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "src_geom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Type de la source de géoréférencement pour la digitalisation de la géométrie<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>me_version",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Version. Ex: 1.0.2<\/p>"
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "frequentation",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la portion dont la frequentation est mesurée (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l&rsquo;organisme local<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l&rsquo;ON3V<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Renseignement ou description complémentaire sur le point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "poi_service_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "revetement_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "depart",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de la localité située au départ de l\u2019itinéraire<\/p>"
+    },
+    {
+        "tableName": "etape",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_itineraire",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de l&rsquo;itinéraire cyclable auquel appartient l&rsquo;étape (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "niveau_schema",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "portion_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_usage",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Autre nom ou appellation de l\u2019itinéraire en usage<\/p>"
+    },
+    {
+        "tableName": "revetement_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.revetement_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_poi",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point l&rsquo;intérêt que la liaison dessert (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "mont_subv",
+        "type": "float4",
+        "length": 8,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Montant de la subvention de l&rsquo;itinéraire<\/p>"
+    },
+    {
+        "tableName": "v_port_geom",
+        "tableType": "View",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>avancement",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Etat d\u2019avancement de la réalisation du segment (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>est_inscrit",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Vrai si l\u2019itinéraire est inscrit à un schéma de développement des véloroutes<\/p>"
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant créé et géré par l ON3V<\/p>"
+    },
+    {
+        "tableName": "poi_tourisme_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_tourisme_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_ouverture",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "site_web",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_inscription",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "repere_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.repere_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "statut_segment_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.statut_segment_val_id_seq'::regclass)",
+        "comments": "<p>Identifiant<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "type_portion",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_liaison",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.liaison_id_liaison_seq'::regclass)",
+        "comments": "<p>Clé primaire<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_subv",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année de la subvention<\/p>"
+    },
+    {
+        "tableName": "element",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_portion",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant de la portion cyclable à laquelle appartient l&rsquo;élément (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Renseignement ou description complémentaire sur le point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "portion",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom usuel désignant la portion cyclable<\/p>"
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "booleen_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.booleen_val_id_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "nom_officiel",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom officiel de l\u2019itinéraire ou celui présent sur les documents de communication et connu du grand public<\/p>"
+    },
+    {
+        "tableName": "v_itin_geom",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_itineraire",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_tourisme_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_on3v",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "frequentation",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "comptage",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nombre de passages comptabilisés<\/p>"
+    },
+    {
+        "tableName": "liaison",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "id_local",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_service",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_poi",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_id_poi_seq'::regclass)",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_acces",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "poi_acces_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "repere_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "metadata",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "me_version_date",
+        "type": "date",
+        "length": 13,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Date de la version. Ex: 2019-06-01<\/p>"
+    },
+    {
+        "tableName": "itineraire",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_iti",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.itineraire_id_iti_seq'::regclass)",
+        "comments": "<p>Identifiant de l&rsquo;itinéraire cyclable<\/p>"
+    },
+    {
+        "tableName": "etat_avancement_val",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>code",
+        "type": "int4",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "primaryKey",
+        "keyTitle": "Primary Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_poi",
+        "type": "serial",
+        "length": 10,
+        "nullable": "",
+        "autoUpdated": "√",
+        "defaultValue": "nextval('veloroutes.poi_id_poi_seq'::regclass)",
+        "comments": "<p>Clé primaire<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "depart",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "gestionnaire",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Nom de l&rsquo;organisme en charge de la gestion du segment<\/p>"
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_ouverture",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Année d&rsquo;ouverture du segment<\/p>"
+    },
+    {
+        "tableName": "booleen_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>statut",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Statut réglementaire qui caractérise le type d\u2019aménagement qu\u2019emprunte le segment cyclable (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "niveau_administratif_val",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "libelle",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Libellé<\/p>"
+    },
+    {
+        "tableName": "statut_segment_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "v_itineraire",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "annee_subv",
+        "type": "date",
+        "length": 13,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "segment",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>geometrie_fictive",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "'F'::text",
+        "comments": "<p>Indique si le tracé de la section de véloroute est inconnu ou approximatif<\/p>"
+    },
+    {
+        "tableName": "repere",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "poi",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    },
+    {
+        "tableName": "poi_service_val",
+        "tableType": "Table",
+        "keyClass": "indexedColumn",
+        "keyTitle": "Indexed",
+        "name": "<i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'><\/i>code",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Code<\/p>"
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Renseignement ou description complémentaire sur le point d\u2019intérêt<\/p>"
+    },
+    {
+        "tableName": "frequentation",
+        "tableType": "Table",
+        "keyClass": "foreignKey",
+        "keyTitle": "Foreign Key",
+        "name": "<i class='icon ion-key iconkey' style='padding-left: 5px;'><\/i>id_repere",
+        "type": "int4",
+        "length": 10,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Identifiant du point de repère où est placé le capteur (clé étrangère)<\/p>"
+    },
+    {
+        "tableName": "v_portion",
+        "tableType": "View",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "description",
+        "type": "text",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": ""
+    },
+    {
+        "tableName": "poi_tourisme",
+        "tableType": "Table",
+        "keyClass": "",
+        "keyTitle": "",
+        "name": "geom",
+        "type": "geometry",
+        "length": 2147483647,
+        "nullable": "√",
+        "autoUpdated": "",
+        "defaultValue": "null",
+        "comments": "<p>Géométrie<\/p>"
+    }
+];
+                    var config = {
+                        pagination: true
+                    };
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="column.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>
