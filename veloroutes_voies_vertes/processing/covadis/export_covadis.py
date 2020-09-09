@@ -72,6 +72,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
                 }
             }
         )
+        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
         self.addParameter(db_param)
 
         # Schema contenant la table
@@ -86,6 +87,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
                 }
             }
         )
+        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
         self.addParameter(schema_param)
 
         # Table à exporter
@@ -95,6 +97,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             options=self.EXPORTABLES,
             defaultValue="",
         )
+        table_param.tooltip_3liz = 'Nom de la table à exporter'
         self.addParameter(table_param)
 
         # Nom du département pour le fichier d'export
@@ -104,6 +107,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             '066',
             optional=False
         )
+        depparam.tooltip_3liz = 'Pour le département de l\'Ain, mettre 001'
         self.addParameter(depparam)
 
         # Chemin du dossier de destination
@@ -114,20 +118,21 @@ class ExportCovadis(BaseProcessingAlgorithm):
             False,
             False
         )
+        outparam.tooltip_3liz = 'Chemin de destination pour enregistrer les exports Shapefile'
         self.addParameter(outparam)
 
-        self.addParameter(
-            QgsProcessingParameterBoolean(
-                self.CHARGER,
-                tr("Charger la couche correspondante dans le projet"),
-                defaultValue=False,
-                optional=False,
-            )
+        param = QgsProcessingParameterBoolean(
+            self.CHARGER,
+            tr("Charger la couche correspondante dans le projet"),
+            defaultValue=False,
+            optional=False,
         )
+        param.tooltip_3liz = 'Si le traitement doit charger la couche Shapefile dans le projet'
+        self.addParameter(param)
 
-        self.addOutput(
-            QgsProcessingOutputVectorLayer(self.OUTPUT, tr("Couches de sortie"))
-        )
+        output = QgsProcessingOutputVectorLayer(self.OUTPUT, tr("Couches de sortie"))
+        output.tooltip_3liz = 'Les couches de l\'export'
+        self.addOutput(output)
 
     @staticmethod
     def createExportTable(table, connection):

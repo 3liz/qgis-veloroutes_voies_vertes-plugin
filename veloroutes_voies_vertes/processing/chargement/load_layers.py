@@ -57,6 +57,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 }
             }
         )
+        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
         self.addParameter(db_param)
 
         schema_param = QgsProcessingParameterString(
@@ -70,6 +71,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 }
             }
         )
+        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
         self.addParameter(schema_param)
 
         self.addParameter(
@@ -82,13 +84,13 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         )
 
         # OUTPUTS
-        self.addOutput(
-            QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
-        )
+        output = QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
+        output.tooltip_3liz = 'Les différentes couches de l\'extention véloroutes et voies vertes'
+        self.addOutput(output)
 
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
-        )
+        output = QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
+        output.tooltip_3liz = output.description()
+        self.addOutput(output)
 
     def initLayer(self, context, uri, schema, table, geom, sql, pkey=None):
 

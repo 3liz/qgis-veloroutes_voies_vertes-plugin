@@ -8,3 +8,6 @@ plugins.xml
 veloroutes_voies_vertes.*.zip
 
 export_database_structure_to_SQL_mac.sh
+
+*.gpkg-shm
+*.gpkg-wal

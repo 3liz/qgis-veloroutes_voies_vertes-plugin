@@ -62,6 +62,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 }
             }
         )
+        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
         self.addParameter(db_param)
 
         # Schema de destination
@@ -76,6 +77,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 }
             }
         )
+        schema_param.tooltip_3liz = 'Nom du schéma où importer les données'
         self.addParameter(schema_param)
 
         # Table de destination
@@ -93,6 +95,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
                 }
             }
         )
+        # table_param.tooltip_3liz = 'Table de destination'
         self.addParameter(table_param)
 
         # Couche à importer
