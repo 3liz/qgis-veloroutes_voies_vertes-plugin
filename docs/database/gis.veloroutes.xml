@@ -1,0 +1,1233 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="gis" schema="veloroutes" type="PostgreSQL - 10.14 (Debian 10.14-1.pgdg100+1)">
+   <sequences>
+      <sequence increment="1" name="booleen_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="element_id_seq" startValue="1"/>
+      <sequence increment="1" name="etape_id_seq" startValue="1"/>
+      <sequence increment="1" name="etat_avancement_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="itineraire_id_iti_seq" startValue="1"/>
+      <sequence increment="1" name="liaison_id_liaison_seq" startValue="1"/>
+      <sequence increment="1" name="metadata_id_seq" startValue="1"/>
+      <sequence increment="1" name="niveau_administratif_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_acces_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_id_poi_seq" startValue="1"/>
+      <sequence increment="1" name="poi_service_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="poi_tourisme_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="portion_id_portion_seq" startValue="1"/>
+      <sequence increment="1" name="portion_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="repere_id_repere_seq" startValue="1"/>
+      <sequence increment="1" name="repere_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="revetement_val_id_seq" startValue="1"/>
+      <sequence increment="1" name="segment_id_segment_seq" startValue="1"/>
+      <sequence increment="1" name="statut_segment_val_id_seq" startValue="1"/>
+   </sequences>
+   <tables>
+      <table name="booleen_val" numRows="4" remarks="" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="code" nullable="true" remarks="" size="2147483647" type="text" typeCode="12">
+            <child column="est_inscrit" foreignKey="est_inscrit_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+            <child column="geometrie_fictive" foreignKey="geometrie_fictive_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <child column="sens_unique" foreignKey="sens_unique_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.booleen_val_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="booleen_val_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code10" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="element" numRows="0" remarks="Table de liaison entre portion et segment. Une portion cyclable est une collection de segments cyclables continus. Un segment cyclable est un élément d’une ou plusieurs portions cyclables." schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.element_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_portion" nullable="true" remarks="Identifiant de la portion cyclable à laquelle appartient l'élément (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_portion" foreignKey="element_portion_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_segment" nullable="true" remarks="Identifiant du segment cyclable auquel appartient l'élément (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_segment" foreignKey="element_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+         </column>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="element_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="etape" numRows="0" remarks="Table de liaison entre itinéraire et portion. Un itinéraire correspond à un agrégat continu et ordonné d’étapes cyclables. Une étape est une portion d’un itinéraire cyclable. Une étape peut&#10;appartenir à plusieurs itinéraires." schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="id_portion" nullable="true" remarks="Identifiant de la portion cyclable à laquelle appartient l'étape (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_portion" foreignKey="etape_portion_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="Identifiant de l'itinéraire cyclable auquel appartient l'étape (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_iti" foreignKey="etape_itineraire_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+         </column>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.etape_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="identifiant de l'étape" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="etape" nullable="true" remarks="Numéro d'ordre de l'étape dans l'itinéraire" size="10" type="int4" typeCode="4"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="etape_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+      </table>
+      <table name="etat_avancement_val" numRows="4" remarks="Nomenclature pour l’état de réalisation d’un segment cyclable" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="code" nullable="false" remarks="Code" size="10" type="int4" typeCode="4">
+            <child column="avancement" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.etat_avancement_val_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <primaryKey column="code" sequenceNumberInPK="1"/>
+         <index name="etat_avancement_val_pkey" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+         <index name="code9" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="frequentation" numRows="0" remarks="Fréquence de passage, table de lien entre repere et portion" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="comptage" nullable="true" remarks="Nombre de passages comptabilisés" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="period" nullable="true" remarks="Période de l’observation caractérisée par une date de début et une date de fin" size="13" type="_date" typeCode="2003"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_portion" nullable="true" remarks="Identifiant de la portion dont la frequentation est mesurée (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_repere" nullable="true" remarks="Identifiant du point de repère où est placé le capteur (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_repere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+         </column>
+         <checkConstraint constraint="((comptage &gt;= 0))" name="comptage"/>
+      </table>
+      <table name="itineraire" numRows="0" remarks="Itinéraire cyclable, véloroute." schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="numero" nullable="false" remarks="Numérotation de l'itinéraire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nom_officiel" nullable="true" remarks="Nom officiel de l’itinéraire ou celui présent sur les documents de communication et connu du grand public" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom_usage" nullable="true" remarks="Autre nom ou appellation de l’itinéraire en usage" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="depart" nullable="true" remarks="Nom de la localité située au départ de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="arrivee" nullable="true" remarks="Nom de la localité située à l'arrivée de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.itineraire_id_iti_seq'::regclass)" digits="0" id="5" name="id_iti" nullable="false" remarks="Identifiant de l'itinéraire cyclable" size="10" type="serial" typeCode="4">
+            <child column="id_itineraire" foreignKey="etape_itineraire_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="etape"/>
+            <child column="id_iti" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itineraire"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="annee_inscription" nullable="true" remarks="Année d’approbation du premier schéma ayant inscrit l’itinéraire" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="site_web" nullable="true" remarks="Référence du site internet faisant la promotion de l'itinéraire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_ouverture" nullable="true" remarks="Année d'ouverture de l'itinéraire sur sa partie française" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="niveau_schema" nullable="true" remarks="Niveau administratif du schéma dans lequel l’itinéraire est inscrit et numéroté (clé étrangère)" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="niveau_administratif_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="est_inscrit" nullable="true" remarks="Vrai si l’itinéraire est inscrit à un schéma de développement des véloroutes" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="est_inscrit_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="11" name="mont_subv" nullable="true" remarks="Montant de la subvention de l'itinéraire" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="annee_subv" nullable="true" remarks="Année de la subvention" size="13" type="date" typeCode="91"/>
+         <primaryKey column="id_iti" sequenceNumberInPK="1"/>
+         <index name="itineraire_pkey" unique="true">
+            <column ascending="true" name="id_iti"/>
+         </index>
+      </table>
+      <table name="liaison" numRows="0" remarks="Liaison cyclable, antenne cyclable" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="precision" nullable="true" remarks="Ordre de grandeur de la précision de saisie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="src_geom" nullable="true" remarks="Type de la source de géoréférencement pour la digitalisation de la géométrie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="src_annee" nullable="true" remarks="Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_local" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_repere" nullable="true" remarks="Identifiant du point de repère que la liaison connecte à un point d'intérêt (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_repere" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_poi" nullable="true" remarks="Identifiant du point l'intérêt que la liaison dessert (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_poi" foreignKey="poi" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.liaison_id_liaison_seq'::regclass)" digits="0" id="7" name="id_liaison" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_liaison" sequenceNumberInPK="1"/>
+         <index name="liaison_pkey" unique="true">
+            <column ascending="true" name="id_liaison"/>
+         </index>
+      </table>
+      <table name="metadata" numRows="0" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="me_version" nullable="false" remarks="Version. Ex: 1.0.2" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="me_version_date" nullable="false" remarks="Date de la version. Ex: 2019-06-01" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="me_status" nullable="false" remarks="" size="5" type="int2" typeCode="5"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="metadata_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="metadata_me_version_key" unique="true">
+            <column ascending="true" name="me_version"/>
+         </index>
+      </table>
+      <table name="niveau_administratif_val" numRows="4" remarks="Nomenclature pour le niveau administratif d'un schéma" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.niveau_administratif_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="niveau_schema" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="niveau_administratif_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code1" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="poi" numRows="0" remarks="POI, point d’intérêt" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="true" remarks="Identifiant créé et géré par l organisme local" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_poi_seq'::regclass)" digits="0" id="4" name="id_poi" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
+            <child column="id_poi" foreignKey="poi" implied="false" onDeleteCascade="false" schema="veloroutes" table="liaison"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="Identifiant créé et géré par l ON3V" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_poi" sequenceNumberInPK="1"/>
+         <index name="poi_pkey" unique="true">
+            <column ascending="true" name="id_poi"/>
+         </index>
+      </table>
+      <table name="poi_acces" numRows="0" remarks="Points d’intérêt localisant un accès à un centre d’intermodal" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="true" remarks="Identifiant du point d'intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_poi_seq'::regclass)" digits="0" id="4" name="id_poi" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_poi" sequenceNumberInPK="1"/>
+         <index name="poi_acces_pkey" unique="true">
+            <column ascending="true" name="id_poi"/>
+         </index>
+      </table>
+      <table name="poi_acces_val" numRows="6" remarks="Nomenclature pour la nature des points d’accès à un autre réseau de transport" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_acces_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="poi_acces_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code2" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="poi_service" numRows="0" remarks="Services présentant un intérêt pour le cyclotourisme" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="true" remarks="Identifiant du point d'intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_poi_seq'::regclass)" digits="0" id="4" name="id_poi" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_poi" sequenceNumberInPK="1"/>
+         <index name="poi_service_pkey" unique="true">
+            <column ascending="true" name="id_poi"/>
+         </index>
+      </table>
+      <table name="poi_service_val" numRows="9" remarks="Nomenclature pour  la nature des services offerts à un cyclotouriste par un point d’intérêt" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="poi_service_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code3" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="poi_tourisme" numRows="0" remarks="Points d’intérêt touristique" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="type" nullable="true" remarks="Nature du point d’intérêt" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="true" remarks="Identifiant du point d'intérêt" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_id_poi_seq'::regclass)" digits="0" id="4" name="id_poi" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_poi" sequenceNumberInPK="1"/>
+         <index name="poi_tourisme_pkey" unique="true">
+            <column ascending="true" name="id_poi"/>
+         </index>
+      </table>
+      <table name="poi_tourisme_val" numRows="3" remarks="Nomenclature pour la nature d’un point d’intérêt touristique" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_tourisme_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="poi_tourisme_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code4" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="portion" numRows="0" remarks="Portion d’itinéraire cyclable, collection de segments cyclables" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_id_portion_seq'::regclass)" digits="0" id="0" name="id_portion" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
+            <child column="id_portion" foreignKey="element_portion_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="element"/>
+            <child column="id_portion" foreignKey="etape_portion_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="etape"/>
+            <child column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
+            <child column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_port_geom"/>
+            <child column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nom" nullable="true" remarks="Nom usuel désignant la portion cyclable" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="description" nullable="true" remarks="Information donnant des détails sur la portion d’itinéraire" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type_portion" nullable="false" remarks="Rôle que joue la portion par rapport à l’itinéraire principal auquel elle se rapporte (clé étrangère)" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="type_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_on3v" nullable="true" remarks="Identifiant créé et géré par l'ON3V" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_local" nullable="true" remarks="Identifiant créé et géré par l'organisme local" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="6" name="mont_subv" nullable="true" remarks="Montant de la subvention de la portion" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_subv" nullable="true" remarks="Année de la subvention" size="13" type="date" typeCode="91"/>
+         <primaryKey column="id_portion" sequenceNumberInPK="1"/>
+         <index name="portion_pkey" unique="true">
+            <column ascending="true" name="id_portion"/>
+         </index>
+      </table>
+      <table name="portion_val" numRows="4" remarks="Nomenclature pour le type d'une portion cyclable qualifié en fonction du rôle qu’elle joue dans la véloroute" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="type_portion" foreignKey="type_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="portion_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code5" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="repere" numRows="0" remarks="Point de repère cyclable, nœud cyclable particulier" schema="veloroutes" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="libelle" nullable="true" remarks="Numéro, nom ou description utilisé comme désignation du point de repère" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="numero_serie" nullable="true" remarks="Numéro de série du capteur utilisé pour l’identifier sur la plateforme nationale des fréquentations" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_local" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="type_noeud" nullable="false" remarks="Valeur indiquant le rôle que joue le point de repère dans l’itinéraire cyclable" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="noeud" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_id_repere_seq'::regclass)" digits="0" id="5" name="id_repere" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
+            <child column="id_repere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
+            <child column="id_repere" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="liaison"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_repere" sequenceNumberInPK="1"/>
+         <index name="repere_pkey" unique="true">
+            <column ascending="true" name="id_repere"/>
+         </index>
+      </table>
+      <table name="repere_val" numRows="7" remarks="Nomenclature pour la nature d'un point de repère pour la description et la compréhension de l’itinéraire" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="type_noeud" foreignKey="noeud" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="repere_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code6" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="revetement_val" numRows="3" remarks="Nomenclature pour le niveau de qualité du revêtement d’un segment cyclable" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.revetement_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="revetement" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="revetement_val_pkey1" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code7" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="segment" numRows="0" remarks="Segment cyclable" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.segment_id_segment_seq'::regclass)" digits="0" id="0" name="id_segment" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
+            <child column="id_segment" foreignKey="element_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="element"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="annee_ouverture" nullable="true" remarks="Année d'ouverture du segment" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_saisie" nullable="true" remarks="Date de digitalisation du segment ou de sa dernière mise à jour" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="src_geom" nullable="true" remarks="Type de la source de géoréférencement pour la digitalisation de la géométrie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="src_annee" nullable="true" remarks="Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement" nullable="false" remarks="Etat d’avancement de la réalisation du segment (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="code" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="revetement" nullable="true" remarks="Qualité du revêtement (clé étrangère)" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="revetement_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="statut" nullable="false" remarks="Statut réglementaire qui caractérise le type d’aménagement qu’emprunte le segment cyclable (clé étrangère)" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="statut" implied="false" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="gestionnaire" nullable="true" remarks="Nom de l'organisme en charge de la gestion du segment" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="proprietaire" nullable="true" remarks="Nom de l’organisme propriétaire du segment" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="precision" nullable="true" remarks="Ordre de grandeur de la précision de saisie" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="'F'::text" digits="0" id="12" name="sens_unique" nullable="true" remarks="Indique si le segment se parcourt dans un seul sens de circulation" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="sens_unique_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="'F'::text" digits="0" id="13" name="geometrie_fictive" nullable="true" remarks="Indique si le tracé de la section de véloroute est inconnu ou approximatif" size="2147483647" type="text" typeCode="12">
+            <parent column="code" foreignKey="geometrie_fictive_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="id_on3v" nullable="true" remarks="Identifiant créé et géré par l'ON3V" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="15" name="id_local" nullable="true" remarks="Identifiant créé et géré par l'organisme local" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id_segment" sequenceNumberInPK="1"/>
+         <index name="segment_pkey" unique="true">
+            <column ascending="true" name="id_segment"/>
+         </index>
+         <index name="revetement" unique="false">
+            <column ascending="true" name="revetement"/>
+         </index>
+      </table>
+      <table name="statut_segment_val" numRows="6" remarks="Nomenclature pour le statut réglementaire du segment cyclable" schema="veloroutes" type="TABLE">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.statut_segment_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="statut" foreignKey="statut" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
+         <primaryKey column="id" sequenceNumberInPK="1"/>
+         <index name="statut_segment_val_pkey" unique="true">
+            <column ascending="true" name="id"/>
+         </index>
+         <index name="code8" unique="true">
+            <column ascending="true" name="code"/>
+         </index>
+      </table>
+      <table name="v_itin_geom" numRows="0" remarks="Vue intermédiaire qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    etape.id_itineraire&#10;   FROM ((((veloroutes.etape&#10;     JOIN veloroutes.portion ON ((portion.id_portion = etape.id_portion)))&#10;     JOIN veloroutes.element ON ((element.id_portion = portion.id_portion)))&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_iti)))&#10;  GROUP BY etape.id_itineraire;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="collect_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+      </table>
+      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_iti,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_iti)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_iti" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_iti" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="numero" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_officiel" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="nom_usage" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="depart" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="arrivee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_inscription" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="site_web" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="annee_ouverture" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="niveau_schema" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="est_inscrit" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="12" name="mont_subv" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="annee_subv" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+      </table>
+      <table name="v_port_geom" numRows="0" remarks="Vue intermédiaire qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    element.id_portion&#10;   FROM ((veloroutes.element&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.portion ON ((portion.id_portion = element.id_portion)))&#10;  GROUP BY element.id_portion;">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="collect_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_portion" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+      </table>
+      <table name="v_portion" numRows="0" remarks="Vue qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_port_geom.collect_geom AS geom,&#10;    portion.id_portion,&#10;    portion.nom,&#10;    portion.description,&#10;    portion.type_portion,&#10;    portion.id_on3v,&#10;    portion.id_local,&#10;    portion.mont_subv,&#10;    portion.annee_subv&#10;   FROM (veloroutes.portion&#10;     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_portion" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="description" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="type_portion" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="id_local" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="8" id="7" name="mont_subv" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_subv" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+      </table>
+   </tables>
+   <routines>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_element" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.element;
+	CREATE TABLE exports.element AS
+	(SELECT
+	 	--identifiant de veloroutes à retransformer?
+		id_portion AS ID_PORTION,
+	 	--identifiant de veloroutes à retrasnformer?
+	 	id_segment AS ID_SEGMENT
+	FROM veloroutes.element);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_itineraire" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.itineraire;
+	CREATE TABLE exports.itineraire AS
+	SELECT
+		--ici c'est l'identifiant de veloroutes
+		id_iti AS ID_ITI,
+		-- ici on remettrait l'ancien identifiant ?
+		--(SELECT id_import FROM imports.import_itineraire WHERE id_iti=id_iti)
+		--AS ID_ITI,
+		numero AS NUMERO,
+		nom_officiel AS NOM_OFF,
+		nom_usage AS NOM_USAGE,
+		depart AS DEPART,
+		arrivee AS ARRIVEE,
+		est_inscrit AS EST_INSCRIT,
+		niveau_schema AS NIV_INSCRI,
+		annee_inscription AS AN_INSCRI,
+		site_web AS SITE_WEB,
+		annee_ouverture AS AN_OUVERT
+	FROM veloroutes.itineraire;
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_liaison" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.liaison;
+	CREATE TABLE exports.liaison AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	precision AS PRECISION,
+	 	src_geom AS SRC_GEOM,
+	 	src_annee AS SRC_ANNEE,
+	 	geom
+	FROM veloroutes.liaison);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_poi_acces" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.poi_acces;
+	CREATE TABLE exports.poi_acces AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT av.libelle FROM veloroutes.poi_acces_val AS av WHERE av.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	CASE
+	 		WHEN EXISTS (SELECT 1 FROM exports.poi_portion AS pp WHERE pp.id_poi = poi.id_poi)
+	 		THEN (SELECT etp.etape
+				  FROM veloroutes.etape as etp
+				  JOIN exports.poi_portion as pp ON pp.id_portion = etp.id_portion
+				  WHERE pp.id_poi = poi.id_poi
+				  )
+	 		ELSE NULL
+	 	END AS ID_ETAPE,
+	 	geom
+	FROM veloroutes.poi_acces as poi);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_poi_portion" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+
+	DROP TABLE IF EXISTS exports.poi_portion;
+	CREATE TABLE exports.poi_portion (
+		id serial,
+    	ID_POI integer,
+		ID_PORTION integer);
+
+	-- On remplit avec les poi à moins de 100m d'une portion cyclable
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_service as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	--Insert FROM poi_acces
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_acces as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	--Insert FROM poi_tourisme
+	INSERT INTO exports.poi_portion(id_poi, id_portion)
+	SELECT
+		poi.id_poi AS ID_POI,
+		vp.id_portion AS ID_PORTION
+	FROM veloroutes.v_portion as vp, veloroutes.poi_tourisme as poi
+	WHERE ST_Distance(poi.geom, vp.geom)< 100;
+
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_poi_service" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.poi_service;
+	CREATE TABLE exports.poi_service AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+		(SELECT sv.libelle FROM veloroutes.poi_service_val AS sv WHERE sv.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	geom
+	FROM veloroutes.poi_service);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_poi_tourisme" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.poi_tourisme;
+	CREATE TABLE exports.poi_tourisme AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT tv.libelle FROM veloroutes.poi_tourisme_val AS tv WHERE tv.code = type) AS TYPE,
+	 	description AS DESCRIPT,
+	 	geom
+	FROM veloroutes.poi_tourisme);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_portion" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.portion;
+	CREATE TABLE exports.portion AS
+	(SELECT
+		vp.id_local AS ID_LOCAL,
+		vp.id_on3v AS ID_ON3V,
+		vp.nom AS NOM,
+		(SELECT pv.libelle FROM veloroutes.portion_val AS pv WHERE pv.code = vp.type_portion) AS TYPE,
+		vp.description AS DESCRIPTION,
+		--id dans veloroutes
+		vp.id_portion AS id,
+	 	--id dans veloroutes
+	 	CASE
+	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		THEN (SELECT etp.id_itineraire FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		ELSE NULL
+	 	END AS ID_ITI,
+		CASE
+	 		WHEN EXISTS (SELECT 1 FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		THEN (SELECT etp.etape FROM veloroutes.etape AS etp WHERE etp.id_portion = vp.id_portion)
+	 		ELSE NULL
+	 	END AS ORDRE_ETAP,
+		vp.geom
+	FROM veloroutes.v_portion as vp);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_repere" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.repere;
+	CREATE TABLE exports.repere AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	libelle AS LIBELLE,
+	 	(SELECT r.libelle FROM veloroutes.repere_val AS r WHERE r.code = type_noeud) AS TYPE_NOEUD,
+	 	geom
+	FROM veloroutes.repere);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_segment" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	DROP TABLE IF EXISTS exports.segment;
+	CREATE TABLE exports.segment AS
+	(SELECT
+		id_local as ID_LOCAL,
+	 	id_on3V AS ID_ON3V,
+	 	(SELECT ss.libelle FROM veloroutes.statut_segment_val AS ss WHERE ss.code = statut) as STATUT,
+	 	(SELECT av.libelle FROM veloroutes.etat_avancement_val AS av WHERE av.code = avancement) AS AVANCEMENT,
+	 	annee_ouverture AS AN_OUVERT,
+	 	sens_unique AS SENSUNIQUE,
+	 	(SELECT rvt.libelle FROM veloroutes.revetement_val AS rvt WHERE rvt.code = revetement) AS REVETEMENT,
+	 	gestionnaire AS GESTION,
+	 	proprietaire AS PROPRIETE,
+	 	date_saisie AS DATESAISIE,
+	 	geometrie_fictive AS FICTIF,
+	 	precision AS PRECISION,
+	 	src_geom AS SRC_GEOM,
+	 	src_annee AS SRC_ANNEE,
+	 	geom
+	FROM veloroutes.segment);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="export_table" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	EXECUTE format('
+	DROP TABLE IF EXISTS exports.%s;
+	CREATE TABLE exports.%s AS
+	(SELECT
+		libelle AS LIBELLE,
+		code AS CODE
+	FROM veloroutes.%s)',tablename,tablename,tablename);
+	RETURN 1;
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_itineraire" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	-- adaptation et insertion des itineraires dans véloroutes
+	UPDATE imports.import_itineraire
+	SET id_iti = (SELECT veloroutes.insert_import_veloroutes_itineraire(id_import))
+	WHERE numero IS NOT NULL
+	AND (EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
+		OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+		OR niveau_schema IS NULL)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
+		 OR est_inscrit IS NULL);
+
+
+	RAISE NOTICE 'Les lignes correctes de itineraire ont été importées dans veloroutes';
+
+	--mise à jour de etape avec les id_itineraire de veloroutes
+	IF EXISTS (
+		SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = 'imports'
+        AND table_name = 'import_etape')
+	THEN
+	UPDATE imports.import_etape
+	SET id_itineraire =(
+		SELECT CAST(ii.id_iti AS integer)
+		FROM imports.import_itineraire as ii
+		WHERE ii.id_import = imports.import_etape.id_itineraire);
+
+	RAISE NOTICE 'La table etape a été mise à jour dans le schéma d import';
+
+	INSERT INTO veloroutes.etape(id_portion, id_itineraire)
+	SELECT id_portion, id_itineraire
+	FROM imports.import_etape as iet
+	WHERE iet.id_portion IS NOT NULL
+	AND iet.id_itineraire IS NOT NULL;
+
+	RAISE NOTICE 'La table étape a été importée dans veloroutes';
+
+	END IF;
+    RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_liaison" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+
+	INSERT INTO veloroutes.liaison(
+	"precision", src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v)
+	SELECT
+		precision, src_geom, src_annee, id_local, id_repere, id_poi, geom, id_liaison, id_on3v
+	FROM imports.import_liaison;
+
+	RAISE NOTICE 'Les lignes correctes de liaison ont été importées dans veloroutes';
+
+	RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_poi" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+
+	EXECUTE format('
+		INSERT INTO veloroutes.%s(
+			description, "type", id_local, geom, id_poi, id_on3v)
+		SELECT
+			description,
+			CASE
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+				THEN type
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+				THEN (SELECT code FROM veloroutes.%s_val as v WHERE v.libelle = type LIMIT 1)
+			END AS type,
+			id_local,
+			geom,
+			id_poi,
+			id_on3v
+		FROM imports.import_%s
+		WHERE (EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+		OR EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+		OR type IS NULL)', poitype, poitype, poitype, poitype, poitype, poitype, poitype);
+
+	RAISE NOTICE 'Les lignes correctes de % ont été importées dans veloroutes', poitype;
+
+	RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_portion" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+
+	--creation des tables element et etape
+    -- import_element
+    DROP TABLE IF EXISTS imports.import_element;
+    CREATE TABLE imports.import_element(
+		id serial,
+        id_portion integer,
+        id_segment integer);
+     -- import_etape
+     DROP TABLE IF EXISTS imports.import_etape;
+    CREATE TABLE imports.import_etape(
+		id serial,
+        id_portion integer,
+        id_itineraire integer);
+
+    -- adaptation et insertion des portions dans véloroutes
+	UPDATE imports.import_portion
+	SET id_portion = (SELECT veloroutes.insert_import_veloroutes_portion(id_import))
+	WHERE type_portion IS NOT NULL
+	AND (EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
+		OR EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion));
+
+	RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
+
+	-- remplissage de import_etape
+	INSERT INTO imports.import_etape(
+        id_portion,
+        id_itineraire)
+    SELECT
+		CAST(id_portion AS integer),
+        lien_itin
+    FROM imports.import_portion
+    WHERE imports.import_portion.lien_itin IS NOT NULL
+	AND id_portion IS NOT NULL;
+
+     -- remplissage de element_import
+    INSERT INTO imports.import_element(
+		id_portion,
+        id_segment)
+	SELECT
+        CAST(id_portion AS integer),
+		lien_segm
+    FROM imports.import_portion
+    WHERE imports.import_portion.lien_segm IS NOT NULL
+	AND id_portion IS NOT NULL;
+
+	RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_repere" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+
+	INSERT INTO veloroutes.repere(
+	libelle, numero_serie, id_local, type_noeud, geom, id_repere, id_on3v)
+	SELECT
+		libelle,
+		numero_serie,
+		id_local,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+			THEN type_noeud
+			WHEN EXISTS (SELECT 1 FROM veloroutes.reperef_val WHERE libelle = type_noeud)
+			THEN (SELECT code FROM veloroutes.repere_val as v WHERE v.libelle = type_noeud LIMIT 1)
+		END AS type_noeud,
+		geom,
+		id_repere,
+		id_on3v
+	FROM imports.import_repere
+	WHERE (EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+		OR EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE libelle = type_noeud));
+
+	RAISE NOTICE 'Les lignes correctes de repere ont été importées dans veloroutes';
+
+	RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="import_veloroutes_segment" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[BEGIN
+	UPDATE imports.import_segment
+	SET id_segment = (SELECT veloroutes.insert_import_veloroutes_segment(id_import))
+	WHERE avancement IS NOT null
+	AND statut IS NOT null
+	-- check that enumerate types are correct
+	AND (EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
+		 OR EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement))
+	AND (EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
+		 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut))
+	AND (EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
+		 OR EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
+		 OR revetement IS NULL)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
+		 OR sens_unique IS NULL)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = geometrie_fictive)
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = geometrie_fictive)
+		 OR geometrie_fictive IS NULL);
+
+	RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
+
+	--mise à jour de element avec les id_segment de veloroutes
+	IF EXISTS (
+		SELECT 1
+        FROM information_schema.tables
+        WHERE table_schema = 'imports'
+        AND table_name = 'import_element')
+	THEN
+	UPDATE imports.import_element
+	SET id_segment =(
+		SELECT CAST(iis.id_segment AS integer)
+		FROM imports.import_segment as iis
+		WHERE iis.id_import = imports.import_element.id_segment);
+
+	RAISE NOTICE 'La table element a été mise à jour dans le schéma d import';
+
+	INSERT INTO veloroutes.element(id_portion, id_segment)
+		SELECT id_portion, id_segment
+		FROM imports.import_element as iel
+		WHERE iel.id_portion IS NOT NULL
+		AND iel.id_segment IS NOT NULL;
+
+	RAISE NOTICE 'La table element a été insérée dans véloroutes';
+
+	END IF;
+
+	RETURN 1;
+END]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="insert_import_veloroutes_itineraire" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE id_veloroutes integer;
+BEGIN
+	INSERT INTO veloroutes.itineraire(
+		site_web,
+		numero,
+		nom_usage,
+		nom_officiel,
+		niveau_schema,
+		est_inscrit,
+		depart,
+		arrivee,
+		annee_inscription,
+		annee_subv,
+		mont_subv,
+		annee_ouverture)
+	SELECT
+		site_web,
+		numero,
+		nom_usage,
+		nom_officiel,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
+			THEN niveau_schema
+			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+			THEN (SELECT code FROM veloroutes.niveau_administratif_val as v WHERE v.libelle = niveau_schema LIMIT 1)
+			ELSE niveau_schema
+		END AS niveau_schema,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
+			THEN est_inscrit
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = est_inscrit LIMIT 1)
+			--WHEN est_inscrit = 'non' THEN 'F'
+			--WHEN est_inscrit = 'oui' THEN 'T'
+			ELSE est_inscrit
+		END AS est_inscrit,
+		depart,
+		arrivee,
+		CASE
+			WHEN substring(annee_inscription from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_inscription from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
+		END AS annee_inscription,
+		CASE
+			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+		END AS annee_subv,
+		CAST (mont_subv AS real),
+		CASE
+			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+		END AS annee_ouverture
+	FROM imports.import_itineraire as ii
+	WHERE ii.id_import = idimport
+	RETURNING id_iti into id_veloroutes;
+
+	RETURN id_veloroutes;
+END;
+	]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="insert_import_veloroutes_portion" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE id_veloroutes integer;
+BEGIN
+	INSERT INTO veloroutes.portion(
+		type_portion,
+		mont_subv,
+		annee_subv,
+		id_local,
+		id_on3v,
+		nom,
+		description
+	)
+	SELECT
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
+			THEN type_portion
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion)
+			THEN (SELECT code FROM veloroutes.portion_val as v WHERE v.libelle = type_portion LIMIT 1)
+		END AS type_portion,
+		CAST (mont_subv AS real),
+		CASE
+			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
+		END AS annee_subv,
+		id_local,
+		id_on3v,
+		nom,
+		description
+	FROM imports.import_portion as ip
+	WHERE ip.id_import = idimport
+	RETURNING id_portion into id_veloroutes;
+
+	RETURN id_veloroutes;
+END;
+	]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="insert_import_veloroutes_segment" returnType="integer" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE id_veloroutes integer; seg record;
+BEGIN
+	INSERT INTO veloroutes.segment(
+		geom,
+		id_local,
+		id_on3v,
+		statut,
+		avancement,
+		revetement,
+		proprietaire,
+		gestionnaire,
+		precision,
+		src_geom,
+		sens_unique,
+		date_saisie,
+		src_annee,
+		geometrie_fictive,
+		annee_ouverture)
+	SELECT
+		CASE
+			WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
+			ELSE geom
+		END AS geom,
+		id_local,
+		id_on3v,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
+			THEN statut
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut)
+			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE v.libelle = statut LIMIT 1)
+		END AS statut,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
+			THEN CAST (avancement AS INTEGER)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement)
+			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE v.libelle = avancement LIMIT 1)
+		END AS avancement,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
+			THEN revetement
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
+			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE v.libelle = revetement LIMIT 1)
+			ELSE revetement
+		END AS revetement,
+		proprietaire,
+		gestionnaire,
+		precision,
+		src_geom,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
+			THEN sens_unique
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = sens_unique LIMIT 1)
+			--WHEN sens_unique = 'bidirectionnelle' THEN 'F'
+			--WHEN sens_unique = 'monodirectionnelle' THEN 'T'
+			ELSE sens_unique
+		END AS sens_unique,
+		CASE
+			WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+		END AS date_saisie,
+		src_annee,
+		CASE
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = geometrie_fictive)
+			THEN geometrie_fictive
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = geometrie_fictive)
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = geometrie_fictive LIMIT 1)
+			ELSE geometrie_fictive
+		END AS geometrie_fictive,
+		CASE
+			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+			WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+		END AS annee_ouverture
+	FROM imports.import_segment as iis
+	WHERE iis.id_import = idimport
+	RETURNING id_segment into id_veloroutes;
+
+	RETURN id_veloroutes;
+END;
+	]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="numserie" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Empêche que le numéro de série soit NULL si le noeud est un capteur]]></comment>
+         <definition language="PLPGSQL"><![CDATA[    BEGIN
+        IF NEW.type_noeud = 'CPT' THEN
+            IF NEW.numero_serie IS NULL THEN
+				RAISE EXCEPTION 'numero_serie ne peut être NULL si type_noeud vaut CPT';
+			END IF;
+		END IF;
+        RETURN NEW;
+    END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="revet" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Force le revêtement à être NULL si le segment est en projet ou fictif]]></comment>
+         <definition language="PLPGSQL"><![CDATA[
+    BEGIN
+        IF NEW.avancement = 1 THEN
+			IF NEW.revetement IS NOT NULL THEN
+            	RAISE EXCEPTION 'revetement ne peut pas prendre de valeur si avancement vaut 1';
+			END IF;
+        END IF;
+        IF NEW.geometrie_fictive ='T' THEN
+            IF NEW.revetement IS NOT NULL THEN
+            	RAISE EXCEPTION 'revetement ne peut pas prendre de valeur si la geom est fictive';
+			END IF;
+        END IF;
+        RETURN NEW;
+    END;
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="split" returnType="boolean" securityType="INVOKER" type="FUNCTION">
+         <comment/>
+         <definition language="PLPGSQL"><![CDATA[DECLARE
+	seg record;
+	cut geometry;
+    geom_init geometry;
+    geom_term geometry;
+	id_new_seg integer;
+
+BEGIN
+
+	-- Récupération du point cliqué
+	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
+
+	-- Récupération du segment cliqué
+	SELECT *
+	FROM veloroutes.segment
+	WHERE veloroutes.segment.id_segment=id_seg
+	INTO seg;
+
+	-- Vérification que le clique ne se situe pas trop loin d'un segment
+	IF ST_Distance(cut, seg.geom)> 5 THEN
+		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic : Distance > 5m ';
+	END IF;
+
+	-- Création des nouvelles géométries
+	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
+    geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
+
+	-- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
+	IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
+		RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
+	END IF;
+
+	-- Modification du segment :
+    -- OA----------(O)----------OB devient  OA----------(O)
+	UPDATE veloroutes.segment s
+	SET
+		geom = geom_init
+	WHERE id_segment = seg.id_segment;
+
+	-- Création d'un nouveau segment :
+    -- (O)----------OB
+    -- On récupère les valeurs issues du segment d'origine
+	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
+	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
+	RETURNING id_segment into id_new_seg;
+
+	-- Création des nouveaux elements de portion si besoin
+	INSERT INTO veloroutes.element(id_portion,id_segment)
+    SELECT veloroutes.element.id_portion, id_new_seg
+	FROM veloroutes.element
+	WHERE veloroutes.element.id_segment = id_seg;
+
+	-- Return 1
+    RETURN 1;
+
+END;]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="v_itineraire_insert" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire]]></comment>
+         <definition language="PLPGSQL"><![CDATA[DECLARE iti_id int; ids text;
+
+BEGIN
+
+	--INSERT a new row in itineraire
+    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
+    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
+    RETURNING id_iti into iti_id;
+
+	--INSERT stages of the itineray in etape
+	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
+    SELECT iti_id, vp.id_portion
+	FROM veloroutes.v_portion vp
+	--segments must be around the new geometry
+	WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
+	--segments that share just one vertex with the new geom are eliminated
+	AND ST_Within(vp.geom,ST_Buffer(NEW.geom,1));
+
+	--Warning for the user if the selection includes a piece of portion
+	--The selection should only be composed by full portions
+	FOR ids IN
+		SELECT veloroutes.v_portion.id_portion
+		FROM veloroutes.v_portion
+		--Optional
+		WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
+		--Portions whose geometry is only partially included in the selection
+		AND ST_Overlaps(veloroutes.v_portion.geom,NEW.geom)
+	LOOP
+      RAISE NOTICE 'La portion (%) ne peut pas être partiellement séléctionnée',ids;
+   	END LOOP;
+ 	RETURN NEW;
+
+END;
+
+
+]]></definition>
+      </routine>
+      <routine dataAccess="MODIFIES" deterministic="false" name="v_portion_insert" returnType="trigger" securityType="INVOKER" type="FUNCTION">
+         <comment><![CDATA[Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion]]></comment>
+         <definition language="PLPGSQL"><![CDATA[DECLARE pid int; geo geometry;ids text;
+
+BEGIN
+	--INSERT a new portion
+    INSERT INTO veloroutes.portion(nom, description,type_portion)
+    VALUES(NEW.nom, NEW.description, NEW.type_portion)
+    RETURNING id_portion into pid;
+
+	--INSERT in element elements of the new portion
+	INSERT INTO veloroutes.element(id_portion,id_segment)
+    SELECT pid, veloroutes.segment.id_segment
+	FROM veloroutes.segment
+	--segments must be around the new geometry
+	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+	--segments that share just one vertex with the new geom are eliminated
+	AND ST_Within(veloroutes.segment.geom,ST_Buffer(NEW.geom,1));
+
+	--Warning for the user if the selection includes a piece of segment
+	--The selection should only be composed by full segments
+	FOR ids IN
+		SELECT veloroutes.segment.id_segment
+		FROM veloroutes.segment
+		--Optional
+		WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+		--Segments whose geometry is only partially included in the selection
+		AND ST_Overlaps(veloroutes.segment.geom,NEW.geom)
+	LOOP
+      RAISE NOTICE 'Le segment (%) ne peut pas être partiellement séléctionné',ids;
+   	END LOOP;
+
+ 	RETURN NEW;
+
+END;]]></definition>
+      </routine>
+   </routines>
+</database>
