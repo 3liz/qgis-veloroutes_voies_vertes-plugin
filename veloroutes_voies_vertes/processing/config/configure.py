@@ -63,23 +63,19 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
                 'class': 'processing.gui.wrappers_postgis.ConnectionWidgetWrapper'
             }
         })
+        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
         self.addParameter(db_param)
 
         # OUTPUTS
         # Add output for status (integer)
-        self.addOutput(
-            QgsProcessingOutputNumber(
-                self.OUTPUT_STATUS,
-                'Statut de sortie'
-            )
-        )
+        output = QgsProcessingOutputNumber(self.OUTPUT_STATUS, 'Statut de sortie')
+        output.tooltip_3liz = output.description()
+        self.addOutput(output)
+
         # Add output for message
-        self.addOutput(
-            QgsProcessingOutputString(
-                self.OUTPUT_STRING,
-                'Message de sortie'
-            )
-        )
+        output = QgsProcessingOutputString(self.OUTPUT_STRING, 'Message de sortie')
+        output.tooltip_3liz = output.description()
+        self.addOutput(output)
 
     def processAlgorithm(self, parameters, context, feedback):
         """

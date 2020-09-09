@@ -50,9 +50,9 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
 
         # OUTPUTS
 
-        self.addOutput(
-            QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
-        )
+        output = QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
+        output.tooltip_3liz = output.description()
+        self.addOutput(output)
 
     @staticmethod
     def createRelation(referenced, referencing, fielda, fieldb, name, setid):

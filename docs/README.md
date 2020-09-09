@@ -3,5 +3,5 @@ Title: Véloroutes
 Favicon: icon.png
 ...
 
-* [User guide](./user_guide/)
+* [User guide](./processing/)
 * [Database](./database/)

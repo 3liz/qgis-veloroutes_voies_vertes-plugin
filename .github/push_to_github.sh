@@ -6,6 +6,12 @@ setup_git() {
   git checkout -b master
 }
 
+commit_processing_files() {
+  make github-pages
+  git add docs/processing
+  git commit --message "Update processing documentation to version : $TRAVIS_TAG" --message "[skip travis]"
+}
+
 commit_schemaspy_files() {
   make schemaspy
   git add docs/database
@@ -18,5 +24,6 @@ upload_files() {
 }
 
 setup_git
+commit_processing_files
 commit_schemaspy_files
 upload_files
