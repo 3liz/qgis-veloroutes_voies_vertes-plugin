@@ -5,7 +5,7 @@ export $(grep -v '^#' .env | xargs)
 
 docker run -d \
   --name qgis-testing-environment \
-  -v  $(pwd)/../veloroutes_voies_vertes:/tests_directory/veloroutes_voies_vertes \
+  -v  $(pwd)/../${PLUGIN_NAME}:/tests_directory/${PLUGIN_NAME} \
   -v  $(pwd)/../docs/processing:/processing \
   -e DISPLAY=:99 \
   qgis/qgis:release-3_10
