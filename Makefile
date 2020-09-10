@@ -38,7 +38,7 @@ flake8:
 
 github-pages: processing-doc
 	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/README.md docs/index.html
-	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/doc_processing.md docs/processing/doc_processing.html
+	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/README.md docs/processing/index.html
 
 processing-doc:
 	cd .docker && ./processing_doc.sh
