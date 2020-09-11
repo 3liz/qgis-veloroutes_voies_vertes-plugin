@@ -103,9 +103,6 @@ class ImportCovadis(BaseProcessingAlgorithm):
             self.INPUT,
             'Couche à importer',
             types=[QgsProcessing.TypeVector],
-            defaultValue=(
-                '/Users/enolasengeissen/Documents/Stage_3Liz/data/'
-                'cd66-3V/Export_PC_Pour_3Liz/Tables/portions.gpkg')
         )
         self.addParameter(couche)
 
