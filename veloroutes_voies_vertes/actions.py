@@ -7,10 +7,9 @@ Actions."""
 
 from qgis.core import (
     QgsProviderRegistry,
-    QgsMessageLog,
-    Qgis,
     QgsExpressionContextUtils,
     QgsProject,
+    QgsProviderConnectionException,
 )
 
 from qgis.utils import iface
@@ -37,10 +36,7 @@ def split_segment(*args):
     try:
         sql = """SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
         connection.executeSql(sql)
-        msg = "Le segment " + str(id_seg) + " a bien été coupé"
+        msg = "Le segment {} a bien été coupé".format(id_seg)
         iface.messageBar().pushInfo('Véloroutes', msg)
-    except Exception as e:  # attempt to use QgsProviderConnectionException instead cf #34
-        msg = e.args[0]
-        iface.messageBar().pushCritical('Véloroutes', msg)
-    message = "segment " + str(id_seg) + " split"
-    QgsMessageLog.logMessage(message, 'VéloroutesPlugin', Qgis.Info)
+    except QgsProviderConnectionException as e:
+        iface.messageBar().pushCritical('Véloroutes', e.args[0])

@@ -54,7 +54,7 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         connection_name = QgsExpressionContextUtils.globalScope().variable('veloroutes_connection_name')
         db_param = QgsProcessingParameterString(
             self.CONNECTION_NAME,
-            'Connection PostgreSQL à la base à vvv',
+            'Connexion à la base PostgreSQL',
             defaultValue=connection_name,
             optional=False
         )
