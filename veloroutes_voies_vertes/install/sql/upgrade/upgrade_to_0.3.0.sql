@@ -823,6 +823,20 @@ ALTER TABLE ONLY veloroutes.poi_service ADD CONSTRAINT type FOREIGN KEY (type) R
 ALTER TABLE ONLY veloroutes.poi_tourisme DROP CONSTRAINT IF EXISTS type CASCADE;
 ALTER TABLE ONLY veloroutes.poi_tourisme ADD CONSTRAINT type FOREIGN KEY (type) REFERENCES veloroutes.poi_tourisme_val(code);
 
+ALTER TABLE ONLY veloroutes.frequentation
+    ADD CONSTRAINT frequentation_repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
+
+ALTER TABLE ONLY veloroutes.frequentation
+    ADD CONSTRAINT frequentation_pkey PRIMARY KEY (id_portion, id_repere);
+
+CREATE INDEX liaison_geom_idx ON veloroutes.liaison USING gist (geom);
+CREATE INDEX poi_acces_geom_idx ON veloroutes.poi_acces USING gist (geom);
+CREATE INDEX poi_geom_idx ON veloroutes.poi USING gist (geom);
+CREATE INDEX poi_service_geom_idx ON veloroutes.poi_service USING gist (geom);
+CREATE INDEX poi_tourisme_geom_idx ON veloroutes.poi_tourisme USING gist (geom);
+CREATE INDEX repere_geom_idx ON veloroutes.repere USING gist (geom);
+CREATE INDEX segment_geom_idx ON veloroutes.segment USING gist (geom);
+
 COMMENT ON COLUMN veloroutes.liaison.id_local IS NULL;
 COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
 

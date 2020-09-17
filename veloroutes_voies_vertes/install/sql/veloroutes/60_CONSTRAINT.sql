@@ -88,6 +88,11 @@ ALTER TABLE ONLY veloroutes.etat_avancement_val
     ADD CONSTRAINT etat_avancement_val_pkey PRIMARY KEY (code);
 
 
+-- frequentation frequentation_pkey
+ALTER TABLE ONLY veloroutes.frequentation
+    ADD CONSTRAINT frequentation_pkey PRIMARY KEY (id_portion, id_repere);
+
+
 -- itineraire itineraire_pkey
 ALTER TABLE ONLY veloroutes.itineraire
     ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_iti);
@@ -211,6 +216,11 @@ ALTER TABLE ONLY veloroutes.etape
 -- etape etape_portion_segment
 ALTER TABLE ONLY veloroutes.etape
     ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
+
+
+-- frequentation frequentation_repere
+ALTER TABLE ONLY veloroutes.frequentation
+    ADD CONSTRAINT frequentation_repere FOREIGN KEY (id_repere) REFERENCES veloroutes.repere(id_repere);
 
 
 -- segment geometrie_fictive_booleen

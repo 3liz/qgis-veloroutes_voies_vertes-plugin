@@ -18,8 +18,36 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
+-- liaison_geom_idx
+CREATE INDEX liaison_geom_idx ON veloroutes.liaison USING gist (geom);
+
+
+-- poi_acces_geom_idx
+CREATE INDEX poi_acces_geom_idx ON veloroutes.poi_acces USING gist (geom);
+
+
+-- poi_geom_idx
+CREATE INDEX poi_geom_idx ON veloroutes.poi USING gist (geom);
+
+
+-- poi_service_geom_idx
+CREATE INDEX poi_service_geom_idx ON veloroutes.poi_service USING gist (geom);
+
+
+-- poi_tourisme_geom_idx
+CREATE INDEX poi_tourisme_geom_idx ON veloroutes.poi_tourisme USING gist (geom);
+
+
+-- repere_geom_idx
+CREATE INDEX repere_geom_idx ON veloroutes.repere USING gist (geom);
+
+
 -- revetement
 CREATE INDEX revetement ON veloroutes.segment USING btree (revetement);
+
+
+-- segment_geom_idx
+CREATE INDEX segment_geom_idx ON veloroutes.segment USING gist (geom);
 
 
 --

@@ -126,8 +126,8 @@ ALTER SEQUENCE veloroutes.etat_avancement_val_id_seq OWNED BY veloroutes.etat_av
 CREATE TABLE veloroutes.frequentation (
     comptage integer,
     period date[],
-    id_portion integer,
-    id_repere integer,
+    id_portion integer NOT NULL,
+    id_repere integer NOT NULL,
     CONSTRAINT comptage CHECK ((comptage >= 0))
 );
 
