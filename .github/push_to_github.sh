@@ -24,6 +24,6 @@ upload_files() {
 }
 
 setup_git
-commit_processing_files
+#commit_processing_files
 commit_schemaspy_files
 upload_files

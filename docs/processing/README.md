@@ -20,7 +20,7 @@ Ajoute la variable "veloroutes_connection_name" à QGIS.
 
 | ID | Description | Type | Info | Required | Advanced |
 |:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connection PostgreSQL à la base à vvv|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
+CONNECTION_NAME|Connexion à la base PostgreSQL|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
 
 
 #### Outputs
