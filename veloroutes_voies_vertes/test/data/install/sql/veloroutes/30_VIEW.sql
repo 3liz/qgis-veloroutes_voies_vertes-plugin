@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.14 (Debian 10.14-1.pgdg100+1)
+-- Dumped by pg_dump version 10.14 (Debian 10.14-1.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -95,3 +95,4 @@ COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collecti
 --
 -- PostgreSQL database dump complete
 --
+
