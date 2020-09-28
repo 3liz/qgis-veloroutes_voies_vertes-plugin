@@ -82,12 +82,18 @@
       <table name="frequentation" numRows="0" remarks="Fréquence de passage, table de lien entre repere et portion" schema="veloroutes" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="comptage" nullable="true" remarks="Nombre de passages comptabilisés" size="10" type="int4" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="period" nullable="true" remarks="Période de l’observation caractérisée par une date de début et une date de fin" size="13" type="_date" typeCode="2003"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_portion" nullable="true" remarks="Identifiant de la portion dont la frequentation est mesurée (clé étrangère)" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="id_portion" nullable="false" remarks="Identifiant de la portion dont la frequentation est mesurée (clé étrangère)" size="10" type="int4" typeCode="4">
             <parent column="id_portion" foreignKey="portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_repere" nullable="true" remarks="Identifiant du point de repère où est placé le capteur (clé étrangère)" size="10" type="int4" typeCode="4">
-            <parent column="id_repere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="id_repere" nullable="false" remarks="Identifiant du point de repère où est placé le capteur (clé étrangère)" size="10" type="int4" typeCode="4">
+            <parent column="id_repere" foreignKey="frequentation_repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
          </column>
+         <primaryKey column="id_portion" sequenceNumberInPK="1"/>
+         <primaryKey column="id_repere" sequenceNumberInPK="2"/>
+         <index name="frequentation_pkey" unique="true">
+            <column ascending="true" name="id_portion"/>
+            <column ascending="true" name="id_repere"/>
+         </index>
          <checkConstraint constraint="((comptage &gt;= 0))" name="comptage"/>
       </table>
       <table name="itineraire" numRows="0" remarks="Itinéraire cyclable, véloroute." schema="veloroutes" type="TABLE">
@@ -134,6 +140,9 @@
          <index name="liaison_pkey" unique="true">
             <column ascending="true" name="id_liaison"/>
          </index>
+         <index name="liaison_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
       </table>
       <table name="metadata" numRows="0" remarks="Métadonnée de la structure du schéma, en lien avec la version du plugin QGIS. C'est utilisé pour les scripts de migration de la structure entre 2 versions." schema="veloroutes" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('veloroutes.metadata_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant de la version" size="10" type="serial" typeCode="4"/>
@@ -175,6 +184,9 @@
          <index name="poi_pkey" unique="true">
             <column ascending="true" name="id_poi"/>
          </index>
+         <index name="poi_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
       </table>
       <table name="poi_acces" numRows="0" remarks="Points d’intérêt localisant un accès à un centre d’intermodal" schema="veloroutes" type="TABLE">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="description" nullable="true" remarks="Renseignement ou description complémentaire sur le point d’intérêt" size="2147483647" type="text" typeCode="12"/>
@@ -188,6 +200,9 @@
          <primaryKey column="id_poi" sequenceNumberInPK="1"/>
          <index name="poi_acces_pkey" unique="true">
             <column ascending="true" name="id_poi"/>
+         </index>
+         <index name="poi_acces_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
          </index>
       </table>
       <table name="poi_acces_val" numRows="6" remarks="Nomenclature pour la nature des points d’accès à un autre réseau de transport" schema="veloroutes" type="TABLE">
@@ -217,6 +232,9 @@
          <index name="poi_service_pkey" unique="true">
             <column ascending="true" name="id_poi"/>
          </index>
+         <index name="poi_service_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
+         </index>
       </table>
       <table name="poi_service_val" numRows="9" remarks="Nomenclature pour  la nature des services offerts à un cyclotouriste par un point d’intérêt" schema="veloroutes" type="TABLE">
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
@@ -244,6 +262,9 @@
          <primaryKey column="id_poi" sequenceNumberInPK="1"/>
          <index name="poi_tourisme_pkey" unique="true">
             <column ascending="true" name="id_poi"/>
+         </index>
+         <index name="poi_tourisme_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
          </index>
       </table>
       <table name="poi_tourisme_val" numRows="3" remarks="Nomenclature pour la nature d’un point d’intérêt touristique" schema="veloroutes" type="TABLE">
@@ -305,13 +326,16 @@
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="geom" nullable="true" remarks="Géométrie" size="2147483647" type="geometry" typeCode="1111"/>
          <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_id_repere_seq'::regclass)" digits="0" id="5" name="id_repere" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
-            <child column="id_repere" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
+            <child column="id_repere" foreignKey="frequentation_repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="frequentation"/>
             <child column="id_repere" foreignKey="repere" implied="false" onDeleteCascade="false" schema="veloroutes" table="liaison"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id_repere" sequenceNumberInPK="1"/>
          <index name="repere_pkey" unique="true">
             <column ascending="true" name="id_repere"/>
+         </index>
+         <index name="repere_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
          </index>
       </table>
       <table name="repere_val" numRows="7" remarks="Nomenclature pour la nature d'un point de repère pour la description et la compréhension de l’itinéraire" schema="veloroutes" type="TABLE">
@@ -377,6 +401,9 @@
          </index>
          <index name="revetement" unique="false">
             <column ascending="true" name="revetement"/>
+         </index>
+         <index name="segment_geom_idx" unique="false">
+            <column ascending="true" name="geom"/>
          </index>
       </table>
       <table name="statut_segment_val" numRows="6" remarks="Nomenclature pour le statut réglementaire du segment cyclable" schema="veloroutes" type="TABLE">

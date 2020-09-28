@@ -302,7 +302,7 @@
                                     <td><p>Nom de l’organisme propriétaire du segment</p></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="geom">geom</span></td>
+                                    <td class='indexedColumn' title='Indexed'><i class='fa fa-sitemap fa-rotate-120' style='padding-right: 5px;'></i><span id="geom">geom</span></td>
                                     <td>geometry</td>
                                     <td>2147483647</td>
                                     <td title='nullable'>√</td>
@@ -446,6 +446,12 @@
                                     <td>Performance</td>
                                     <td><span title='Ascending'>Asc</span></td>
                                     <td>revetement</td>
+                                </tr>
+                                <tr>
+                                    <td title='Indexed'>segment_geom_idx</td>
+                                    <td>Performance</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>geom</td>
                                 </tr>
                                 </tbody>
                             </table>
