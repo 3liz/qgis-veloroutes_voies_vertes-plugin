@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Debian 10.6-1.pgdg90+1)
--- Dumped by pg_dump version 10.6 (Debian 10.6-1.pgdg90+1)
+-- Dumped from database version 10.14 (Debian 10.14-1.pgdg100+1)
+-- Dumped by pg_dump version 10.14 (Debian 10.14-1.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -12,8 +12,19 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Data for Name: booleen_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
+--
+
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('N', 'Ne sais pas', 1);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('F', 'False', 2);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES ('T', 'True', 3);
+INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES (NULL, 'Non renseigné', 4);
+
 
 --
 -- Data for Name: etat_avancement_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
@@ -113,6 +124,13 @@ INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (3, 'ASP', 
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (4, 'RTE', 'Route');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (5, 'BCY', 'Bande cyclable');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (6, 'ICA', 'Itinéraire à circulation apaisée');
+
+
+--
+-- Name: booleen_val_id_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: -
+--
+
+SELECT pg_catalog.setval('veloroutes.booleen_val_id_seq', 4, true);
 
 
 --

@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.10
--- Dumped by pg_dump version 10.10
+-- Dumped from database version 10.14 (Debian 10.14-1.pgdg100+1)
+-- Dumped by pg_dump version 10.14 (Debian 10.14-1.pgdg100+1)
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -181,10 +181,6 @@ COMMENT ON COLUMN veloroutes.liaison.src_geom IS 'Type de la source de géoréf�
 COMMENT ON COLUMN veloroutes.liaison.src_annee IS 'Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique';
 
 
--- liaison.id_local
-COMMENT ON COLUMN veloroutes.liaison.id_local IS 'Identifiant de la liaison cyclable';
-
-
 -- liaison.id_repere
 COMMENT ON COLUMN veloroutes.liaison.id_repere IS 'Identifiant du point de repère que la liaison connecte à un point d''intérêt (clé étrangère)';
 
@@ -195,6 +191,10 @@ COMMENT ON COLUMN veloroutes.liaison.id_poi IS 'Identifiant du point l''intérê
 
 -- liaison.geom
 COMMENT ON COLUMN veloroutes.liaison.geom IS 'Géométrie';
+
+
+-- liaison.id_liaison
+COMMENT ON COLUMN veloroutes.liaison.id_liaison IS 'Clé primaire';
 
 
 -- metadata
@@ -242,11 +242,19 @@ COMMENT ON COLUMN veloroutes.poi.type IS 'Nature du point d’intérêt';
 
 
 -- poi.id_local
-COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant du point d''intérêt';
+COMMENT ON COLUMN veloroutes.poi.id_local IS 'Identifiant créé et géré par l organisme local';
 
 
 -- poi.geom
 COMMENT ON COLUMN veloroutes.poi.geom IS 'Géométrie';
+
+
+-- poi.id_poi
+COMMENT ON COLUMN veloroutes.poi.id_poi IS 'Clé primaire';
+
+
+-- poi.id_on3v
+COMMENT ON COLUMN veloroutes.poi.id_on3v IS 'Identifiant créé et géré par l ON3V';
 
 
 -- poi_acces
@@ -421,16 +429,16 @@ COMMENT ON COLUMN veloroutes.repere.libelle IS 'Numéro, nom ou description util
 COMMENT ON COLUMN veloroutes.repere.numero_serie IS 'Numéro de série du capteur utilisé pour l’identifier sur la plateforme nationale des fréquentations';
 
 
--- repere.id_local
-COMMENT ON COLUMN veloroutes.repere.id_local IS 'Identifiant du point de repère cyclable';
-
-
 -- repere.type_noeud
 COMMENT ON COLUMN veloroutes.repere.type_noeud IS 'Valeur indiquant le rôle que joue le point de repère dans l’itinéraire cyclable';
 
 
 -- repere.geom
 COMMENT ON COLUMN veloroutes.repere.geom IS 'Géométrie';
+
+
+-- repere.id_repere
+COMMENT ON COLUMN veloroutes.repere.id_repere IS 'Clé primaire';
 
 
 -- repere_val
@@ -568,12 +576,12 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
 
 
--- TRIGGER insert_v_portion ON v_portion
-COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
-
-
 -- TRIGGER insert_v_itineraire ON v_itineraire
 COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+
+
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
 
 
 -- TRIGGER numserie ON repere
@@ -587,3 +595,4 @@ COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs
 --
 -- PostgreSQL database dump complete
 --
+
