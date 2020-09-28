@@ -274,11 +274,11 @@ CREATE FUNCTION veloroutes.import_veloroutes_itineraire() RETURNS boolean
 	UPDATE imports.import_itineraire
 	SET id_iti = (SELECT veloroutes.insert_import_veloroutes_itineraire(id_import))
 	WHERE numero IS NOT NULL
-	AND (EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
-		OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
+	AND (EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE UPPER(code) = UPPER(niveau_schema))
+		OR EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE UPPER(libelle) = UPPER(niveau_schema))
 		OR niveau_schema IS NULL)
-	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
-		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(est_inscrit))
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle = est_inscrit))
 		 OR est_inscrit IS NULL);
 
 
@@ -340,18 +340,18 @@ CREATE FUNCTION veloroutes.import_veloroutes_poi(poitype text) RETURNS boolean
 		SELECT
 			description,
 			CASE
-				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE UPPER(code) = UPPER(type))
 				THEN type
-				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
-				THEN (SELECT code FROM veloroutes.%s_val as v WHERE v.libelle = type LIMIT 1)
+				WHEN EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE UPPER(libelle) = UPPER(type))
+				THEN (SELECT code FROM veloroutes.%s_val as v WHERE UPPER(v.libelle) = UPPER(type) LIMIT 1)
 			END AS type,
 			id_local,
 			geom,
 			id_poi,
 			id_on3v
 		FROM imports.import_%s
-		WHERE (EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE code = type)
-		OR EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE libelle = type)
+		WHERE (EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE UPPER(code) = UPPER(type))
+		OR EXISTS (SELECT 1 FROM veloroutes.%s_val WHERE UPPER(libelle) = UPPER(type))
 		OR type IS NULL)', poitype, poitype, poitype, poitype, poitype, poitype, poitype);
 
 	RAISE NOTICE 'Les lignes correctes de % ont été importées dans veloroutes', poitype;
@@ -383,8 +383,8 @@ CREATE FUNCTION veloroutes.import_veloroutes_portion() RETURNS boolean
 	UPDATE imports.import_portion
 	SET id_portion = (SELECT veloroutes.insert_import_veloroutes_portion(id_import))
 	WHERE type_portion IS NOT NULL
-	AND (EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
-		OR EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion));
+	AND (EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE UPPER(code) = UPPER(type_portion))
+		OR EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE UPPER(libelle) = UPPER(type_portion)));
 
 	RAISE NOTICE 'Les lignes correctes de portion ont été importées dans veloroutes';
 
@@ -426,17 +426,17 @@ CREATE FUNCTION veloroutes.import_veloroutes_repere() RETURNS boolean
 		numero_serie,
 		id_local,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE UPPER(code) = UPPER(type_noeud))
 			THEN type_noeud
-			WHEN EXISTS (SELECT 1 FROM veloroutes.reperef_val WHERE libelle = type_noeud)
-			THEN (SELECT code FROM veloroutes.repere_val as v WHERE v.libelle = type_noeud LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.reperef_val WHERE UPPER(libelle) = UPPER(type_noeud))
+			THEN (SELECT code FROM veloroutes.repere_val as v WHERE UPPER(v.libelle) = UPPER(type_noeud) LIMIT 1)
 		END AS type_noeud,
 		geom,
 		id_repere,
 		id_on3v
 	FROM imports.import_repere
-	WHERE (EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE code = type_noeud)
-		OR EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE libelle = type_noeud));
+	WHERE (EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE UPPER(code) = UPPER(type_noeud))
+		OR EXISTS (SELECT 1 FROM veloroutes.repere_val WHERE UPPER(libelle) = UPPER(type_noeud)));
 
 	RAISE NOTICE 'Les lignes correctes de repere ont été importées dans veloroutes';
 
@@ -454,17 +454,17 @@ CREATE FUNCTION veloroutes.import_veloroutes_segment() RETURNS boolean
 	AND statut IS NOT null
 	-- check that enumerate types are correct
 	AND (EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
-		 OR EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement))
-	AND (EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
-		 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut))
-	AND (EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
-		 OR EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
+		 OR EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement)))
+	AND (EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
+		 OR EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut)))
+	AND (EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
+		 OR EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
 		 OR revetement IS NULL)
-	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
-		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
 		 OR sens_unique IS NULL)
-	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = geometrie_fictive)
-		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = geometrie_fictive)
+	AND (EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
+		 OR EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
 		 OR geometrie_fictive IS NULL);
 
 	RAISE NOTICE 'Les lignes correctes de segment ont été importées dans veloroutes';
@@ -522,17 +522,17 @@ BEGIN
 		nom_usage,
 		nom_officiel,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE code = niveau_schema)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE UPPER(code) = UPPER(niveau_schema))
 			THEN niveau_schema
-			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE libelle = niveau_schema)
-			THEN (SELECT code FROM veloroutes.niveau_administratif_val as v WHERE v.libelle = niveau_schema LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.niveau_administratif_val WHERE UPPER(libelle) = UPPER(niveau_schema))
+			THEN (SELECT code FROM veloroutes.niveau_administratif_val as v WHERE UPPER(v.libelle) = UPPER(niveau_schema) LIMIT 1)
 			ELSE niveau_schema
 		END AS niveau_schema,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = est_inscrit)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(est_inscrit))
 			THEN est_inscrit
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = est_inscrit)
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = est_inscrit LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(est_inscrit))
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(est_inscrit) LIMIT 1)
 			--WHEN est_inscrit = 'non' THEN 'F'
 			--WHEN est_inscrit = 'oui' THEN 'T'
 			ELSE est_inscrit
@@ -577,10 +577,10 @@ BEGIN
 	)
 	SELECT
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE code = type_portion)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE UPPER(code) = UPPER(type_portion))
 			THEN type_portion
-			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE libelle = type_portion)
-			THEN (SELECT code FROM veloroutes.portion_val as v WHERE v.libelle = type_portion LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.portion_val WHERE UPPER(libelle) = UPPER(type_portion))
+			THEN (SELECT code FROM veloroutes.portion_val as v WHERE UPPER(v.libelle) = UPPER(type_portion) LIMIT 1)
 		END AS type_portion,
 		CAST (mont_subv AS real),
 		CASE
@@ -629,22 +629,22 @@ BEGIN
 		id_local,
 		id_on3v,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE code = statut)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
 			THEN statut
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE libelle = statut)
-			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE v.libelle = statut LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
+			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
 		END AS statut,
 		CASE
 			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
 			THEN CAST (avancement AS INTEGER)
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE libelle = avancement)
-			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE v.libelle = avancement LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement))
+			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE UPPER(v.libelle) = UPPER(avancement) LIMIT 1)
 		END AS avancement,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE code = revetement)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
 			THEN revetement
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE libelle = revetement)
-			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE v.libelle = revetement LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
+			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE UPPER(v.libelle) = UPPER(revetement) LIMIT 1)
 			ELSE revetement
 		END AS revetement,
 		proprietaire,
@@ -652,10 +652,10 @@ BEGIN
 		precision,
 		src_geom,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = sens_unique)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
 			THEN sens_unique
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = sens_unique)
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = sens_unique LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(sens_unique) LIMIT 1)
 			--WHEN sens_unique = 'bidirectionnelle' THEN 'F'
 			--WHEN sens_unique = 'monodirectionnelle' THEN 'T'
 			ELSE sens_unique
@@ -666,10 +666,10 @@ BEGIN
 		END AS date_saisie,
 		src_annee,
 		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE code = geometrie_fictive)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
 			THEN geometrie_fictive
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE libelle = geometrie_fictive)
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE v.libelle = geometrie_fictive LIMIT 1)
+			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
+			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(geometrie_fictive) LIMIT 1)
 			ELSE geometrie_fictive
 		END AS geometrie_fictive,
 		CASE
