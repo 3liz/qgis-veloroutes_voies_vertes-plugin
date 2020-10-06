@@ -12,7 +12,7 @@ __revision__ = "$Format:%H$"
 from qgis.core import QgsApplication, QgsMessageLog, Qgis
 from qgis.PyQt.QtWidgets import QMessageBox
 
-from .actions import split_segment
+from .actions import split_segment, remove_selected_portion
 
 from .processing.provider import VeloroutesProvider
 
@@ -50,7 +50,9 @@ class VeloroutesPlugin:
         # extra args to add on runtime
         actions = {
             'split_segment':
-                [3, split_segment]
+                [3, split_segment],
+            'remove_selected_portion':
+                [1, remove_selected_portion]
         }
         if name not in actions:
             QMessageBox.critical(
