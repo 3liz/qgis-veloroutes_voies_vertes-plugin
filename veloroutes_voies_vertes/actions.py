@@ -43,61 +43,76 @@ def split_segment(*args):
         iface.messageBar().pushCritical('Véloroutes', e.args[0])
 
 
-def remove_selected_portion(*args):
+def _remove_selected_from_relation(
+    agg_id: int, src_primary_key: str, src_layer_name: str, rel_primary_key: str, rel_layer_name: str):
     # get arguments
-    id_iti = int(args[0])
+    id_value = agg_id
 
     # get project instance
     project = QgsProject.instance()
 
     # get layers needed
-    layer_portions = project.mapLayersByName('v_portion')
+    src_layer = project.mapLayersByName(src_layer_name)
 
     # Control if layers exists
-    if not len(layer_portions):
-        iface.messageBar().pushCritical('Véloroutes', 'La couche v_portion n\'a pas été trouvée')
+    if not len(src_layer):
+        iface.messageBar().pushCritical('Véloroutes', 'La couche {} n\'a pas été trouvée'.format(
+            src_layer_name))
         return
-    layer_portions = layer_portions[0]
+    src_layer = src_layer[0]
 
-    layer_etape = project.mapLayersByName('etape')
-    if not len(layer_etape):
-        iface.messageBar().pushCritical('Véloroutes', 'La table etape n\'a pas été trouvée')
+    rel_layer = project.mapLayersByName(rel_layer_name)
+    if not len(rel_layer):
+        iface.messageBar().pushCritical('Véloroutes', 'La table {} n\'a pas été trouvée'.format(
+            rel_layer_name))
         return
-    layer_etape = layer_etape[0]
+    rel_layer = rel_layer[0]
 
-    # count number of features selected from v_portion layer
-    count = layer_portions.selectedFeatureCount()
+    # count number of features selected from src_layer
+    count = src_layer.selectedFeatureCount()
     if count < 1:
-        iface.messageBar().pushCritical('Véloroutes', 'Vous devez sélectionner au moins une portion')
+        iface.messageBar().pushCritical(
+            'Véloroutes',
+            'Vous devez sélectionner au moins un objet de la couche {}'.format(src_layer_name))
         return
 
-    # get list etape
-    couple_etape = []
-    for feat in layer_etape.getFeatures(QgsExpression.createFieldEqualityExpression('id_itineraire', id_iti)):
-        couple_etape.append((feat['id_itineraire'], feat['id_portion']))
+    # get list rel_layer
+    couple_rel = []
+    for feat in rel_layer.getFeatures(QgsExpression.createFieldEqualityExpression(src_primary_key, id_value)):
+        couple_rel.append((feat[src_primary_key], feat[rel_primary_key]))
 
-    # create list of couples between args (id_iti) and feature (id_portion)
-    features = layer_portions.getSelectedFeatures()
+    # create list of couples between src_primary_key and rel_primary_key
+    features = src_layer.getSelectedFeatures()
     couple_id = []
     for feat in features:
-        couple_id.append((id_iti, feat['id_portion']))
+        couple_id.append((id_value, feat[rel_primary_key]))
 
     # test between two lists
     match_list = []
-    for item in couple_etape:
+    for item in couple_rel:
         if item in couple_id:
             match_list.append(item)
 
     # test if match_list is empty
     if len(match_list) < 1:
-        iface.messageBar().pushInfo('Véloroutes', 'Pas d\'étape à supprimer')
+        iface.messageBar().pushInfo(
+            'Véloroutes',
+            'Pas d\'objet de la couche {} à supprimer'.format(rel_layer_name))
         return
-    layer_etape.startEditing()
+    rel_layer.startEditing()
     count = 0
-    for feat in layer_etape.getFeatures(QgsExpression.createFieldEqualityExpression('id_itineraire', id_iti)):
-        if (feat['id_itineraire'], feat['id_portion']) in match_list:
-            layer_etape.deleteFeature(feat.id())
+    for feat in rel_layer.getFeatures(QgsExpression.createFieldEqualityExpression(src_primary_key, id_value)):
+        if (feat[src_primary_key], feat[rel_primary_key]) in match_list:
+            rel_layer.deleteFeature(feat.id())
             count += 1
-    layer_etape.commitChanges()
-    msg = "{} étapes ont été supprimées".format(count)
+    rel_layer.commitChanges()
+    msg = "{} objet(s) ont été supprimées de la couche {}".format(count, rel_layer_name)
     iface.messageBar().pushInfo('Véloroutes', msg)
+
+
+def remove_selected_portion(*args):
+    _remove_selected_from_relation(int(args[0]), 'id_itineraire', 'v_portion', 'id_portion', 'etape')
+
+
+def remove_selected_segment(*args):
+    _remove_selected_from_relation(int(args[0]), 'id_portion', 'segment', 'id_segment', 'element')
