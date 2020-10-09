@@ -12,7 +12,7 @@ __revision__ = "$Format:%H$"
 from qgis.core import QgsApplication, QgsMessageLog, Qgis
 from qgis.PyQt.QtWidgets import QMessageBox
 
-from .actions import split_segment, update_selected_feature
+from .actions import split_segment, update_selected_feature, create_relation
 
 from .processing.provider import VeloroutesProvider
 
@@ -52,7 +52,9 @@ class VeloroutesPlugin:
             'split_segment':
                 [3, split_segment],
             'update_selected_feature':
-                [3, update_selected_feature]
+                [3, update_selected_feature],
+            'create_relation':
+                [6, create_relation]
         }
         if name not in actions:
             QMessageBox.critical(

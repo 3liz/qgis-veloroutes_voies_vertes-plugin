@@ -5,6 +5,8 @@ Created on Tue Jul  7 10:06:14 2020
 
 Actions."""
 
+from functools import partial
+
 from qgis.core import (
     QgsProviderRegistry,
     QgsExpressionContextUtils,
@@ -202,3 +204,104 @@ def update_selected_feature(*args):
             _add_selected_from_relation(agg_id, 'id_portion', 'segment', 'id_segment', 'element')
 
     layers[0].triggerRepaint()
+
+
+def create_relation(*args):
+    layer_name = args[0]
+    layer_update = args[1]
+    rel_layer_name = args[2]
+    src_field_id_name = args[3]
+    rel_field_id_name = args[4]
+    repaint_layer_name = args[5]
+
+    layers = QgsProject.instance().mapLayersByName(layer_name)
+
+    # Control if layers exists
+    if not len(layers):
+        iface.messageBar().pushCritical('Véloroutes', 'La couche {} n\'a pas été trouvée'.format(
+            layer_name))
+        return
+
+    src_layer = layers[0]
+
+    layers = QgsProject.instance().mapLayersByName(layer_update)
+
+    if not len(layers):
+        iface.messageBar().pushCritical('Véloroutes', 'La couche {} n\'a pas été trouvée'.format(
+            layer_update))
+        return
+
+    update_layer = layers[0]
+
+    # count number of features selected from src_layer
+    count = src_layer.selectedFeatureCount()
+    if count < 1:
+        iface.messageBar().pushCritical(
+            'Véloroutes',
+            'Vous devez sélectionner au moins un objet de la couche {}'.format(layer_update))
+        return
+
+    fields = update_layer.fields()
+    new_feature = QgsFeature()
+    new_feature.setFields(fields)
+
+    features = src_layer.getSelectedFeatures()
+    selected_features_id = []
+    for feat in features:
+        selected_features_id.append(feat['id_portion'])
+
+    update_layer.startEditing()
+
+    # open feature form and test if cancel form for stop or not the script
+    if not iface.openFeatureForm(update_layer, new_feature, showModal=True):
+        update_layer.rollBack()
+        iface.messageBar().pushInfo(
+            'Véloroutes',
+            'Création de l\'itinéraire annulée')
+        return
+    iface.messageBar().pushInfo(
+        'Véloroutes',
+        'Création de l\'itinéraire validée')
+    update_layer.committedFeaturesAdded.connect(
+        partial(_add_relation, selected_features_id, rel_layer_name, src_field_id_name, rel_field_id_name))
+    update_layer.commitChanges()
+    update_layer.committedFeaturesAdded.disconnect()
+
+    iface.messageBar().pushInfo(
+        'Véloroutes', 'L\'itinéraire numéro {} a été ajouté'.format(str(new_feature['numero'])))
+
+    layer_repaint = QgsProject.instance().mapLayersByName(repaint_layer_name)
+
+    if not len(layer_repaint):
+        iface.messageBar().pushCritical('Véloroutes', 'La couche {} n\'a pas été rafraîchie'.format(
+            repaint_layer_name))
+        return
+
+    layer_repaint[0].triggerRepaint()
+
+    iface.messageBar().pushInfo('Véloroutes', 'La couche {} a bien été réactualisée'.format(
+        repaint_layer_name))
+
+
+def _add_relation(selected_features_id, rel_layer_name, feature_id, feature_rel, layer_id, added_features):
+    feat = added_features[0]
+    layers = QgsProject.instance().mapLayersByName(rel_layer_name)
+    if not len(layers):
+        iface.messageBar().pushCritical('Véloroutes', 'La couche {} n\'a pas été trouvée'.format(
+            rel_layer_name))
+        return
+
+    couple_id = []
+    for item in selected_features_id:
+        couple_id.append((item, feat['id_iti']))
+    layer = layers[0]
+    new_feature = QgsFeature()
+    new_feature.setFields(layer.fields())
+
+    layer.startEditing()
+
+    for item in couple_id:
+        new_feature[feature_rel] = item[0]
+        new_feature[feature_id] = item[1]
+        layer.addFeature(new_feature)
+    layer.commitChanges()
