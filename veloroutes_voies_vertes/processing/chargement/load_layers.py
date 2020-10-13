@@ -12,20 +12,25 @@ from qgis.core import (
     QgsVectorLayer,
     QgsRasterLayer
 )
+
 from processing.tools.postgis import uri_from_name
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
+from ...qgis_plugin_tools.tools.resources import resources_path
 
 
 class LoadLayersAlgorithm(BaseProcessingAlgorithm):
     """
-    Chargement des couches adresse depuis la base de données
+    Chargement des couches depuis la base de données
     """
+    all_layer = None
 
     DATABASE = "DATABASE"
     SCHEMA = "SCHEMA"
     RASTER = "RASTER"
+    STYLE = "STYLE"
+    SAVE_STYLE = "SAVE_STYLE"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
 
@@ -77,7 +82,25 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.RASTER,
-                tr("Ajouter un fond raster OpenStreetMap?"),
+                tr("Ajouter un fond raster OpenStreetMap ?"),
+                defaultValue=False,
+                optional=False,
+            )
+        )
+
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.STYLE,
+                tr("Ajouter les styles aux couches ?"),
+                defaultValue=False,
+                optional=False,
+            )
+        )
+
+        self.addParameter(
+            QgsProcessingParameterBoolean(
+                self.SAVE_STYLE,
+                tr("Enregistrer les styles en base ?"),
                 defaultValue=False,
                 optional=False,
             )
@@ -122,6 +145,9 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         layers_v_name = ["v_portion", "v_itineraire"]
         tables_name = ["element", "etape", "portion", "itineraire"]
+
+        self.all_layer = layers_name + layers_v_name + tables_name
+
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -167,6 +193,9 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 result = self.XYZ(context, url_with_params, 'OpenStreetMap')
                 output_layers.append(result.id())
 
+        self.style = self.parameterAsBool(parameters, self.STYLE, context)
+        self.save_style = self.parameterAsBool(parameters, self.SAVE_STYLE, context)
+
         # add attribute tables
         for x in tables_name:
             if not context.project().mapLayersByName(x):
@@ -177,3 +206,24 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                     output_layers.append(result.id())
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}
+
+    def postProcessAlgorithm(self, context, feedback):
+
+        if not self.style and self.save_style:
+            feedback.reportError(
+                "Le style des couches ne peut pas être chargé en base car aucun "
+                " style n'est importé"
+            )
+        else:
+            for x in self.all_layer:
+                layers = context.project().mapLayersByName(x)
+                if len(layers) >= 1:
+                    layer = layers[0]
+                    if self.style:
+                        layer.loadNamedStyle(resources_path("qml", x + ".qml"))
+                        feedback.pushInfo("Le style de la couche " + x + " a été chargé")
+                    if self.save_style:
+                        layer.saveStyleToDatabase(layer.name(), 'Extension Véloroutes - ' + x, True, '')
+                        feedback.pushInfo("Le style de la couche " + x + " a été enregistré en base")
+
+        return {}

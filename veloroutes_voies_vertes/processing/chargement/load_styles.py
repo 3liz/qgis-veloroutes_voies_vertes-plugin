@@ -17,8 +17,13 @@ from ...qgis_plugin_tools.tools.resources import resources_path
 
 class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     """
-    Chargement des couches adresse depuis la base de données
+    Chargement des styles depuis le dossier resources
     """
+    layers_name = [
+        "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
+        "portion", "itineraire", "liaison", "segment", "v_portion",
+        "v_itineraire", "etape", "element"
+    ]
 
     INPUT = "INPUT"
     OUTPUT_MSG = "OUTPUT MSG"
@@ -99,13 +104,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         manager.addRelation(rel3)
         manager.addRelation(rel4)
 
-        layers_name = [
-            "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
-            "portion", "itineraire", "liaison", "segment", "v_portion",
-            "v_itineraire", "etape", "element"
-        ]
-
-        for x in layers_name:
+        for x in self.layers_name:
             layers = context.project().mapLayersByName(x)
             if layers:
                 for layer in layers:
@@ -115,3 +114,17 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
                     msg = msg + " // Style for " + x + " successfully loaded"
 
         return {self.OUTPUT_MSG: msg}
+
+    def postProcessAlgorithm(self, context, feedback):
+
+        if context.project():
+
+            for x in self.layers_name:
+                layers = context.project().mapLayersByName(x)
+                if len(layers) >= 1:
+                    lay = layers[0]
+                    # reload provider's data
+                    lay.dataProvider().reloadData()
+                    lay.triggerRepaint()
+
+        return {}

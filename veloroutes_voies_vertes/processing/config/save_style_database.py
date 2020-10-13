@@ -7,24 +7,23 @@ __copyright__ = '(C) 2019 by 3liz'
 __revision__ = '$Format:%H$'
 
 from qgis.core import (
-    QgsProcessingParameterString,
+    QgsProcessingParameterBoolean,
     QgsProcessingOutputString,
-    QgsProcessingOutputNumber,
-    QgsExpressionContextUtils
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 
 
-class ConfigurePlugin(BaseProcessingAlgorithm):
+class SaveStyleDatabase(BaseProcessingAlgorithm):
 
     CONFIRM_SAVE = 'CONFIRM_SAVE'
+    OUTPUT_STRING = 'OUTPUT_STRING'
 
     def name(self):
         return 'save_style_database'
 
     def displayName(self):
-        return 'Sauvegerder les styles en base de données'
+        return 'Sauvegarder les styles en base de données'
 
     def group(self):
         return 'Configuration'
@@ -42,7 +41,9 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         """
         # INPUTS
 
-        #Boolean to confirm save
+        # Boolean to confirm save
+        input_bool = QgsProcessingParameterBoolean(self.CONFIRM_SAVE, 'Confirmez la sauvegarde des styles')
+        self.addParameter(input_bool)
 
         # OUTPUTS
 
@@ -55,3 +56,29 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         """
         Here is where the processing itself takes place.
         """
+        confirm = self.parameterAsBool(parameters, self.CONFIRM_SAVE, context)
+
+        if not confirm:
+            return {
+                self.OUTPUT_STRING: 'les styles n\'ont pas été sauvegardés'
+            }
+
+        layers_required = [
+            "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
+            "portion", "itineraire", "liaison", "segment", "v_portion",
+            "v_itineraire", "etape", "element"
+        ]
+
+        layers = context.project().mapLayers()
+        if len(layers) < 1:
+            return {
+                self.OUTPUT_STRING: 'Aucune couche n\'a été trouvée'
+            }
+        for lay in layers:
+            if lay in layers_required:
+                layer = layers[lay]
+                layer.saveStyleToDatabase(layer.name(), 'default description', True, '')
+
+        return {
+                self.OUTPUT_STRING: 'les styles ont été sauvegardés'
+        }

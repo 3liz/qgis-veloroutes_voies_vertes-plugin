@@ -84,6 +84,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
                 optional=False,
             )
         )
+
         # OUTPUTS
         self.addOutput(
             QgsProcessingOutputNumber(self.OUTPUT_STATUS, tr("Output status"))

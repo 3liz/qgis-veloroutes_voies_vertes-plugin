@@ -11,6 +11,7 @@ from .chargement.load_layers import LoadLayersAlgorithm
 from .chargement.load_styles import LoadStylesAlgorithm
 from ..qgis_plugin_tools.tools.resources import resources_path
 from .config.configure import ConfigurePlugin
+from .config.save_style_database import SaveStyleDatabase
 from .covadis.import_covadis import ImportCovadis
 from .covadis.export_covadis import ExportCovadis
 from .covadis.export_all import ExportCovadisAll
@@ -26,6 +27,7 @@ class VeloroutesProvider(QgsProcessingProvider):
         self.addAlgorithm(ImportCovadis())
         self.addAlgorithm(ExportCovadis())
         self.addAlgorithm(ExportCovadisAll())
+        self.addAlgorithm(SaveStyleDatabase())
 
     def id(self):
         return "veloroutes_vv"
