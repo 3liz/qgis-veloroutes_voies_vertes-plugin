@@ -115,7 +115,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
             self.PROJECTS_FOLDER,
             tr("Chemin de destination"),
             '',
-            False,
             False
         )
         outparam.tooltip_3liz = 'Chemin de destination pour enregistrer les exports Shapefile'
