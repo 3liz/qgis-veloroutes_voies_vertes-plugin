@@ -17,7 +17,7 @@ from ...qgis_plugin_tools.tools.resources import resources_path
 
 class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     """
-    Chargement des couches adresse depuis la base de données
+    Chargement des couches véloroutes depuis la base de données
     """
 
     INPUT = "INPUT"
@@ -30,7 +30,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         return tr("Chargement des styles depuis le dossier resources")
 
     def groupId(self):
-        return "adresse_donnees"
+        return "veloroutes_donnees"
 
     def group(self):
         return tr("Données")
