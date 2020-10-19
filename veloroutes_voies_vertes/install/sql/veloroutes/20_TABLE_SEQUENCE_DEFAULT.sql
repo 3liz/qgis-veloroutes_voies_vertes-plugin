@@ -150,7 +150,7 @@ CREATE TABLE veloroutes.itineraire (
     niveau_schema text,
     est_inscrit text,
     mont_subv real,
-    annee_subv date
+    annee_subv integer
 );
 
 
@@ -402,7 +402,7 @@ CREATE TABLE veloroutes.portion (
     id_on3v text,
     id_local text,
     mont_subv real,
-    annee_subv date
+    annee_subv integer
 );
 
 
