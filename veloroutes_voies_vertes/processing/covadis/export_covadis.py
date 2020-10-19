@@ -3,6 +3,8 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
+import os
+
 from qgis.core import (
     QgsProviderRegistry,
     QgsProcessingParameterString,
@@ -15,7 +17,7 @@ from qgis.core import (
     QgsProcessingParameterEnum,
     QgsVectorFileWriter,
     QgsProcessingParameterFolderDestination,
-    QgsProcessingParameterBoolean
+    QgsProcessingParameterBoolean,
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
@@ -113,10 +115,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         # Chemin du dossier de destination
         outparam = QgsProcessingParameterFolderDestination(
             self.PROJECTS_FOLDER,
-            tr("Chemin de destination"),
-            '',
-            False,
-            False
+            description=tr("Chemin de destination")
         )
         outparam.tooltip_3liz = 'Chemin de destination pour enregistrer les exports Shapefile'
         self.addParameter(outparam)
@@ -182,10 +181,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
         options.driverName = "ESRI ShapeFile"
         options.fileEncoding = "utf-8"
 
+        # construction du répertoire
+        if not os.path.exists(dirname):
+            os.mkdir(dirname)
+        file_path = os.path.join(dirname, filename + ".shp")
+
         # Enregistrement du fichier shape
         error = QgsVectorFileWriter.writeAsVectorFormatV2(
             layer=layer,
-            fileName=dirname + '/' + filename + ".shp",
+            fileName=file_path,
             transformContext=transformContext,
             options=options
         )
@@ -226,6 +230,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
         dirname = self.parameterAsString(parameters, self.PROJECTS_FOLDER, context)
+
         charger = self.parameterAsBool(parameters, self.CHARGER, context)
 
         feedback.pushInfo("")
