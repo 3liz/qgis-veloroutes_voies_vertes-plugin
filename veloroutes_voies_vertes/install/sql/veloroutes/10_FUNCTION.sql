@@ -543,10 +543,7 @@ BEGIN
 			WHEN substring(annee_inscription from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
 			WHEN substring(annee_inscription from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
 		END AS annee_inscription,
-		CASE
-			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-		END AS annee_subv,
+		CAST (annee_subv as integer),
 		CAST (mont_subv AS real),
 		CASE
 			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
@@ -583,10 +580,7 @@ BEGIN
 			THEN (SELECT code FROM veloroutes.portion_val as v WHERE UPPER(v.libelle) = UPPER(type_portion) LIMIT 1)
 		END AS type_portion,
 		CAST (mont_subv AS real),
-		CASE
-			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-		END AS annee_subv,
+		CAST (annee_subv as integer),
 		id_local,
 		id_on3v,
 		nom,

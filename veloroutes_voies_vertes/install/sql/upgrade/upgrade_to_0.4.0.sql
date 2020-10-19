@@ -1,3 +1,67 @@
+-- DROP VIEW
+DROP VIEW IF EXISTS veloroutes.v_portion;
+DROP VIEW IF EXISTS veloroutes.v_itineraire;
+
+-- Update table veloroutes.itineraire for annee_subv
+ALTER TABLE veloroutes.itineraire ALTER COLUMN annee_subv TYPE integer USING EXTRACT(YEAR FROM annee_subv);
+
+-- Update table veloroutes.portion for annee_subv
+ALTER TABLE veloroutes.portion ALTER COLUMN annee_subv TYPE integer USING EXTRACT(YEAR FROM annee_subv);
+
+--CREATE VIEW
+-- v_itineraire
+CREATE VIEW veloroutes.v_itineraire AS
+ SELECT v_itin_geom.collect_geom AS geom,
+    itineraire.id_iti,
+    itineraire.numero,
+    itineraire.nom_officiel,
+    itineraire.nom_usage,
+    itineraire.depart,
+    itineraire.arrivee,
+    itineraire.annee_inscription,
+    itineraire.site_web,
+    itineraire.annee_ouverture,
+    itineraire.niveau_schema,
+    itineraire.est_inscrit,
+    itineraire.mont_subv,
+    itineraire.annee_subv
+   FROM (veloroutes.itineraire
+     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_iti)));
+
+-- VIEW v_itineraire
+COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent
+';
+
+-- v_portion
+CREATE VIEW veloroutes.v_portion AS
+ SELECT v_port_geom.collect_geom AS geom,
+    portion.id_portion,
+    portion.nom,
+    portion.description,
+    portion.type_portion,
+    portion.id_on3v,
+    portion.id_local,
+    portion.mont_subv,
+    portion.annee_subv
+   FROM (veloroutes.portion
+     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));
+
+
+-- VIEW v_portion
+COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
+
+-- v_itineraire insert_v_itineraire
+CREATE TRIGGER insert_v_itineraire INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
+
+-- TRIGGER insert_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+
+-- v_portion insert_v_portion
+CREATE TRIGGER insert_v_portion INSTEAD OF INSERT ON veloroutes.v_portion FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_portion_insert();
+
+-- TRIGGER insert_v_portion ON v_portion
+COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_insert()';
+
 -- import_veloroutes_itineraire()
 CREATE OR REPLACE FUNCTION veloroutes.import_veloroutes_itineraire() RETURNS boolean
     LANGUAGE plpgsql
@@ -258,10 +322,7 @@ BEGIN
 			WHEN substring(annee_inscription from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
 			WHEN substring(annee_inscription from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_inscription from 1 for 10),'DD-MM-YYYY')
 		END AS annee_inscription,
-		CASE
-			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-		END AS annee_subv,
+		CAST (annee_subv as integer),
 		CAST (mont_subv AS real),
 		CASE
 			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
@@ -298,10 +359,7 @@ BEGIN
 			THEN (SELECT code FROM veloroutes.portion_val as v WHERE UPPER(v.libelle) = UPPER(type_portion) LIMIT 1)
 		END AS type_portion,
 		CAST (mont_subv AS real),
-		CASE
-			WHEN substring(annee_subv from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_subv from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_subv from 1 for 10),'DD-MM-YYYY')
-		END AS annee_subv,
+		CAST (annee_subv as integer),
 		id_local,
 		id_on3v,
 		nom,
