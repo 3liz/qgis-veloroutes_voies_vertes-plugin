@@ -122,7 +122,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         param = QgsProcessingParameterBoolean(
             self.CHARGER,
-            tr("Charger la couche correspondante dans le projet"),
+            tr("Charger le fichier d'export dans le projet"),
             defaultValue=False,
             optional=False,
         )
@@ -203,13 +203,16 @@ class ExportCovadis(BaseProcessingAlgorithm):
             raise QgsProcessingException("Erreur lors de l'écriture du fichier :" + error[1])
 
         # Chargement de la couche corrrespondante dans le projet
+        if not os.path.exists(file_path):
+            file_path = os.path.join(dirname, filename + ".dbf")
+        export_layer = QgsVectorLayer(file_path, "Export COVADIS " + layer.name(), 'ogr')
         if charger:
-            context.temporaryLayerStore().addMapLayer(layer)
+            context.temporaryLayerStore().addMapLayer(export_layer)
             context.addLayerToLoadOnCompletion(
-                layer.id(),
+                export_layer.id(),
                 QgsProcessingContext.LayerDetails(filename, context.project(), self.OUTPUT)
             )
-        return layer
+        return export_layer
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
