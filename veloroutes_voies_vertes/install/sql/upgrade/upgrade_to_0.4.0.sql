@@ -456,3 +456,17 @@ BEGIN
 	RETURN id_veloroutes;
 END;
 	$$;
+
+
+-- DROP FUNCTION EXPORT
+DROP FUNCTION IF EXISTS veloroutes.export_element;
+DROP FUNCTION IF EXISTS veloroutes.export_itineraire;
+DROP FUNCTION IF EXISTS veloroutes.export_liaison;
+DROP FUNCTION IF EXISTS veloroutes.export_poi_acces;
+DROP FUNCTION IF EXISTS veloroutes.export_poi_portion;
+DROP FUNCTION IF EXISTS veloroutes.export_poi_tourisme;
+DROP FUNCTION IF EXISTS veloroutes.export_poi_service;
+DROP FUNCTION IF EXISTS veloroutes.export_portion;
+DROP FUNCTION IF EXISTS veloroutes.export_repere;
+DROP FUNCTION IF EXISTS veloroutes.export_segment;
+DROP FUNCTION IF EXISTS veloroutes.export_table; 
