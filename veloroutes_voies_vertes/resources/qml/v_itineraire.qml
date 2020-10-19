@@ -7,10 +7,10 @@
   </flags>
   <renderer-v2 enableorderby="0" type="categorizedSymbol" forceraster="0" attr="id_iti" symbollevels="1">
     <categories>
-      <category render="true" symbol="0" value="6" label="6"/>
-      <category render="true" symbol="1" value="7" label="7"/>
-      <category render="false" symbol="2" value="" label=""/>
-      <category render="true" symbol="3" value="8" label="8"/>
+      <category value="6" label="6" symbol="0" render="true"/>
+      <category value="7" label="7" symbol="1" render="true"/>
+      <category value="" label="" symbol="2" render="false"/>
+      <category value="8" label="8" symbol="3" render="true"/>
     </categories>
     <symbols>
       <symbol alpha="1" clip_to_extent="1" force_rhr="0" name="0" type="line">
@@ -394,7 +394,7 @@
   </geometryOptions>
   <fieldConfiguration>
     <field name="id_iti">
-      <editWidget type="Range">
+      <editWidget type="Hidden">
         <config>
           <Option type="Map">
             <Option value="true" name="AllowNull" type="bool"/>
@@ -410,7 +410,10 @@
     <field name="numero">
       <editWidget type="TextEdit">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option value="false" name="IsMultiline" type="bool"/>
+            <Option value="false" name="UseHtml" type="bool"/>
+          </Option>
         </config>
       </editWidget>
     </field>
@@ -478,16 +481,30 @@
       </editWidget>
     </field>
     <field name="mont_subv">
-      <editWidget type="TextEdit">
+      <editWidget type="Range">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option value="true" name="AllowNull" type="bool"/>
+            <Option value="2147483647" name="Max" type="int"/>
+            <Option value="-2147483648" name="Min" type="int"/>
+            <Option value="0" name="Precision" type="int"/>
+            <Option value="1" name="Step" type="int"/>
+            <Option value="SpinBox" name="Style" type="QString"/>
+          </Option>
         </config>
       </editWidget>
     </field>
     <field name="annee_subv">
-      <editWidget type="DateTime">
+      <editWidget type="Range">
         <config>
-          <Option/>
+          <Option type="Map">
+            <Option value="true" name="AllowNull" type="bool"/>
+            <Option value="2147483647" name="Max" type="int"/>
+            <Option value="2000" name="Min" type="int"/>
+            <Option value="0" name="Precision" type="int"/>
+            <Option value="1" name="Step" type="int"/>
+            <Option value="SpinBox" name="Style" type="QString"/>
+          </Option>
         </config>
       </editWidget>
     </field>
@@ -510,82 +527,82 @@
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default expression="" applyOnUpdate="0" field="id_iti"/>
-    <default expression="" applyOnUpdate="0" field="numero"/>
-    <default expression="" applyOnUpdate="0" field="nom_officiel"/>
-    <default expression="" applyOnUpdate="0" field="nom_usage"/>
-    <default expression="" applyOnUpdate="0" field="depart"/>
-    <default expression="" applyOnUpdate="0" field="arrivee"/>
-    <default expression="" applyOnUpdate="0" field="annee_inscription"/>
-    <default expression="" applyOnUpdate="0" field="site_web"/>
-    <default expression="" applyOnUpdate="0" field="annee_ouverture"/>
-    <default expression="" applyOnUpdate="0" field="niveau_schema"/>
-    <default expression="" applyOnUpdate="0" field="est_inscrit"/>
-    <default expression="" applyOnUpdate="0" field="mont_subv"/>
-    <default expression="" applyOnUpdate="0" field="annee_subv"/>
+    <default applyOnUpdate="0" field="id_iti" expression=""/>
+    <default applyOnUpdate="0" field="numero" expression=""/>
+    <default applyOnUpdate="0" field="nom_officiel" expression=""/>
+    <default applyOnUpdate="0" field="nom_usage" expression=""/>
+    <default applyOnUpdate="0" field="depart" expression=""/>
+    <default applyOnUpdate="0" field="arrivee" expression=""/>
+    <default applyOnUpdate="0" field="annee_inscription" expression=""/>
+    <default applyOnUpdate="0" field="site_web" expression=""/>
+    <default applyOnUpdate="0" field="annee_ouverture" expression=""/>
+    <default applyOnUpdate="0" field="niveau_schema" expression=""/>
+    <default applyOnUpdate="0" field="est_inscrit" expression=""/>
+    <default applyOnUpdate="0" field="mont_subv" expression=""/>
+    <default applyOnUpdate="0" field="annee_subv" expression=""/>
   </defaults>
   <constraints>
-    <constraint constraints="3" exp_strength="0" notnull_strength="1" unique_strength="1" field="id_iti"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="numero"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="nom_officiel"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="nom_usage"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="depart"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="arrivee"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="annee_inscription"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="site_web"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="annee_ouverture"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="niveau_schema"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="est_inscrit"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="mont_subv"/>
-    <constraint constraints="0" exp_strength="0" notnull_strength="0" unique_strength="0" field="annee_subv"/>
+    <constraint unique_strength="1" notnull_strength="1" constraints="3" field="id_iti" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="2" constraints="1" field="numero" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="nom_officiel" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="nom_usage" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="depart" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="arrivee" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_inscription" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="site_web" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_ouverture" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="niveau_schema" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="est_inscrit" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="mont_subv" exp_strength="0"/>
+    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_subv" exp_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="id_iti"/>
-    <constraint desc="" exp="" field="numero"/>
-    <constraint desc="" exp="" field="nom_officiel"/>
-    <constraint desc="" exp="" field="nom_usage"/>
-    <constraint desc="" exp="" field="depart"/>
-    <constraint desc="" exp="" field="arrivee"/>
-    <constraint desc="" exp="" field="annee_inscription"/>
-    <constraint desc="" exp="" field="site_web"/>
-    <constraint desc="" exp="" field="annee_ouverture"/>
-    <constraint desc="" exp="" field="niveau_schema"/>
-    <constraint desc="" exp="" field="est_inscrit"/>
-    <constraint desc="" exp="" field="mont_subv"/>
-    <constraint desc="" exp="" field="annee_subv"/>
+    <constraint exp="" desc="" field="id_iti"/>
+    <constraint exp="" desc="" field="numero"/>
+    <constraint exp="" desc="" field="nom_officiel"/>
+    <constraint exp="" desc="" field="nom_usage"/>
+    <constraint exp="" desc="" field="depart"/>
+    <constraint exp="" desc="" field="arrivee"/>
+    <constraint exp="" desc="" field="annee_inscription"/>
+    <constraint exp="" desc="" field="site_web"/>
+    <constraint exp="" desc="" field="annee_ouverture"/>
+    <constraint exp="" desc="" field="niveau_schema"/>
+    <constraint exp="" desc="" field="est_inscrit"/>
+    <constraint exp="" desc="" field="mont_subv"/>
+    <constraint exp="" desc="" field="annee_subv"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
-    <actionsetting shortTitle="Suppression d'étape" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_iti%],[% '\''||@layer_name||'\'' %], 'del')" notificationMessage="" isEnabledOnlyWhenEditable="0" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " type="1" capture="0" icon="" id="{964cc17a-8a2c-4060-b950-84053d582a76}">
-      <actionScope id="Canvas"/>
-      <actionScope id="Layer"/>
+    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <actionsetting shortTitle="Suppression d'étape" icon="" capture="0" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_iti%],[% '\''||@layer_name||'\'' %], 'del')" notificationMessage="" type="1" isEnabledOnlyWhenEditable="0" id="{e5c474b3-4dd5-4f05-8d19-7ef137868a15}">
       <actionScope id="Feature"/>
+      <actionScope id="Canvas"/>
       <actionScope id="Field"/>
+      <actionScope id="Layer"/>
     </actionsetting>
-    <actionsetting shortTitle="Ajouter une étape" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_iti%], [% '\''||@layer_name||'\'' %] ,'add')" notificationMessage="" isEnabledOnlyWhenEditable="0" name="Ajouter une étape à partir de portions sélectionnées" type="1" capture="0" icon="" id="{00f63b41-7070-4d10-bb23-0e720281f059}">
-      <actionScope id="Canvas"/>
-      <actionScope id="Layer"/>
+    <actionsetting shortTitle="Ajouter une étape" icon="" capture="0" name="Ajouter une étape à partir de portions sélectionnées" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_iti%], [% '\''||@layer_name||'\'' %] ,'add')" notificationMessage="" type="1" isEnabledOnlyWhenEditable="0" id="{ee0fb2fd-ebc5-4fd2-9255-829e78f4d3a4}">
       <actionScope id="Feature"/>
+      <actionScope id="Canvas"/>
       <actionScope id="Field"/>
+      <actionScope id="Layer"/>
     </actionsetting>
   </attributeactions>
-  <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
+  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
     <columns>
-      <column name="numero" type="field" hidden="0" width="-1"/>
-      <column name="nom_officiel" type="field" hidden="0" width="-1"/>
-      <column name="nom_usage" type="field" hidden="0" width="-1"/>
-      <column name="depart" type="field" hidden="0" width="-1"/>
-      <column name="arrivee" type="field" hidden="0" width="-1"/>
-      <column name="id_iti" type="field" hidden="0" width="-1"/>
-      <column name="annee_inscription" type="field" hidden="0" width="-1"/>
-      <column name="site_web" type="field" hidden="0" width="-1"/>
-      <column name="annee_ouverture" type="field" hidden="0" width="-1"/>
-      <column name="niveau_schema" type="field" hidden="0" width="-1"/>
-      <column name="est_inscrit" type="field" hidden="0" width="-1"/>
-      <column type="actions" hidden="1" width="-1"/>
-      <column name="mont_subv" type="field" hidden="0" width="-1"/>
-      <column name="annee_subv" type="field" hidden="0" width="-1"/>
+      <column width="-1" name="numero" hidden="0" type="field"/>
+      <column width="-1" name="nom_officiel" hidden="0" type="field"/>
+      <column width="-1" name="nom_usage" hidden="0" type="field"/>
+      <column width="-1" name="depart" hidden="0" type="field"/>
+      <column width="-1" name="arrivee" hidden="0" type="field"/>
+      <column width="-1" name="id_iti" hidden="0" type="field"/>
+      <column width="-1" name="annee_inscription" hidden="0" type="field"/>
+      <column width="-1" name="site_web" hidden="0" type="field"/>
+      <column width="-1" name="annee_ouverture" hidden="0" type="field"/>
+      <column width="-1" name="niveau_schema" hidden="0" type="field"/>
+      <column width="-1" name="est_inscrit" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
+      <column width="-1" name="mont_subv" hidden="0" type="field"/>
+      <column width="-1" name="annee_subv" hidden="0" type="field"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -616,16 +633,16 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorField name="numero" showLabel="1" index="1"/>
-    <attributeEditorField name="nom_officiel" showLabel="1" index="2"/>
-    <attributeEditorField name="nom_usage" showLabel="1" index="3"/>
-    <attributeEditorField name="depart" showLabel="1" index="4"/>
-    <attributeEditorField name="arrivee" showLabel="1" index="5"/>
-    <attributeEditorField name="annee_inscription" showLabel="1" index="6"/>
-    <attributeEditorField name="site_web" showLabel="1" index="7"/>
-    <attributeEditorField name="annee_ouverture" showLabel="1" index="8"/>
-    <attributeEditorField name="niveau_schema" showLabel="1" index="9"/>
-    <attributeEditorField name="est_inscrit" showLabel="1" index="10"/>
+    <attributeEditorField showLabel="1" name="numero" index="1"/>
+    <attributeEditorField showLabel="1" name="nom_officiel" index="2"/>
+    <attributeEditorField showLabel="1" name="nom_usage" index="3"/>
+    <attributeEditorField showLabel="1" name="depart" index="4"/>
+    <attributeEditorField showLabel="1" name="arrivee" index="5"/>
+    <attributeEditorField showLabel="1" name="annee_inscription" index="6"/>
+    <attributeEditorField showLabel="1" name="site_web" index="7"/>
+    <attributeEditorField showLabel="1" name="annee_ouverture" index="8"/>
+    <attributeEditorField showLabel="1" name="niveau_schema" index="9"/>
+    <attributeEditorField showLabel="1" name="est_inscrit" index="10"/>
   </attributeEditorForm>
   <editable>
     <field editable="1" name="annee_inscription"/>
@@ -634,7 +651,7 @@ def my_form_open(dialog, layer, feature):
     <field editable="1" name="arrivee"/>
     <field editable="1" name="depart"/>
     <field editable="1" name="est_inscrit"/>
-    <field editable="1" name="id_iti"/>
+    <field editable="0" name="id_iti"/>
     <field editable="1" name="mont_subv"/>
     <field editable="1" name="niveau_schema"/>
     <field editable="1" name="nom_officiel"/>
@@ -643,19 +660,19 @@ def my_form_open(dialog, layer, feature):
     <field editable="1" name="site_web"/>
   </editable>
   <labelOnTop>
-    <field name="annee_inscription" labelOnTop="0"/>
-    <field name="annee_ouverture" labelOnTop="0"/>
-    <field name="annee_subv" labelOnTop="0"/>
-    <field name="arrivee" labelOnTop="0"/>
-    <field name="depart" labelOnTop="0"/>
-    <field name="est_inscrit" labelOnTop="0"/>
-    <field name="id_iti" labelOnTop="0"/>
-    <field name="mont_subv" labelOnTop="0"/>
-    <field name="niveau_schema" labelOnTop="0"/>
-    <field name="nom_officiel" labelOnTop="0"/>
-    <field name="nom_usage" labelOnTop="0"/>
-    <field name="numero" labelOnTop="0"/>
-    <field name="site_web" labelOnTop="0"/>
+    <field labelOnTop="0" name="annee_inscription"/>
+    <field labelOnTop="0" name="annee_ouverture"/>
+    <field labelOnTop="0" name="annee_subv"/>
+    <field labelOnTop="0" name="arrivee"/>
+    <field labelOnTop="0" name="depart"/>
+    <field labelOnTop="0" name="est_inscrit"/>
+    <field labelOnTop="0" name="id_iti"/>
+    <field labelOnTop="0" name="mont_subv"/>
+    <field labelOnTop="0" name="niveau_schema"/>
+    <field labelOnTop="0" name="nom_officiel"/>
+    <field labelOnTop="0" name="nom_usage"/>
+    <field labelOnTop="0" name="numero"/>
+    <field labelOnTop="0" name="site_web"/>
   </labelOnTop>
   <widgets>
     <widget name="etape_7d2f_id_itineraire_v_itinerai_id_iti">
