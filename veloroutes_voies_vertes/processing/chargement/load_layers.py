@@ -36,7 +36,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         return tr("Chargement des couches depuis la base")
 
     def groupId(self):
-        return "adresse_donnees"
+        return "veloroutes_donnees"
 
     def group(self):
         return tr("Données")

@@ -14,6 +14,7 @@ from .config.configure import ConfigurePlugin
 from .covadis.import_covadis import ImportCovadis
 from .covadis.export_covadis import ExportCovadis
 from .covadis.export_all import ExportCovadisAll
+from .chargement.save_style_database import SaveStyleDatabase
 
 
 class VeloroutesProvider(QgsProcessingProvider):
@@ -26,6 +27,7 @@ class VeloroutesProvider(QgsProcessingProvider):
         self.addAlgorithm(ImportCovadis())
         self.addAlgorithm(ExportCovadis())
         self.addAlgorithm(ExportCovadisAll())
+        self.addAlgorithm(SaveStyleDatabase())
 
     def id(self):
         return "veloroutes_vv"
