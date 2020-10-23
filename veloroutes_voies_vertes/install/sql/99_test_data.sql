@@ -2810,10 +2810,10 @@ SELECT pg_catalog.setval('veloroutes.etape_id_seq', 5, false);
 --
 -- TOC entry 4851 (class 0 OID 0)
 -- Dependencies: 221
--- Name: itineraire_id_iti_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
+-- Name: itineraire_id_itineraire_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: enolasengeissen
 --
 
-SELECT pg_catalog.setval('veloroutes.itineraire_id_iti_seq', 8, false);
+SELECT pg_catalog.setval('veloroutes.itineraire_id_itineraire_seq', 8, false);
 
 
 --

@@ -95,7 +95,7 @@ ALTER TABLE ONLY veloroutes.frequentation
 
 -- itineraire itineraire_pkey
 ALTER TABLE ONLY veloroutes.itineraire
-    ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_iti);
+    ADD CONSTRAINT itineraire_pkey PRIMARY KEY (id_itineraire);
 
 
 -- liaison liaison_pkey
@@ -210,7 +210,7 @@ ALTER TABLE ONLY veloroutes.itineraire
 
 -- etape etape_itineraire_portion
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_iti);
+    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_itineraire);
 
 
 -- etape etape_portion_segment

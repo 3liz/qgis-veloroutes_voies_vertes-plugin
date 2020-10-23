@@ -143,7 +143,7 @@ CREATE TABLE veloroutes.itineraire (
     nom_usage text,
     depart text,
     arrivee text,
-    id_iti integer NOT NULL,
+    id_itineraire integer NOT NULL,
     annee_inscription date,
     site_web text,
     annee_ouverture date,
@@ -158,8 +158,8 @@ CREATE TABLE veloroutes.itineraire (
 COMMENT ON TABLE veloroutes.itineraire IS 'Itinéraire cyclable, véloroute.';
 
 
--- itineraire_id_iti_seq
-CREATE SEQUENCE veloroutes.itineraire_id_iti_seq
+-- itineraire_id_itineraire_seq
+CREATE SEQUENCE veloroutes.itineraire_id_itineraire_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -168,8 +168,8 @@ CREATE SEQUENCE veloroutes.itineraire_id_iti_seq
     CACHE 1;
 
 
--- itineraire_id_iti_seq
-ALTER SEQUENCE veloroutes.itineraire_id_iti_seq OWNED BY veloroutes.itineraire.id_iti;
+-- itineraire_id_itineraire_seq
+ALTER SEQUENCE veloroutes.itineraire_id_itineraire_seq OWNED BY veloroutes.itineraire.id_itineraire;
 
 
 -- liaison
@@ -613,8 +613,8 @@ ALTER TABLE ONLY veloroutes.etape ALTER COLUMN id SET DEFAULT nextval('veloroute
 ALTER TABLE ONLY veloroutes.etat_avancement_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.etat_avancement_val_id_seq'::regclass);
 
 
--- itineraire id_iti
-ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_iti SET DEFAULT nextval('veloroutes.itineraire_id_iti_seq'::regclass);
+-- itineraire id_itineraire
+ALTER TABLE ONLY veloroutes.itineraire ALTER COLUMN id_itineraire SET DEFAULT nextval('veloroutes.itineraire_id_itineraire_seq'::regclass);
 
 
 -- liaison id_liaison
