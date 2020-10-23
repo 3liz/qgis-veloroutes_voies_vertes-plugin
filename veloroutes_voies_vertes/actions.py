@@ -248,7 +248,7 @@ def create_relation(*args):
     features = src_layer.getSelectedFeatures()
     selected_features_id = []
     for feat in features:
-        selected_features_id.append(feat['id_portion'])
+        selected_features_id.append(feat[rel_field_id_name])
 
     update_layer.startEditing()
 
@@ -257,18 +257,22 @@ def create_relation(*args):
         update_layer.rollBack()
         iface.messageBar().pushInfo(
             'Véloroutes',
-            'Création de l\'itinéraire annulée')
+            'Ouverture du formulaire pour la création impossible')
         return
     iface.messageBar().pushInfo(
         'Véloroutes',
-        'Création de l\'itinéraire validée')
+        'Création validée')
     update_layer.committedFeaturesAdded.connect(
         partial(_add_relation, selected_features_id, rel_layer_name, src_field_id_name, rel_field_id_name))
     update_layer.commitChanges()
     update_layer.committedFeaturesAdded.disconnect()
+    if layer_update == 'itineraire':
+        msg = 'L\'itinéraire numéro {} a été créé'.format(str(new_feature['numero']))
+    else:
+        msg = 'La portion {} a été créée'.format(str(new_feature['nom']))
 
     iface.messageBar().pushInfo(
-        'Véloroutes', 'L\'itinéraire numéro {} a été ajouté'.format(str(new_feature['numero'])))
+        'Véloroutes', msg)
 
     layer_repaint = QgsProject.instance().mapLayersByName(repaint_layer_name)
 
@@ -293,7 +297,7 @@ def _add_relation(selected_features_id, rel_layer_name, feature_id, feature_rel,
 
     couple_id = []
     for item in selected_features_id:
-        couple_id.append((item, feat['id_iti']))
+        couple_id.append((item, feat[feature_id]))
     layer = layers[0]
     new_feature = QgsFeature()
     new_feature.setFields(layer.fields())
