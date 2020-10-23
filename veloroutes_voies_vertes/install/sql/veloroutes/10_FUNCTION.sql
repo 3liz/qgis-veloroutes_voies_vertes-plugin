@@ -542,7 +542,7 @@ BEGIN
 	--INSERT a new row in itineraire
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
     VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_iti into iti_id;
+    RETURNING id_itineraire into iti_id;
 
 	--INSERT stages of the itineray in etape
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
@@ -568,8 +568,6 @@ BEGIN
  	RETURN NEW;
 
 END;
-
-
 $$;
 
 

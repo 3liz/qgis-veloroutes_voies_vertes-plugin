@@ -24,7 +24,7 @@ CREATE VIEW veloroutes.v_itin_geom AS
      JOIN veloroutes.portion ON ((portion.id_portion = etape.id_portion)))
      JOIN veloroutes.element ON ((element.id_portion = portion.id_portion)))
      JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))
-     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_iti)))
+     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_itineraire)))
   GROUP BY etape.id_itineraire;
 
 
@@ -36,7 +36,7 @@ COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itin
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
  SELECT v_itin_geom.collect_geom AS geom,
-    itineraire.id_iti,
+    itineraire.id_itineraire,
     itineraire.numero,
     itineraire.nom_officiel,
     itineraire.nom_usage,
@@ -50,7 +50,7 @@ CREATE VIEW veloroutes.v_itineraire AS
     itineraire.mont_subv,
     itineraire.annee_subv
    FROM (veloroutes.itineraire
-     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_iti)));
+     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));
 
 
 -- VIEW v_itineraire

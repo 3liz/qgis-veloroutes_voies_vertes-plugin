@@ -130,8 +130,8 @@ COMMENT ON COLUMN veloroutes.itineraire.depart IS 'Nom de la localité située a
 COMMENT ON COLUMN veloroutes.itineraire.arrivee IS 'Nom de la localité située à l''arrivée de l’itinéraire';
 
 
--- itineraire.id_iti
-COMMENT ON COLUMN veloroutes.itineraire.id_iti IS 'Identifiant de l''itinéraire cyclable';
+-- itineraire.id_itineraire
+COMMENT ON COLUMN veloroutes.itineraire.id_itineraire IS 'Identifiant de l''itinéraire cyclable';
 
 
 -- itineraire.annee_inscription

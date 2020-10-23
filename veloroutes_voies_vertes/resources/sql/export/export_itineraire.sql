@@ -1,5 +1,5 @@
 SELECT
-	id_iti,
+	id_itineraire,
 	numero AS "NUMERO",
 	nom_officiel AS "NOM_OFF",
 	nom_usage AS "NOM_USAGE",
