@@ -18,9 +18,9 @@ Ajoute la variable "veloroutes_connection_name" à QGIS.
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion à la base PostgreSQL|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+CONNECTION_NAME|Connexion à la base PostgreSQL|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 
 
 #### Outputs
@@ -45,11 +45,11 @@ Création de la structure de la base données. Vous pouvez aussi charger des don
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓||
-OVERRIDE|Écraser le schéma veloroutes ? ** ATTENTION ** Cela supprimera toutes les données !|Boolean||✓||
-ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+OVERRIDE|Écraser le schéma veloroutes ? ** ATTENTION ** Cela supprimera toutes les données !|Boolean||✓|||
+ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
 
 
 #### Outputs
@@ -71,10 +71,10 @@ Mise à jour de la base de données suite à une nouvelle version de l'extension
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓||
-RUN_MIGRATIONS|Cocher cette option pour lancer la mise-à-jour.|Boolean||✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+RUN_MIGRATIONS|Cocher cette option pour lancer la mise-à-jour.|Boolean||✓|||
 
 
 #### Outputs
@@ -99,13 +99,13 @@ Exporter tous les fichiers au format shape d'ESRI
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||
-DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||
-FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓||
-CHARGER|Charger la couche correspondante dans le projet|Boolean|Si le traitement doit charger la couche Shapefile dans le projet|✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
+SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||Default: veloroutes <br> |
+DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||Default: 066 <br> |
+FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓|||
+CHARGER|Charger le fichier d'export dans le projet|Boolean|Si le traitement doit charger la couche Shapefile dans le projet|✓|||
 
 
 #### Outputs
@@ -127,14 +127,14 @@ Exporter un fichier au format shape d'ESRI
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||
-TABLE|Donnée à exporter|Enum|Nom de la table à exporter|✓||
-DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||
-FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓||
-CHARGER|Charger la couche correspondante dans le projet|Boolean|Si le traitement doit charger la couche Shapefile dans le projet|✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
+SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||Default: veloroutes <br> |
+TABLE|Donnée à exporter|Enum|Nom de la table à exporter|✓||Values: itineraire, portion, element, segment, repere, liaison, poi_portion, poi_acces, poi_service, poi_tourisme, etat_avancement_val, revetement_val, statut_segment_val, portion_val, repere_val <br>|
+DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||Default: 066 <br> |
+FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓|||
+CHARGER|Charger le fichier d'export dans le projet|Boolean|Si le traitement doit charger la couche Shapefile dans le projet|✓|||
 
 
 #### Outputs
@@ -156,13 +156,13 @@ Charger les données des différentes couches
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
-SCHEMA|Schéma|String|Nom du schéma où importer les données|✓||
-TABLE|Table de destination|String||✓||
-INPUT|Couche à importer|VectorLayer||✓||
-MATRIX|matrix|Matrix||✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
+SCHEMA|Schéma|String|Nom du schéma où importer les données|✓||Default: veloroutes <br> |
+TABLE|Table de destination|String||✓||Default: portion <br> |
+INPUT|Couche à importer|VectorLayer||✓||Type: TypeVector <br>|
+MATRIX|matrix|Matrix||✓||Default: ['TYPE_PORTION_COVADIS', 'type_portion', 'MONTANT_SUBVENTION', 'mont_subv', 'ANNE_SUBVENTION', 'annee_subv', 'fid', 'id_import', 'LIEN_ITIN', 'lien_itin', 'LIEN_CYCLO', 'lien_segm'] <br> |
 
 
 #### Outputs
@@ -186,11 +186,11 @@ Charger toutes les couches de la base de données.Vous pouvez aussi ajouter un f
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|||
-RASTER|Ajouter un fond raster OpenStreetMap?|Boolean||✓||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
+SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|||Default: veloroutes <br> |
+RASTER|Ajouter un fond raster OpenStreetMap?|Boolean||✓|||
 
 
 #### Outputs
@@ -212,9 +212,9 @@ Charger les styles pour les différentes couches.
 
 #### Parameters
 
-| ID | Description | Type | Info | Required | Advanced |
-|:-:|:-:|:-:|:-:|:-:|:-:|
-INPUT|Champ qui ne sert à rien !|String||||
+| ID | Description | Type | Info | Required | Advanced | Option |
+|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+INPUT|Champ qui ne sert à rien !|String|||||
 
 
 #### Outputs

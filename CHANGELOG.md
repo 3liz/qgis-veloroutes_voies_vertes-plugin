@@ -1,5 +1,21 @@
 ## CHANGELOG
 
+### 0.4.0 - 23/10/2020
+
+* Ajout d'actions
+  * Ajouter / retirer un élément à une portion
+  * Ajouter / retirer une étape à un itinéraire
+  * Créer une portion
+  * Créer un itinéraire
+* Mise à jour des fichiers styles
+* Refonte du module d'export
+  * Export via requête SQL
+  * Refonte de l'algorithme d'export
+* Mise à jour de la base de données
+  * Suppression des fonctions d'export
+  * Mise à jour de deux champs 
+* Ajout des fichiers SQL pour l'export
+
 ### 0.3.0 - 28/09/2020
 
 * Ajout de l'algorithme d'import

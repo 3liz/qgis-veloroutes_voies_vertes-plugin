@@ -4,16 +4,15 @@
  <head>
   <meta charset="utf-8"/>
   <title>Véloroutes et voies vertes COVADIS</title>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <link href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
-  <link href="../icon.png" rel="icon" type="image/png" >
+  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <link type="text/css" href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
+  <link type="image/png" href="../icon.png" rel="icon" >
  </head>
  <body>
  <header class="header-container" style="">
     <h1>Véloroutes et voies vertes COVADIS</h1>
  </header>
  <article>
- <p><a href="../">Up</a></p>
 <div class="toc"><span class="toctitle">Table of content</span><ul>
 <li><a href="#veloroutes-et-voies-vertes-covadis">Véloroutes et voies vertes COVADIS</a><ul>
 <li><a href="#configuration">Configuration</a><ul>
@@ -87,6 +86,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -96,6 +96,7 @@
 <td align="center">String</td>
 <td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -140,6 +141,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -150,6 +152,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">OVERRIDE</td>
@@ -158,6 +161,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">ADD_TEST_DATA</td>
@@ -165,6 +169,7 @@
 <td align="center">Boolean</td>
 <td align="center"></td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -208,6 +213,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -218,6 +224,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">RUN_MIGRATIONS</td>
@@ -225,6 +232,7 @@
 <td align="center">Boolean</td>
 <td align="center"></td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -269,6 +277,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -279,6 +288,7 @@
 <td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">SCHEMA</td>
@@ -287,6 +297,7 @@
 <td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: veloroutes <br></td>
 </tr>
 <tr>
 <td align="center">DPT</td>
@@ -295,6 +306,7 @@
 <td align="center">Pour le département de l'Ain, mettre 001</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: 066 <br></td>
 </tr>
 <tr>
 <td align="center">FOLDER</td>
@@ -303,13 +315,15 @@
 <td align="center">Chemin de destination pour enregistrer les exports Shapefile</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">CHARGER</td>
-<td align="center">Charger la couche correspondante dans le projet</td>
+<td align="center">Charger le fichier d'export dans le projet</td>
 <td align="center">Boolean</td>
 <td align="center">Si le traitement doit charger la couche Shapefile dans le projet</td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -353,6 +367,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -363,6 +378,7 @@
 <td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">SCHEMA</td>
@@ -371,6 +387,7 @@
 <td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: veloroutes <br></td>
 </tr>
 <tr>
 <td align="center">TABLE</td>
@@ -379,6 +396,7 @@
 <td align="center">Nom de la table à exporter</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Values: itineraire, portion, element, segment, repere, liaison, poi_portion, poi_acces, poi_service, poi_tourisme, etat_avancement_val, revetement_val, statut_segment_val, portion_val, repere_val <br></td>
 </tr>
 <tr>
 <td align="center">DPT</td>
@@ -387,6 +405,7 @@
 <td align="center">Pour le département de l'Ain, mettre 001</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: 066 <br></td>
 </tr>
 <tr>
 <td align="center">FOLDER</td>
@@ -395,13 +414,15 @@
 <td align="center">Chemin de destination pour enregistrer les exports Shapefile</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">CHARGER</td>
-<td align="center">Charger la couche correspondante dans le projet</td>
+<td align="center">Charger le fichier d'export dans le projet</td>
 <td align="center">Boolean</td>
 <td align="center">Si le traitement doit charger la couche Shapefile dans le projet</td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -445,6 +466,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -455,6 +477,7 @@
 <td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">SCHEMA</td>
@@ -463,6 +486,7 @@
 <td align="center">Nom du schéma où importer les données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: veloroutes <br></td>
 </tr>
 <tr>
 <td align="center">TABLE</td>
@@ -471,6 +495,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: portion <br></td>
 </tr>
 <tr>
 <td align="center">INPUT</td>
@@ -479,6 +504,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Type: TypeVector <br></td>
 </tr>
 <tr>
 <td align="center">MATRIX</td>
@@ -487,6 +513,7 @@
 <td align="center"></td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center">Default: ['TYPE_PORTION_COVADIS', 'type_portion', 'MONTANT_SUBVENTION', 'mont_subv', 'ANNE_SUBVENTION', 'annee_subv', 'fid', 'id_import', 'LIEN_ITIN', 'lien_itin', 'LIEN_CYCLO', 'lien_segm'] <br></td>
 </tr>
 </tbody>
 </table>
@@ -524,6 +551,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -534,6 +562,7 @@
 <td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
+<td align="center"></td>
 </tr>
 <tr>
 <td align="center">SCHEMA</td>
@@ -542,6 +571,7 @@
 <td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center">Default: veloroutes <br></td>
 </tr>
 <tr>
 <td align="center">RASTER</td>
@@ -549,6 +579,7 @@
 <td align="center">Boolean</td>
 <td align="center"></td>
 <td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 </tr>
 </tbody>
@@ -592,6 +623,7 @@
 <th align="center">Info</th>
 <th align="center">Required</th>
 <th align="center">Advanced</th>
+<th align="center">Option</th>
 </tr>
 </thead>
 <tbody>
@@ -599,6 +631,7 @@
 <td align="center">INPUT</td>
 <td align="center">Champ qui ne sert à rien !</td>
 <td align="center">String</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center"></td>
