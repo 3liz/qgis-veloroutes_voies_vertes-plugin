@@ -6,14 +6,12 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
-    QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer,
     QgsProcessingContext,
     QgsProcessingException,
     QgsProcessingOutputVectorLayer,
     QgsWkbTypes,
-    QgsProviderConnectionException,
     QgsProcessingParameterEnum,
     QgsVectorFileWriter,
     QgsProcessingParameterFolderDestination,
@@ -23,6 +21,7 @@ from qgis.core import (
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
 from processing.tools.postgis import uri_from_name
+from ...qgis_plugin_tools.tools.resources import resources_path
 
 
 class ExportCovadis(BaseProcessingAlgorithm):
@@ -133,24 +132,34 @@ class ExportCovadis(BaseProcessingAlgorithm):
         output.tooltip_3liz = 'Les couches de l\'export'
         self.addOutput(output)
 
-    @staticmethod
-    def createExportTable(table, connection):
-        if "val" in table:
-            sql = "SELECT veloroutes.export_table('{}')".format(table)
-        else:
-            sql = "SELECT veloroutes.export_{}()".format(table)
-        try:
-            connection.executeSql(sql)
-        except QgsProviderConnectionException as e:
-            msg = e.args[0]
-            raise QgsProcessingException(msg)
+    def get_sql_layer(self, table, geom, pk, uri, feedback):
+        sql_file = resources_path('sql', 'export', 'export_{}.sql'.format(table))
+        other = False
+        if not os.path.exists(sql_file):
+            sql_file = resources_path('sql', 'export', 'export_table.sql')
+            other = True
 
-    def to_shapefile(self, context, table, dpt, dirname, uri, geom, charger):
-        uri.setDataSource('exports', table, geom, "")
-        layer = QgsVectorLayer(uri.uri(), table, "postgres")
+        with open(sql_file, "r") as f:
+            sql = f.read()
+            if len(sql.strip()) == 0:
+                feedback.reportError("Fichier SQL vide")
+                return None
+        sql = str(sql)
+        if other:
+            sql += table
+
+        uri.setSchema('')
+        uri.setTable('(' + sql + ')')
+        uri.setGeometryColumn(geom)
+        uri.setKeyColumn(pk)
+
+        layer = QgsVectorLayer(uri.uri(False), table, "postgres")
         if not layer.isValid():
-            return False
+            feedback.reportError("Layer not valid " + layer.name())
+            return None
+        return layer
 
+    def export_layer_to_shape(self, context, sql_layer, dpt, table, dirname, feedback):
         # Construction filename
         prefixe = "N_3V_"
         suffixe = "_" + dpt
@@ -173,7 +182,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             QgsWkbTypes.PointGeometry: '_P',
             QgsWkbTypes.NullGeometry: ''
         }
-        geomcode = geomtype[layer.geometryType()]
+        geomcode = geomtype[sql_layer.geometryType()]
         filename = prefixe + tablename + geomcode + suffixe
 
         transformContext = context.project().transformContext()
@@ -188,7 +197,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         # Enregistrement du fichier shape
         error = QgsVectorFileWriter.writeAsVectorFormatV2(
-            layer=layer,
+            layer=sql_layer,
             fileName=file_path,
             transformContext=transformContext,
             options=options
@@ -201,35 +210,52 @@ class ExportCovadis(BaseProcessingAlgorithm):
                 "Vérifiez que le chemin de destination est valide")
         if error[0] != QgsVectorFileWriter.NoError:
             raise QgsProcessingException("Erreur lors de l'écriture du fichier :" + error[1])
+        return [file_path, filename]
 
+    def load_shapefile(self, shp_file_path, filename, table, context, feedback):
         # Chargement de la couche corrrespondante dans le projet
-        if not os.path.exists(file_path):
-            file_path = os.path.join(dirname, filename + ".dbf")
-        export_layer = QgsVectorLayer(file_path, "Export COVADIS " + layer.name(), 'ogr')
-        if charger:
-            context.temporaryLayerStore().addMapLayer(export_layer)
-            context.addLayerToLoadOnCompletion(
-                export_layer.id(),
-                QgsProcessingContext.LayerDetails(filename, context.project(), self.OUTPUT)
-            )
-        return export_layer
+        if not os.path.exists(shp_file_path):
+            shp_file_path = shp_file_path.replace(".shp", ".dbf")
+            if not os.path.exists(shp_file_path):
+                feedback.reportError('Fichier introuvable lors du chargement')
+                return False
+        export_layer = QgsVectorLayer(shp_file_path, "Export COVADIS " + table, 'ogr')
+        context.temporaryLayerStore().addMapLayer(export_layer)
+        context.addLayerToLoadOnCompletion(
+            export_layer.id(),
+            QgsProcessingContext.LayerDetails(filename, context.project(), self.OUTPUT)
+        )
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
+        table_without_geom = [
+            'itineraire',
+            'element',
+            'poi_portion',
+            'poi_acces',
+            'poi_service',
+            'poi_tourisme'
+        ]
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
         connection = self.parameterAsString(parameters, self.DATABASE, context)
-        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-        conn = metadata.findConnection(connection)
         table_int = self.parameterAsEnum(parameters, self.TABLE, context)
         table_name = self.EXPORTABLES[table_int]
-
+        if table_name in table_without_geom or "val" in table_name:
+            geom = None
+        else:
+            geom = "geom"
+        name = table_name
         uri = uri_from_name(connection)
-        uri.setDataSource(
-            self.parameterAsString(parameters, self.SCHEMA, context),
-            table_name,
-            "geom", "")
+        if table_name == 'portion':
+            name = 'v_portion'
+            uri.setKeyColumn('id_portion')
+        uri.setTable(name)
+        uri.setSchema(self.parameterAsString(parameters, self.SCHEMA, context))
+        uri.setGeometryColumn(geom)
         layer = QgsVectorLayer(uri.uri(), table_name, "postgres")
         layer_name = layer.name()
+
+        pk = layer.fields().field(layer.primaryKeyAttributes()[0])
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
         dirname = self.parameterAsString(parameters, self.PROJECTS_FOLDER, context)
@@ -239,12 +265,14 @@ class ExportCovadis(BaseProcessingAlgorithm):
         feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
-        self.createExportTable(layer_name, conn)
-        if layer_name in ['itineraire', 'element', 'poi_portion'] or "val" in table_name:
-            geom = None
+        sql_layer = self.get_sql_layer(layer_name, geom, pk.name(), uri, feedback)
+        result = self.export_layer_to_shape(context, sql_layer, dpt, layer_name, dirname, feedback)
+        if charger:
+            self.load_shapefile(result[0], result[1], layer_name, context, feedback)
+
+        if not result[0]:
+            output_layer = ""
         else:
-            geom = "geom"
-        result = self.to_shapefile(context, layer_name, dpt, dirname, uri, geom, charger)
-        output_layer = result.id()
+            output_layer = result[0]
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layer}

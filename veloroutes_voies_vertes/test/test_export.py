@@ -14,7 +14,7 @@ import os.path
 # from os import listdir
 from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 from ..processing.provider import VeloroutesProvider as ProcessingProvider
-from ..qgis_plugin_tools.tools.resources import plugin_test_data_path
+from ..qgis_plugin_tools.tools.resources import plugin_test_data_path, resources_path
 
 
 class TestExport(DatabaseTestCase):
@@ -42,13 +42,22 @@ class TestExport(DatabaseTestCase):
         self.assertTrue(os.path.isfile(path))
 
     def test_conversion_enumtype(self):
+        sql_file = resources_path('sql', 'export', 'export_segment.sql')
+        if not os.path.exists(sql_file):
+            self.assertEqual("Fichier inexistant", "Fichier n'existe pas")
+
+        with open(sql_file, "r") as f:
+            sql_from_file = f.read()
+            if len(sql_from_file.strip()) == 0:
+                self.assertEqual("Fichier vide", "Fichier sans requête")
+        sql_from_file = str(sql_from_file)
         sql = """
         TRUNCATE TABLE veloroutes.segment CASCADE;
         INSERT INTO veloroutes.segment(avancement, statut)
         VALUES (2,'VV');
-        SELECT veloroutes.export_segment();
-        SELECT avancement, statut FROM exports.segment;
+        SELECT "AVANCEMENT", "STATUT" FROM
         """
+        sql += ' ( ' + sql_from_file + ' ) AS export_segment;'
         self.cursor.execute(sql)
         res = self.cursor.fetchone()
         expected = ('Tracé arrêté', 'Voie verte')
