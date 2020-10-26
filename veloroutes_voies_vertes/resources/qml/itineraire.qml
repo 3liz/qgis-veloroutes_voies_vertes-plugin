@@ -1,13 +1,13 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.10-A Coruña" readOnly="0">
+<qgis version="3.10.10-A Coruña" hasScaleBasedVisibilityFlag="0" maxScale="0" styleCategories="AllStyleCategories" readOnly="0" minScale="1e+08">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property value="&quot;id_iti&quot;" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="&quot;id_iti&quot;"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -20,8 +20,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -30,8 +30,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -40,8 +40,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -50,8 +50,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -60,19 +60,16 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
     </field>
-    <field name="id_iti">
-      <editWidget type="TextEdit">
+    <field name="id_itineraire">
+      <editWidget type="Hidden">
         <config>
-          <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
-          </Option>
+          <Option/>
         </config>
       </editWidget>
     </field>
@@ -80,11 +77,11 @@
       <editWidget type="DateTime">
         <config>
           <Option type="Map">
-            <Option value="true" name="allow_null" type="bool"/>
-            <Option value="true" name="calendar_popup" type="bool"/>
-            <Option value="yyyy-MM-dd" name="display_format" type="QString"/>
-            <Option value="yyyy-MM-dd" name="field_format" type="QString"/>
-            <Option value="false" name="field_iso_format" type="bool"/>
+            <Option type="bool" name="allow_null" value="true"/>
+            <Option type="bool" name="calendar_popup" value="true"/>
+            <Option type="QString" name="display_format" value="yyyy-MM-dd"/>
+            <Option type="QString" name="field_format" value="yyyy-MM-dd"/>
+            <Option type="bool" name="field_iso_format" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -93,8 +90,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -110,18 +107,18 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option value="DEP" name="Départemental" type="QString"/>
+                <Option type="QString" name="Départemental" value="DEP"/>
               </Option>
               <Option type="Map">
-                <Option value="REG" name="Régional" type="QString"/>
+                <Option type="QString" name="Régional" value="REG"/>
               </Option>
               <Option type="Map">
-                <Option value="NAT" name="National" type="QString"/>
+                <Option type="QString" name="National" value="NAT"/>
               </Option>
               <Option type="Map">
-                <Option value="EUR" name="Européen" type="QString"/>
+                <Option type="QString" name="Européen" value="EUR"/>
               </Option>
             </Option>
           </Option>
@@ -132,18 +129,18 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option value="T" name="Vrai" type="QString"/>
+                <Option type="QString" name="Vrai" value="T"/>
               </Option>
               <Option type="Map">
-                <Option value="F" name="False" type="QString"/>
+                <Option type="QString" name="False" value="F"/>
               </Option>
               <Option type="Map">
-                <Option value="N" name="Ne sais pas" type="QString"/>
+                <Option type="QString" name="Ne sais pas" value="N"/>
               </Option>
               <Option type="Map">
-                <Option value="{2839923C-8B7D-419E-B84B-CA2FE9B80EC7}" name="&lt;NULL>" type="QString"/>
+                <Option type="QString" name="&lt;NULL>" value="{2839923C-8B7D-419E-B84B-CA2FE9B80EC7}"/>
               </Option>
             </Option>
           </Option>
@@ -154,12 +151,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" name="AllowNull" value="true"/>
+            <Option type="int" name="Max" value="2147483647"/>
+            <Option type="int" name="Min" value="-2147483648"/>
+            <Option type="int" name="Precision" value="0"/>
+            <Option type="int" name="Step" value="1"/>
+            <Option type="QString" name="Style" value="SpinBox"/>
           </Option>
         </config>
       </editWidget>
@@ -168,99 +165,99 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="2000" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" name="AllowNull" value="true"/>
+            <Option type="int" name="Max" value="2147483647"/>
+            <Option type="int" name="Min" value="2000"/>
+            <Option type="int" name="Precision" value="0"/>
+            <Option type="int" name="Step" value="1"/>
+            <Option type="QString" name="Style" value="SpinBox"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="numero" index="0"/>
-    <alias name="" field="nom_officiel" index="1"/>
-    <alias name="" field="nom_usage" index="2"/>
-    <alias name="" field="depart" index="3"/>
-    <alias name="" field="arrivee" index="4"/>
-    <alias name="" field="id_iti" index="5"/>
-    <alias name="" field="annee_inscription" index="6"/>
-    <alias name="" field="site_web" index="7"/>
-    <alias name="" field="annee_ouverture" index="8"/>
-    <alias name="" field="niveau_schema" index="9"/>
-    <alias name="" field="est_inscrit" index="10"/>
-    <alias name="" field="mont_subv" index="11"/>
-    <alias name="" field="annee_subv" index="12"/>
+    <alias field="numero" index="0" name=""/>
+    <alias field="nom_officiel" index="1" name=""/>
+    <alias field="nom_usage" index="2" name=""/>
+    <alias field="depart" index="3" name=""/>
+    <alias field="arrivee" index="4" name=""/>
+    <alias field="id_itineraire" index="5" name=""/>
+    <alias field="annee_inscription" index="6" name=""/>
+    <alias field="site_web" index="7" name=""/>
+    <alias field="annee_ouverture" index="8" name=""/>
+    <alias field="niveau_schema" index="9" name=""/>
+    <alias field="est_inscrit" index="10" name=""/>
+    <alias field="mont_subv" index="11" name=""/>
+    <alias field="annee_subv" index="12" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="numero" expression=""/>
-    <default applyOnUpdate="0" field="nom_officiel" expression=""/>
-    <default applyOnUpdate="0" field="nom_usage" expression=""/>
-    <default applyOnUpdate="0" field="depart" expression=""/>
-    <default applyOnUpdate="0" field="arrivee" expression=""/>
-    <default applyOnUpdate="0" field="id_iti" expression=""/>
-    <default applyOnUpdate="0" field="annee_inscription" expression=""/>
-    <default applyOnUpdate="0" field="site_web" expression=""/>
-    <default applyOnUpdate="0" field="annee_ouverture" expression=""/>
-    <default applyOnUpdate="0" field="niveau_schema" expression=""/>
-    <default applyOnUpdate="0" field="est_inscrit" expression=""/>
-    <default applyOnUpdate="0" field="mont_subv" expression=""/>
-    <default applyOnUpdate="0" field="annee_subv" expression=""/>
+    <default expression="" field="numero" applyOnUpdate="0"/>
+    <default expression="" field="nom_officiel" applyOnUpdate="0"/>
+    <default expression="" field="nom_usage" applyOnUpdate="0"/>
+    <default expression="" field="depart" applyOnUpdate="0"/>
+    <default expression="" field="arrivee" applyOnUpdate="0"/>
+    <default expression="" field="id_itineraire" applyOnUpdate="0"/>
+    <default expression="" field="annee_inscription" applyOnUpdate="0"/>
+    <default expression="" field="site_web" applyOnUpdate="0"/>
+    <default expression="" field="annee_ouverture" applyOnUpdate="0"/>
+    <default expression="" field="niveau_schema" applyOnUpdate="0"/>
+    <default expression="" field="est_inscrit" applyOnUpdate="0"/>
+    <default expression="" field="mont_subv" applyOnUpdate="0"/>
+    <default expression="" field="annee_subv" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint unique_strength="0" notnull_strength="1" constraints="1" field="numero" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="nom_officiel" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="nom_usage" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="depart" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="arrivee" exp_strength="0"/>
-    <constraint unique_strength="2" notnull_strength="2" constraints="3" field="id_iti" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_inscription" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="site_web" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_ouverture" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="niveau_schema" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="est_inscrit" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="mont_subv" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_subv" exp_strength="0"/>
+    <constraint field="numero" notnull_strength="1" constraints="1" exp_strength="0" unique_strength="0"/>
+    <constraint field="nom_officiel" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="nom_usage" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="depart" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="arrivee" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="id_itineraire" notnull_strength="2" constraints="3" exp_strength="0" unique_strength="2"/>
+    <constraint field="annee_inscription" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="site_web" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="annee_ouverture" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="niveau_schema" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="est_inscrit" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="mont_subv" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="annee_subv" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" desc="" field="numero"/>
-    <constraint exp="" desc="" field="nom_officiel"/>
-    <constraint exp="" desc="" field="nom_usage"/>
-    <constraint exp="" desc="" field="depart"/>
-    <constraint exp="" desc="" field="arrivee"/>
-    <constraint exp="" desc="" field="id_iti"/>
-    <constraint exp="" desc="" field="annee_inscription"/>
-    <constraint exp="" desc="" field="site_web"/>
-    <constraint exp="" desc="" field="annee_ouverture"/>
-    <constraint exp="" desc="" field="niveau_schema"/>
-    <constraint exp="" desc="" field="est_inscrit"/>
-    <constraint exp="" desc="" field="mont_subv"/>
-    <constraint exp="" desc="" field="annee_subv"/>
+    <constraint field="numero" exp="" desc=""/>
+    <constraint field="nom_officiel" exp="" desc=""/>
+    <constraint field="nom_usage" exp="" desc=""/>
+    <constraint field="depart" exp="" desc=""/>
+    <constraint field="arrivee" exp="" desc=""/>
+    <constraint field="id_itineraire" exp="" desc=""/>
+    <constraint field="annee_inscription" exp="" desc=""/>
+    <constraint field="site_web" exp="" desc=""/>
+    <constraint field="annee_ouverture" exp="" desc=""/>
+    <constraint field="niveau_schema" exp="" desc=""/>
+    <constraint field="est_inscrit" exp="" desc=""/>
+    <constraint field="mont_subv" exp="" desc=""/>
+    <constraint field="annee_subv" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="&quot;numero&quot;">
+  <attributetableconfig sortOrder="0" sortExpression="&quot;numero&quot;" actionWidgetStyle="dropDown">
     <columns>
-      <column width="-1" name="numero" hidden="0" type="field"/>
-      <column width="-1" name="nom_officiel" hidden="0" type="field"/>
-      <column width="-1" name="nom_usage" hidden="0" type="field"/>
-      <column width="-1" name="depart" hidden="0" type="field"/>
-      <column width="-1" name="arrivee" hidden="0" type="field"/>
-      <column width="127" name="id_iti" hidden="0" type="field"/>
-      <column width="-1" name="annee_inscription" hidden="0" type="field"/>
-      <column width="-1" name="site_web" hidden="0" type="field"/>
-      <column width="-1" name="annee_ouverture" hidden="0" type="field"/>
-      <column width="-1" name="niveau_schema" hidden="0" type="field"/>
-      <column width="-1" name="est_inscrit" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" name="mont_subv" hidden="0" type="field"/>
-      <column width="-1" name="annee_subv" hidden="0" type="field"/>
+      <column type="field" name="numero" hidden="0" width="-1"/>
+      <column type="field" name="nom_officiel" hidden="0" width="-1"/>
+      <column type="field" name="nom_usage" hidden="0" width="-1"/>
+      <column type="field" name="depart" hidden="0" width="-1"/>
+      <column type="field" name="arrivee" hidden="0" width="-1"/>
+      <column type="field" name="annee_inscription" hidden="0" width="-1"/>
+      <column type="field" name="site_web" hidden="0" width="-1"/>
+      <column type="field" name="annee_ouverture" hidden="0" width="-1"/>
+      <column type="field" name="niveau_schema" hidden="0" width="-1"/>
+      <column type="field" name="est_inscrit" hidden="0" width="-1"/>
+      <column type="actions" hidden="1" width="-1"/>
+      <column type="field" name="mont_subv" hidden="0" width="-1"/>
+      <column type="field" name="annee_subv" hidden="0" width="-1"/>
+      <column type="field" name="id_itineraire" hidden="0" width="-1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -291,44 +288,51 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="annee_inscription"/>
-    <field editable="1" name="annee_ouverture"/>
-    <field editable="1" name="annee_subv"/>
-    <field editable="1" name="arrivee"/>
-    <field editable="1" name="depart"/>
-    <field editable="1" name="est_inscrit"/>
-    <field editable="0" name="id_iti"/>
-    <field editable="1" name="mont_subv"/>
-    <field editable="1" name="niveau_schema"/>
-    <field editable="1" name="nom_officiel"/>
-    <field editable="1" name="nom_usage"/>
-    <field editable="1" name="numero"/>
-    <field editable="1" name="site_web"/>
+    <field name="annee_inscription" editable="1"/>
+    <field name="annee_ouverture" editable="1"/>
+    <field name="annee_subv" editable="1"/>
+    <field name="arrivee" editable="1"/>
+    <field name="depart" editable="1"/>
+    <field name="est_inscrit" editable="1"/>
+    <field name="id_iti" editable="0"/>
+    <field name="id_itineraire" editable="0"/>
+    <field name="mont_subv" editable="1"/>
+    <field name="niveau_schema" editable="1"/>
+    <field name="nom_officiel" editable="1"/>
+    <field name="nom_usage" editable="1"/>
+    <field name="numero" editable="1"/>
+    <field name="site_web" editable="1"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="annee_inscription"/>
-    <field labelOnTop="0" name="annee_ouverture"/>
-    <field labelOnTop="0" name="annee_subv"/>
-    <field labelOnTop="0" name="arrivee"/>
-    <field labelOnTop="0" name="depart"/>
-    <field labelOnTop="0" name="est_inscrit"/>
-    <field labelOnTop="0" name="id_iti"/>
-    <field labelOnTop="0" name="mont_subv"/>
-    <field labelOnTop="0" name="niveau_schema"/>
-    <field labelOnTop="0" name="nom_officiel"/>
-    <field labelOnTop="0" name="nom_usage"/>
-    <field labelOnTop="0" name="numero"/>
-    <field labelOnTop="0" name="site_web"/>
+    <field name="annee_inscription" labelOnTop="0"/>
+    <field name="annee_ouverture" labelOnTop="0"/>
+    <field name="annee_subv" labelOnTop="0"/>
+    <field name="arrivee" labelOnTop="0"/>
+    <field name="depart" labelOnTop="0"/>
+    <field name="est_inscrit" labelOnTop="0"/>
+    <field name="id_iti" labelOnTop="0"/>
+    <field name="id_itineraire" labelOnTop="0"/>
+    <field name="mont_subv" labelOnTop="0"/>
+    <field name="niveau_schema" labelOnTop="0"/>
+    <field name="nom_officiel" labelOnTop="0"/>
+    <field name="nom_usage" labelOnTop="0"/>
+    <field name="numero" labelOnTop="0"/>
+    <field name="site_web" labelOnTop="0"/>
   </labelOnTop>
   <widgets>
     <widget name="etape_6a0e5c72_95ba_4012_8a51_77f727a0c755_id_itineraire_itineraire_1bcf6d5d_e7e4_493e_89a3_45ebef699aea_id_iti">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_itineraire_itineraire_c47affa8_3ced_43b5_b85b_cb009c7b432a_id_iti">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="etape_9a378a97_1e9f_455f_972e_02e7bc9efae0_id_itineraire_itineraire_6d73d1d4_22e7_434a_8911_95df835869cd_id_itineraire">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>
