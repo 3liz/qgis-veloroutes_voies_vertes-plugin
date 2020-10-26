@@ -1,13 +1,13 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis hasScaleBasedVisibilityFlag="0" maxScale="0" minScale="1e+08" styleCategories="AllStyleCategories" version="3.10.10-A Coruña" readOnly="0">
+<qgis version="3.10.10-A Coruña" hasScaleBasedVisibilityFlag="0" maxScale="0" styleCategories="AllStyleCategories" readOnly="0" minScale="1e+08">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property value="id_portion" key="dualview/previewExpressions"/>
-    <property value="0" key="embeddedWidgets/count"/>
+    <property key="dualview/previewExpressions" value="id_portion"/>
+    <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
@@ -17,12 +17,9 @@
   </geometryOptions>
   <fieldConfiguration>
     <field name="id_portion">
-      <editWidget type="TextEdit">
+      <editWidget type="Hidden">
         <config>
-          <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
-          </Option>
+          <Option/>
         </config>
       </editWidget>
     </field>
@@ -30,8 +27,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -40,8 +37,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option value="false" name="IsMultiline" type="bool"/>
-            <Option value="false" name="UseHtml" type="bool"/>
+            <Option type="bool" name="IsMultiline" value="false"/>
+            <Option type="bool" name="UseHtml" value="false"/>
           </Option>
         </config>
       </editWidget>
@@ -50,18 +47,18 @@
       <editWidget type="ValueMap">
         <config>
           <Option type="Map">
-            <Option name="map" type="List">
+            <Option type="List" name="map">
               <Option type="Map">
-                <Option value="ETP" name="Etape" type="QString"/>
+                <Option type="QString" name="Etape" value="ETP"/>
               </Option>
               <Option type="Map">
-                <Option value="VAR" name="Variante" type="QString"/>
+                <Option type="QString" name="Variante" value="VAR"/>
               </Option>
               <Option type="Map">
-                <Option value="PRV" name="Portion provisoire" type="QString"/>
+                <Option type="QString" name="Portion provisoire" value="PRV"/>
               </Option>
               <Option type="Map">
-                <Option value="OBS" name="Portion obeservée" type="QString"/>
+                <Option type="QString" name="Portion obeservée" value="OBS"/>
               </Option>
             </Option>
           </Option>
@@ -86,12 +83,12 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="-2147483648" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" name="AllowNull" value="true"/>
+            <Option type="int" name="Max" value="2147483647"/>
+            <Option type="int" name="Min" value="-2147483648"/>
+            <Option type="int" name="Precision" value="0"/>
+            <Option type="int" name="Step" value="1"/>
+            <Option type="QString" name="Style" value="SpinBox"/>
           </Option>
         </config>
       </editWidget>
@@ -100,74 +97,74 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option value="true" name="AllowNull" type="bool"/>
-            <Option value="2147483647" name="Max" type="int"/>
-            <Option value="2000" name="Min" type="int"/>
-            <Option value="0" name="Precision" type="int"/>
-            <Option value="1" name="Step" type="int"/>
-            <Option value="SpinBox" name="Style" type="QString"/>
+            <Option type="bool" name="AllowNull" value="true"/>
+            <Option type="int" name="Max" value="2147483647"/>
+            <Option type="int" name="Min" value="2000"/>
+            <Option type="int" name="Precision" value="0"/>
+            <Option type="int" name="Step" value="1"/>
+            <Option type="QString" name="Style" value="SpinBox"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="" field="id_portion" index="0"/>
-    <alias name="" field="nom" index="1"/>
-    <alias name="" field="description" index="2"/>
-    <alias name="" field="type_portion" index="3"/>
-    <alias name="" field="id_on3v" index="4"/>
-    <alias name="" field="id_local" index="5"/>
-    <alias name="" field="mont_subv" index="6"/>
-    <alias name="" field="annee_subv" index="7"/>
+    <alias field="id_portion" index="0" name=""/>
+    <alias field="nom" index="1" name=""/>
+    <alias field="description" index="2" name=""/>
+    <alias field="type_portion" index="3" name=""/>
+    <alias field="id_on3v" index="4" name=""/>
+    <alias field="id_local" index="5" name=""/>
+    <alias field="mont_subv" index="6" name=""/>
+    <alias field="annee_subv" index="7" name=""/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="id_portion" expression=""/>
-    <default applyOnUpdate="0" field="nom" expression=""/>
-    <default applyOnUpdate="0" field="description" expression=""/>
-    <default applyOnUpdate="0" field="type_portion" expression=""/>
-    <default applyOnUpdate="0" field="id_on3v" expression=""/>
-    <default applyOnUpdate="0" field="id_local" expression=""/>
-    <default applyOnUpdate="0" field="mont_subv" expression=""/>
-    <default applyOnUpdate="0" field="annee_subv" expression=""/>
+    <default expression="" field="id_portion" applyOnUpdate="0"/>
+    <default expression="" field="nom" applyOnUpdate="0"/>
+    <default expression="" field="description" applyOnUpdate="0"/>
+    <default expression="" field="type_portion" applyOnUpdate="0"/>
+    <default expression="" field="id_on3v" applyOnUpdate="0"/>
+    <default expression="" field="id_local" applyOnUpdate="0"/>
+    <default expression="" field="mont_subv" applyOnUpdate="0"/>
+    <default expression="" field="annee_subv" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint unique_strength="1" notnull_strength="1" constraints="3" field="id_portion" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="nom" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="description" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="1" constraints="1" field="type_portion" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="id_on3v" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="id_local" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="mont_subv" exp_strength="0"/>
-    <constraint unique_strength="0" notnull_strength="0" constraints="0" field="annee_subv" exp_strength="0"/>
+    <constraint field="id_portion" notnull_strength="2" constraints="3" exp_strength="0" unique_strength="2"/>
+    <constraint field="nom" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="description" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="type_portion" notnull_strength="1" constraints="1" exp_strength="0" unique_strength="0"/>
+    <constraint field="id_on3v" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="id_local" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="mont_subv" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
+    <constraint field="annee_subv" notnull_strength="0" constraints="0" exp_strength="0" unique_strength="0"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" desc="" field="id_portion"/>
-    <constraint exp="" desc="" field="nom"/>
-    <constraint exp="" desc="" field="description"/>
-    <constraint exp="" desc="" field="type_portion"/>
-    <constraint exp="" desc="" field="id_on3v"/>
-    <constraint exp="" desc="" field="id_local"/>
-    <constraint exp="" desc="" field="mont_subv"/>
-    <constraint exp="" desc="" field="annee_subv"/>
+    <constraint field="id_portion" exp="" desc=""/>
+    <constraint field="nom" exp="" desc=""/>
+    <constraint field="description" exp="" desc=""/>
+    <constraint field="type_portion" exp="" desc=""/>
+    <constraint field="id_on3v" exp="" desc=""/>
+    <constraint field="id_local" exp="" desc=""/>
+    <constraint field="mont_subv" exp="" desc=""/>
+    <constraint field="annee_subv" exp="" desc=""/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
+    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig sortOrder="0" sortExpression="" actionWidgetStyle="dropDown">
     <columns>
-      <column width="95" name="id_portion" hidden="0" type="field"/>
-      <column width="224" name="nom" hidden="0" type="field"/>
-      <column width="301" name="description" hidden="0" type="field"/>
-      <column width="-1" name="type_portion" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
-      <column width="-1" name="id_on3v" hidden="0" type="field"/>
-      <column width="-1" name="id_local" hidden="0" type="field"/>
-      <column width="-1" name="mont_subv" hidden="0" type="field"/>
-      <column width="-1" name="annee_subv" hidden="0" type="field"/>
+      <column type="field" name="id_portion" hidden="0" width="95"/>
+      <column type="field" name="nom" hidden="0" width="224"/>
+      <column type="field" name="description" hidden="0" width="301"/>
+      <column type="field" name="type_portion" hidden="0" width="-1"/>
+      <column type="actions" hidden="1" width="-1"/>
+      <column type="field" name="id_on3v" hidden="0" width="-1"/>
+      <column type="field" name="id_local" hidden="0" width="-1"/>
+      <column type="field" name="mont_subv" hidden="0" width="-1"/>
+      <column type="field" name="annee_subv" hidden="0" width="-1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -198,55 +195,65 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field editable="1" name="annee_subv"/>
-    <field editable="1" name="description"/>
-    <field editable="1" name="id_local"/>
-    <field editable="1" name="id_on3v"/>
-    <field editable="0" name="id_portion"/>
-    <field editable="1" name="mont_subv"/>
-    <field editable="1" name="nom"/>
-    <field editable="1" name="type_portion"/>
-    <field editable="0" name="v_portion_description"/>
-    <field editable="0" name="v_portion_nom"/>
-    <field editable="0" name="v_portion_type_portion"/>
+    <field name="annee_subv" editable="1"/>
+    <field name="description" editable="1"/>
+    <field name="id_local" editable="1"/>
+    <field name="id_on3v" editable="1"/>
+    <field name="id_portion" editable="0"/>
+    <field name="mont_subv" editable="1"/>
+    <field name="nom" editable="1"/>
+    <field name="type_portion" editable="1"/>
+    <field name="v_portion_description" editable="0"/>
+    <field name="v_portion_nom" editable="0"/>
+    <field name="v_portion_type_portion" editable="0"/>
   </editable>
   <labelOnTop>
-    <field labelOnTop="0" name="annee_subv"/>
-    <field labelOnTop="0" name="description"/>
-    <field labelOnTop="0" name="id_local"/>
-    <field labelOnTop="0" name="id_on3v"/>
-    <field labelOnTop="0" name="id_portion"/>
-    <field labelOnTop="0" name="mont_subv"/>
-    <field labelOnTop="0" name="nom"/>
-    <field labelOnTop="0" name="type_portion"/>
-    <field labelOnTop="0" name="v_portion_description"/>
-    <field labelOnTop="0" name="v_portion_nom"/>
-    <field labelOnTop="0" name="v_portion_type_portion"/>
+    <field name="annee_subv" labelOnTop="0"/>
+    <field name="description" labelOnTop="0"/>
+    <field name="id_local" labelOnTop="0"/>
+    <field name="id_on3v" labelOnTop="0"/>
+    <field name="id_portion" labelOnTop="0"/>
+    <field name="mont_subv" labelOnTop="0"/>
+    <field name="nom" labelOnTop="0"/>
+    <field name="type_portion" labelOnTop="0"/>
+    <field name="v_portion_description" labelOnTop="0"/>
+    <field name="v_portion_nom" labelOnTop="0"/>
+    <field name="v_portion_type_portion" labelOnTop="0"/>
   </labelOnTop>
   <widgets>
     <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_portion">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="element_d645199c_2ad4_4c2c_afff_a94e74912f09_id_portion_portion_6078641e_d0e3_4be8_96d3_831341a6ee37_id_portion">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_portion">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
+      </config>
+    </widget>
+    <widget name="etape_9a378a97_1e9f_455f_972e_02e7bc9efae0_id_portion_portion_6078641e_d0e3_4be8_96d3_831341a6ee37_id_portion">
+      <config type="Map">
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="v_portion__id_portion_portion_43_id_portion">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="v_portion__id_portion_portion_43_id_portion_1">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
     <widget name="virtual_la_id_portion_portion_43_id_portion">
       <config type="Map">
-        <Option value="" name="nm-rel" type="QString"/>
+        <Option type="QString" name="nm-rel" value=""/>
       </config>
     </widget>
   </widgets>
