@@ -88,8 +88,8 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
             vportion.id(), element.id(), "id_portion", "id_portion",
             "vportion_element", "element_87_id_portion_v_portion__id_portion")
         rel3 = self.createRelation(
-            vitineraire.id(), etape.id(), "id_itineraire", "id_iti",
-            "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_iti")
+            vitineraire.id(), etape.id(), "id_itineraire", "id_itineraire",
+            "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_itineraire")
         rel4 = self.createRelation(
             segment.id(), element.id(), "id_segment", "id_segment",
             "segment_element", "element_34_id_segment_segment__id_segment")

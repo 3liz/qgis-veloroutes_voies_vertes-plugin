@@ -150,7 +150,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
             if x == "v_portion":
                 pkey = "id_portion"
             if x == "v_itineraire":
-                pkey = "id_iti"
+                pkey = "id_itineraire"
             if not context.project().mapLayersByName(x):
                 result = self.initLayer(
                     context, uri, schema, x, "geom", "", pkey
