@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.4.1 - 27/10/2020
+
+* Fix bug
+
 ### 0.4.0 - 23/10/2020
 
 * Ajout d'actions
