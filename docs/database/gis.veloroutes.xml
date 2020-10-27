@@ -5,7 +5,7 @@
       <sequence increment="1" name="element_id_seq" startValue="1"/>
       <sequence increment="1" name="etape_id_seq" startValue="1"/>
       <sequence increment="1" name="etat_avancement_val_id_seq" startValue="1"/>
-      <sequence increment="1" name="itineraire_id_iti_seq" startValue="1"/>
+      <sequence increment="1" name="itineraire_id_itineraire_seq" startValue="1"/>
       <sequence increment="1" name="liaison_id_liaison_seq" startValue="1"/>
       <sequence increment="1" name="metadata_id_seq" startValue="1"/>
       <sequence increment="1" name="niveau_administratif_val_id_seq" startValue="1"/>
@@ -56,7 +56,7 @@
             <parent column="id_portion" foreignKey="etape_portion_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="Identifiant de l'itinéraire cyclable auquel appartient l'étape (clé étrangère)" size="10" type="int4" typeCode="4">
-            <parent column="id_iti" foreignKey="etape_itineraire_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+            <parent column="id_itineraire" foreignKey="etape_itineraire_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
          </column>
          <column autoUpdated="true" defaultValue="nextval('veloroutes.etape_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="identifiant de l'étape" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="etape" nullable="true" remarks="Numéro d'ordre de l'étape dans l'itinéraire" size="10" type="int4" typeCode="4"/>
@@ -102,9 +102,10 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nom_usage" nullable="true" remarks="Autre nom ou appellation de l’itinéraire en usage" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="depart" nullable="true" remarks="Nom de la localité située au départ de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="arrivee" nullable="true" remarks="Nom de la localité située à l'arrivée de l’itinéraire" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="true" defaultValue="nextval('veloroutes.itineraire_id_iti_seq'::regclass)" digits="0" id="5" name="id_iti" nullable="false" remarks="Identifiant de l'itinéraire cyclable" size="10" type="serial" typeCode="4">
+         <column autoUpdated="true" defaultValue="nextval('veloroutes.itineraire_id_itineraire_seq'::regclass)" digits="0" id="5" name="id_itineraire" nullable="false" remarks="Identifiant de l'itinéraire cyclable" size="10" type="serial" typeCode="4">
             <child column="id_itineraire" foreignKey="etape_itineraire_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="etape"/>
-            <child column="id_iti" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itineraire"/>
+            <child column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itin_geom"/>
+            <child column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itineraire"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="annee_inscription" nullable="true" remarks="Année d’approbation du premier schéma ayant inscrit l’itinéraire" size="13" type="date" typeCode="91"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="site_web" nullable="true" remarks="Référence du site internet faisant la promotion de l'itinéraire" size="2147483647" type="text" typeCode="12"/>
@@ -117,9 +118,9 @@
          </column>
          <column autoUpdated="false" defaultValue="null" digits="8" id="11" name="mont_subv" nullable="true" remarks="Montant de la subvention de l'itinéraire" size="8" type="float4" typeCode="7"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="annee_subv" nullable="true" remarks="Année de la subvention" size="10" type="int4" typeCode="4"/>
-         <primaryKey column="id_iti" sequenceNumberInPK="1"/>
+         <primaryKey column="id_itineraire" sequenceNumberInPK="1"/>
          <index name="itineraire_pkey" unique="true">
-            <column ascending="true" name="id_iti"/>
+            <column ascending="true" name="id_itineraire"/>
          </index>
       </table>
       <table name="liaison" numRows="0" remarks="Liaison cyclable, antenne cyclable" schema="veloroutes" type="TABLE">
@@ -420,14 +421,16 @@
             <column ascending="true" name="code"/>
          </index>
       </table>
-      <table name="v_itin_geom" numRows="0" remarks="Vue intermédiaire qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    etape.id_itineraire&#10;   FROM ((((veloroutes.etape&#10;     JOIN veloroutes.portion ON ((portion.id_portion = etape.id_portion)))&#10;     JOIN veloroutes.element ON ((element.id_portion = portion.id_portion)))&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_iti)))&#10;  GROUP BY etape.id_itineraire;">
+      <table name="v_itin_geom" numRows="0" remarks="Vue intermédiaire qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    etape.id_itineraire&#10;   FROM ((((veloroutes.etape&#10;     JOIN veloroutes.portion ON ((portion.id_portion = etape.id_portion)))&#10;     JOIN veloroutes.element ON ((element.id_portion = portion.id_portion)))&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.itineraire ON ((etape.id_itineraire = itineraire.id_itineraire)))&#10;  GROUP BY etape.id_itineraire;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="collect_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+         </column>
       </table>
-      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_iti,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_iti)));">
+      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_iti" nullable="true" remarks="" size="10" type="int4" typeCode="4">
-            <parent column="id_iti" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4">
+            <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="numero" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="nom_officiel" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
@@ -956,7 +959,7 @@ BEGIN
 	--INSERT a new row in itineraire
     INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
     VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_iti into iti_id;
+    RETURNING id_itineraire into iti_id;
 
 	--INSERT stages of the itineray in etape
 	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
@@ -982,8 +985,6 @@ BEGIN
  	RETURN NEW;
 
 END;
-
-
 ]]></definition>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="v_portion_insert" returnType="trigger" securityType="INVOKER" type="FUNCTION">

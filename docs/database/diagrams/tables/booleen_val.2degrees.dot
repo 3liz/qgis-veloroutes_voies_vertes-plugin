@@ -19,7 +19,7 @@ digraph "twoDegreesRelationshipsDiagram" {
     arrowsize="0.8"
   ];
   "element":"elipses":w -> "segment":"id_segment":e [arrowhead=none dir=back arrowtail=crowodot];
-  "etape":"elipses":w -> "itineraire":"id_iti":e [arrowhead=none dir=back arrowtail=crowodot];
+  "etape":"elipses":w -> "itineraire":"id_itineraire":e [arrowhead=none dir=back arrowtail=crowodot];
   "itineraire":"est_inscrit":w -> "booleen_val":"code.type":e [arrowhead=none dir=back arrowtail=crowodot];
   "itineraire":"niveau_schema":w -> "niveau_administratif_val":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
   "segment":"avancement":w -> "etat_avancement_val":"elipses":e [arrowhead=none dir=back arrowtail=crowodot];
@@ -77,7 +77,7 @@ digraph "twoDegreesRelationshipsDiagram" {
    label=<
     <TABLE BORDER="0" CELLBORDER="1" CELLSPACING="0" BGCOLOR="#ffffff">
       <TR><TD COLSPAN="3"  BGCOLOR="#f5f5f5"><TABLE BORDER="0" CELLSPACING="0"><TR><TD ALIGN="LEFT"><B>itineraire</B></TD><TD ALIGN="RIGHT">[table]</TD></TR></TABLE></TD></TR>
-      <TR><TD PORT="id_iti" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="106" HEIGHT="16">id_iti</TD></TR></TABLE></TD></TR>
+      <TR><TD PORT="id_itineraire" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/primaryKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="106" HEIGHT="16">id_itineraire</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="niveau_schema" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="106" HEIGHT="16">niveau_schema</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="est_inscrit" COLSPAN="3" ALIGN="LEFT"><TABLE BORDER="0" CELLSPACING="0" ALIGN="LEFT"><TR ALIGN="LEFT"><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="15" HEIGHT="16"><IMG SRC="../../images/foreignKeys.png"/></TD><TD ALIGN="LEFT" FIXEDSIZE="TRUE" WIDTH="106" HEIGHT="16">est_inscrit</TD></TR></TABLE></TD></TR>
       <TR><TD PORT="elipses" COLSPAN="3" ALIGN="LEFT">...</TD></TR>
