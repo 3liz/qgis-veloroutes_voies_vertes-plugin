@@ -42,3 +42,9 @@ github-pages:
 processing-doc:
 	cd .docker && ./processing_doc.sh
 	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/README.md docs/processing/index.html
+
+
+generate_sql:
+	@echo 'Generate SQL into install files'
+	cd veloroutes_voies_vertes/install/sql && ./export_database_structure_to_SQL.sh vvv veloroutes
+	git diff -p -R --no-ext-diff --no-color | grep -E "^(diff|(old|new) mode)" --color=never | git apply
