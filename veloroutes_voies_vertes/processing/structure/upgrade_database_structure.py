@@ -147,7 +147,7 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             SELECT me_version
             FROM {}.metadata
             WHERE me_status = 1
-            ORDER BY me_version_date DESC
+            ORDER BY me_version_date DESC, me_version DESC
             LIMIT 1;
         """.format(
             SCHEMA
