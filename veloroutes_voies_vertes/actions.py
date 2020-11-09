@@ -309,3 +309,17 @@ def _add_relation(selected_features_id, rel_layer_name, feature_id, feature_rel,
         new_feature[feature_id] = item[1]
         layer.addFeature(new_feature)
     layer.commitChanges()
+
+
+# Dictionary of actions
+# number of arguments it expects
+# function to call
+# extra args to add on runtime
+actions = {
+    'split_segment':
+        [3, split_segment],
+    'update_selected_feature':
+        [3, update_selected_feature],
+    'create_relation':
+        [6, create_relation]
+}

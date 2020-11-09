@@ -497,7 +497,7 @@
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
-    <actionsetting type="1" name="Couper un segment en un point" capture="0" id="{adebc8b8-9bef-44df-b9d7-290193d85bc8}" shortTitle="split" notificationMessage="" isEnabledOnlyWhenEditable="1" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_segment%],[% @click_x %],[% @click_y %])&#xa;print([%id_segment%])" icon="">
+    <actionsetting type="1" name="Couper un segment en un point" capture="0" id="{adebc8b8-9bef-44df-b9d7-290193d85bc8}" shortTitle="split" notificationMessage="" isEnabledOnlyWhenEditable="1" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_segment%],[% @click_x %],[% @click_y %])" icon="">
       <actionScope id="Field"/>
       <actionScope id="Layer"/>
       <actionScope id="Feature"/>
