@@ -35,6 +35,23 @@ COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itin
 
 -- v_itineraire
 CREATE VIEW veloroutes.v_itineraire AS
+ SELECT public.st_setsrid(public.st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,
+    0 AS id_itineraire,
+    ''::text AS numero,
+    ''::text AS nom_officiel,
+    ''::text AS nom_usage,
+    ''::text AS depart,
+    ''::text AS arrivee,
+    ''::text AS annee_inscription,
+    ''::text AS site_web,
+    ''::text AS annee_ouverture,
+    'DEP'::text AS niveau_schema,
+    'F'::text AS est_inscrit,
+    0.0 AS mont_subv,
+    ''::text AS annee_subv
+  WHERE (( SELECT count(*) AS count
+           FROM veloroutes.v_itin_geom) = 0)
+UNION ALL
  SELECT v_itin_geom.collect_geom AS geom,
     itineraire.id_itineraire,
     itineraire.numero,
@@ -54,8 +71,7 @@ CREATE VIEW veloroutes.v_itineraire AS
 
 
 -- VIEW v_itineraire
-COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent
-';
+COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent';
 
 
 -- v_port_geom
@@ -75,6 +91,18 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 
 -- v_portion
 CREATE VIEW veloroutes.v_portion AS
+ SELECT public.st_setsrid(public.st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,
+    0 AS id_portion,
+    ''::text AS nom,
+    ''::text AS description,
+    'ETP'::text AS type_portion,
+    ''::text AS id_on3v,
+    ''::text AS id_local,
+    0.0 AS mont_subv,
+    ''::text AS annee_subv
+  WHERE (( SELECT count(*) AS count
+           FROM veloroutes.v_port_geom) = 0)
+UNION ALL
  SELECT v_port_geom.collect_geom AS geom,
     portion.id_portion,
     portion.nom,

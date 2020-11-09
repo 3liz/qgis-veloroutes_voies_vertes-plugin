@@ -40,14 +40,6 @@ CREATE TRIGGER numserie BEFORE INSERT OR UPDATE ON veloroutes.repere FOR EACH RO
 COMMENT ON TRIGGER numserie ON veloroutes.repere IS 'Contrainte sur le champs numero_serie avec la fonction numserie()';
 
 
--- segment revetement
-CREATE TRIGGER revetement BEFORE INSERT OR UPDATE ON veloroutes.segment FOR EACH ROW EXECUTE PROCEDURE veloroutes.revet();
-
-
--- TRIGGER revetement ON segment
-COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs revetement avec la fonction revet()';
-
-
 --
 -- PostgreSQL database dump complete
 --
