@@ -74,14 +74,14 @@ class TestImport(DatabaseTestCase):
         VALUES (
             ST_GeomFromText('LINESTRING(0 0,1 1)',2154),
             '01-01-2010', '01-01-2010', 'src_geom_test', '01-01-2010',
-            2, 'LIS', 'VV', 'gestion_test', 'propri_test',
+            '02', 'LIS', 'VV', 'gestion_test', 'propri_test',
             'DC', 'T', 'F', 222, 333, 5);
         """
         self.cursor.execute(insert)
         self.cursor.execute("SELECT veloroutes.import_veloroutes_segment()")
 
         veloroutes = """
-        SELECT TO_CHAR(annee_ouverture, 'DD-MM-YYYY'), TO_CHAR(date_saisie, 'DD-MM-YYYY'),
+        SELECT annee_ouverture, TO_CHAR(date_saisie, 'DD-MM-YYYY'),
             src_geom, src_annee, avancement,
             revetement, statut, gestionnaire,
             proprietaire, "precision", sens_unique,
@@ -92,8 +92,8 @@ class TestImport(DatabaseTestCase):
         self.cursor.execute(veloroutes)
         result = self.cursor.fetchall()
         expected_row = (
-            '01-01-2010', '01-01-2010', 'src_geom_test', '01-01-2010',
-            2, 'LIS', 'VV', 'gestion_test', 'propri_test',
+            '2010-01-01', '01-01-2010', 'src_geom_test', '01-01-2010',
+            '02', 'LIS', 'VV', 'gestion_test', 'propri_test',
             'DC', 'T', 'F', '222', '333')
         self.assertTupleEqual(expected_row, result[0])
 
@@ -104,20 +104,20 @@ class TestImport(DatabaseTestCase):
         INSERT INTO imports.import_segment(
             annee_ouverture, date_saisie, avancement, statut, id_import)
         VALUES (
-            '01/01/2010', '2010-01-01',2,'VV',1);
+            '01/01/2010', '2010-01-01','02','VV',1);
         """
         self.cursor.execute(insert)
         self.cursor.execute("SELECT veloroutes.import_veloroutes_segment()")
 
         veloroutes = """
-        SELECT TO_CHAR(annee_ouverture, 'DD-MM-YYYY'),
+        SELECT annee_ouverture,
             date_saisie
             FROM veloroutes.segment
             LIMIT 1
         """
         self.cursor.execute(veloroutes)
         result = self.cursor.fetchall()
-        expected_row = ('01-01-2010', None)
+        expected_row = ('2010-01-01', None)
         self.assertTupleEqual(expected_row, result[0])
 
     def test_check_enumtype(self):
@@ -134,7 +134,7 @@ class TestImport(DatabaseTestCase):
         self.cursor.execute("SELECT veloroutes.import_veloroutes_segment()")
         self.cursor.execute("SELECT avancement FROM veloroutes.segment")
         result = self.cursor.fetchall()
-        self.assertEqual(2, result[0][0])
+        self.assertEqual('02', result[0][0])
 
     def test_insert_newid(self):
         """Tests that the id given in veloroutes is inserted in imports"""
