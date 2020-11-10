@@ -1,5 +1,9 @@
 ## CHANGELOG
 
+### 0.5.1 - 10/11/2020
+
+* Amélioration de la construction du zip
+
 ### 0.5.0 - 10/11/2020
 
 * Upgrade database: champs annee en text et code avancement 
