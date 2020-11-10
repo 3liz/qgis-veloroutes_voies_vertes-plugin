@@ -27,6 +27,7 @@
             <child column="est_inscrit" foreignKey="est_inscrit_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
             <child column="geometrie_fictive" foreignKey="geometrie_fictive_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
             <child column="sens_unique" foreignKey="sens_unique_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="true" defaultValue="nextval('veloroutes.booleen_val_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="" size="10" type="serial" typeCode="4"/>
@@ -66,8 +67,17 @@
          </index>
       </table>
       <table name="etat_avancement_val" numRows="4" remarks="Nomenclature pour l’état de réalisation d’un segment cyclable" schema="veloroutes" type="TABLE">
-         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="code" nullable="false" remarks="Code" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="niveau_administratif_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_acces_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_service_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="repere_val"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="revetement_val"/>
             <child column="avancement" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <child column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="statut_segment_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="true" defaultValue="nextval('veloroutes.etat_avancement_val_id_seq'::regclass)" digits="0" id="2" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
@@ -107,9 +117,9 @@
             <child column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itin_geom"/>
             <child column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="v_itineraire"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="annee_inscription" nullable="true" remarks="Année d’approbation du premier schéma ayant inscrit l’itinéraire" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="annee_inscription" nullable="true" remarks="Année d’approbation du premier schéma ayant inscrit l’itinéraire" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="site_web" nullable="true" remarks="Référence du site internet faisant la promotion de l'itinéraire" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_ouverture" nullable="true" remarks="Année d'ouverture de l'itinéraire sur sa partie française" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_ouverture" nullable="true" remarks="Année d'ouverture de l'itinéraire sur sa partie française" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="niveau_schema" nullable="true" remarks="Niveau administratif du schéma dans lequel l’itinéraire est inscrit et numéroté (clé étrangère)" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="niveau_administratif_val"/>
          </column>
@@ -117,7 +127,7 @@
             <parent column="code" foreignKey="est_inscrit_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="8" id="11" name="mont_subv" nullable="true" remarks="Montant de la subvention de l'itinéraire" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="annee_subv" nullable="true" remarks="Année de la subvention" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="annee_subv" nullable="true" remarks="Année de la subvention" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id_itineraire" sequenceNumberInPK="1"/>
          <index name="itineraire_pkey" unique="true">
             <column ascending="true" name="id_itineraire"/>
@@ -162,6 +172,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.niveau_administratif_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="niveau_schema" foreignKey="niveau_schema" implied="false" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -210,6 +221,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_acces_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_acces"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -241,6 +253,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_service_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_service"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -272,6 +285,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.poi_tourisme_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type" foreignKey="type" implied="false" onDeleteCascade="false" schema="veloroutes" table="poi_tourisme"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -298,7 +312,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="id_on3v" nullable="true" remarks="Identifiant créé et géré par l'ON3V" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_local" nullable="true" remarks="Identifiant créé et géré par l'organisme local" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="8" id="6" name="mont_subv" nullable="true" remarks="Montant de la subvention de la portion" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_subv" nullable="true" remarks="Année de la subvention" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_subv" nullable="true" remarks="Année de la subvention" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id_portion" sequenceNumberInPK="1"/>
          <index name="portion_pkey" unique="true">
             <column ascending="true" name="id_portion"/>
@@ -308,6 +322,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.portion_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_portion" foreignKey="type_portion" implied="false" onDeleteCascade="false" schema="veloroutes" table="portion"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -343,6 +358,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.repere_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="type_noeud" foreignKey="noeud" implied="false" onDeleteCascade="false" schema="veloroutes" table="repere"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -357,6 +373,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.revetement_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="revetement" foreignKey="revetement" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -371,11 +388,11 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.segment_id_segment_seq'::regclass)" digits="0" id="0" name="id_segment" nullable="false" remarks="Clé primaire" size="10" type="serial" typeCode="4">
             <child column="id_segment" foreignKey="element_segment" implied="false" onDeleteCascade="false" schema="veloroutes" table="element"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="annee_ouverture" nullable="true" remarks="Année d'ouverture du segment" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="annee_ouverture" nullable="true" remarks="Année d'ouverture du segment" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="date_saisie" nullable="true" remarks="Date de digitalisation du segment ou de sa dernière mise à jour" size="13" type="date" typeCode="91"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="src_geom" nullable="true" remarks="Type de la source de géoréférencement pour la digitalisation de la géométrie" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="src_annee" nullable="true" remarks="Année de mise à jour, millésime de la carte ou du référentiel de saisie ayant servi de source géométrique" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement" nullable="false" remarks="Etat d’avancement de la réalisation du segment (clé étrangère)" size="10" type="int4" typeCode="4">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="avancement" nullable="false" remarks="Etat d’avancement de la réalisation du segment (clé étrangère)" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="avancement" implied="false" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="revetement" nullable="true" remarks="Qualité du revêtement (clé étrangère)" size="2147483647" type="text" typeCode="12">
@@ -411,6 +428,7 @@
          <column autoUpdated="true" defaultValue="nextval('veloroutes.statut_segment_val_id_seq'::regclass)" digits="0" id="0" name="id" nullable="false" remarks="Identifiant" size="10" type="serial" typeCode="4"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="code" nullable="false" remarks="Code" size="2147483647" type="text" typeCode="12">
             <child column="statut" foreignKey="statut" implied="false" onDeleteCascade="false" schema="veloroutes" table="segment"/>
+            <parent column="code" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="etat_avancement_val"/>
          </column>
          <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="libelle" nullable="true" remarks="Libellé" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id" sequenceNumberInPK="1"/>
@@ -427,7 +445,7 @@
             <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
          </column>
       </table>
-      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));">
+      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_setsrid(st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,&#10;    0 AS id_itineraire,&#10;    ''::text AS numero,&#10;    ''::text AS nom_officiel,&#10;    ''::text AS nom_usage,&#10;    ''::text AS depart,&#10;    ''::text AS arrivee,&#10;    ''::text AS annee_inscription,&#10;    ''::text AS site_web,&#10;    ''::text AS annee_ouverture,&#10;    'DEP'::text AS niveau_schema,&#10;    'F'::text AS est_inscrit,&#10;    0.0 AS mont_subv,&#10;    ''::text AS annee_subv&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_itin_geom) = 0)&#10;UNION ALL&#10; SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
@@ -437,13 +455,13 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="nom_usage" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="depart" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="arrivee" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_inscription" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="annee_inscription" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="site_web" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="annee_ouverture" nullable="true" remarks="" size="13" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="annee_ouverture" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="niveau_schema" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="est_inscrit" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="8" id="12" name="mont_subv" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="annee_subv" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="annee_subv" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
       <table name="v_port_geom" numRows="0" remarks="Vue intermédiaire qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    element.id_portion&#10;   FROM ((veloroutes.element&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.portion ON ((portion.id_portion = element.id_portion)))&#10;  GROUP BY element.id_portion;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="collect_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
@@ -451,7 +469,7 @@
             <parent column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion"/>
          </column>
       </table>
-      <table name="v_portion" numRows="0" remarks="Vue qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT v_port_geom.collect_geom AS geom,&#10;    portion.id_portion,&#10;    portion.nom,&#10;    portion.description,&#10;    portion.type_portion,&#10;    portion.id_on3v,&#10;    portion.id_local,&#10;    portion.mont_subv,&#10;    portion.annee_subv&#10;   FROM (veloroutes.portion&#10;     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));">
+      <table name="v_portion" numRows="0" remarks="Vue qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_setsrid(st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,&#10;    0 AS id_portion,&#10;    ''::text AS nom,&#10;    ''::text AS description,&#10;    'ETP'::text AS type_portion,&#10;    ''::text AS id_on3v,&#10;    ''::text AS id_local,&#10;    0.0 AS mont_subv,&#10;    ''::text AS annee_subv&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_port_geom) = 0)&#10;UNION ALL&#10; SELECT v_port_geom.collect_geom AS geom,&#10;    portion.id_portion,&#10;    portion.nom,&#10;    portion.description,&#10;    portion.type_portion,&#10;    portion.id_on3v,&#10;    portion.id_local,&#10;    portion.mont_subv,&#10;    portion.annee_subv&#10;   FROM (veloroutes.portion&#10;     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_portion" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_portion" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="portion"/>
@@ -462,7 +480,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="id_on3v" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="id_local" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="8" id="7" name="mont_subv" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_subv" nullable="true" remarks="" size="10" type="int4" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="annee_subv" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
       </table>
    </tables>
    <routines>
@@ -782,84 +800,84 @@ END;
          <comment/>
          <definition language="PLPGSQL"><![CDATA[DECLARE id_veloroutes integer; seg record;
 BEGIN
-	INSERT INTO veloroutes.segment(
-		geom,
-		id_local,
-		id_on3v,
-		statut,
-		avancement,
-		revetement,
-		proprietaire,
-		gestionnaire,
-		precision,
-		src_geom,
-		sens_unique,
-		date_saisie,
-		src_annee,
-		geometrie_fictive,
-		annee_ouverture)
-	SELECT
-		CASE
-			WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
-			ELSE geom
-		END AS geom,
-		id_local,
-		id_on3v,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
-			THEN statut
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
-			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
-		END AS statut,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
-			THEN CAST (avancement AS INTEGER)
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement))
-			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE UPPER(v.libelle) = UPPER(avancement) LIMIT 1)
-		END AS avancement,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
-			THEN revetement
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
-			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE UPPER(v.libelle) = UPPER(revetement) LIMIT 1)
-			ELSE revetement
-		END AS revetement,
-		proprietaire,
-		gestionnaire,
-		precision,
-		src_geom,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
-			THEN sens_unique
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(sens_unique) LIMIT 1)
-			--WHEN sens_unique = 'bidirectionnelle' THEN 'F'
-			--WHEN sens_unique = 'monodirectionnelle' THEN 'T'
-			ELSE sens_unique
-		END AS sens_unique,
-		CASE
-			WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
-		END AS date_saisie,
-		src_annee,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
-			THEN geometrie_fictive
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(geometrie_fictive) LIMIT 1)
-			ELSE geometrie_fictive
-		END AS geometrie_fictive,
-		CASE
-			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
-		END AS annee_ouverture
-	FROM imports.import_segment as iis
-	WHERE iis.id_import = idimport
-	RETURNING id_segment into id_veloroutes;
+    INSERT INTO veloroutes.segment(
+        geom,
+        id_local,
+        id_on3v,
+        statut,
+        avancement,
+        revetement,
+        proprietaire,
+        gestionnaire,
+        precision,
+        src_geom,
+        sens_unique,
+        date_saisie,
+        src_annee,
+        geometrie_fictive,
+        annee_ouverture)
+    SELECT
+        CASE
+            WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
+            ELSE geom
+        END AS geom,
+        id_local,
+        id_on3v,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
+            THEN statut
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
+            THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
+        END AS statut,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(code) = UPPER(avancement))
+            THEN avancement
+            WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement))
+            THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE UPPER(v.libelle) = UPPER(avancement) LIMIT 1)
+        END AS avancement,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
+            THEN revetement
+            WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
+            THEN (SELECT code FROM veloroutes.revetement_val as v WHERE UPPER(v.libelle) = UPPER(revetement) LIMIT 1)
+            ELSE revetement
+        END AS revetement,
+        proprietaire,
+        gestionnaire,
+        precision,
+        src_geom,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
+            THEN sens_unique
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
+            THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(sens_unique) LIMIT 1)
+            --WHEN sens_unique = 'bidirectionnelle' THEN 'F'
+            --WHEN sens_unique = 'monodirectionnelle' THEN 'T'
+            ELSE sens_unique
+        END AS sens_unique,
+        CASE
+            WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+            WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+        END AS date_saisie,
+        src_annee,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
+            THEN geometrie_fictive
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
+            THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(geometrie_fictive) LIMIT 1)
+            ELSE geometrie_fictive
+        END AS geometrie_fictive,
+        CASE
+            WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+            WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+        END AS annee_ouverture
+    FROM imports.import_segment as iis
+    WHERE iis.id_import = idimport
+    RETURNING id_segment into id_veloroutes;
 
-	RETURN id_veloroutes;
+    RETURN id_veloroutes;
 END;
-	]]></definition>
+    ]]></definition>
       </routine>
       <routine dataAccess="MODIFIES" deterministic="false" name="numserie" returnType="trigger" securityType="INVOKER" type="FUNCTION">
          <comment><![CDATA[Empêche que le numéro de série soit NULL si le noeud est un capteur]]></comment>

@@ -7,6 +7,9 @@ poi_tourisme
 poi_service
 poi_acces
 segment
+poi_tourisme_val
+poi_service_val
+poi_acces_val
 repere
 itineraire
 portion
@@ -14,10 +17,7 @@ statut_segment_val
 revetement_val
 repere_val
 portion_val
-poi_tourisme_val
-poi_service_val
-poi_acces_val
-poi
 niveau_administratif_val
-etat_avancement_val
 booleen_val
+poi
+etat_avancement_val

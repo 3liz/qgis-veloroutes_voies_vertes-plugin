@@ -257,8 +257,8 @@
                                 </tr>
                                 <tr>
                                     <td><span id="annee_subv">annee_subv</span></td>
-                                    <td>int4</td>
-                                    <td>10</td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
                                     <td title='nullable'>√</td>
                                     <td title=''></td>
                                     <td>null</td>
@@ -333,7 +333,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT v_port_geom.collect_geom AS geom,&#10;    portion.id_portion,&#10;    portion.nom,&#10;    portion.description,&#10;    portion.type_portion,&#10;    portion.id_on3v,&#10;    portion.id_local,&#10;    portion.mont_subv,&#10;    portion.annee_subv&#10;   FROM (veloroutes.portion&#10;     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT st_setsrid(st_geomfromtext(&#39;LINESTRING(0 0, 0 0)&#39;::text), 2154) AS geom,&#10;    0 AS id_portion,&#10;    &#39;&#39;::text AS nom,&#10;    &#39;&#39;::text AS description,&#10;    &#39;ETP&#39;::text AS type_portion,&#10;    &#39;&#39;::text AS id_on3v,&#10;    &#39;&#39;::text AS id_local,&#10;    0.0 AS mont_subv,&#10;    &#39;&#39;::text AS annee_subv&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_port_geom) = 0)&#10;UNION ALL&#10; SELECT v_port_geom.collect_geom AS geom,&#10;    portion.id_portion,&#10;    portion.nom,&#10;    portion.description,&#10;    portion.type_portion,&#10;    portion.id_on3v,&#10;    portion.id_local,&#10;    portion.mont_subv,&#10;    portion.annee_subv&#10;   FROM (veloroutes.portion&#10;     JOIN veloroutes.v_port_geom ON ((portion.id_portion = v_port_geom.id_portion)));</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">
