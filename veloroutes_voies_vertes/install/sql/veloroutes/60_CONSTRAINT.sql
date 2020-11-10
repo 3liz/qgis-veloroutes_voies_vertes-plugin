@@ -195,12 +195,12 @@ ALTER TABLE ONLY veloroutes.segment
 
 -- element element_portion_segment
 ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT element_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
+    ADD CONSTRAINT element_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion) ON DELETE CASCADE;
 
 
 -- element element_segment
 ALTER TABLE ONLY veloroutes.element
-    ADD CONSTRAINT element_segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_segment);
+    ADD CONSTRAINT element_segment FOREIGN KEY (id_segment) REFERENCES veloroutes.segment(id_segment) ON DELETE CASCADE;
 
 
 -- itineraire est_inscrit_booleen
@@ -210,12 +210,12 @@ ALTER TABLE ONLY veloroutes.itineraire
 
 -- etape etape_itineraire_portion
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_itineraire);
+    ADD CONSTRAINT etape_itineraire_portion FOREIGN KEY (id_itineraire) REFERENCES veloroutes.itineraire(id_itineraire) ON DELETE CASCADE;
 
 
 -- etape etape_portion_segment
 ALTER TABLE ONLY veloroutes.etape
-    ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion);
+    ADD CONSTRAINT etape_portion_segment FOREIGN KEY (id_portion) REFERENCES veloroutes.portion(id_portion) ON DELETE CASCADE;
 
 
 -- frequentation frequentation_repere

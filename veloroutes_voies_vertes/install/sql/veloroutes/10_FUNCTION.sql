@@ -532,6 +532,24 @@ BEGIN
 END;$$;
 
 
+-- v_itineraire_delete()
+CREATE FUNCTION veloroutes.v_itineraire_delete() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN
+    DELETE FROM veloroutes.etape WHERE id_itineraire=OLD.id_itineraire;
+    DELETE FROM veloroutes.itineraire WHERE id_itineraire=OLD.id_itineraire;
+
+    RETURN OLD;
+
+END;$$;
+
+
+-- FUNCTION v_itineraire_delete()
+COMMENT ON FUNCTION veloroutes.v_itineraire_delete() IS 'Effectue la suppression dans les tables etape et itineraire lors de la suppression dans la vue v_itineraire';
+
+
 -- v_itineraire_insert()
 CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
     LANGUAGE plpgsql
@@ -575,6 +593,55 @@ $$;
 COMMENT ON FUNCTION veloroutes.v_itineraire_insert() IS 'Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire';
 
 
+-- v_itineraire_update()
+CREATE FUNCTION veloroutes.v_itineraire_update() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN
+    UPDATE veloroutes.itineraire SET
+        numero = NEW.numero,
+        nom_officiel = NEW.nom_officiel,
+        nom_usage = NEW.nom_usage,
+        depart = NEW.depart,
+        arrivee = NEW.arrivee,
+        annee_inscription = NEW.annee_inscription,
+        site_web = NEW.site_web,
+        annee_ouverture = NEW.annee_ouverture,
+        niveau_schema = NEW.niveau_schema,
+        est_inscrit = NEW.est_inscrit,
+        mont_subv = NEW.mont_subv,
+        annee_subv = NEW.annee_subv
+    WHERE id_itineraire = OLD.id_itineraire;
+
+    RETURN NEW;
+
+END;$$;
+
+
+-- FUNCTION v_itineraire_update()
+COMMENT ON FUNCTION veloroutes.v_itineraire_update() IS 'Effectue les mises à jour dans la table itineraire lors de la saisie dans la vue v_itineraire';
+
+
+-- v_portion_delete()
+CREATE FUNCTION veloroutes.v_portion_delete() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN
+    DELETE FROM veloroutes.etape WHERE id_portion=OLD.id_portion;
+    DELETE FROM veloroutes.element WHERE id_portion=OLD.id_portion;
+    DELETE FROM veloroutes.portion WHERE id_portion=OLD.id_portion;
+
+    RETURN OLD;
+
+END;$$;
+
+
+-- FUNCTION v_portion_delete()
+COMMENT ON FUNCTION veloroutes.v_portion_delete() IS 'Effectue la suppression dans les tables element, etapes et portion lors de la suppression dans la vue v_portion';
+
+
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
@@ -615,6 +682,31 @@ END;$$;
 
 -- FUNCTION v_portion_insert()
 COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions dans les tables portion et element lors de la saisie dans la vue v_portion';
+
+
+-- v_portion_update()
+CREATE FUNCTION veloroutes.v_portion_update() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+
+BEGIN
+    UPDATE veloroutes.portion SET
+        nom = NEW.nom,
+        description = NEW.description,
+        type_portion = NEW.type_portion,
+        id_on3v = NEW.id_on3v,
+        id_local = NEW.id_local,
+        mont_subv = NEW.mont_subv,
+        annee_subv = NEW.annee_subv
+    WHERE id_portion = OLD.id_portion;
+
+    RETURN NEW;
+
+END;$$;
+
+
+-- FUNCTION v_portion_update()
+COMMENT ON FUNCTION veloroutes.v_portion_update() IS 'Effectue les mises à jour dans la table portion lors de la saisie dans la vue v_portion';
 
 
 --
