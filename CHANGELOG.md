@@ -4,6 +4,8 @@
 
 * DELETE ON CASCADE pour les clés étrangères des éléments et étapes
 * Fonctions et triggers de mise à jour et suppression à partir des vues v_portion et v_itineraire
+* Actions de gestion des portions et itinéraires depuis les tables non géométriques
+* Amélioration des QML de v_portion et v_itineraire
 
 ### 0.5.1 - 10/11/2020
 
