@@ -7,13 +7,13 @@ then
     exit 1
 fi
 
-echo "Test if PostgreSQL is ready"
-until docker exec postgis bash -c "psql service=test -c 'SELECT version()'" 1>  /dev/null 2>&1
-do
-  echo "."
-  sleep 1
-done
-echo "PostgreSQL is now ready !"
+#echo "Test if PostgreSQL is ready"
+#until docker exec postgis bash -c "psql service=test -c 'SELECT version()'" 1>  /dev/null 2>&1
+#do
+#  echo "."
+#  sleep 1
+#done
+#echo "PostgreSQL is now ready !"
 
 echo "Installing the service file"
 docker cp pg_service.conf postgis:/etc/postgresql-common/
