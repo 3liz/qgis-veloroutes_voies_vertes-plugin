@@ -1,6 +1,6 @@
 ## CHANGELOG
 
-### 0.6.0 (next)
+### 0.6.0 - 10/11/2020
 
 * DELETE ON CASCADE pour les clés étrangères des éléments et étapes
 * Fonctions et triggers de mise à jour et suppression à partir des vues v_portion et v_itineraire
