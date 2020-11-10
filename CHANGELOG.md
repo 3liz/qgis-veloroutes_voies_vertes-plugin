@@ -6,6 +6,8 @@
 * Fonctions et triggers de mise à jour et suppression à partir des vues v_portion et v_itineraire
 * Actions de gestion des portions et itinéraires depuis les tables non géométriques
 * Amélioration des QML de v_portion et v_itineraire
+* Actions add or del selected_feature pour portion et itineraire
+* Mise en forme des tableaux de portion et itinéraire
 
 ### 0.5.1 - 10/11/2020
 

@@ -193,14 +193,14 @@ def update_selected_feature(*args):
         return
 
     if action == 'del':
-        if layer_name == 'v_itineraire':
+        if layer_name in ('itineraire', 'v_itineraire'):
             _remove_selected_from_relation(agg_id, 'id_itineraire', 'v_portion', 'id_portion', 'etape')
-        if layer_name == 'v_portion':
+        if layer_name in ('portion', 'v_portion'):
             _remove_selected_from_relation(agg_id, 'id_portion', 'segment', 'id_segment', 'element')
     elif action == 'add':
-        if layer_name == 'v_itineraire':
+        if layer_name in ('itineraire', 'v_itineraire'):
             _add_selected_from_relation(agg_id, 'id_itineraire', 'v_portion', 'id_portion', 'etape')
-        elif layer_name == 'v_portion':
+        elif layer_name in ('portion', 'v_portion'):
             _add_selected_from_relation(agg_id, 'id_portion', 'segment', 'id_segment', 'element')
 
     layers[0].triggerRepaint()
