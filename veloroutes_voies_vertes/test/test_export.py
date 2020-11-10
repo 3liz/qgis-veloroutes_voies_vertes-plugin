@@ -54,7 +54,7 @@ class TestExport(DatabaseTestCase):
         sql = """
         TRUNCATE TABLE veloroutes.segment CASCADE;
         INSERT INTO veloroutes.segment(avancement, statut)
-        VALUES (2,'VV');
+        VALUES ('02','VV');
         SELECT "AVANCEMENT", "STATUT" FROM
         """
         sql += ' ( ' + sql_from_file + ' ) AS export_segment;'

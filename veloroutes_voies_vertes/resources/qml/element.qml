@@ -1,17 +1,19 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis readOnly="0" version="3.10.10-A Coruña" styleCategories="AllStyleCategories" maxScale="0" hasScaleBasedVisibilityFlag="0" minScale="1e+8">
+<qgis styleCategories="AllStyleCategories" maxScale="0" readOnly="0" version="3.10.10-A Coruña" minScale="1e+8" hasScaleBasedVisibilityFlag="0">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property key="dualview/previewExpressions" value="&quot;id&quot;"/>
+    <property key="dualview/previewExpressions">
+      <value>"id"</value>
+    </property>
     <property key="embeddedWidgets/count" value="0"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
-  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
+  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -20,8 +22,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option type="bool" name="IsMultiline" value="false"/>
-            <Option type="bool" name="UseHtml" value="false"/>
+            <Option name="IsMultiline" value="false" type="bool"/>
+            <Option name="UseHtml" value="false" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -30,14 +32,14 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option type="bool" name="AllowAddFeatures" value="true"/>
-            <Option type="bool" name="AllowNULL" value="true"/>
-            <Option type="bool" name="MapIdentification" value="true"/>
-            <Option type="bool" name="OrderByValue" value="false"/>
-            <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="element_87_id_portion_v_portion__id_portion"/>
-            <Option type="bool" name="ShowForm" value="false"/>
-            <Option type="bool" name="ShowOpenFormButton" value="true"/>
+            <Option name="AllowAddFeatures" value="true" type="bool"/>
+            <Option name="AllowNULL" value="true" type="bool"/>
+            <Option name="MapIdentification" value="true" type="bool"/>
+            <Option name="OrderByValue" value="false" type="bool"/>
+            <Option name="ReadOnly" value="false" type="bool"/>
+            <Option name="Relation" value="element_87_id_portion_v_portion__id_portion" type="QString"/>
+            <Option name="ShowForm" value="false" type="bool"/>
+            <Option name="ShowOpenFormButton" value="true" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -46,51 +48,51 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option type="bool" name="AllowAddFeatures" value="false"/>
-            <Option type="bool" name="AllowNULL" value="true"/>
-            <Option type="bool" name="MapIdentification" value="true"/>
-            <Option type="bool" name="OrderByValue" value="false"/>
-            <Option type="bool" name="ReadOnly" value="false"/>
-            <Option type="QString" name="Relation" value="element_34_id_segment_segment__id_segment"/>
-            <Option type="bool" name="ShowForm" value="false"/>
-            <Option type="bool" name="ShowOpenFormButton" value="true"/>
+            <Option name="AllowAddFeatures" value="false" type="bool"/>
+            <Option name="AllowNULL" value="true" type="bool"/>
+            <Option name="MapIdentification" value="true" type="bool"/>
+            <Option name="OrderByValue" value="false" type="bool"/>
+            <Option name="ReadOnly" value="false" type="bool"/>
+            <Option name="Relation" value="element_34_id_segment_segment__id_segment" type="QString"/>
+            <Option name="ShowForm" value="false" type="bool"/>
+            <Option name="ShowOpenFormButton" value="true" type="bool"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="Identifiant" field="id" index="0"/>
-    <alias name="Portion" field="id_portion" index="1"/>
-    <alias name="Segment" field="id_segment" index="2"/>
+    <alias name="Identifiant" index="0" field="id"/>
+    <alias name="Portion" index="1" field="id_portion"/>
+    <alias name="Segment" index="2" field="id_segment"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
   <defaults>
-    <default applyOnUpdate="0" field="id" expression=""/>
-    <default applyOnUpdate="0" field="id_portion" expression="NULL"/>
-    <default applyOnUpdate="0" field="id_segment" expression="NULL"/>
+    <default expression="" field="id" applyOnUpdate="0"/>
+    <default expression="NULL" field="id_portion" applyOnUpdate="0"/>
+    <default expression="NULL" field="id_segment" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint constraints="3" unique_strength="2" field="id" exp_strength="0" notnull_strength="2"/>
-    <constraint constraints="1" unique_strength="0" field="id_portion" exp_strength="0" notnull_strength="2"/>
-    <constraint constraints="1" unique_strength="0" field="id_segment" exp_strength="0" notnull_strength="2"/>
+    <constraint notnull_strength="2" exp_strength="0" constraints="3" unique_strength="2" field="id"/>
+    <constraint notnull_strength="2" exp_strength="0" constraints="1" unique_strength="0" field="id_portion"/>
+    <constraint notnull_strength="2" exp_strength="0" constraints="1" unique_strength="0" field="id_segment"/>
   </constraints>
   <constraintExpressions>
-    <constraint exp="" field="id" desc=""/>
-    <constraint exp="" field="id_portion" desc=""/>
-    <constraint exp="" field="id_segment" desc=""/>
+    <constraint desc="" exp="" field="id"/>
+    <constraint desc="" exp="" field="id_portion"/>
+    <constraint desc="" exp="" field="id_segment"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
     <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" sortExpression="&quot;id&quot;" actionWidgetStyle="dropDown">
+  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="&quot;id&quot;">
     <columns>
-      <column hidden="0" type="field" name="id" width="-1"/>
-      <column hidden="0" type="field" name="id_portion" width="-1"/>
-      <column hidden="0" type="field" name="id_segment" width="409"/>
-      <column hidden="1" type="actions" width="-1"/>
+      <column width="-1" name="id" hidden="0" type="field"/>
+      <column width="-1" name="id_portion" hidden="0" type="field"/>
+      <column width="409" name="id_segment" hidden="0" type="field"/>
+      <column width="-1" hidden="1" type="actions"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -169,7 +171,7 @@ def my_form_open(dialog, layer, feature):
   <widgets>
     <widget name="v_portion__id_portion_element_87_id_portion">
       <config type="Map">
-        <Option type="QString" name="nm-rel" value=""/>
+        <Option name="nm-rel" value="" type="QString"/>
       </config>
     </widget>
   </widgets>

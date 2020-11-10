@@ -98,7 +98,7 @@ ALTER SEQUENCE veloroutes.etape_id_seq OWNED BY veloroutes.etape.id;
 
 -- etat_avancement_val
 CREATE TABLE veloroutes.etat_avancement_val (
-    code integer NOT NULL,
+    code text NOT NULL,
     libelle text,
     id integer NOT NULL
 );
@@ -144,13 +144,13 @@ CREATE TABLE veloroutes.itineraire (
     depart text,
     arrivee text,
     id_itineraire integer NOT NULL,
-    annee_inscription date,
+    annee_inscription text,
     site_web text,
-    annee_ouverture date,
+    annee_ouverture text,
     niveau_schema text,
     est_inscrit text,
     mont_subv real,
-    annee_subv integer
+    annee_subv text
 );
 
 
@@ -402,7 +402,7 @@ CREATE TABLE veloroutes.portion (
     id_on3v text,
     id_local text,
     mont_subv real,
-    annee_subv integer
+    annee_subv text
 );
 
 
@@ -535,11 +535,11 @@ ALTER SEQUENCE veloroutes.revetement_val_id_seq OWNED BY veloroutes.revetement_v
 -- segment
 CREATE TABLE veloroutes.segment (
     id_segment integer NOT NULL,
-    annee_ouverture date,
+    annee_ouverture text,
     date_saisie date,
     src_geom text,
     src_annee text,
-    avancement integer NOT NULL,
+    avancement text NOT NULL,
     revetement text,
     statut text NOT NULL,
     gestionnaire text,

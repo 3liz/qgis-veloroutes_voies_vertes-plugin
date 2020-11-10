@@ -51,7 +51,7 @@ for ITEM in FUNCTION "TABLE|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRAINT COMM
     sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"$I"_"$ITEM".sql;
     # Rename
     rename -f 's#\|#_#g' "$OUTDIR"/"$I"_"$ITEM".sql;
-    
+
     #Increment I
     I=$(($I+10));
 done
@@ -65,3 +65,6 @@ if [ $SCHEMA = 'veloroutes' ]
 then
    pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
 fi
+
+# Export test data
+#  pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --exclude-table "veloroutes.*_val" -f "$OUTDIR"/90_test_data.sql

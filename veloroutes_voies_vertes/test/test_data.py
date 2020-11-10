@@ -43,18 +43,23 @@ class TestSqlFunctions(DatabaseTestCase):
     def test_trigger_segment_projet_revetement(self):
         """ Test the trigger on segment(revetement) case project"""
         # Contraintes sur le champs segment(revetement) avec la fonction revet()
+        # contraintes désactivées
+        return
         msg = 'revêtement ne peut pas prendre de valeur si avancement vaut 1'
         with self.assertRaises(psycopg2.InternalError, msg=msg):
             self.cursor.execute(
-                "INSERT INTO veloroutes.segment(avancement, revetement, statut) VALUES (1,'LIS','VV')")
+                "INSERT INTO veloroutes.segment(avancement, revetement, statut) VALUES ('01','LIS','VV')")
 
     def test_trigger_segment_fictif_revetement(self):
         """ Test the trigger on segment(revetement) case fictive geometry"""
         msg = 'revêtement ne peut pas prendre de valeur si la geom est fictive'
+        # Contraintes sur le champs segment(revetement) avec la fonction revet()
+        # contraintes désactivées
+        return
         with self.assertRaises(psycopg2.InternalError, msg=msg):
             self.cursor.execute(
-                "INSERT INTO veloroutes.segment(geometrie_fictive, revetement, statut)"
-                "VALUES ('T','LIS','VV')")
+                "INSERT INTO veloroutes.segment(geometrie_fictive, avancement, revetement, statut)"
+                "VALUES ('T', '02','LIS','VV')")
 
     def test_insertok_revetement(self):
         """Test that we can insert a row in segment with good items"""
@@ -67,7 +72,7 @@ class TestSqlFunctions(DatabaseTestCase):
                                            proprietaire,geom,precision,
                                            sens_unique,geometrie_fictive)
             VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
-                    '2010',4,'LIS', 'ASP', 'gestion_test', 'GOLBEY',
+                    '2010','04','LIS', 'ASP', 'gestion_test', 'GOLBEY',
                     ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
         """
         self.cursor.execute(sql)

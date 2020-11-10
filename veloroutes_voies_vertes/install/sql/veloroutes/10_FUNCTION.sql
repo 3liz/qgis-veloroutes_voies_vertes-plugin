@@ -349,84 +349,84 @@ CREATE FUNCTION veloroutes.insert_import_veloroutes_segment(idimport integer) RE
     LANGUAGE plpgsql
     AS $$DECLARE id_veloroutes integer; seg record;
 BEGIN
-	INSERT INTO veloroutes.segment(
-		geom,
-		id_local,
-		id_on3v,
-		statut,
-		avancement,
-		revetement,
-		proprietaire,
-		gestionnaire,
-		precision,
-		src_geom,
-		sens_unique,
-		date_saisie,
-		src_annee,
-		geometrie_fictive,
-		annee_ouverture)
-	SELECT
-		CASE
-			WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
-			ELSE geom
-		END AS geom,
-		id_local,
-		id_on3v,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
-			THEN statut
-			WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
-			THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
-		END AS statut,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE CAST (code AS text) = avancement)
-			THEN CAST (avancement AS INTEGER)
-			WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement))
-			THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE UPPER(v.libelle) = UPPER(avancement) LIMIT 1)
-		END AS avancement,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
-			THEN revetement
-			WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
-			THEN (SELECT code FROM veloroutes.revetement_val as v WHERE UPPER(v.libelle) = UPPER(revetement) LIMIT 1)
-			ELSE revetement
-		END AS revetement,
-		proprietaire,
-		gestionnaire,
-		precision,
-		src_geom,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
-			THEN sens_unique
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(sens_unique) LIMIT 1)
-			--WHEN sens_unique = 'bidirectionnelle' THEN 'F'
-			--WHEN sens_unique = 'monodirectionnelle' THEN 'T'
-			ELSE sens_unique
-		END AS sens_unique,
-		CASE
-			WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
-		END AS date_saisie,
-		src_annee,
-		CASE
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
-			THEN geometrie_fictive
-			WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
-			THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(geometrie_fictive) LIMIT 1)
-			ELSE geometrie_fictive
-		END AS geometrie_fictive,
-		CASE
-			WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
-			WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
-		END AS annee_ouverture
-	FROM imports.import_segment as iis
-	WHERE iis.id_import = idimport
-	RETURNING id_segment into id_veloroutes;
+    INSERT INTO veloroutes.segment(
+        geom,
+        id_local,
+        id_on3v,
+        statut,
+        avancement,
+        revetement,
+        proprietaire,
+        gestionnaire,
+        precision,
+        src_geom,
+        sens_unique,
+        date_saisie,
+        src_annee,
+        geometrie_fictive,
+        annee_ouverture)
+    SELECT
+        CASE
+            WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
+            ELSE geom
+        END AS geom,
+        id_local,
+        id_on3v,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
+            THEN statut
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
+            THEN (SELECT code FROM veloroutes.statut_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
+        END AS statut,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(code) = UPPER(avancement))
+            THEN avancement
+            WHEN EXISTS (SELECT 1 FROM veloroutes.etat_avancement_val WHERE UPPER(libelle) = UPPER(avancement))
+            THEN (SELECT code FROM veloroutes.etat_avancement_val as v WHERE UPPER(v.libelle) = UPPER(avancement) LIMIT 1)
+        END AS avancement,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(code) = UPPER(revetement))
+            THEN revetement
+            WHEN EXISTS (SELECT 1 FROM veloroutes.revetement_val WHERE UPPER(libelle) = UPPER(revetement))
+            THEN (SELECT code FROM veloroutes.revetement_val as v WHERE UPPER(v.libelle) = UPPER(revetement) LIMIT 1)
+            ELSE revetement
+        END AS revetement,
+        proprietaire,
+        gestionnaire,
+        precision,
+        src_geom,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(sens_unique))
+            THEN sens_unique
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(sens_unique))
+            THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(sens_unique) LIMIT 1)
+            --WHEN sens_unique = 'bidirectionnelle' THEN 'F'
+            --WHEN sens_unique = 'monodirectionnelle' THEN 'T'
+            ELSE sens_unique
+        END AS sens_unique,
+        CASE
+            WHEN substring(date_saisie from 1 for 10) LIKE '__-__-____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+            WHEN substring(date_saisie from 1 for 10) LIKE '__/__/____' THEN to_date(substring(date_saisie from 1 for 10),'DD-MM-YYYY')
+        END AS date_saisie,
+        src_annee,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(code) = UPPER(geometrie_fictive))
+            THEN geometrie_fictive
+            WHEN EXISTS (SELECT 1 FROM veloroutes.booleen_val WHERE UPPER(libelle) = UPPER(geometrie_fictive))
+            THEN (SELECT code FROM veloroutes.booleen_val as v WHERE UPPER(v.libelle) = UPPER(geometrie_fictive) LIMIT 1)
+            ELSE geometrie_fictive
+        END AS geometrie_fictive,
+        CASE
+            WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+            WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
+        END AS annee_ouverture
+    FROM imports.import_segment as iis
+    WHERE iis.id_import = idimport
+    RETURNING id_segment into id_veloroutes;
 
-	RETURN id_veloroutes;
+    RETURN id_veloroutes;
 END;
-	$$;
+    $$;
 
 
 -- numserie()

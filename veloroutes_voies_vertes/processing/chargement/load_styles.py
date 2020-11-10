@@ -99,13 +99,13 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         manager.addRelation(rel3)
         manager.addRelation(rel4)
 
-        layers_name = [
+        self.layers_name = [
             "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
             "portion", "itineraire", "liaison", "segment", "v_portion",
             "v_itineraire", "etape", "element"
         ]
 
-        for x in layers_name:
+        for x in self.layers_name:
             layers = context.project().mapLayersByName(x)
             if layers:
                 for layer in layers:
@@ -115,3 +115,13 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
                     msg = msg + " // Style for " + x + " successfully loaded"
 
         return {self.OUTPUT_MSG: msg}
+
+    def postProcessAlgorithm(self, context, feedback):
+
+        for x in self.layers_name:
+            layers = context.project().mapLayersByName(x)
+            if layers:
+                for layer in layers:
+                    layer.triggerRepaint()
+
+        return {}

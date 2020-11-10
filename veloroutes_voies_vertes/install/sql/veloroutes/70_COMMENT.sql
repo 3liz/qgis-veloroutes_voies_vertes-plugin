@@ -563,8 +563,7 @@ COMMENT ON VIEW veloroutes.v_itin_geom IS 'Vue intermédiaire qui joint les itin
 
 
 -- VIEW v_itineraire
-COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent
-';
+COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent';
 
 
 -- VIEW v_port_geom
@@ -586,10 +585,6 @@ COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue édi
 
 -- TRIGGER numserie ON repere
 COMMENT ON TRIGGER numserie ON veloroutes.repere IS 'Contrainte sur le champs numero_serie avec la fonction numserie()';
-
-
--- TRIGGER revetement ON segment
-COMMENT ON TRIGGER revetement ON veloroutes.segment IS 'Contrainte sur le champs revetement avec la fonction revet()';
 
 
 --

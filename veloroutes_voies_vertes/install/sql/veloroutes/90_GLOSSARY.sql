@@ -30,10 +30,10 @@ INSERT INTO veloroutes.booleen_val (code, libelle, id) VALUES (NULL, 'Non rensei
 -- Data for Name: etat_avancement_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
 --
 
-INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES (1, 'Projet', 1);
-INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES (2, 'Tracé arrêté', 2);
-INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES (3, 'Travaux en cours', 3);
-INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES (4, 'Ouvert', 4);
+INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES ('01', 'Projet', 1);
+INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES ('02', 'Tracé arrêté', 2);
+INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES ('03', 'Travaux en cours', 3);
+INSERT INTO veloroutes.etat_avancement_val (code, libelle, id) VALUES ('04', 'Ouvert', 4);
 
 
 --
