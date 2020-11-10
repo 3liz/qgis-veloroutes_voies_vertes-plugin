@@ -1,5 +1,11 @@
 ## CHANGELOG
 
+### 0.5.0 - 10/11/2020
+
+* Upgrade database: champs annee en text et code avancement 
+* Fix: Get the last DB version even if it is the same date
+* Fix: triggerRepaint après chargement des styles
+
 ### 0.4.1 - 27/10/2020
 
 * Fix bug
