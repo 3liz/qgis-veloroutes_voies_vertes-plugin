@@ -38,11 +38,13 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
-    @unittest.skip
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         params = {
@@ -50,13 +52,11 @@ class TestProcessing(unittest.TestCase):
             "OVERRIDE": True,
             "ADD_TEST_DATA": True,
         }
-        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())] = VERSION
+        os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.upper())] = VERSION
         alg = "{}:create_database_structure".format(provider.id())
-        try:
-            processing_output = processing.run(alg, params, feedback=feedback)
-        except QgsProcessingException as e:
-            self.assertTrue(False, e)
-        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.capitalize())]
+        results = processing_output = processing.run(alg, params, feedback=feedback)
+        del os.environ["TEST_DATABASE_INSTALL_{}".format(SCHEMA.upper())]
+        self.assertEqual(VERSION, results["DATABASE_VERSION"])
 
         self.cursor.execute(
             "SELECT table_name FROM information_schema.tables WHERE table_schema = '{}'".format(
@@ -93,11 +93,11 @@ class TestProcessing(unittest.TestCase):
             "v_port_geom",
             "v_portion",
             "v_itin_geom",
-            "v_itineraire"
+            "v_itineraire",
+            "booleen_val",
         ]
         self.assertCountEqual(expected, result)
-        expected = "*** LA STRUCTURE {} A BIEN ÉTÉ CRÉÉE '{}'***".format(SCHEMA, VERSION)
-        self.assertEqual(expected, processing_output["OUTPUT_STRING"])
+        self.assertEqual(VERSION, processing_output["DATABASE_VERSION"])
 
         sql = """
             SELECT me_version
@@ -181,7 +181,9 @@ class TestProcessing(unittest.TestCase):
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
 
         feedback = LoggerProcessingFeedBack()
         self.cursor.execute("SELECT version();")
@@ -248,12 +250,11 @@ class TestProcessing(unittest.TestCase):
         with self.assertRaises(QgsProcessingException):
             processing.run(alg, params, feedback=feedback)
 
-        expected = (
-            "Unable to execute algorithm\nLe schéma existe déjà dans la base de données ! Si "
-            "vous voulez VRAIMENT supprimer et recréer le schéma (et supprimer les données) "
-            "cocher la case **Écraser**"
-        )
-        self.assertEqual(expected, feedback.last)
+        msg = (
+            "Unable to execute algorithm\nLe schéma {} existe déjà dans la base de données {} ! "
+            "Si vous voulez VRAIMENT supprimer et recréer le schéma "
+            "(et supprimer les données) cocher la case **Écraser**").format(SCHEMA, 'test')
+        self.assertEqual(msg, feedback.last)
 
         feedback.pushDebugInfo("Update the database")
         params = {"CONNECTION_NAME": "test", "RUN_MIGRATIONS": True}
