@@ -196,7 +196,9 @@ class TestImport(DatabaseTestCase):
     def test_import_python(self):
         """Tests execution of the algorithm with a correct input layer"""
         provider = ProcessingProvider()
-        QgsApplication.processingRegistry().addProvider(provider)
+        registry = QgsApplication.processingRegistry()
+        if not registry.providerById(provider.id()):
+            registry.addProvider(provider)
         feedback = LoggerProcessingFeedBack(True)
         project = QgsProject()
         context = QgsProcessingContext()

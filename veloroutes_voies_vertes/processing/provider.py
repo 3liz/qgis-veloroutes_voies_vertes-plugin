@@ -5,8 +5,8 @@ __revision__ = "$Format:%H$"
 
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
-from .structure.create_database_structure import CreateDatabaseStructure
-from .structure.upgrade_database_structure import UpgradeDatabaseStructure
+from .database.create import CreateDatabaseStructure
+from .database.upgrade import UpgradeDatabaseStructure
 from .chargement.load_layers import LoadLayersAlgorithm
 from .chargement.load_styles import LoadStylesAlgorithm
 from ..qgis_plugin_tools.tools.resources import resources_path
@@ -27,7 +27,7 @@ class VeloroutesProvider(QgsProcessingProvider):
         self.addAlgorithm(ExportCovadis())
         self.addAlgorithm(ExportCovadisAll())
 
-    def id(self):
+    def id(self):  # NOQA: A003
         return "veloroutes_vv"
 
     def icon(self):
