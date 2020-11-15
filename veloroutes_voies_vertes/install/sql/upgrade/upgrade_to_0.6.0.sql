@@ -1,3 +1,5 @@
+BEGIN;
+
 -- DROP foreign key constraint pour etape et element
 ALTER TABLE ONLY veloroutes.etape
     DROP CONSTRAINT etape_portion_segment;
@@ -122,3 +124,5 @@ COMMENT ON FUNCTION veloroutes.v_itineraire_delete() IS 'Effectue la suppression
 CREATE TRIGGER delete_v_itineraire INSTEAD OF DELETE ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_delete();
 
 COMMENT ON TRIGGER delete_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_delete()';
+
+COMMIT;

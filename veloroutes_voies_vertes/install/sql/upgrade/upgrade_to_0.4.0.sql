@@ -1,3 +1,4 @@
+BEGIN;
 -- DROP VIEW
 DROP VIEW IF EXISTS veloroutes.v_portion;
 DROP VIEW IF EXISTS veloroutes.v_itineraire;
@@ -470,3 +471,5 @@ DROP FUNCTION IF EXISTS veloroutes.export_portion;
 DROP FUNCTION IF EXISTS veloroutes.export_repere;
 DROP FUNCTION IF EXISTS veloroutes.export_segment;
 DROP FUNCTION IF EXISTS veloroutes.export_table; 
+
+COMMIT;

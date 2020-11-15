@@ -1,3 +1,5 @@
+BEGIN;
+
 DROP TRIGGER IF EXISTS revetement ON veloroutes.segment;
 
 ALTER TABLE veloroutes.segment ALTER COLUMN annee_ouverture TYPE text USING substring(annee_ouverture::text from 1 for 4);
@@ -168,3 +170,5 @@ BEGIN
     RETURN id_veloroutes;
 END;
     $$;
+
+COMMIT;
