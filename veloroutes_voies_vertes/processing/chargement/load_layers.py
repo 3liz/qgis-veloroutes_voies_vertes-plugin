@@ -122,7 +122,8 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         layers_v_name = ["v_portion", "v_itineraire"]
-        tables_name = ["element", "etape", "portion", "itineraire"]
+        tables_name = ["element", "etape", "portion", "itineraire", "statut_segment_val",
+            "amenagement_segment_val", "amenagement_type_segment_val"]
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
