@@ -17,6 +17,28 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Data for Name: amenagement_segment_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
+--
+
+INSERT INTO veloroutes.amenagement_segment_val (id, code, libelle) VALUES (1, 'SP', 'Site propre');
+INSERT INTO veloroutes.amenagement_segment_val (id, code, libelle) VALUES (2, 'RTE', 'Partage de route');
+
+
+--
+-- Data for Name: amenagement_type_segment_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
+--
+
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (1, 'VV', 'Voie verte', 'SP');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (2, 'PCY', 'Piste cyclable', 'SP');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (3, 'BSP', 'Boucle cyclable', 'SP');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (4, 'ASP', 'Autre site propre', 'SP');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (5, 'RTE', 'Jalonnement', 'RTE');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (6, 'BCY', 'Bande cyclable', 'RTE');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (7, 'BCR', 'Boucle cyclable', 'RTE');
+INSERT INTO veloroutes.amenagement_type_segment_val (id, code, libelle, amenagement) VALUES (8, 'ICA', 'Apaisée', 'RTE');
+
+
+--
 -- Data for Name: booleen_val; Type: TABLE DATA; Schema: veloroutes; Owner: -
 --
 
@@ -124,6 +146,20 @@ INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (3, 'ASP', 
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (4, 'RTE', 'Route');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (5, 'BCY', 'Bande cyclable');
 INSERT INTO veloroutes.statut_segment_val (id, code, libelle) VALUES (6, 'ICA', 'Itinéraire à circulation apaisée');
+
+
+--
+-- Name: amenagement_segment_val_id_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: -
+--
+
+SELECT pg_catalog.setval('veloroutes.amenagement_segment_val_id_seq', 2, true);
+
+
+--
+-- Name: amenagement_type_segment_val_id_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: -
+--
+
+SELECT pg_catalog.setval('veloroutes.amenagement_type_segment_val_id_seq', 8, true);
 
 
 --

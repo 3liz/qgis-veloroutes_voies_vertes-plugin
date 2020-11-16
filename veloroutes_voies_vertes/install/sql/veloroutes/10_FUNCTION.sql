@@ -364,7 +364,10 @@ BEGIN
         date_saisie,
         src_annee,
         geometrie_fictive,
-        annee_ouverture)
+        annee_ouverture,
+        desserte_college,
+        amenagement,
+        amenagement_type)
     SELECT
         CASE
             WHEN ST_SRID(geom) != 2154 THEN ST_Transform(ST_SetSRID(geom,2154),2154)
@@ -419,7 +422,20 @@ BEGIN
         CASE
             WHEN substring(annee_ouverture from 1 for 10) LIKE '__-__-____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
             WHEN substring(annee_ouverture from 1 for 10) LIKE '__/__/____' THEN to_date(substring(annee_ouverture from 1 for 10),'DD-MM-YYYY')
-        END AS annee_ouverture
+        END AS annee_ouverture,
+        'F' AS desserte_college,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
+            THEN (SELECT v.amenagement FROM veloroutes.amenagement_type_segment_val as v WHERE UPPER(v.code) = UPPER(statut) LIMIT 1)
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
+            THEN (SELECT v.amenagement FROM veloroutes.amenagement_type_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
+        END AS amenagement,
+        CASE
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(code) = UPPER(statut))
+            THEN (SELECT v.code FROM veloroutes.amenagement_type_segment_val as v WHERE UPPER(v.code) = UPPER(statut) LIMIT 1)
+            WHEN EXISTS (SELECT 1 FROM veloroutes.statut_segment_val WHERE UPPER(libelle) = UPPER(statut))
+            THEN (SELECT v.code FROM veloroutes.amenagement_type_segment_val as v WHERE UPPER(v.libelle) = UPPER(statut) LIMIT 1)
+        END AS amenagement_type
     FROM imports.import_segment as iis
     WHERE iis.id_import = idimport
     RETURNING id_segment into id_veloroutes;
@@ -475,58 +491,68 @@ COMMENT ON FUNCTION veloroutes.revet() IS 'Force le revêtement à être NULL si
 CREATE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
     LANGUAGE plpgsql
     AS $$DECLARE
-	seg record;
-	cut geometry;
+    seg record;
+    cut geometry;
     geom_init geometry;
     geom_term geometry;
-	id_new_seg integer;
+    id_new_seg integer;
 
 BEGIN
 
-	-- Récupération du point cliqué
-	SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
+    -- Récupération du point cliqué
+    SELECT ST_GeomFromText('POINT(' || xnode || ' ' || ynode || ')',2154) INTO cut;
 
-	-- Récupération du segment cliqué
-	SELECT *
-	FROM veloroutes.segment
-	WHERE veloroutes.segment.id_segment=id_seg
-	INTO seg;
+    -- Récupération du segment cliqué
+    SELECT *
+    FROM veloroutes.segment
+    WHERE veloroutes.segment.id_segment=id_seg
+    INTO seg;
 
-	-- Vérification que le clique ne se situe pas trop loin d'un segment
-	IF ST_Distance(cut, seg.geom)> 5 THEN
-		RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic : Distance > 5m ';
-	END IF;
+    -- Vérification que le clique ne se situe pas trop loin d'un segment
+    IF ST_Distance(cut, seg.geom)> 5 THEN
+        RAISE EXCEPTION 'Aucun segment trouvé à proximité du clic : Distance > 5m ';
+    END IF;
 
-	-- Création des nouvelles géométries
-	geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
+    -- Création des nouvelles géométries
+    geom_init := ST_LineSubstring(seg.geom, 0, ST_LineLocatePoint(seg.geom, cut));
     geom_term := ST_LineSubstring(seg.geom, ST_LineLocatePoint(seg.geom, cut), 1);
 
-	-- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
-	IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
-		RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
-	END IF;
+    -- Vérification que le point de coupure est à plus d'un mètre des extrémités du segment
+    IF ST_length(geom_init)<1 OR ST_length(geom_term)<1 THEN
+        RAISE EXCEPTION 'Impossible de couper : point trop proche de l''extrémité';
+    END IF;
 
-	-- Modification du segment :
+    -- Modification du segment :
     -- OA----------(O)----------OB devient  OA----------(O)
-	UPDATE veloroutes.segment s
-	SET
-		geom = geom_init
-	WHERE id_segment = seg.id_segment;
+    UPDATE veloroutes.segment s
+    SET
+        geom = geom_init
+    WHERE id_segment = seg.id_segment;
 
-	-- Création d'un nouveau segment :
+    -- Création d'un nouveau segment :
     -- (O)----------OB
     -- On récupère les valeurs issues du segment d'origine
-	INSERT INTO veloroutes.segment(annee_ouverture, date_saisie, src_geom, src_annee,avancement, revetement, statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,geom)
-	VALUES(seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement, seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive, geom_term)
-	RETURNING id_segment into id_new_seg;
+    INSERT INTO veloroutes.segment(
+        annee_ouverture, date_saisie, src_geom, src_annee, avancement, revetement,
+        statut, gestionnaire, proprietaire, precision, sens_unique, geometrie_fictive,
+        desserte_college, amenagement, amenagement_type,
+        geom
+    )
+    VALUES(
+        seg.annee_ouverture, seg.date_saisie, seg.src_geom, seg.src_annee, seg.avancement, seg.revetement,
+        seg.statut, seg.gestionnaire, seg.proprietaire, seg.precision, seg.sens_unique, seg.geometrie_fictive,
+        seg.desserte_college, seg.amenagement, seg.amenagement_type,
+        geom_term
+    )
+    RETURNING id_segment into id_new_seg;
 
-	-- Création des nouveaux elements de portion si besoin
-	INSERT INTO veloroutes.element(id_portion,id_segment)
+    -- Création des nouveaux elements de portion si besoin
+    INSERT INTO veloroutes.element(id_portion,id_segment)
     SELECT veloroutes.element.id_portion, id_new_seg
-	FROM veloroutes.element
-	WHERE veloroutes.element.id_segment = id_seg;
+    FROM veloroutes.element
+    WHERE veloroutes.element.id_segment = id_seg;
 
-	-- Return 1
+    -- Return 1
     RETURN 1;
 
 END;$$;
