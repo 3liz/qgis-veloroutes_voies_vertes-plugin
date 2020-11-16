@@ -49,6 +49,12 @@ for ITEM in FUNCTION "TABLE|SEQUENCE|DEFAULT" VIEW INDEX TRIGGER CONSTRAINT COMM
     fi
     # Remove SET function to remove some compatibility issues between PostgreSQL versions
     sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"$I"_"$ITEM".sql;
+    # Remove SET search_path
+    sed -i "s#SELECT pg_catalog.set_config('search_path', '', false);##g" "$OUTDIR"/"$I"_"$ITEM".sql;
+    # Remove default_table_access_method
+    sed -i "s#SET default_table_access_method = heap##g" "$OUTDIR"/"$I"_"$ITEM".sql;
+    # Replace FOR EACH ROW EXECUTE FUNCTION (pg13) by FOR EACH ROW EXECUTE PROCEDURE (still ok for Pg13)
+    sed -i "s#FOR EACH ROW EXECUTE FUNCTION#FOR EACH ROW EXECUTE PROCEDURE#g" "$OUTDIR"/"$I"_"$ITEM".sql;
     # Rename
     rename -f 's#\|#_#g' "$OUTDIR"/"$I"_"$ITEM".sql;
 
@@ -61,10 +67,9 @@ rm "$OUTDIR/dump"
 
 # NOMENCLATURE
 echo "GLOSSARY"
-if [ $SCHEMA = 'veloroutes' ]
-then
-   pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
-fi
+pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --table "veloroutes.*_val" -f "$OUTDIR"/90_GLOSSARY.sql
+sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" "$OUTDIR"/"90_GLOSSARY.sql"
+sed -i "s#SELECT pg_catalog.set_config('search_path', '', false);##g" "$OUTDIR"/"90_GLOSSARY.sql"
 
 # Export test data
 #  pg_dump service=$SERVICE --data-only --inserts --column-inserts -n $SCHEMA --no-acl --no-owner --exclude-table "veloroutes.*_val" -f "$OUTDIR"/90_test_data.sql
