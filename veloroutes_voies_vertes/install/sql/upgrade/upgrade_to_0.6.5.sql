@@ -73,6 +73,38 @@ ALTER TABLE ONLY veloroutes.segment
 ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT amenagement_type FOREIGN KEY (amenagement_type) REFERENCES veloroutes.amenagement_type_segment_val(code);
 
+
+-- statut_amenagment_type()
+CREATE FUNCTION veloroutes.statut_amenagment_type() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$    BEGIN
+        IF NEW.amenagement_type IS NULL AND
+           NEW.statut IS NOT NULL
+           THEN
+                IF (SELECT COUNT(*) = 0 FROM veloroutes.statut_segment_val WHERE code = NEW.statut) THEN
+                    RAISE EXCEPTION 'statut doit être un code de statut_segment_val';
+                END IF;
+                NEW.amenagement := (SELECT amenagement FROM veloroutes.amenagement_type_segment_val WHERE code = NEW.statut);
+                NEW.amenagement_type := NEW.statut;
+        END IF;
+        IF NEW.statut IS NULL AND
+           NEW.amenagement_type IS NOT NULL
+           THEN
+                IF (SELECT COUNT(*) = 0 FROM veloroutes.amenagement_type_segment_val WHERE code = NEW.amenagement_type) THEN
+                    RAISE EXCEPTION 'amenagement_type doit être un code de amenagement_type_segment_val';
+                END IF;
+                NEW.amenagement := (SELECT amenagement FROM veloroutes.amenagement_type_segment_val WHERE code = NEW.amenagement_type);
+                NEW.statut := CASE WHEN NEW.amenagement_type = 'BCR' THEN 'RTE'
+                                   WHEN NEW.amenagement_type = 'BSP' THEN 'ASP'
+                                   ELSE NEW.amenagement_type END;
+        END IF;
+        RETURN NEW;
+    END;
+$$;
+
+-- segment statut_amenagment_type
+CREATE TRIGGER statut_amenagment_type BEFORE INSERT OR UPDATE ON veloroutes.segment FOR EACH ROW EXECUTE PROCEDURE veloroutes.statut_amenagment_type();
+
 -- split(integer, real, real)
 CREATE OR REPLACE FUNCTION veloroutes.split(id_seg integer, xnode real, ynode real) RETURNS boolean
     LANGUAGE plpgsql
