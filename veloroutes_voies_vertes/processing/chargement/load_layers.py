@@ -10,9 +10,10 @@ from qgis.core import (
     QgsProcessingOutputString,
     QgsProcessingContext,
     QgsVectorLayer,
-    QgsRasterLayer
+    QgsRasterLayer,
+    QgsProviderRegistry,
+    QgsDataSourceUri,
 )
-from processing.tools.postgis import uri_from_name
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
@@ -125,7 +126,10 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
-        uri = uri_from_name(connection)
+
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection)
+        uri = QgsDataSourceUri(connection.uri())
 
         is_host = uri.host() != ""
         if is_host:

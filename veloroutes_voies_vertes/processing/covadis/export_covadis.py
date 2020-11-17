@@ -16,11 +16,12 @@ from qgis.core import (
     QgsVectorFileWriter,
     QgsProcessingParameterFolderDestination,
     QgsProcessingParameterBoolean,
+    QgsDataSourceUri,
+    QgsProviderRegistry,
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
-from processing.tools.postgis import uri_from_name
 from ...qgis_plugin_tools.tools.resources import resources_path
 
 
@@ -245,7 +246,11 @@ class ExportCovadis(BaseProcessingAlgorithm):
         else:
             geom = "geom"
         name = table_name
-        uri = uri_from_name(connection)
+
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection)
+        uri = QgsDataSourceUri(connection.uri())
+
         if table_name == 'portion':
             name = 'v_portion'
             uri.setKeyColumn('id_portion')

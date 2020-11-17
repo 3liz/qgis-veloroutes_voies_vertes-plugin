@@ -12,12 +12,12 @@ from qgis.core import (
     QgsProviderRegistry,
     QgsProcessingParameterString,
     QgsVectorLayer,
+    QgsDataSourceUri,
     QgsProcessingException
 )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
-from processing.tools.postgis import uri_from_name
 
 import processing
 
@@ -185,7 +185,7 @@ class ImportCovadis(BaseProcessingAlgorithm):
         if table in geomlayer:
             geom = "geom"
 
-        uri = uri_from_name(connection)
+        uri = QgsDataSourceUri(conn.uri())
         uri.setDataSource(schema, table, geom, "")
         layer = QgsVectorLayer(uri.uri(), table, "postgres")
         layer_name = layer.name()
