@@ -70,10 +70,13 @@ class TestSqlFunctions(DatabaseTestCase):
                                            src_geom,src_annee,avancement,
                                            revetement,statut,gestionnaire,
                                            proprietaire,geom,precision,
-                                           sens_unique,geometrie_fictive)
+                                           sens_unique,geometrie_fictive,
+                                           desserte_college, amenagement,
+                                           amenagement_type)
             VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
                     '2010','04','LIS', 'ASP', 'gestion_test', 'GOLBEY',
-                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F',
+                    'F', 'SP', 'ASP')
         """
         self.cursor.execute(sql)
         res = """

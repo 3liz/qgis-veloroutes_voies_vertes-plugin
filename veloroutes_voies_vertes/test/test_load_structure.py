@@ -213,6 +213,8 @@ class TestProcessing(unittest.TestCase):
         records = self.cursor.fetchall()
         result = [r[0] for r in records]
         expected = [
+            "amenagement_segment_val",
+            "amenagement_type_segment_val",
             "booleen_val",
             "element",
             "etape",
