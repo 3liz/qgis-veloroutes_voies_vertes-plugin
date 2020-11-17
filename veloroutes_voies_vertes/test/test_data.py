@@ -87,3 +87,117 @@ class TestSqlFunctions(DatabaseTestCase):
         self.cursor.execute(res)
         record = self.cursor.fetchall()
         self.assertEqual('src_geom_test', record[0][0])
+
+    def test_trigger_segment_statut_amenagment_type_with_statut(self):
+        """Test trigger segment statut_amenagement_type with defined statut"""
+        self.cursor.execute("TRUNCATE TABLE veloroutes.segment CASCADE")
+
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,statut,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'ASP', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        self.cursor.execute(sql)
+        res = """
+            SELECT veloroutes.segment.src_geom, veloroutes.segment.statut,
+            veloroutes.segment.amenagement, veloroutes.segment.amenagement_type
+            FROM veloroutes.segment
+            WHERE veloroutes.segment.gestionnaire='gestion_test';
+        """
+        self.cursor.execute(res)
+        record = self.cursor.fetchall()
+        self.assertEqual('src_geom_test', record[0][0])
+        self.assertEqual('ASP', record[0][1])
+        self.assertEqual('SP', record[0][2])
+        self.assertEqual('ASP', record[0][3])
+
+        # Invalid statut
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,statut,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'SP', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        msg = 'statut doit être un code de statut_segment_val'
+        with self.assertRaises(psycopg2.InternalError, msg=msg):
+            self.cursor.execute(sql)
+
+    def test_trigger_segment_statut_amenagment_type_with_at(self):
+        """Test trigger segment statut_amenagement_type with defined amenagement_type"""
+        self.cursor.execute("TRUNCATE TABLE veloroutes.segment CASCADE")
+
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,amenagement_type,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'ASP', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        self.cursor.execute(sql)
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,amenagement_type,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'BCR', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        self.cursor.execute(sql)
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,amenagement_type,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'BSP', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        self.cursor.execute(sql)
+        res = """
+            SELECT veloroutes.segment.src_geom, veloroutes.segment.statut,
+            veloroutes.segment.amenagement, veloroutes.segment.amenagement_type
+            FROM veloroutes.segment
+            WHERE veloroutes.segment.gestionnaire='gestion_test';
+        """
+        self.cursor.execute(res)
+        record = self.cursor.fetchall()
+        self.assertEqual('src_geom_test', record[0][0])
+        self.assertEqual('ASP', record[0][1])
+        self.assertEqual('SP', record[0][2])
+        self.assertEqual('ASP', record[0][3])
+        self.assertEqual('RTE', record[1][1])
+        self.assertEqual('RTE', record[1][2])
+        self.assertEqual('BCR', record[1][3])
+        self.assertEqual('ASP', record[2][1])
+        self.assertEqual('SP', record[2][2])
+        self.assertEqual('BSP', record[2][3])
+
+        # Invalid amenagement_type
+        sql = """
+            INSERT INTO veloroutes.segment(annee_ouverture,date_saisie,
+                                           src_geom,src_annee,avancement,
+                                           revetement,amenagement_type,gestionnaire,
+                                           proprietaire,geom,precision,
+                                           sens_unique,geometrie_fictive)
+            VALUES ('2010-01-01', '2013-09-09', 'src_geom_test',
+                    '2010','04','LIS', 'SP', 'gestion_test', 'GOLBEY',
+                    ST_GeomFromText('LINESTRING(0 0,1 1)',2154), 'DC', 'F', 'F')
+        """
+        msg = 'amenagement_type doit être un code de amenagement_type_segment_val'
+        with self.assertRaises(psycopg2.InternalError, msg=msg):
+            self.cursor.execute(sql)
