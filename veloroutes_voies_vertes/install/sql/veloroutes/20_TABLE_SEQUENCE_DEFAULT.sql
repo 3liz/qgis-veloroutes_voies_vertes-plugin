@@ -20,6 +20,59 @@ SET default_tablespace = '';
 
 SET default_with_oids = false;
 
+-- amenagement_segment_val
+CREATE TABLE veloroutes.amenagement_segment_val (
+    id integer NOT NULL,
+    code text NOT NULL,
+    libelle text
+);
+
+
+-- amenagement_segment_val
+COMMENT ON TABLE veloroutes.amenagement_segment_val IS 'Nomenclature pour les aménagements de segment cyclable';
+
+
+-- amenagement_segment_val_id_seq
+CREATE SEQUENCE veloroutes.amenagement_segment_val_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- amenagement_segment_val_id_seq
+ALTER SEQUENCE veloroutes.amenagement_segment_val_id_seq OWNED BY veloroutes.amenagement_segment_val.id;
+
+
+-- amenagement_type_segment_val
+CREATE TABLE veloroutes.amenagement_type_segment_val (
+    id integer NOT NULL,
+    code text NOT NULL,
+    libelle text,
+    amenagement text NOT NULL
+);
+
+
+-- amenagement_type_segment_val
+COMMENT ON TABLE veloroutes.amenagement_type_segment_val IS 'Nomenclature pour les types d''aménagement de segment cyclable';
+
+
+-- amenagement_type_segment_val_id_seq
+CREATE SEQUENCE veloroutes.amenagement_type_segment_val_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+-- amenagement_type_segment_val_id_seq
+ALTER SEQUENCE veloroutes.amenagement_type_segment_val_id_seq OWNED BY veloroutes.amenagement_type_segment_val.id;
+
+
 -- booleen_val
 CREATE TABLE veloroutes.booleen_val (
     code text,
@@ -546,10 +599,13 @@ CREATE TABLE veloroutes.segment (
     proprietaire text,
     geom public.geometry(LineString,2154),
     "precision" text,
-    sens_unique text DEFAULT 'F'::text,
-    geometrie_fictive text DEFAULT 'F'::text,
+    sens_unique text,
+    geometrie_fictive text,
     id_on3v text,
-    id_local text
+    id_local text,
+    desserte_college text,
+    amenagement text NOT NULL,
+    amenagement_type text NOT NULL
 );
 
 
@@ -595,6 +651,14 @@ CREATE SEQUENCE veloroutes.statut_segment_val_id_seq
 
 -- statut_segment_val_id_seq
 ALTER SEQUENCE veloroutes.statut_segment_val_id_seq OWNED BY veloroutes.statut_segment_val.id;
+
+
+-- amenagement_segment_val id
+ALTER TABLE ONLY veloroutes.amenagement_segment_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.amenagement_segment_val_id_seq'::regclass);
+
+
+-- amenagement_type_segment_val id
+ALTER TABLE ONLY veloroutes.amenagement_type_segment_val ALTER COLUMN id SET DEFAULT nextval('veloroutes.amenagement_type_segment_val_id_seq'::regclass);
 
 
 -- booleen_val id

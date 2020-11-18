@@ -18,6 +18,26 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
+-- amenagement_segment_val amenagement_segment_val_code_key
+ALTER TABLE ONLY veloroutes.amenagement_segment_val
+    ADD CONSTRAINT amenagement_segment_val_code_key UNIQUE (code);
+
+
+-- amenagement_segment_val amenagement_segment_val_pkey
+ALTER TABLE ONLY veloroutes.amenagement_segment_val
+    ADD CONSTRAINT amenagement_segment_val_pkey PRIMARY KEY (id);
+
+
+-- amenagement_type_segment_val amenagement_type_segment_val_code_key
+ALTER TABLE ONLY veloroutes.amenagement_type_segment_val
+    ADD CONSTRAINT amenagement_type_segment_val_code_key UNIQUE (code);
+
+
+-- amenagement_type_segment_val amenagement_type_segment_val_pkey
+ALTER TABLE ONLY veloroutes.amenagement_type_segment_val
+    ADD CONSTRAINT amenagement_type_segment_val_pkey PRIMARY KEY (id);
+
+
 -- booleen_val booleen_val_pkey
 ALTER TABLE ONLY veloroutes.booleen_val
     ADD CONSTRAINT booleen_val_pkey PRIMARY KEY (id);
@@ -188,9 +208,29 @@ ALTER TABLE ONLY veloroutes.statut_segment_val
     ADD CONSTRAINT statut_segment_val_pkey PRIMARY KEY (id);
 
 
+-- segment amenagement
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT amenagement FOREIGN KEY (amenagement) REFERENCES veloroutes.amenagement_segment_val(code);
+
+
+-- segment amenagement_type
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT amenagement_type FOREIGN KEY (amenagement_type) REFERENCES veloroutes.amenagement_type_segment_val(code);
+
+
+-- amenagement_type_segment_val amenagement_type_amenagement
+ALTER TABLE ONLY veloroutes.amenagement_type_segment_val
+    ADD CONSTRAINT amenagement_type_amenagement FOREIGN KEY (amenagement) REFERENCES veloroutes.amenagement_segment_val(code);
+
+
 -- segment avancement
 ALTER TABLE ONLY veloroutes.segment
     ADD CONSTRAINT avancement FOREIGN KEY (avancement) REFERENCES veloroutes.etat_avancement_val(code);
+
+
+-- segment desserte_college_booleen
+ALTER TABLE ONLY veloroutes.segment
+    ADD CONSTRAINT desserte_college_booleen FOREIGN KEY (desserte_college) REFERENCES veloroutes.booleen_val(code);
 
 
 -- element element_portion_segment

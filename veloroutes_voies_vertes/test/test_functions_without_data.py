@@ -22,7 +22,7 @@ class TestSqlFunctions(DatabaseWithoutDataTestCase):
         self.cursor.execute(
             "SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'veloroutes';"
         )
-        self.assertEqual(27, self.cursor.fetchone()[0])
+        self.assertEqual(29, self.cursor.fetchone()[0])
 
         # Number of features
         self.cursor.execute(

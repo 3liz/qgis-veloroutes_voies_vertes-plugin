@@ -9,6 +9,7 @@ from qgis.core import (
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
     QgsProcessingContext,
+    QgsMapLayerType,
     QgsVectorLayer,
     QgsRasterLayer,
     QgsProviderRegistry,
@@ -122,14 +123,16 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         output_layers = []
         layers_name = ["repere", "poi_tourisme", "poi_service", "liaison", "segment"]
         layers_v_name = ["v_portion", "v_itineraire"]
-        tables_name = ["element", "etape", "portion", "itineraire"]
+        tables_name = ["element", "etape", "portion", "itineraire", "statut_segment_val",
+                       "amenagement_segment_val", "amenagement_type_segment_val"]
+        layers_to_load = layers_name + layers_v_name + tables_name
         connection = self.parameterAsString(parameters, self.DATABASE, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
-
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
         connection = metadata.findConnection(connection)
         uri = QgsDataSourceUri(connection.uri())
+        connection_info = uri.connectionInfo()
 
         is_host = uri.host() != ""
         if is_host:
@@ -139,28 +142,40 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         schema = self.parameterAsString(parameters, self.SCHEMA, context)
         feedback.pushInfo("")
+        feedback.pushInfo("## LISTE DES COUCHES A CHARGER ##")
+        for layer in context.project().mapLayers().values():
+            if layer.type() == QgsMapLayerType.VectorLayer and \
+               layer.dataProvider().name() == 'postgres':
+                l_uri = layer.dataProvider().uri()
+                table_name = l_uri.table()
+                if l_uri.connectionInfo() == connection_info and \
+                   l_uri.schema() == schema and \
+                   table_name in layers_to_load:
+                    layers_to_load.remove(table_name)
+
+        feedback.pushInfo("")
         feedback.pushInfo("## CHARGEMENT DES COUCHES ##")
 
-        # add geographical layers
-        for x in layers_name:
-            if not context.project().mapLayersByName(x):
+        # add vector
+        for x in layers_to_load:
+            if x in layers_name:
                 result = self.initLayer(context, uri, schema, x, "geom", "")
-                if not result:
-                    feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-                else:
-                    output_layers.append(result.id())
-        # add views
-        for x in layers_v_name:
-            if x == "v_portion":
-                pkey = "id_portion"
-            if x == "v_itineraire":
-                pkey = "id_itineraire"
-            if not context.project().mapLayersByName(x):
+            elif x in layers_v_name:
+                if x == "v_portion":
+                    pkey = "id_portion"
+                if x == "v_itineraire":
+                    pkey = "id_itineraire"
                 result = self.initLayer(
                     context, uri, schema, x, "geom", "", pkey
                 )
-                if not result:
-                    feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
+            elif x in tables_name:
+                result = self.initLayer(context, uri, schema, x, None, "")
+
+            if not result:
+                feedback.reportError("La couche '" + x + "' ne peut pas être chargée")
+            else:
+                output_layers.append(result.id())
+
         # add raster
         raster = self.parameterAsBool(parameters, self.RASTER, context)
         if raster:
@@ -171,13 +186,12 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                 result = self.XYZ(context, url_with_params, 'OpenStreetMap')
                 output_layers.append(result.id())
 
-        # add attribute tables
-        for x in tables_name:
-            if not context.project().mapLayersByName(x):
-                result = self.initLayer(context, uri, schema, x, None, "")
-                if not result:
-                    feedback.pushInfo("La couche " + x + " ne peut pas être chargée")
-                else:
-                    output_layers.append(result.id())
+        output_len = len(output_layers)
+        if output_len == 1:
+            msg = '{} couche chargée'.format(output_len)
+        elif output_len:
+            msg = '{} couches chargées'.format(output_len)
+        else:
+            msg = 'Aucunes couches chargées'
 
         return {self.OUTPUT_MSG: msg, self.OUTPUT: output_layers}

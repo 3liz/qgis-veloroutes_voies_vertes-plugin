@@ -48,6 +48,14 @@ COMMENT ON FUNCTION veloroutes.v_portion_insert() IS 'Effectue les insertions da
 COMMENT ON FUNCTION veloroutes.v_portion_update() IS 'Effectue les mises à jour dans la table portion lors de la saisie dans la vue v_portion';
 
 
+-- amenagement_segment_val
+COMMENT ON TABLE veloroutes.amenagement_segment_val IS 'Nomenclature pour les aménagements de segment cyclable';
+
+
+-- amenagement_type_segment_val
+COMMENT ON TABLE veloroutes.amenagement_type_segment_val IS 'Nomenclature pour les types d''aménagement de segment cyclable';
+
+
 -- element
 COMMENT ON TABLE veloroutes.element IS 'Table de liaison entre portion et segment. Une portion cyclable est une collection de segments cyclables continus. Un segment cyclable est un élément d’une ou plusieurs portions cyclables.';
 
@@ -555,6 +563,18 @@ COMMENT ON COLUMN veloroutes.segment.id_on3v IS 'Identifiant créé et géré pa
 
 -- segment.id_local
 COMMENT ON COLUMN veloroutes.segment.id_local IS 'Identifiant créé et géré par l''organisme local';
+
+
+-- segment.desserte_college
+COMMENT ON COLUMN veloroutes.segment.desserte_college IS 'Indique si le segment est une desserte de collège';
+
+
+-- segment.amenagement
+COMMENT ON COLUMN veloroutes.segment.amenagement IS 'Indique l''aménagement du segment';
+
+
+-- segment.amenagement_type
+COMMENT ON COLUMN veloroutes.segment.amenagement_type IS 'Indique le type d''aménagement du segment';
 
 
 -- statut_segment_val

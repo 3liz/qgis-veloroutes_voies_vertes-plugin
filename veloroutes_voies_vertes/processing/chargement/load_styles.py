@@ -3,13 +3,18 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
+import os
 from qgis.core import (
     QgsMapLayerType,
     QgsProcessingParameterString,
     QgsProcessingOutputString,
-    QgsProcessingParameterDefinition,
-    QgsRelation
+    QgsProcessingOutputMultipleLayers,
+    QgsRelation,
+    QgsMapLayerDependency,
+    QgsDataSourceUri,
+    QgsProviderRegistry,
 )
+
 from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import resources_path
@@ -20,7 +25,9 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     Chargement des couches adresse depuis la base de données
     """
 
-    INPUT = "INPUT"
+    DATABASE = "DATABASE"
+    SCHEMA = "SCHEMA"
+    OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
 
     def name(self):
@@ -40,18 +47,40 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
 
     def initAlgorithm(self, config):
         # INPUTS
-        parameter = QgsProcessingParameterString(
-            self.INPUT, "Champ qui ne sert à rien !", optional=True
+        db_param = QgsProcessingParameterString(
+            self.DATABASE, tr("Connexion à la base de données")
         )
-        parameter.setFlags(
-            parameter.flags() | QgsProcessingParameterDefinition.FlagHidden
+        db_param.setMetadata(
+            {
+                "widget_wrapper": {
+                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                }
+            }
         )
-        self.addParameter(parameter)
+        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
+        self.addParameter(db_param)
+
+        schema_param = QgsProcessingParameterString(
+            self.SCHEMA, tr("Schéma"), "veloroutes", False, True
+        )
+        schema_param.setMetadata(
+            {
+                "widget_wrapper": {
+                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                    "connection_param": self.DATABASE,
+                }
+            }
+        )
+        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
+        self.addParameter(schema_param)
 
         # OUTPUTS
-
         output = QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
         output.tooltip_3liz = output.description()
+        self.addOutput(output)
+
+        output = QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches dont le style a été modifié"))
+        output.tooltip_3liz = 'Les différentes couches de l\'extention véloroutes et voies vertes'
         self.addOutput(output)
 
     @staticmethod
@@ -66,62 +95,127 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         return rel
 
     def processAlgorithm(self, parameters, context, feedback):
-        _ = parameters
-        msg = ""
+        connection = self.parameterAsString(parameters, self.DATABASE, context)
 
-        layers = context.project().mapLayers().values()
-        vector_layers = [layer for layer in layers if layer.type() == QgsMapLayerType.VectorLayer]
+        # Get connection info
+        feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection)
+        uri = QgsDataSourceUri(connection.uri())
+        connection_info = uri.connectionInfo()
 
-        manager = context.project().relationManager()
-        manager.setRelations(manager.discoverRelations([], vector_layers))
+        is_host = uri.host() != ""
+        if is_host:
+            feedback.pushInfo("Connexion établie via l'hote")
+        else:
+            feedback.pushInfo("Connexion établie via le service")
 
-        vportion = context.project().mapLayersByName("v_portion")[0]
-        vitineraire = context.project().mapLayersByName("v_itineraire")[0]
-        segment = context.project().mapLayersByName("segment")[0]
-        etape = context.project().mapLayersByName("etape")[0]
-        element = context.project().mapLayersByName("element")[0]
+        # Get schema
+        schema = self.parameterAsString(parameters, self.SCHEMA, context)
 
-        rel1 = self.createRelation(
-            vportion.id(), etape.id(), "id_portion", "id_portion",
-            "vportion_etape", "etape_7d2f_id_portion_v_portion__id_portion")
-        rel2 = self.createRelation(
-            vportion.id(), element.id(), "id_portion", "id_portion",
-            "vportion_element", "element_87_id_portion_v_portion__id_portion")
-        rel3 = self.createRelation(
-            vitineraire.id(), etape.id(), "id_itineraire", "id_itineraire",
-            "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_itineraire")
-        rel4 = self.createRelation(
-            segment.id(), element.id(), "id_segment", "id_segment",
-            "segment_element", "element_34_id_segment_segment__id_segment")
-
-        manager.addRelation(rel1)
-        manager.addRelation(rel2)
-        manager.addRelation(rel3)
-        manager.addRelation(rel4)
-
-        self.layers_name = [
-            "repere", "poi_tourisme", "poi_service", "OpenStreetMap",
-            "portion", "itineraire", "liaison", "segment", "v_portion",
-            "v_itineraire", "etape", "element"
+        tables_name = [
+            "repere", "poi_tourisme", "poi_service", "portion", "itineraire",
+            "liaison", "segment", "v_portion", "v_itineraire", "etape", "element",
+            "statut_segment_val", "amenagement_segment_val", "amenagement_type_segment_val"
         ]
 
-        for x in self.layers_name:
-            layers = context.project().mapLayersByName(x)
-            if layers:
-                for layer in layers:
-                    feedback.pushInfo(layer.name() + ", qml loaded")
-                    layer.loadNamedStyle(resources_path("qml", x + ".qml"))
-                    feedback.pushInfo("Style for " + x + " successfully loaded")
-                    msg = msg + " // Style for " + x + " successfully loaded"
+        # Get available layers
+        self.available_layers = {}
+        feedback.pushInfo("")
+        feedback.pushInfo("## LISTE DES COUCHES A METTRE A JOUR ##")
+        for layer in context.project().mapLayers().values():
+            if layer.type() == QgsMapLayerType.VectorLayer and \
+               layer.dataProvider().name() == 'postgres':
+                l_uri = layer.dataProvider().uri()
+                table_name = l_uri.table()
+                if l_uri.connectionInfo() == connection_info and \
+                   l_uri.schema() == schema and \
+                   table_name in tables_name:
+                    self.available_layers[table_name] = layer.id()
+                    feedback.pushInfo("// {}".format(layer.name()))
 
-        return {self.OUTPUT_MSG: msg}
+        return {self.OUTPUT_MSG: '', self.OUTPUT: list(self.available_layers.values())}
 
     def postProcessAlgorithm(self, context, feedback):
+        feedback.pushInfo("postProcessAlgorithm")
+        msg = ''
 
-        for x in self.layers_name:
-            layers = context.project().mapLayersByName(x)
-            if layers:
-                for layer in layers:
+        # Get vector layers
+        vector_layers = {}
+        for table_name, l_id in self.available_layers.items():
+            vector_layers[table_name] = context.project().mapLayer(l_id)
+
+        # Discover relations
+        feedback.pushInfo("")
+        feedback.pushInfo("## DECOUVERTE DES RELATIONS ##")
+        manager = context.project().relationManager()
+        manager.setRelations(manager.discoverRelations([], list(vector_layers.values())))
+
+        # Add relations for views
+        feedback.pushInfo("")
+        feedback.pushInfo("## AJOUT DES RELATIONS AVEC LES VUES ##")
+        vportion = vector_layers.get('v_portion')
+        vitineraire = vector_layers.get('v_itineraire')
+        segment = vector_layers.get('segment')
+        etape = vector_layers.get('etape')
+        element = vector_layers.get('element')
+
+        if vportion and etape:
+            rel1 = self.createRelation(
+                vportion.id(), etape.id(), "id_portion", "id_portion",
+                "vportion_etape", "etape_7d2f_id_portion_v_portion__id_portion")
+            manager.addRelation(rel1)
+            feedback.pushInfo("// Relation entre {} et {}".format(vportion.name(), etape.name()))
+        if vportion and element:
+            rel2 = self.createRelation(
+                vportion.id(), element.id(), "id_portion", "id_portion",
+                "vportion_element", "element_87_id_portion_v_portion__id_portion")
+            manager.addRelation(rel2)
+            feedback.pushInfo("// Relation entre {} et {}".format(vportion.name(), element.name()))
+        if vitineraire and etape:
+            rel3 = self.createRelation(
+                vitineraire.id(), etape.id(), "id_itineraire", "id_itineraire",
+                "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_itineraire")
+            manager.addRelation(rel3)
+            feedback.pushInfo("// Relation entre {} et {}".format(vitineraire.name(), etape.name()))
+        if segment and element:
+            rel4 = self.createRelation(
+                segment.id(), element.id(), "id_segment", "id_segment",
+                "segment_element", "element_34_id_segment_segment__id_segment")
+            manager.addRelation(rel4)
+            feedback.pushInfo("// Relation entre {} et {}".format(segment.name(), element.name()))
+
+        # Add Dependencies
+        feedback.pushInfo("")
+        feedback.pushInfo("## AJOUT DES DEPENDANCES ##")
+        if vportion and segment:
+            vportion.setDependencies([QgsMapLayerDependency(segment.id())])
+        if vitineraire and segment:
+            vitineraire.setDependencies([QgsMapLayerDependency(segment.id())])
+
+        # Load layer styles
+        feedback.pushInfo("")
+        feedback.pushInfo("## CHARGEMENT DES STYLES ##")
+        msg = ''
+        for table_name, layer in vector_layers.items():
+            feedback.pushInfo("Recherche du style pour {} ({})".format(layer.name(), table_name))
+            style_path = resources_path("qml", table_name + ".qml")
+            if os.path.exists(style_path):
+                layer.loadNamedStyle(style_path)
+                feedback.pushInfo("Chargement du style pour {} ({})".format(layer.name(), table_name))
+                msg += " // Style de {} ({}) chargé".format(layer.name(), table_name)
+                layer.triggerRepaint()
+        # Apply to OpenStreetMap
+        osm_name = 'OpenStreetMap'
+        osm_layers = context.project().mapLayersByName(osm_name)
+        if osm_layers:
+            for layer in osm_layers:
+                feedback.pushInfo("Recherche du style pour {} ({})".format(layer.name(), osm_name))
+                style_path = resources_path("qml", osm_name + ".qml")
+                if os.path.exists(style_path):
+                    layer.loadNamedStyle(style_path)
+                    feedback.pushInfo("Chargement du style pour {} ({})".format(layer.name(), osm_name))
+                    msg += " // Style de {} ({}) chargé".format(layer.name(), osm_name)
                     layer.triggerRepaint()
 
-        return {}
+        return {self.OUTPUT_MSG: msg, self.OUTPUT: list(self.available_layers.values())}
