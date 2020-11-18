@@ -7,10 +7,10 @@
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
-SET idle_in_transaction_session_timeout = 0;
+
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
-SELECT pg_catalog.set_config('search_path', '', false);
+
 SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
@@ -2710,14 +2710,6 @@ INSERT INTO veloroutes.liaison ("precision", src_geom, src_annee, id_local, id_r
 
 
 --
--- Data for Name: metadata; Type: TABLE DATA; Schema: veloroutes; Owner: -
---
-
-INSERT INTO veloroutes.metadata (id, me_version, me_version_date, me_status) VALUES (1, '0.4.1', '2020-11-09', 1);
-INSERT INTO veloroutes.metadata (id, me_version, me_version_date, me_status) VALUES (2, '0.6.0', '2020-11-17', 1);
-
-
---
 -- Data for Name: poi_acces; Type: TABLE DATA; Schema: veloroutes; Owner: -
 --
 
@@ -2923,13 +2915,6 @@ SELECT pg_catalog.setval('veloroutes.itineraire_id_itineraire_seq', 8, false);
 --
 
 SELECT pg_catalog.setval('veloroutes.liaison_id_liaison_seq', 20, false);
-
-
---
--- Name: metadata_id_seq; Type: SEQUENCE SET; Schema: veloroutes; Owner: -
---
-
-SELECT pg_catalog.setval('veloroutes.metadata_id_seq', 2, true);
 
 
 --

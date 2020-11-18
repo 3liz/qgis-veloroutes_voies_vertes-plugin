@@ -33,9 +33,6 @@ reformat_sql:
 	@cd .docker && ./reformat_sql_install.sh
 	@cd .docker && ./stop.sh
 
-flake8:
-	@docker run --rm -w /plugin -v $(shell pwd):/plugin etrimaille/flake8:3.8.2
-
 github-pages:
 	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/README.md docs/index.html
 
@@ -43,6 +40,12 @@ processing-doc:
 	cd .docker && ./processing_doc.sh
 	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/README.md docs/processing/index.html
 
+export_test_data:
+	# NEED TO IMPROVE THE DUMP TO EXCLUDE metadata qgis version table
+	cd veloroutes_voies_vertes/install/sql && pg_dump service=vvv --data-only --inserts --column-inserts -n veloroutes --no-acl --no-owner --exclude-table "veloroutes.*_val" -f 99_test_data.sql
+	cd veloroutes_voies_vertes/install/sql && sed -i "s#SELECT pg_catalog.set_config('search_path', '', false);##g" 99_test_data.sql
+	cd veloroutes_voies_vertes/install/sql && sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" 99_test_data.sql
+	cd veloroutes_voies_vertes/install/sql && sed -i "s#SET default_table_access_method = heap##g" 99_test_data.sql
 
 generate_sql:
 	@echo 'Generate SQL into install files'
