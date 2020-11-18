@@ -3,8 +3,12 @@
 import os
 import unittest
 
-from veloroutes_voies_vertes.qgis_plugin_tools.tools.database import available_migrations
-from veloroutes_voies_vertes.qgis_plugin_tools.tools.resources import plugin_path
+from veloroutes_voies_vertes.qgis_plugin_tools.tools.database import (
+    available_migrations,
+)
+from veloroutes_voies_vertes.qgis_plugin_tools.tools.resources import (
+    plugin_path,
+)
 
 __copyright__ = "Copyright 2020, 3Liz"
 __license__ = "GPL version 3"

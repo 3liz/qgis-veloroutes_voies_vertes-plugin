@@ -6,16 +6,19 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 import processing
-from ..processing.provider import VeloroutesProvider as ProcessingProvider
+
 from qgis.core import (
     QgsApplication,
-    QgsVectorLayer,
+    QgsProcessingContext,
     QgsProject,
-    QgsProcessingContext
+    QgsVectorLayer,
+)
 
+from ..processing.provider import VeloroutesProvider as ProcessingProvider
+from ..qgis_plugin_tools.tools.logger_processing import (
+    LoggerProcessingFeedBack,
 )
 from ..qgis_plugin_tools.tools.resources import plugin_test_data_path
-from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
 
 
 class TestImport(DatabaseTestCase):

@@ -9,11 +9,10 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 
-from qgis.core import QgsApplication, QgsMessageLog, Qgis
+from qgis.core import Qgis, QgsApplication, QgsMessageLog
 from qgis.PyQt.QtWidgets import QMessageBox
 
 from .actions import actions
-
 from .processing.provider import VeloroutesProvider
 
 

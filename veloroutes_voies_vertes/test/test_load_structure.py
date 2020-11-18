@@ -1,20 +1,19 @@
 """Tests for Processing algorithms."""
 
 import os
-import psycopg2
 import time
 
 import processing
+import psycopg2
 
-from qgis.core import (
-    QgsApplication,
-    QgsProcessingException,
-)
+from qgis.core import QgsApplication, QgsProcessingException
 from qgis.testing import unittest
 
 from ..processing.provider import VeloroutesProvider as ProcessingProvider
 from ..qgis_plugin_tools.tools.database import available_migrations
-from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
+from ..qgis_plugin_tools.tools.logger_processing import (
+    LoggerProcessingFeedBack,
+)
 
 __copyright__ = "Copyright 2019, 3Liz"
 __license__ = "GPL version 3"

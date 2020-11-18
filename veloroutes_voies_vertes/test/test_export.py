@@ -5,16 +5,22 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
-from qgis.core import (
-    QgsProject,
-    QgsProcessingContext,
-)
-import processing
 import os.path
-# from os import listdir
-from ..qgis_plugin_tools.tools.logger_processing import LoggerProcessingFeedBack
+
+import processing
+
+from qgis.core import QgsProcessingContext, QgsProject
+
 from ..processing.provider import VeloroutesProvider as ProcessingProvider
-from ..qgis_plugin_tools.tools.resources import plugin_test_data_path, resources_path
+
+# from os import listdir
+from ..qgis_plugin_tools.tools.logger_processing import (
+    LoggerProcessingFeedBack,
+)
+from ..qgis_plugin_tools.tools.resources import (
+    plugin_test_data_path,
+    resources_path,
+)
 
 
 class TestExport(DatabaseTestCase):

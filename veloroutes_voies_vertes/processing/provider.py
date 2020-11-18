@@ -5,15 +5,16 @@ __revision__ = "$Format:%H$"
 
 from qgis.core import QgsProcessingProvider
 from qgis.PyQt.QtGui import QIcon
-from .database.create import CreateDatabaseStructure
-from .database.upgrade import UpgradeDatabaseStructure
+
+from ..qgis_plugin_tools.tools.resources import resources_path
 from .chargement.load_layers import LoadLayersAlgorithm
 from .chargement.load_styles import LoadStylesAlgorithm
-from ..qgis_plugin_tools.tools.resources import resources_path
 from .config.configure import ConfigurePlugin
-from .covadis.import_covadis import ImportCovadis
-from .covadis.export_covadis import ExportCovadis
 from .covadis.export_all import ExportCovadisAll
+from .covadis.export_covadis import ExportCovadis
+from .covadis.import_covadis import ImportCovadis
+from .database.create import CreateDatabaseStructure
+from .database.upgrade import UpgradeDatabaseStructure
 
 
 class VeloroutesProvider(QgsProcessingProvider):

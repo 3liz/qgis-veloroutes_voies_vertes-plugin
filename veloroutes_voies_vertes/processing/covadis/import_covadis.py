@@ -3,23 +3,25 @@ Created on Wed Jul 15 12:30:40 2020
 
 @author: enola sengeissen
 """
+import processing
+
 from qgis.core import (
+    QgsDataSourceUri,
     QgsProcessing,
-    QgsProcessingParameterVectorLayer,
+    QgsProcessingException,
     QgsProcessingOutputString,
     QgsProcessingParameterMatrix,
+    QgsProcessingParameterString,
+    QgsProcessingParameterVectorLayer,
     QgsProviderConnectionException,
     QgsProviderRegistry,
-    QgsProcessingParameterString,
     QgsVectorLayer,
-    QgsDataSourceUri,
-    QgsProcessingException
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.algorithm_processing import (
+    BaseProcessingAlgorithm,
+)
 from ...qgis_plugin_tools.tools.i18n import tr
-
-import processing
 
 
 class ImportCovadis(BaseProcessingAlgorithm):

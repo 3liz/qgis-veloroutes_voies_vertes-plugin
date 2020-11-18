@@ -6,21 +6,23 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
-    QgsProcessingParameterString,
-    QgsVectorLayer,
+    QgsDataSourceUri,
     QgsProcessingContext,
     QgsProcessingException,
     QgsProcessingOutputVectorLayer,
-    QgsWkbTypes,
-    QgsProcessingParameterEnum,
-    QgsVectorFileWriter,
-    QgsProcessingParameterFolderDestination,
     QgsProcessingParameterBoolean,
-    QgsDataSourceUri,
+    QgsProcessingParameterEnum,
+    QgsProcessingParameterFolderDestination,
+    QgsProcessingParameterString,
     QgsProviderRegistry,
+    QgsVectorFileWriter,
+    QgsVectorLayer,
+    QgsWkbTypes,
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.algorithm_processing import (
+    BaseProcessingAlgorithm,
+)
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import resources_path
 

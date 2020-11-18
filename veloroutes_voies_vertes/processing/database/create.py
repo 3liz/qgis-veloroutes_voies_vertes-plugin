@@ -7,24 +7,29 @@ import os
 
 from qgis.core import (
     Qgis,
-    QgsProcessingParameterString,
-    QgsProcessingParameterBoolean,
-    QgsProcessingOutputString,
     QgsExpressionContextUtils,
     QgsProcessingException,
-    QgsProviderRegistry,
+    QgsProcessingOutputString,
+    QgsProcessingParameterBoolean,
+    QgsProcessingParameterString,
     QgsProviderConnectionException,
+    QgsProviderRegistry,
 )
+
 if Qgis.QGIS_VERSION_INT >= 31400:
     from qgis.core import QgsProcessingParameterProviderConnection
 
-from ...qgis_plugin_tools.tools.database import (
-    available_migrations,
+from veloroutes_voies_vertes.processing.database.base import (
+    BaseDatabaseAlgorithm,
 )
+
+from ...qgis_plugin_tools.tools.database import available_migrations
 from ...qgis_plugin_tools.tools.i18n import tr
-from ...qgis_plugin_tools.tools.resources import plugin_test_data_path, plugin_path
+from ...qgis_plugin_tools.tools.resources import (
+    plugin_path,
+    plugin_test_data_path,
+)
 from ...qgis_plugin_tools.tools.version import version
-from veloroutes_voies_vertes.processing.database.base import BaseDatabaseAlgorithm
 
 SCHEMA = "veloroutes"
 

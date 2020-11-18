@@ -3,11 +3,10 @@ __license__ = "GPL version 3"
 __email__ = "info@3liz.org"
 
 import os
-import unittest
 import re
+import unittest
 
 from qgis.PyQt.QtXml import QDomDocument
-
 from qgis_plugin_tools.tools.resources import resources_path
 
 from veloroutes_voies_vertes import actions

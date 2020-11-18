@@ -8,14 +8,13 @@ Actions."""
 from functools import partial
 
 from qgis.core import (
-    QgsProviderRegistry,
+    QgsExpression,
     QgsExpressionContextUtils,
+    QgsFeature,
     QgsProject,
     QgsProviderConnectionException,
-    QgsExpression,
-    QgsFeature,
+    QgsProviderRegistry,
 )
-
 from qgis.utils import iface
 
 __copyright__ = 'Copyright 2019, 3Liz'

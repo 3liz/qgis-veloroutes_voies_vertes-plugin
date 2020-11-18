@@ -12,15 +12,17 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
+    QgsExpressionContextUtils,
     QgsProcessingException,
-    QgsProcessingParameterString,
-    QgsProcessingParameterBoolean,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
-    QgsExpressionContextUtils,
+    QgsProcessingParameterBoolean,
+    QgsProcessingParameterString,
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.algorithm_processing import (
+    BaseProcessingAlgorithm,
+)
 from ...qgis_plugin_tools.tools.database import (
     available_migrations,
     fetch_data_from_sql_query,

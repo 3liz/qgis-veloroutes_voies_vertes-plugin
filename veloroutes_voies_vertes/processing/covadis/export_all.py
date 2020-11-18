@@ -4,8 +4,9 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 import processing
-from .export_covadis import ExportCovadis
+
 from ...qgis_plugin_tools.tools.i18n import tr
+from .export_covadis import ExportCovadis
 
 
 class ExportCovadisAll(ExportCovadis):

@@ -4,19 +4,21 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
-    QgsProcessingParameterBoolean,
-    QgsProcessingParameterString,
+    QgsDataSourceUri,
+    QgsMapLayerType,
+    QgsProcessingContext,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
-    QgsProcessingContext,
-    QgsMapLayerType,
-    QgsVectorLayer,
-    QgsRasterLayer,
+    QgsProcessingParameterBoolean,
+    QgsProcessingParameterString,
     QgsProviderRegistry,
-    QgsDataSourceUri,
+    QgsRasterLayer,
+    QgsVectorLayer,
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import BaseProcessingAlgorithm
+from ...qgis_plugin_tools.tools.algorithm_processing import (
+    BaseProcessingAlgorithm,
+)
 from ...qgis_plugin_tools.tools.i18n import tr
 
 
