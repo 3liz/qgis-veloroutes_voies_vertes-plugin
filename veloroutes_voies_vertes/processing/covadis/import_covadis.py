@@ -6,6 +6,7 @@ Created on Wed Jul 15 12:30:40 2020
 import processing
 
 from qgis.core import (
+    Qgis,
     QgsDataSourceUri,
     QgsProcessing,
     QgsProcessingException,
@@ -17,6 +18,13 @@ from qgis.core import (
     QgsProviderRegistry,
     QgsVectorLayer,
 )
+
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import (
+        QgsProcessingParameterDatabaseSchema,
+        QgsProcessingParameterProviderConnection,
+        QgsProcessingParameterDatabaseTable,
+    )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import (
     BaseProcessingAlgorithm,
@@ -52,53 +60,91 @@ class ImportCovadis(BaseProcessingAlgorithm):
         return tr("Charger les données des différentes couches")
 
     def initAlgorithm(self, config):
-        # INPUTS
-        # Base de destination
-        db_param = QgsProcessingParameterString(
-            self.DATABASE, tr("Connexion à la base de données")
-        )
-        db_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion PostgreSQL vers la base de données")
+        tooltip = tr("Base de données de destination")
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.DATABASE,
+                label,
+                "postgres",
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.DATABASE, label)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        self.addParameter(db_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
-        # Schema de destination
-        schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "veloroutes", False, False
-        )
-        schema_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE,
+        # Schéma de destination
+        label = tr("Schéma")
+        tooltip = 'Nom du schéma où importer les données'
+        default = 'veloroutes'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseSchema(
+                self.SCHEMA,
+                label,
+                self.DATABASE,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                        "connection_param": self.DATABASE,
+                    }
                 }
-            }
-        )
-        schema_param.tooltip_3liz = 'Nom du schéma où importer les données'
-        self.addParameter(schema_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # Table de destination
-        table_param = QgsProcessingParameterString(
-            self.TABLE,
-            tr("Table de destination"),
-            'portion',
-            False
-        )
-        table_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.TableWidgetWrapper",
-                    "schema_param": self.SCHEMA
+        label = tr("Table de destination")
+        tooltip = 'Nom du schéma où importer les données'
+        default = 'portion'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseTable(
+                self.TABLE,
+                label,
+                self.DATABASE,
+                self.SCHEMA,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(
+                self.TABLE,
+                label,
+                default,
+                False
+            )
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.TableWidgetWrapper",
+                        "schema_param": self.SCHEMA
+                    }
                 }
-            }
-        )
-        # table_param.tooltip_3liz = 'Table de destination'
-        self.addParameter(table_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # Couche à importer
         couche = QgsProcessingParameterVectorLayer(
@@ -161,25 +207,31 @@ class ImportCovadis(BaseProcessingAlgorithm):
         Fonction qui adapte les données si besoin
         et insère la table dans le schéma veloroutes
         """
+        if 'poi' in table:
+            sql = "SELECT veloroutes.import_veloroutes_poi({})".format(table)
+        else:
+            sql = "SELECT veloroutes.import_veloroutes_{}()".format(table)
         try:
-            if 'poi' in table:
-                sql = "SELECT veloroutes.import_veloroutes_poi({})".format(table)
-            else:
-                sql = "SELECT veloroutes.import_veloroutes_{}()".format(table)
             connection.executeSql(sql)
-            feedback.pushInfo(tr("Insertion des données dans le schéma veloroutes fait"))
         except QgsProviderConnectionException as e:
-            msg = e.args[0]
-            raise QgsProcessingException(msg)
+            raise QgsProcessingException(str(e))
+        feedback.pushInfo(tr("Insertion des données dans le schéma veloroutes fait"))
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
 
-        connection = self.parameterAsString(parameters, self.DATABASE, context)
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection = self.parameterAsConnectionName(parameters, self.DATABASE, context)
+            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
+            table = self.parameterAsDatabaseTableName(parameters, self.TABLE, context)
+        else:
+            connection = self.parameterAsString(parameters, self.DATABASE, context)
+            schema = self.parameterAsString(parameters, self.SCHEMA, context)
+            table = self.parameterAsString(parameters, self.TABLE, context)
+
         conn = metadata.findConnection(connection)
-        schema = self.parameterAsString(parameters, self.SCHEMA, context)
-        table = self.parameterAsString(parameters, self.TABLE, context)
         input_layer = self.parameterAsVectorLayer(parameters, self.INPUT, context)
 
         geom = None
@@ -231,9 +283,9 @@ class ImportCovadis(BaseProcessingAlgorithm):
             k = matrix.index('lien_itin')
             c_lien_itin = {
                 'expression': matrix[k - 1],  # champs d'entrée
-                'length': 0,  # longueur de destinaion
+                'length': 0,  # longueur de destination
                 'name': 'lien_itin',  # champs de destination
-                'precision': 0,  # precision de destinaton
+                'precision': 0,  # precision de destination
                 'type': 2  # type de destination
             }
             field_map.append(c_lien_itin)

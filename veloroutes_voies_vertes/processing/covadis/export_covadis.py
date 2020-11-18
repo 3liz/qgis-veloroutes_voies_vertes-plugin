@@ -6,6 +6,7 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
+    Qgis,
     QgsDataSourceUri,
     QgsProcessingContext,
     QgsProcessingException,
@@ -19,6 +20,12 @@ from qgis.core import (
     QgsVectorLayer,
     QgsWkbTypes,
 )
+
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import (
+        QgsProcessingParameterDatabaseSchema,
+        QgsProcessingParameterProviderConnection,
+    )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import (
     BaseProcessingAlgorithm,
@@ -65,34 +72,57 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
     def initAlgorithm(self, config):
 
-        # Base contenant la table
-        db_param = QgsProcessingParameterString(
-            self.DATABASE, tr("Connexion à la base de données")
-        )
-        db_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion à la base de données")
+        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.DATABASE,
+                label,
+                "postgres",
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.DATABASE, label)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        self.addParameter(db_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
-        # Schema contenant la table
-        schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "veloroutes", False, False
-        )
-        schema_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE
+        # Schema de destination
+        label = tr("Schéma")
+        tooltip = 'Nom du schéma où importer les données'
+        default = 'veloroutes'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseSchema(
+                self.SCHEMA,
+                label,
+                self.DATABASE,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                        "connection_param": self.DATABASE,
+                    }
                 }
-            }
-        )
-        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
-        self.addParameter(schema_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # Table à exporter
         table_param = QgsProcessingParameterEnum(
@@ -240,7 +270,14 @@ class ExportCovadis(BaseProcessingAlgorithm):
             'poi_tourisme'
         ]
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
-        connection = self.parameterAsString(parameters, self.DATABASE, context)
+
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection = self.parameterAsConnectionName(parameters, self.DATABASE, context)
+            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
+        else:
+            connection = self.parameterAsString(parameters, self.DATABASE, context)
+            schema = self.parameterAsString(parameters, self.SCHEMA, context)
+
         table_int = self.parameterAsEnum(parameters, self.TABLE, context)
         table_name = self.EXPORTABLES[table_int]
         if table_name in table_without_geom or "val" in table_name:
@@ -257,7 +294,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
             name = 'v_portion'
             uri.setKeyColumn('id_portion')
         uri.setTable(name)
-        uri.setSchema(self.parameterAsString(parameters, self.SCHEMA, context))
+        uri.setSchema(schema)
         uri.setGeometryColumn(geom)
         layer = QgsVectorLayer(uri.uri(), table_name, "postgres")
         layer_name = layer.name()

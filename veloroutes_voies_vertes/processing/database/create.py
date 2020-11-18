@@ -237,6 +237,10 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
             raise QgsProcessingException(str(e))
 
         feedback.pushInfo("Version de la base de données '{}'.".format(metadata_version))
+
+        if run_migration:
+            feedback.reportError("You need to run migrations, old version installed !")
+
         results = {
             self.DATABASE_VERSION: metadata_version,
         }

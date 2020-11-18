@@ -12,11 +12,15 @@ __copyright__ = '(C) 2019 by 3liz'
 __revision__ = '$Format:%H$'
 
 from qgis.core import (
+    Qgis,
     QgsExpressionContextUtils,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsProcessingParameterString,
 )
+
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import QgsProcessingParameterProviderConnection
 
 from ...qgis_plugin_tools.tools.algorithm_processing import (
     BaseProcessingAlgorithm,
@@ -46,27 +50,32 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         return 'Ajoute la variable "veloroutes_connection_name" à QGIS.'
 
     def initAlgorithm(self, config):
-        """
-        Here we define the inputs and output of the algorithm, along
-        with some other properties.
-        """
-        # INPUTS
-
         # Database connection parameters
-        connection_name = QgsExpressionContextUtils.globalScope().variable('veloroutes_connection_name')
-        db_param = QgsProcessingParameterString(
-            self.CONNECTION_NAME,
-            'Connexion à la base PostgreSQL',
-            defaultValue=connection_name,
-            optional=False
-        )
-        db_param.setMetadata({
-            'widget_wrapper': {
-                'class': 'processing.gui.wrappers_postgis.ConnectionWidgetWrapper'
-            }
-        })
-        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        self.addParameter(db_param)
+        label = "Connexion PostgreSQL vers la base de données"
+        tooltip = "Base de données de destination"
+        default = QgsExpressionContextUtils.globalScope().variable('veloroutes_connection_name')
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.CONNECTION_NAME,
+                label,
+                "postgres",
+                optional=False,
+                defaultValue=default
+            )
+        else:
+            param = QgsProcessingParameterString(self.CONNECTION_NAME, label, defaultValue=default)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
+                }
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # OUTPUTS
         # Add output for status (integer)
@@ -80,10 +89,10 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         self.addOutput(output)
 
     def processAlgorithm(self, parameters, context, feedback):
-        """
-        Here is where the processing itself takes place.
-        """
-        connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
+        else:
+            connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
 
         # Set global variable
         # noinspection PyCallByClass,PyArgumentList

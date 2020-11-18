@@ -4,6 +4,7 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 from qgis.core import (
+    Qgis,
     QgsDataSourceUri,
     QgsMapLayerType,
     QgsProcessingContext,
@@ -15,6 +16,12 @@ from qgis.core import (
     QgsRasterLayer,
     QgsVectorLayer,
 )
+
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import (
+        QgsProcessingParameterDatabaseSchema,
+        QgsProcessingParameterProviderConnection,
+    )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import (
     BaseProcessingAlgorithm,
@@ -50,33 +57,56 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
                   "Vous pouvez aussi ajouter un fond raster OpenSreetMap")
 
     def initAlgorithm(self, config):
-        # INPUTS
-        db_param = QgsProcessingParameterString(
-            self.DATABASE, tr("Connexion à la base de données")
-        )
-        db_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion à la base de données")
+        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.DATABASE,
+                label,
+                "postgres",
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.DATABASE, label)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        self.addParameter(db_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
-        schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "veloroutes", False, True
-        )
-        schema_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE,
+        label = tr("Schéma")
+        tooltip = 'Nom du schéma pour importer les couches'
+        default = 'veloroutes'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseSchema(
+                self.SCHEMA,
+                label,
+                self.DATABASE,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                        "connection_param": self.DATABASE,
+                    }
                 }
-            }
-        )
-        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
-        self.addParameter(schema_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         self.addParameter(
             QgsProcessingParameterBoolean(
@@ -89,7 +119,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
 
         # OUTPUTS
         output = QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches de sortie"))
-        output.tooltip_3liz = 'Les différentes couches de l\'extention véloroutes et voies vertes'
+        output.tooltip_3liz = 'Les différentes couches de l\'extension véloroutes et voies vertes'
         self.addOutput(output)
 
         output = QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
@@ -128,7 +158,12 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         tables_name = ["element", "etape", "portion", "itineraire", "statut_segment_val",
                        "amenagement_segment_val", "amenagement_type_segment_val"]
         layers_to_load = layers_name + layers_v_name + tables_name
-        connection = self.parameterAsString(parameters, self.DATABASE, context)
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection = self.parameterAsConnectionName(parameters, self.DATABASE, context)
+            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
+        else:
+            connection = self.parameterAsString(parameters, self.DATABASE, context)
+            schema = self.parameterAsString(parameters, self.SCHEMA, context)
 
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
         metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
@@ -142,7 +177,6 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         else:
             feedback.pushInfo("Connexion établie via le service")
 
-        schema = self.parameterAsString(parameters, self.SCHEMA, context)
         feedback.pushInfo("")
         feedback.pushInfo("## LISTE DES COUCHES A CHARGER ##")
         for layer in context.project().mapLayers().values():

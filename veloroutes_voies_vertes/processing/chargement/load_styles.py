@@ -6,6 +6,7 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
+    Qgis,
     QgsDataSourceUri,
     QgsMapLayerDependency,
     QgsMapLayerType,
@@ -15,6 +16,12 @@ from qgis.core import (
     QgsProviderRegistry,
     QgsRelation,
 )
+
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import (
+        QgsProcessingParameterDatabaseSchema,
+        QgsProcessingParameterProviderConnection,
+    )
 
 from ...qgis_plugin_tools.tools.algorithm_processing import (
     BaseProcessingAlgorithm,
@@ -49,33 +56,56 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         return tr("Charger les styles pour les différentes couches.")
 
     def initAlgorithm(self, config):
-        # INPUTS
-        db_param = QgsProcessingParameterString(
-            self.DATABASE, tr("Connexion à la base de données")
-        )
-        db_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion PostgreSQL vers la base de données")
+        tooltip = tr("Base de données de destination")
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.DATABASE,
+                label,
+                "postgres",
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.DATABASE, label)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        db_param.tooltip_3liz = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
-        self.addParameter(db_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
-        schema_param = QgsProcessingParameterString(
-            self.SCHEMA, tr("Schéma"), "veloroutes", False, True
-        )
-        schema_param.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
-                    "connection_param": self.DATABASE,
+        label = tr("Schéma")
+        tooltip = 'Nom du schéma pour chercher les couches'
+        default = 'veloroutes'
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterDatabaseSchema(
+                self.SCHEMA,
+                label,
+                self.DATABASE,
+                defaultValue=default,
+                optional=False,
+            )
+        else:
+            param = QgsProcessingParameterString(self.SCHEMA, label, default, False, True)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.SchemaWidgetWrapper",
+                        "connection_param": self.DATABASE,
+                    }
                 }
-            }
-        )
-        schema_param.tooltip_3liz = 'Nom du schéma pour chercher les couches dans la base de données'
-        self.addParameter(schema_param)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         # OUTPUTS
         output = QgsProcessingOutputString(self.OUTPUT_MSG, tr("Message de sortie"))
@@ -98,7 +128,12 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         return rel
 
     def processAlgorithm(self, parameters, context, feedback):
-        connection = self.parameterAsString(parameters, self.DATABASE, context)
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection = self.parameterAsConnectionName(parameters, self.DATABASE, context)
+            schema = self.parameterAsSchema(parameters, self.SCHEMA, context)
+        else:
+            connection = self.parameterAsString(parameters, self.DATABASE, context)
+            schema = self.parameterAsString(parameters, self.SCHEMA, context)
 
         # Get connection info
         feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
@@ -112,9 +147,6 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
             feedback.pushInfo("Connexion établie via l'hote")
         else:
             feedback.pushInfo("Connexion établie via le service")
-
-        # Get schema
-        schema = self.parameterAsString(parameters, self.SCHEMA, context)
 
         tables_name = [
             "repere", "poi_tourisme", "poi_service", "portion", "itineraire",
