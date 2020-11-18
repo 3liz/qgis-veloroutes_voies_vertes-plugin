@@ -11,6 +11,7 @@ poi_tourisme_val
 poi_service_val
 poi_acces_val
 repere
+amenagement_type_segment_val
 itineraire
 portion
 statut_segment_val
@@ -18,6 +19,7 @@ revetement_val
 repere_val
 portion_val
 niveau_administratif_val
+amenagement_segment_val
 booleen_val
 poi
 etat_avancement_val

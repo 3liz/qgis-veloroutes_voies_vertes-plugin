@@ -97,6 +97,15 @@
                                 </thead>
                                 <tbody>
                                     <tr>
+                                        <td><a href="routines/v_portion_update.html">v_portion_update</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Effectue les mises à jour dans la table portion lors de la saisie dans la vue v_portion</p></td>
+                                    </tr>
+                                    <tr>
                                         <td><a href="routines/v_portion_insert.html">v_portion_insert</a></td>
                                         <td>FUNCTION</td>
                                         <td>PLPGSQL</td>
@@ -149,6 +158,15 @@
                                         <td>trigger</td>
                                         <td>INVOKER</td>
                                         <td><p>Effectue les insertions dans les tables itineraire et etape lors de la saisie dans la vue v_itineraire</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/v_itineraire_update.html">v_itineraire_update</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Effectue les mises à jour dans la table itineraire lors de la saisie dans la vue v_itineraire</p></td>
                                     </tr>
                                     <tr>
                                         <td><a href="routines/split.html">split</a></td>
@@ -214,6 +232,15 @@
                                         <td><p>Force le revêtement à être NULL si le segment est en projet ou fictif</p></td>
                                     </tr>
                                     <tr>
+                                        <td><a href="routines/statut_amenagment_type.html">statut_amenagment_type</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
                                         <td><a href="routines/insert_import_veloroutes_portion.html">insert_import_veloroutes_portion</a></td>
                                         <td>FUNCTION</td>
                                         <td>PLPGSQL</td>
@@ -221,6 +248,24 @@
                                         <td>integer</td>
                                         <td>INVOKER</td>
                                         <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/v_itineraire_delete.html">v_itineraire_delete</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Effectue la suppression dans les tables etape et itineraire lors de la suppression dans la vue v_itineraire</p></td>
+                                    </tr>
+                                    <tr>
+                                        <td><a href="routines/v_portion_delete.html">v_portion_delete</a></td>
+                                        <td>FUNCTION</td>
+                                        <td>PLPGSQL</td>
+                                        <td>false</td>
+                                        <td>trigger</td>
+                                        <td>INVOKER</td>
+                                        <td><p>Effectue la suppression dans les tables element, etapes et portion lors de la suppression dans la vue v_portion</p></td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -147,7 +147,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="element.id_portion references portion.id_portion via element_portion_segment"><a href='portion.html'>portion</a><span class='relatedKey'>.id_portion</span></td>
-                                                <td class="constraint detail">element_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">element_portion_segment<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -168,7 +168,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="element.id_segment references segment.id_segment via element_segment"><a href='segment.html'>segment</a><span class='relatedKey'>.id_segment</span></td>
-                                                <td class="constraint detail">element_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">element_segment<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -229,49 +229,53 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="236,41,453,199">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="23,5,174,152">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="5,169,192,463">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="256,41,473,199">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="33,5,184,152">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="5,169,212,551">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/element.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="528,228,745,385">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="315,101,466,248">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="297,296,484,589">
-<area shape="rect" id="node6" href="portion_val.html" target="_top" title="portion_val" alt="" coords="43,108,215,196">
-<area shape="rect" id="node7" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,213,253,301">
-<area shape="rect" id="node8" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="41,529,217,617">
-<area shape="rect" id="node9" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="26,319,233,407">
-<area shape="rect" id="node10" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="13,424,246,512">
-<area shape="rect" id="node4" href="etape.html" target="_top" title="etape" alt="" coords="571,5,702,93">
-<area shape="rect" id="node5" href="frequentation.html" target="_top" title="frequentation" alt="" coords="539,111,734,199">
+<area shape="rect" id="node1" href="amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="345,647,683,735">
+<area shape="rect" id="node2" href="amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="5,611,301,699">
+<area shape="rect" id="node3" href="element.html" target="_top" title="element" alt="" coords="977,237,1195,395">
+<area shape="rect" id="node4" href="portion.html" target="_top" title="portion" alt="" coords="755,64,905,211">
+<area shape="rect" id="node5" href="segment.html" target="_top" title="segment" alt="" coords="727,309,933,691">
+<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="428,84,600,172">
+<area shape="rect" id="node9" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="390,189,638,277">
+<area shape="rect" id="node10" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="426,505,602,593">
+<area shape="rect" id="node11" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="411,295,617,383">
+<area shape="rect" id="node12" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="397,400,631,488">
+<area shape="rect" id="node6" href="etape.html" target="_top" title="etape" alt="" coords="1021,5,1151,93">
+<area shape="rect" id="node7" href="frequentation.html" target="_top" title="frequentation" alt="" coords="989,111,1183,199">
 </map>
                                         <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/element.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="236,41,453,199">
-<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="23,5,174,152">
-<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="5,169,192,463">
+<area shape="rect" id="node1" href="element.html" target="_top" title="element" alt="" coords="256,41,473,199">
+<area shape="rect" id="node2" href="portion.html" target="_top" title="portion" alt="" coords="33,5,184,152">
+<area shape="rect" id="node3" href="segment.html" target="_top" title="segment" alt="" coords="5,169,212,551">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/element.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="326,623,502,711">
-<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,412,253,500">
-<area shape="rect" id="node3" href="element.html" target="_top" title="element" alt="" coords="805,379,1023,536">
-<area shape="rect" id="node4" href="portion.html" target="_top" title="portion" alt="" coords="593,217,743,364">
-<area shape="rect" id="node5" href="segment.html" target="_top" title="segment" alt="" coords="575,436,761,729">
-<area shape="rect" id="node8" href="portion_val.html" target="_top" title="portion_val" alt="" coords="328,256,500,344">
-<area shape="rect" id="node9" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="311,412,517,500">
-<area shape="rect" id="node10" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="297,517,531,605">
-<area shape="rect" id="node6" href="etape.html" target="_top" title="etape" alt="" coords="849,5,979,93">
-<area shape="rect" id="node7" href="frequentation.html" target="_top" title="frequentation" alt="" coords="817,111,1011,199">
-<area shape="rect" id="node11" href="v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="825,216,1003,280">
-<area shape="rect" id="node12" href="v_portion.html" target="_top" title="v_portion" alt="" coords="836,297,992,361">
+<area shape="rect" id="node1" href="amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="297,676,593,764">
+<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,535,253,623">
+<area shape="rect" id="node3" href="amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="637,744,975,832">
+<area shape="rect" id="node4" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="718,603,894,691">
+<area shape="rect" id="node5" href="element.html" target="_top" title="element" alt="" coords="1269,379,1487,536">
+<area shape="rect" id="node6" href="portion.html" target="_top" title="portion" alt="" coords="1047,220,1197,367">
+<area shape="rect" id="node7" href="segment.html" target="_top" title="segment" alt="" coords="1019,433,1225,815">
+<area shape="rect" id="node10" href="portion_val.html" target="_top" title="portion_val" alt="" coords="720,276,892,364">
+<area shape="rect" id="node11" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="342,429,549,517">
+<area shape="rect" id="node12" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="329,535,562,623">
+<area shape="rect" id="node8" href="etape.html" target="_top" title="etape" alt="" coords="1313,5,1443,93">
+<area shape="rect" id="node9" href="frequentation.html" target="_top" title="frequentation" alt="" coords="1281,111,1475,199">
+<area shape="rect" id="node13" href="v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="1289,216,1467,280">
+<area shape="rect" id="node14" href="v_portion.html" target="_top" title="v_portion" alt="" coords="1300,297,1456,361">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/element.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>

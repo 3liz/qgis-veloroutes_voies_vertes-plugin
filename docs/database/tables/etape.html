@@ -131,7 +131,7 @@ appartenir à plusieurs itinéraires.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="etape.id_portion references portion.id_portion via etape_portion_segment"><a href='portion.html'>portion</a><span class='relatedKey'>.id_portion</span></td>
-                                                <td class="constraint detail">etape_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">etape_portion_segment<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>
@@ -152,7 +152,7 @@ appartenir à plusieurs itinéraires.</p>
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="etape.id_itineraire references itineraire.id_itineraire via etape_itineraire_portion"><a href='itineraire.html'>itineraire</a><span class='relatedKey'>.id_itineraire</span></td>
-                                                <td class="constraint detail">etape_itineraire_portion<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">etape_itineraire_portion<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                         </table>
                                     </td>

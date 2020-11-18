@@ -126,11 +126,11 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="element.id_portion references portion.id_portion via element_portion_segment"><a href='element.html'>element</a><span class='relatedKey'>.id_portion</span></td>
-                                                <td class="constraint detail">element_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">element_portion_segment<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="etape.id_portion references portion.id_portion via etape_portion_segment"><a href='etape.html'>etape</a><span class='relatedKey'>.id_portion</span></td>
-                                                <td class="constraint detail">etape_portion_segment<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">etape_portion_segment<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="frequentation.id_portion references portion.id_portion via portion"><a href='frequentation.html'>frequentation</a><span class='relatedKey'>.id_portion</span></td>

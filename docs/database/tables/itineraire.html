@@ -211,7 +211,7 @@
                                         <table border='0' cellspacing='0' cellpadding='0'>
                                             <tr>
                                                 <td title="etape.id_itineraire references itineraire.id_itineraire via etape_itineraire_portion"><a href='etape.html'>etape</a><span class='relatedKey'>.id_itineraire</span></td>
-                                                <td class="constraint detail">etape_itineraire_portion<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                                <td class="constraint detail">etape_itineraire_portion<span title='Cascade on delete:&#10;Deletion of parent deletes child'>C</span></td>
                                             </tr>
                                             <tr>
                                                 <td title="v_itin_geom.id_itineraire&#39;s name implies that it&#39;s a child of itineraire.id_itineraire, but it doesn&#39;t reference that column."><a href='v_itin_geom.html'>v_itin_geom</a><span class='relatedKey'>.id_itineraire</span></td>
@@ -442,12 +442,12 @@
                                     </div>
                                     <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="347,512,523,659">
-<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,515,253,603">
+<area shape="rect" id="node1" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="347,560,523,707">
+<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,563,253,651">
 <area shape="rect" id="node3" href="etape.html" target="_top" title="etape" alt="" coords="1013,35,1159,211">
 <area shape="rect" id="node4" href="itineraire.html" target="_top" title="itineraire" alt="" coords="616,111,947,561">
 <area shape="rect" id="node5" href="portion.html" target="_top" title="portion" alt="" coords="710,5,853,93">
-<area shape="rect" id="node6" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="297,348,572,495">
+<area shape="rect" id="node6" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="297,380,572,527">
 <area shape="rect" id="node7" href="segment.html" target="_top" title="segment" alt="" coords="706,579,857,667">
 <area shape="rect" id="node8" href="v_itin_geom.html" target="_top" title="v_itin_geom" alt="" coords="1000,244,1172,337">
 <area shape="rect" id="node9" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="991,355,1181,448">
