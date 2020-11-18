@@ -1,5 +1,17 @@
 ## CHANGELOG
 
+### 0.7.0 - 18/11/2020
+
+* Modification de la table segment avec ajout des champs desserte_college, amenagement et amenagement_type
+* Ajout des table de valeurs pour amenagement et amenagment_type
+* Définition des clés étrangères
+* Modification de l'algo de chargements de couches
+* Mise à jours des qml en conséquence
+* Amélioration de l'algo de chargements des styles
+* Ajout d'un trigger pour respecter la logique entre statut et amenagement_type
+* Amélioration du processus des migrations de la base de données
+* Début du portage vers QGIS 3.16
+
 ### 0.6.0 - 10/11/2020
 
 * DELETE ON CASCADE pour les clés étrangères des éléments et étapes
