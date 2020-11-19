@@ -37,6 +37,13 @@ class TestProcessing(unittest.TestCase):
         del self.connection
         time.sleep(1)
 
+    def _count_database_version_info(self):
+        """ Internal function to count the number of database version in the database. """
+        sql = "SELECT COUNT(*) FROM veloroutes.metadata;"
+        self.cursor.execute(sql)
+        record = self.cursor.fetchone()
+        self.assertEqual(1, record[0])
+
     def test_load_structure_with_migration(self):
         """Test we can load the PostGIS structure with migrations."""
         provider = ProcessingProvider()
@@ -178,6 +185,7 @@ class TestProcessing(unittest.TestCase):
             "v_itineraire"
         ]
         self.assertCountEqual(expected, result)
+        self._count_database_version_info()
 
     def test_load_structure_without_migrations(self):
         """Test we can load the PostGIS structure without migrations."""
@@ -269,3 +277,4 @@ class TestProcessing(unittest.TestCase):
             "n'est nécessaire",
             results["OUTPUT_STRING"],
         )
+        self._count_database_version_info()
