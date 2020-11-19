@@ -61,6 +61,7 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
             "veloroutes_connection_name"
         )
         label = tr("Connexion PostgreSQL vers la base de données")
+        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
         if Qgis.QGIS_VERSION_INT >= 31400:
             param = QgsProcessingParameterProviderConnection(
                 self.CONNECTION_NAME,
@@ -83,6 +84,10 @@ class CreateDatabaseStructure(BaseDatabaseAlgorithm):
                     }
                 }
             )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
         self.addParameter(param)
 
         self.addParameter(

@@ -12,21 +12,25 @@ __revision__ = "$Format:%H$"
 import os
 
 from qgis.core import (
+    Qgis,
     QgsExpressionContextUtils,
     QgsProcessingException,
     QgsProcessingOutputNumber,
     QgsProcessingOutputString,
     QgsProcessingParameterBoolean,
     QgsProcessingParameterString,
+    QgsProviderConnectionException,
+    QgsProviderRegistry,
 )
 
-from ...qgis_plugin_tools.tools.algorithm_processing import (
-    BaseProcessingAlgorithm,
+if Qgis.QGIS_VERSION_INT >= 31400:
+    from qgis.core import QgsProcessingParameterProviderConnection
+
+from veloroutes_voies_vertes.processing.database.base import (
+    BaseDatabaseAlgorithm,
 )
-from ...qgis_plugin_tools.tools.database import (
-    available_migrations,
-    fetch_data_from_sql_query,
-)
+
+from ...qgis_plugin_tools.tools.database import available_migrations
 from ...qgis_plugin_tools.tools.i18n import tr
 from ...qgis_plugin_tools.tools.resources import plugin_path
 from ...qgis_plugin_tools.tools.version import format_version_integer, version
@@ -34,7 +38,7 @@ from ...qgis_plugin_tools.tools.version import format_version_integer, version
 SCHEMA = "veloroutes"
 
 
-class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
+class UpgradeDatabaseStructure(BaseDatabaseAlgorithm):
 
     CONNECTION_NAME = "CONNECTION_NAME"
     RUN_MIGRATIONS = "RUN_MIGRATIONS"
@@ -47,36 +51,38 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
     def displayName(self):
         return tr("Mise à jour de la structure de la base")
 
-    def group(self):
-        return tr("Structure")
-
-    def groupId(self):
-        return "veloroutes_structure"
-
     def shortHelpString(self):
         return tr(
             "Mise à jour de la base de données suite à une nouvelle version de l'extension."
         )
 
     def initAlgorithm(self, config):
-        # INPUTS
-        connection_name = QgsExpressionContextUtils.globalScope().variable(
-            "veloroutes_connection_name"
-        )
-        db_param_a = QgsProcessingParameterString(
-            self.CONNECTION_NAME,
-            tr("Connexion PostgreSQL vers la base de données"),
-            defaultValue=connection_name,
-            optional=False,
-        )
-        db_param_a.setMetadata(
-            {
-                "widget_wrapper": {
-                    "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+        label = tr("Connexion à la base de données")
+        tooltip = 'Nom de la connexion dans QGIS pour se connecter à la base de données'
+        default = QgsExpressionContextUtils.globalScope().variable("veloroutes_connection_name")
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            param = QgsProcessingParameterProviderConnection(
+                self.CONNECTION_NAME,
+                label,
+                "postgres",
+                optional=False,
+                defaultValue=default
+            )
+        else:
+            param = QgsProcessingParameterString(
+                self.CONNECTION_NAME, label, optional=False, defaultValue=default)
+            param.setMetadata(
+                {
+                    "widget_wrapper": {
+                        "class": "processing.gui.wrappers_postgis.ConnectionWidgetWrapper"
+                    }
                 }
-            }
-        )
-        self.addParameter(db_param_a)
+            )
+        if Qgis.QGIS_VERSION_INT >= 31600:
+            param.setHelp(tooltip)
+        else:
+            param.tooltip_3liz = tooltip
+        self.addParameter(param)
 
         self.addParameter(
             QgsProcessingParameterBoolean(
@@ -117,12 +123,17 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         """.format(
             SCHEMA
         )
-        connection_name = self.parameterAsString(
-            parameters, self.CONNECTION_NAME, context
-        )
-        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            return ok, error_message
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
+        else:
+            connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
+
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
+        try:
+            data = connection.executeSql(sql)
+        except QgsProviderConnectionException as e:
+            raise QgsProcessingException(str(e))
 
         ok = False
         msg = tr("Le schéma {} n'existe pas dans la base de données !").format(SCHEMA)
@@ -134,9 +145,13 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         return ok, msg
 
     def processAlgorithm(self, parameters, context, feedback):
-        connection_name = self.parameterAsString(
-            parameters, self.CONNECTION_NAME, context
-        )
+        if Qgis.QGIS_VERSION_INT >= 31400:
+            connection_name = self.parameterAsConnectionName(parameters, self.CONNECTION_NAME, context)
+        else:
+            connection_name = self.parameterAsString(parameters, self.CONNECTION_NAME, context)
+
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        connection = metadata.findConnection(connection_name)
 
         # Drop schema if needed
         run_migrations = self.parameterAsBool(parameters, self.RUN_MIGRATIONS, context)
@@ -154,9 +169,10 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
         """.format(
             SCHEMA
         )
-        _, data, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            raise QgsProcessingException(error_message)
+        try:
+            data = connection.executeSql(sql)
+        except QgsProviderConnectionException as e:
+            raise QgsProcessingException(str(e))
 
         db_version = None
         for a in data:
@@ -204,45 +220,37 @@ class UpgradeDatabaseStructure(BaseProcessingAlgorithm):
             sql_file = os.path.join(plugin_path(), "install/sql/upgrade/{}".format(sf))
             with open(sql_file, "r") as f:
                 sql = f.read()
-                if len(sql.strip()) == 0:
-                    feedback.pushInfo("* " + sf + " -- NON TRAITÉ (FICHIER VIDE)")
-                    continue
 
-                # Add SQL database version in veloroutes.metadata
-                new_db_version = (
-                    sf.replace("upgrade_to_", "").replace(".sql", "").strip()
-                )
-                feedback.pushInfo("* NOUVELLE VERSION BDD " + new_db_version)
-                sql += """
-                    UPDATE {}.metadata
-                    SET (me_version, me_version_date)
-                    = ( '{}', now()::timestamp(0) );
-                """.format(
-                    SCHEMA, new_db_version
-                )
+            if len(sql.strip()) == 0:
+                feedback.pushInfo("* " + sf + " -- NON TRAITÉ (FICHIER VIDE)")
+                continue
 
-                _, _, _, ok, error_message = fetch_data_from_sql_query(
-                    connection_name, sql
-                )
-                if not ok:
-                    raise QgsProcessingException(error_message)
+            try:
+                connection.executeSql(sql)
+            except QgsProviderConnectionException as e:
+                raise QgsProcessingException(str(e))
 
-                feedback.pushInfo("* " + sf + " -- OK !")
+            # Add SQL database version in veloroutes.metadata
+            new_db_version = (sf.replace("upgrade_to_", "").replace(".sql", "").strip())
+            self.upgrade_database_version(connection, new_db_version)
+
+            feedback.pushInfo("* " + sf + " -- OK !")
 
         # Everything is fine, we now update to the plugin version
-        sql = """
-            UPDATE {}.metadata
-            SET (me_version, me_version_date)
-            = ( '{}', now()::timestamp(0) );
-        """.format(
-            SCHEMA, plugin_version
-        )
-
-        _, _, _, ok, error_message = fetch_data_from_sql_query(connection_name, sql)
-        if not ok:
-            raise QgsProcessingException(error_message)
+        self.upgrade_database_version(connection, plugin_version)
 
         msg = tr("*** LA STRUCTURE A BIEN ÉTÉ MISE À JOUR SUR LA BASE DE DONNÉES ***")
         feedback.pushInfo(msg)
 
         return {self.OUTPUT_STATUS: 1, self.OUTPUT_STRING: msg}
+
+    @staticmethod
+    def upgrade_database_version(connection, plugin_version):
+        sql = """
+            UPDATE {}.metadata
+            SET (me_version, me_version_date) = ( '{}', now()::timestamp(0) );
+        """.format(SCHEMA, plugin_version)
+        try:
+            connection.executeSql(sql)
+        except QgsProviderConnectionException as e:
+            raise QgsProcessingException(str(e))
