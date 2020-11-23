@@ -4,6 +4,8 @@
 
 * Support de QGIS 3.16
 * Amélioration des migrations des bases de données
+* Ajout des champs convention et type_pluriannuel
+* Modification des formulaires par glisser déposer
 
 ### 0.7.0 - 18/11/2020
 
