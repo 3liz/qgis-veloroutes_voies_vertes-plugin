@@ -631,15 +631,15 @@
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting type="1" shortTitle="Suppression d'éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'del')" id="{6745080f-80dd-427f-b842-9bb38f298184}">
+    <actionsetting type="1" shortTitle="Suppression d'éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'del')" id="{8e0c666c-72be-4cc7-80a4-ea706b781065}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting type="1" shortTitle="Ajouter des éléments de portion " isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'add')" id="{7fa28415-9bc4-46e6-b8a0-48e65f321178}">
+    <actionsetting type="1" shortTitle="Ajouter des éléments de portion " isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'add')" id="{c5ac501e-8fe3-4c3b-b809-9bf53cccc55c}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting type="1" shortTitle="Créer un itinéraire" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Créer un itinéraire à partir de portions sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('create_relation', [% '\''||@layer_name||'\'' %] , 'itineraire', 'etape', 'id_itineraire', 'id_portion', 'v_itineraire')" id="{d2d60269-43b9-4e4f-8350-8c8d0d2e5750}">
+    <actionsetting type="1" shortTitle="Créer un itinéraire" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Créer un itinéraire à partir de portions sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('create_relation', [% '\''||@layer_name||'\'' %] , 'itineraire', 'etape', 'id_itineraire', 'id_portion', 'v_itineraire')" id="{069dd853-4c82-4113-9d7a-1ec7d4110b33}">
       <actionScope id="Layer"/>
       <actionScope id="Canvas"/>
     </actionsetting>
@@ -686,13 +686,31 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorField index="1" showLabel="1" name="nom"/>
-    <attributeEditorField index="2" showLabel="1" name="description"/>
-    <attributeEditorField index="3" showLabel="1" name="type_portion"/>
-    <attributeEditorRelation showLinkButton="1" showLabel="1" name="" showUnlinkButton="1" relation=""/>
-    <attributeEditorRelation showLinkButton="1" showLabel="1" name="" showUnlinkButton="1" relation=""/>
+    <attributeEditorField index="0" showLabel="1" name="id_portion"/>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Informations" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Covadis" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="5" showLabel="1" name="id_local"/>
+        <attributeEditorField index="4" showLabel="1" name="id_on3v"/>
+        <attributeEditorField index="1" showLabel="1" name="nom"/>
+        <attributeEditorField index="3" showLabel="1" name="type_portion"/>
+        <attributeEditorField index="2" showLabel="1" name="description"/>
+      </attributeEditorContainer>
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Subvention" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="9" showLabel="1" name="type_pluriannuel"/>
+        <attributeEditorField index="8" showLabel="1" name="convention"/>
+        <attributeEditorField index="7" showLabel="1" name="annee_subv"/>
+        <attributeEditorField index="6" showLabel="1" name="mont_subv"/>
+      </attributeEditorContainer>
+      <attributeEditorField index="10" showLabel="1" name="longueur"/>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Segments" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="element_87_id_portion_v_portion__id_portion" showUnlinkButton="1" relation="element_87_id_portion_v_portion__id_portion"/>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Étapes" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="etape_7d2f_id_portion_v_portion__id_portion" showUnlinkButton="1" relation="etape_7d2f_id_portion_v_portion__id_portion"/>
+    </attributeEditorContainer>
   </attributeEditorForm>
   <editable>
     <field editable="1" name="annee_subv"/>
@@ -728,7 +746,7 @@ def my_form_open(dialog, layer, feature):
     </widget>
     <widget name="etape_7d2f_id_portion_v_portion__id_portion">
       <config type="Map">
-        <Option type="QString" value="etape_7d2f_id_itineraire_v_itinerai_id_itineraire" name="nm-rel"/>
+        <Option type="QString" value="" name="nm-rel"/>
       </config>
     </widget>
   </widgets>

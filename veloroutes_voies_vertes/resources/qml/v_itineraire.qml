@@ -713,11 +713,11 @@
   <expressionfields/>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting type="1" shortTitle="Suppression d'étape" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" id="{4fa09c5b-7db8-46dc-8e3b-29a0f7c3ccbc}">
+    <actionsetting type="1" shortTitle="Suppression d'étape" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" id="{e7f7da1c-4077-48aa-8d98-a8e7cd610203}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting type="1" shortTitle="Ajouter des étapes" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des étapes à partir de portions sélectionnées" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" id="{8506a116-7716-49b7-8486-abffef5e3dee}">
+    <actionsetting type="1" shortTitle="Ajouter des étapes" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des étapes à partir de portions sélectionnées" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" id="{9a7af9b1-691e-4872-b847-9e1aa55ea061}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
@@ -768,18 +768,32 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
   <attributeEditorForm>
-    <attributeEditorField index="1" showLabel="1" name="numero"/>
-    <attributeEditorField index="2" showLabel="1" name="nom_officiel"/>
-    <attributeEditorField index="3" showLabel="1" name="nom_usage"/>
-    <attributeEditorField index="4" showLabel="1" name="depart"/>
-    <attributeEditorField index="5" showLabel="1" name="arrivee"/>
-    <attributeEditorField index="6" showLabel="1" name="annee_inscription"/>
-    <attributeEditorField index="7" showLabel="1" name="site_web"/>
-    <attributeEditorField index="8" showLabel="1" name="annee_ouverture"/>
-    <attributeEditorField index="9" showLabel="1" name="niveau_schema"/>
-    <attributeEditorField index="10" showLabel="1" name="est_inscrit"/>
+    <attributeEditorField index="0" showLabel="1" name="id_itineraire"/>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Informations" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Covadis" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="1" showLabel="1" name="numero"/>
+        <attributeEditorField index="2" showLabel="1" name="nom_officiel"/>
+        <attributeEditorField index="3" showLabel="1" name="nom_usage"/>
+        <attributeEditorField index="4" showLabel="1" name="depart"/>
+        <attributeEditorField index="5" showLabel="1" name="arrivee"/>
+        <attributeEditorField index="9" showLabel="1" name="niveau_schema"/>
+        <attributeEditorField index="7" showLabel="1" name="site_web"/>
+        <attributeEditorField index="8" showLabel="1" name="annee_ouverture"/>
+        <attributeEditorField index="10" showLabel="1" name="est_inscrit"/>
+        <attributeEditorField index="6" showLabel="1" name="annee_inscription"/>
+      </attributeEditorContainer>
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Subvention" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="11" showLabel="1" name="mont_subv"/>
+        <attributeEditorField index="12" showLabel="1" name="annee_subv"/>
+        <attributeEditorField index="13" showLabel="1" name="type_pluriannuel"/>
+      </attributeEditorContainer>
+      <attributeEditorField index="14" showLabel="1" name="longueur"/>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Étapes" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="etape_7d2f_id_itineraire_v_itinerai_id_itineraire" showUnlinkButton="1" relation="etape_7d2f_id_itineraire_v_itinerai_id_itineraire"/>
+    </attributeEditorContainer>
   </attributeEditorForm>
   <editable>
     <field editable="1" name="annee_inscription"/>
@@ -825,11 +839,11 @@ def my_form_open(dialog, layer, feature):
     </widget>
     <widget name="etape_7d2f_id_itineraire_v_itinerai_id_itineraire">
       <config type="Map">
-        <Option type="QString" value="etape_7d2f_id_portion_v_portion__id_portion" name="nm-rel"/>
+        <Option type="QString" value="" name="nm-rel"/>
       </config>
     </widget>
   </widgets>
-  <previewExpression>"id_iti"</previewExpression>
+  <previewExpression>"numero"</previewExpression>
   <mapTip></mapTip>
   <layerGeometryType>1</layerGeometryType>
 </qgis>

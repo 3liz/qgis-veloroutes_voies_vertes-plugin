@@ -1,17 +1,19 @@
 <!DOCTYPE qgis PUBLIC 'http://mrcc.com/qgis.dtd' 'SYSTEM'>
-<qgis styleCategories="AllStyleCategories" maxScale="0" readOnly="0" version="3.10.10-A Coruña" minScale="1e+8" hasScaleBasedVisibilityFlag="0">
+<qgis maxScale="0" version="3.10.10-A Coruña" hasScaleBasedVisibilityFlag="0" readOnly="0" minScale="1e+8" styleCategories="AllStyleCategories">
   <flags>
     <Identifiable>1</Identifiable>
     <Removable>1</Removable>
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property key="dualview/previewExpressions" value="&quot;id_portion&quot;"/>
-    <property key="embeddedWidgets/count" value="0"/>
+    <property key="dualview/previewExpressions">
+      <value>"id_portion"</value>
+    </property>
+    <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
   </customproperties>
-  <geometryOptions removeDuplicateNodes="0" geometryPrecision="0">
+  <geometryOptions geometryPrecision="0" removeDuplicateNodes="0">
     <activeChecks/>
     <checkConfiguration/>
   </geometryOptions>
@@ -20,14 +22,14 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option name="AllowAddFeatures" value="false" type="bool"/>
-            <Option name="AllowNULL" value="true" type="bool"/>
-            <Option name="MapIdentification" value="true" type="bool"/>
-            <Option name="OrderByValue" value="false" type="bool"/>
-            <Option name="ReadOnly" value="false" type="bool"/>
-            <Option name="Relation" value="etape_7d2f_id_portion_v_portion__id_portion" type="QString"/>
-            <Option name="ShowForm" value="false" type="bool"/>
-            <Option name="ShowOpenFormButton" value="true" type="bool"/>
+            <Option type="bool" value="false" name="AllowAddFeatures"/>
+            <Option type="bool" value="true" name="AllowNULL"/>
+            <Option type="bool" value="true" name="MapIdentification"/>
+            <Option type="bool" value="false" name="OrderByValue"/>
+            <Option type="bool" value="false" name="ReadOnly"/>
+            <Option type="QString" value="etape_7d2f_id_portion_v_portion__id_portion" name="Relation"/>
+            <Option type="bool" value="false" name="ShowForm"/>
+            <Option type="bool" value="true" name="ShowOpenFormButton"/>
           </Option>
         </config>
       </editWidget>
@@ -36,14 +38,14 @@
       <editWidget type="RelationReference">
         <config>
           <Option type="Map">
-            <Option name="AllowAddFeatures" value="false" type="bool"/>
-            <Option name="AllowNULL" value="true" type="bool"/>
-            <Option name="MapIdentification" value="false" type="bool"/>
-            <Option name="OrderByValue" value="false" type="bool"/>
-            <Option name="ReadOnly" value="false" type="bool"/>
-            <Option name="Relation" value="etape_008e0743_3f06_431d_afbb_0c8da7d8e66f_id_itineraire_itineraire_37f151ab_0ac8_4003_b653_f83e948fd3f8_id_itineraire" type="QString"/>
-            <Option name="ShowForm" value="false" type="bool"/>
-            <Option name="ShowOpenFormButton" value="true" type="bool"/>
+            <Option type="bool" value="false" name="AllowAddFeatures"/>
+            <Option type="bool" value="true" name="AllowNULL"/>
+            <Option type="bool" value="false" name="MapIdentification"/>
+            <Option type="bool" value="false" name="OrderByValue"/>
+            <Option type="bool" value="false" name="ReadOnly"/>
+            <Option type="QString" value="etape_7d2f_id_itineraire_v_itinerai_id_itineraire" name="Relation"/>
+            <Option type="bool" value="false" name="ShowForm"/>
+            <Option type="bool" value="true" name="ShowOpenFormButton"/>
           </Option>
         </config>
       </editWidget>
@@ -52,8 +54,8 @@
       <editWidget type="TextEdit">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option type="bool" value="false" name="IsMultiline"/>
+            <Option type="bool" value="false" name="UseHtml"/>
           </Option>
         </config>
       </editWidget>
@@ -62,22 +64,22 @@
       <editWidget type="Range">
         <config>
           <Option type="Map">
-            <Option name="AllowNull" value="true" type="bool"/>
-            <Option name="Max" value="2147483647" type="int"/>
-            <Option name="Min" value="0" type="int"/>
-            <Option name="Precision" value="0" type="int"/>
-            <Option name="Step" value="1" type="int"/>
-            <Option name="Style" value="SpinBox" type="QString"/>
+            <Option type="bool" value="true" name="AllowNull"/>
+            <Option type="int" value="2147483647" name="Max"/>
+            <Option type="int" value="0" name="Min"/>
+            <Option type="int" value="0" name="Precision"/>
+            <Option type="int" value="1" name="Step"/>
+            <Option type="QString" value="SpinBox" name="Style"/>
           </Option>
         </config>
       </editWidget>
     </field>
   </fieldConfiguration>
   <aliases>
-    <alias name="Portion" index="0" field="id_portion"/>
-    <alias name="Itinéraire" index="1" field="id_itineraire"/>
-    <alias name="" index="2" field="id"/>
-    <alias name="Numéro d'ordre" index="3" field="etape"/>
+    <alias index="0" name="Portion" field="id_portion"/>
+    <alias index="1" name="Itinéraire" field="id_itineraire"/>
+    <alias index="2" name="" field="id"/>
+    <alias index="3" name="Numéro d'ordre" field="etape"/>
   </aliases>
   <excludeAttributesWMS/>
   <excludeAttributesWFS/>
@@ -88,28 +90,28 @@
     <default expression="" field="etape" applyOnUpdate="0"/>
   </defaults>
   <constraints>
-    <constraint notnull_strength="2" exp_strength="0" constraints="1" unique_strength="0" field="id_portion"/>
-    <constraint notnull_strength="2" exp_strength="0" constraints="1" unique_strength="0" field="id_itineraire"/>
-    <constraint notnull_strength="1" exp_strength="0" constraints="3" unique_strength="1" field="id"/>
-    <constraint notnull_strength="2" exp_strength="0" constraints="1" unique_strength="0" field="etape"/>
+    <constraint unique_strength="0" notnull_strength="2" exp_strength="0" field="id_portion" constraints="1"/>
+    <constraint unique_strength="0" notnull_strength="2" exp_strength="0" field="id_itineraire" constraints="1"/>
+    <constraint unique_strength="1" notnull_strength="1" exp_strength="0" field="id" constraints="3"/>
+    <constraint unique_strength="0" notnull_strength="2" exp_strength="0" field="etape" constraints="1"/>
   </constraints>
   <constraintExpressions>
-    <constraint desc="" exp="" field="id_portion"/>
-    <constraint desc="" exp="" field="id_itineraire"/>
-    <constraint desc="" exp="" field="id"/>
-    <constraint desc="" exp="" field="etape"/>
+    <constraint exp="" desc="" field="id_portion"/>
+    <constraint exp="" desc="" field="id_itineraire"/>
+    <constraint exp="" desc="" field="id"/>
+    <constraint exp="" desc="" field="etape"/>
   </constraintExpressions>
   <expressionfields/>
   <attributeactions>
-    <defaultAction key="Canvas" value="{00000000-0000-0000-0000-000000000000}"/>
+    <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
   </attributeactions>
-  <attributetableconfig sortOrder="0" actionWidgetStyle="dropDown" sortExpression="">
+  <attributetableconfig sortExpression="" actionWidgetStyle="dropDown" sortOrder="0">
     <columns>
-      <column width="-1" name="id_portion" hidden="0" type="field"/>
-      <column width="261" name="id_itineraire" hidden="0" type="field"/>
-      <column width="200" name="id" hidden="0" type="field"/>
-      <column width="-1" name="etape" hidden="0" type="field"/>
-      <column width="-1" hidden="1" type="actions"/>
+      <column type="field" name="id_portion" width="-1" hidden="0"/>
+      <column type="field" name="id_itineraire" width="261" hidden="0"/>
+      <column type="field" name="id" width="200" hidden="0"/>
+      <column type="field" name="etape" width="-1" hidden="0"/>
+      <column type="actions" width="-1" hidden="1"/>
     </columns>
   </attributetableconfig>
   <conditionalstyles>
@@ -140,16 +142,16 @@ def my_form_open(dialog, layer, feature):
   <featformsuppress>0</featformsuppress>
   <editorlayout>generatedlayout</editorlayout>
   <editable>
-    <field name="etape" editable="1"/>
-    <field name="id" editable="0"/>
-    <field name="id_itineraire" editable="1"/>
-    <field name="id_portion" editable="1"/>
+    <field editable="1" name="etape"/>
+    <field editable="0" name="id"/>
+    <field editable="1" name="id_itineraire"/>
+    <field editable="1" name="id_portion"/>
   </editable>
   <labelOnTop>
-    <field name="etape" labelOnTop="0"/>
-    <field name="id" labelOnTop="0"/>
-    <field name="id_itineraire" labelOnTop="0"/>
-    <field name="id_portion" labelOnTop="0"/>
+    <field labelOnTop="0" name="etape"/>
+    <field labelOnTop="0" name="id"/>
+    <field labelOnTop="0" name="id_itineraire"/>
+    <field labelOnTop="0" name="id_portion"/>
   </labelOnTop>
   <widgets/>
   <previewExpression>"id_portion"</previewExpression>
