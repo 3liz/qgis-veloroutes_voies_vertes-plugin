@@ -189,6 +189,10 @@ COMMENT ON COLUMN veloroutes.itineraire.mont_subv IS 'Montant de la subvention d
 COMMENT ON COLUMN veloroutes.itineraire.annee_subv IS 'Année de la subvention';
 
 
+-- itineraire.type_pluriannuel
+COMMENT ON COLUMN veloroutes.itineraire.type_pluriannuel IS 'Type pluriannuel';
+
+
 -- liaison
 COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
 
@@ -423,6 +427,14 @@ COMMENT ON COLUMN veloroutes.portion.mont_subv IS 'Montant de la subvention de l
 
 -- portion.annee_subv
 COMMENT ON COLUMN veloroutes.portion.annee_subv IS 'Année de la subvention';
+
+
+-- portion.convention
+COMMENT ON COLUMN veloroutes.portion.convention IS 'Lien vers la convention';
+
+
+-- portion.type_pluriannuel
+COMMENT ON COLUMN veloroutes.portion.type_pluriannuel IS 'Type pluriannuel';
 
 
 -- portion_val
