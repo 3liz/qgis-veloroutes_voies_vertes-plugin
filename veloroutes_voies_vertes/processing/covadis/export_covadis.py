@@ -165,13 +165,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
         output.tooltip_3liz = 'Les couches de l\'export'
         self.addOutput(output)
 
-    def get_sql_layer(self, table, geom, pk, uri, feedback):
+    @staticmethod
+    def get_sql_layer(table, geom, pk, uri, feedback):
         sql_file = resources_path('sql', 'export', 'export_{}.sql'.format(table))
         other = False
         if not os.path.exists(sql_file):
             sql_file = resources_path('sql', 'export', 'export_table.sql')
             other = True
 
+        feedback.pushDebugInfo("Lecture du fichier {}".format(sql_file))
         with open(sql_file, "r") as f:
             sql = f.read()
             if len(sql.strip()) == 0:
@@ -188,7 +190,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         layer = QgsVectorLayer(uri.uri(False), table, "postgres")
         if not layer.isValid():
-            feedback.reportError("Layer not valid " + layer.name())
+            feedback.reportError("Layer {} is not valid.".format(layer.name()))
             return None
         return layer
 
@@ -218,7 +220,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         geomcode = geomtype[sql_layer.geometryType()]
         filename = prefixe + tablename + geomcode + suffixe
 
-        transformContext = context.project().transformContext()
+        transform_context = context.project().transformContext()
         options = QgsVectorFileWriter.SaveVectorOptions()
         options.driverName = "ESRI ShapeFile"
         options.fileEncoding = "utf-8"
@@ -232,7 +234,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         error = QgsVectorFileWriter.writeAsVectorFormatV2(
             layer=sql_layer,
             fileName=file_path,
-            transformContext=transformContext,
+            transformContext=transform_context,
             options=options
         )
 
@@ -269,7 +271,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
             'poi_service',
             'poi_tourisme'
         ]
-        feedback.pushInfo("## CONNEXION A LA BASE DE DONNEES ##")
 
         if Qgis.QGIS_VERSION_INT >= 31400:
             connection = self.parameterAsConnectionName(parameters, self.DATABASE, context)
@@ -299,6 +300,9 @@ class ExportCovadis(BaseProcessingAlgorithm):
         layer = QgsVectorLayer(uri.uri(), table_name, "postgres")
         layer_name = layer.name()
 
+        if len(layer.primaryKeyAttributes()) == 0:
+            feedback.reportError("Layer {} does not have a primary key.".format(layer_name))
+            # Linked to the line below
         pk = layer.fields().field(layer.primaryKeyAttributes()[0])
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
@@ -307,11 +311,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
         charger = self.parameterAsBool(parameters, self.CHARGER, context)
 
         feedback.pushInfo("")
-        feedback.pushInfo("## CHARGEMENT DE LA COUCHE ##")
 
         sql_layer = self.get_sql_layer(layer_name, geom, pk.name(), uri, feedback)
+        if not sql_layer:
+            return {self.OUTPUT_MSG: "Layer {} is not valid".format(name), self.OUTPUT: None}
+
+        feedback.pushInfo("## Export de la couche {} en Shapefile".format(layer_name))
         result = self.export_layer_to_shape(context, sql_layer, dpt, layer_name, dirname, feedback)
         if charger:
+            feedback.pushInfo("## Chargement de la couche {}".format(layer_name))
             self.load_shapefile(result[0], result[1], layer_name, context, feedback)
 
         if not result[0]:
