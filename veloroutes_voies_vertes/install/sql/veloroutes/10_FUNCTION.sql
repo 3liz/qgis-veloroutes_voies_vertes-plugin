@@ -612,33 +612,59 @@ CREATE FUNCTION veloroutes.v_itineraire_insert() RETURNS trigger
 
 BEGIN
 
-	--INSERT a new row in itineraire
-    INSERT INTO veloroutes.itineraire(numero, nom_officiel, nom_usage, depart, arrivee, annee_inscription, site_web, annee_ouverture, niveau_schema, est_inscrit)
-    VALUES(NEW.numero, NEW.nom_officiel, NEW.nom_usage, NEW.depart, NEW.arrivee, NEW.annee_inscription, NEW.site_web, NEW.annee_ouverture, NEW.niveau_schema, NEW.est_inscrit)
-    RETURNING id_itineraire into iti_id;
+    --INSERT a new row in itineraire
+    INSERT INTO veloroutes.itineraire(
+        numero,
+        nom_officiel,
+        nom_usage,
+        depart,
+        arrivee,
+        annee_inscription,
+        site_web,
+        annee_ouverture,
+        niveau_schema,
+        est_inscrit,
+        mont_subv,
+        annee_subv,
+        type_pluriannuel
+    ) VALUES (
+        NEW.numero,
+        NEW.nom_officiel,
+        NEW.nom_usage,
+        NEW.depart,
+        NEW.arrivee,
+        NEW.annee_inscription,
+        NEW.site_web,
+        NEW.annee_ouverture,
+        NEW.niveau_schema,
+        NEW.est_inscrit,
+        NEW.mont_subv,
+        NEW.annee_subv,
+        NEW.type_pluriannuel
+    ) RETURNING id_itineraire into iti_id;
 
-	--INSERT stages of the itineray in etape
-	INSERT INTO veloroutes.etape(id_itineraire,id_portion)
+    --INSERT stages of the itineray in etape
+    INSERT INTO veloroutes.etape(id_itineraire,id_portion)
     SELECT iti_id, vp.id_portion
-	FROM veloroutes.v_portion vp
-	--segments must be around the new geometry
-	WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
-	--segments that share just one vertex with the new geom are eliminated
-	AND ST_Within(vp.geom,ST_Buffer(NEW.geom,1));
+    FROM veloroutes.v_portion vp
+    --segments must be around the new geometry
+    WHERE ST_DWithin(NEW.geom, vp.geom,0.01)
+    --segments that share just one vertex with the new geom are eliminated
+    AND ST_Within(vp.geom,ST_Buffer(NEW.geom,1));
 
-	--Warning for the user if the selection includes a piece of portion
-	--The selection should only be composed by full portions
-	FOR ids IN
-		SELECT veloroutes.v_portion.id_portion
-		FROM veloroutes.v_portion
-		--Optional
-		WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
-		--Portions whose geometry is only partially included in the selection
-		AND ST_Overlaps(veloroutes.v_portion.geom,NEW.geom)
-	LOOP
+    --Warning for the user if the selection includes a piece of portion
+    --The selection should only be composed by full portions
+    FOR ids IN
+        SELECT veloroutes.v_portion.id_portion
+        FROM veloroutes.v_portion
+        --Optional
+        WHERE ST_DWithin(veloroutes.v_portion.geom, NEW.geom, 0.01)
+        --Portions whose geometry is only partially included in the selection
+        AND ST_Overlaps(veloroutes.v_portion.geom,NEW.geom)
+    LOOP
       RAISE NOTICE 'La portion (%) ne peut pas être partiellement séléctionnée',ids;
-   	END LOOP;
- 	RETURN NEW;
+    END LOOP;
+    RETURN NEW;
 
 END;
 $$;
@@ -666,7 +692,8 @@ BEGIN
         niveau_schema = NEW.niveau_schema,
         est_inscrit = NEW.est_inscrit,
         mont_subv = NEW.mont_subv,
-        annee_subv = NEW.annee_subv
+        annee_subv = NEW.annee_subv,
+        type_pluriannuel = NEW.type_pluriannuel
     WHERE id_itineraire = OLD.id_itineraire;
 
     RETURN NEW;
@@ -700,37 +727,57 @@ COMMENT ON FUNCTION veloroutes.v_portion_delete() IS 'Effectue la suppression da
 -- v_portion_insert()
 CREATE FUNCTION veloroutes.v_portion_insert() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$DECLARE pid int; geo geometry;ids text;
-
+    AS $$
+    DECLARE pid int;
+            geo geometry;
+            ids text;
 BEGIN
-	--INSERT a new portion
-    INSERT INTO veloroutes.portion(nom, description,type_portion)
-    VALUES(NEW.nom, NEW.description, NEW.type_portion)
-    RETURNING id_portion into pid;
+    --INSERT a new portion
+    INSERT INTO veloroutes.portion(
+        nom,
+        description,
+        type_portion,
+        id_on3v,
+        id_local,
+        mont_subv,
+        annee_subv,
+        convention,
+        type_pluriannuel
+    ) VALUES (
+        NEW.nom,
+        NEW.description,
+        NEW.type_portion,
+        NEW.id_on3v,
+        NEW.id_local,
+        NEW.mont_subv,
+        NEW.annee_subv,
+        NEW.convention,
+        NEW.type_pluriannuel
+    ) RETURNING id_portion into pid;
 
-	--INSERT in element elements of the new portion
-	INSERT INTO veloroutes.element(id_portion,id_segment)
+    --INSERT in element elements of the new portion
+    INSERT INTO veloroutes.element(id_portion,id_segment)
     SELECT pid, veloroutes.segment.id_segment
-	FROM veloroutes.segment
-	--segments must be around the new geometry
-	WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
-	--segments that share just one vertex with the new geom are eliminated
-	AND ST_Within(veloroutes.segment.geom,ST_Buffer(NEW.geom,1));
+    FROM veloroutes.segment
+    --segments must be around the new geometry
+    WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+    --segments that share just one vertex with the new geom are eliminated
+    AND ST_Within(veloroutes.segment.geom,ST_Buffer(NEW.geom,1));
 
-	--Warning for the user if the selection includes a piece of segment
-	--The selection should only be composed by full segments
-	FOR ids IN
-		SELECT veloroutes.segment.id_segment
-		FROM veloroutes.segment
-		--Optional
-		WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
-		--Segments whose geometry is only partially included in the selection
-		AND ST_Overlaps(veloroutes.segment.geom,NEW.geom)
-	LOOP
+    --Warning for the user if the selection includes a piece of segment
+    --The selection should only be composed by full segments
+    FOR ids IN
+        SELECT veloroutes.segment.id_segment
+        FROM veloroutes.segment
+        --Optional
+        WHERE ST_DWithin(veloroutes.segment.geom,NEW.geom, 0.01)
+        --Segments whose geometry is only partially included in the selection
+        AND ST_Overlaps(veloroutes.segment.geom,NEW.geom)
+    LOOP
       RAISE NOTICE 'Le segment (%) ne peut pas être partiellement séléctionné',ids;
-   	END LOOP;
+    END LOOP;
 
- 	RETURN NEW;
+    RETURN NEW;
 
 END;$$;
 
@@ -752,7 +799,9 @@ BEGIN
         id_on3v = NEW.id_on3v,
         id_local = NEW.id_local,
         mont_subv = NEW.mont_subv,
-        annee_subv = NEW.annee_subv
+        annee_subv = NEW.annee_subv,
+        convention = NEW.convention,
+        type_pluriannuel = NEW.type_pluriannuel
     WHERE id_portion = OLD.id_portion;
 
     RETURN NEW;
