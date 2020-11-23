@@ -302,7 +302,9 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         if len(layer.primaryKeyAttributes()) == 0:
             feedback.reportError("Layer {} does not have a primary key.".format(layer_name))
-            # Linked to the line below
+            # Fixme, we shouldn't have this line
+            return {self.OUTPUT_MSG: "Layer {} doesn't have a primary key".format(name), self.OUTPUT: None}
+
         pk = layer.fields().field(layer.primaryKeyAttributes()[0])
 
         dpt = self.parameterAsString(parameters, self.DPT, context)
