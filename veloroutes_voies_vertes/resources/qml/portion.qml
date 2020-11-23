@@ -6,7 +6,9 @@
     <Searchable>1</Searchable>
   </flags>
   <customproperties>
-    <property value="&quot;id_portion&quot;" key="dualview/previewExpressions"/>
+    <property key="dualview/previewExpressions">
+      <value>"id_portion"</value>
+    </property>
     <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
     <property key="variableValues"/>
@@ -207,10 +209,10 @@
   </expressionfields>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting type="1" shortTitle="Ajouter des éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'add')" id="{12313bd6-259a-4eb2-947f-0b3dcb5e9011}">
+    <actionsetting type="1" shortTitle="Ajouter des éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'add')" id="{385979da-edd2-459f-b034-ab82c048d849}">
       <actionScope id="Feature"/>
     </actionsetting>
-    <actionsetting type="1" shortTitle="Suppression d'éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'del')" id="{19f59a92-da75-42b0-a04e-b7424ec62fe1}">
+    <actionsetting type="1" shortTitle="Suppression d'éléments de portion" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'éléments de portion à partir des segments sélectionnés" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_portion%], [% '\''||@layer_name||'\'' %] , 'del')" id="{80dd32d4-ab60-464b-890b-9b62fec0b3ba}">
       <actionScope id="Feature"/>
     </actionsetting>
   </attributeactions>
@@ -260,7 +262,32 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
+  <attributeEditorForm>
+    <attributeEditorField index="0" showLabel="1" name="id_portion"/>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Informations" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Covadis" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="5" showLabel="1" name="id_local"/>
+        <attributeEditorField index="4" showLabel="1" name="id_on3v"/>
+        <attributeEditorField index="1" showLabel="1" name="nom"/>
+        <attributeEditorField index="3" showLabel="1" name="type_portion"/>
+        <attributeEditorField index="2" showLabel="1" name="description"/>
+      </attributeEditorContainer>
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Subvention" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="9" showLabel="1" name="type_pluriannuel"/>
+        <attributeEditorField index="8" showLabel="1" name="convention"/>
+        <attributeEditorField index="7" showLabel="1" name="annee_subv"/>
+        <attributeEditorField index="6" showLabel="1" name="mont_subv"/>
+      </attributeEditorContainer>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Segments" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorField index="10" showLabel="1" name="elements"/>
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="element_2d1e038c_1f70_4cbe_8991_0305fb4b3058_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion" showUnlinkButton="1" relation="element_2d1e038c_1f70_4cbe_8991_0305fb4b3058_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion"/>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Étapes" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion" showUnlinkButton="1" relation="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion"/>
+    </attributeEditorContainer>
+  </attributeEditorForm>
   <editable>
     <field editable="1" name="annee_subv"/>
     <field editable="1" name="convention"/>
@@ -269,14 +296,11 @@ def my_form_open(dialog, layer, feature):
     <field editable="1" name="id_local"/>
     <field editable="1" name="id_on3v"/>
     <field editable="0" name="id_portion"/>
+    <field editable="0" name="longueur"/>
     <field editable="1" name="mont_subv"/>
     <field editable="1" name="nom"/>
-    <field editable="0" name="segments"/>
     <field editable="1" name="type_pluriannuel"/>
     <field editable="1" name="type_portion"/>
-    <field editable="0" name="v_portion_description"/>
-    <field editable="0" name="v_portion_nom"/>
-    <field editable="0" name="v_portion_type_portion"/>
   </editable>
   <labelOnTop>
     <field labelOnTop="0" name="annee_subv"/>
@@ -286,19 +310,21 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="id_local"/>
     <field labelOnTop="0" name="id_on3v"/>
     <field labelOnTop="0" name="id_portion"/>
+    <field labelOnTop="0" name="longueur"/>
     <field labelOnTop="0" name="mont_subv"/>
     <field labelOnTop="0" name="nom"/>
-    <field labelOnTop="0" name="segments"/>
     <field labelOnTop="0" name="type_pluriannuel"/>
     <field labelOnTop="0" name="type_portion"/>
-    <field labelOnTop="0" name="v_portion_description"/>
-    <field labelOnTop="0" name="v_portion_nom"/>
-    <field labelOnTop="0" name="v_portion_type_portion"/>
   </labelOnTop>
   <widgets>
     <widget name="element_187bfb9d_67f5_4058_8133_4c3aab650a47_id_portion_portion_097d5bb8_46a9_4b89_afcc_d25683ead4c5_id_portion">
       <config type="Map">
         <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="element_2d1e038c_1f70_4cbe_8991_0305fb4b3058_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion">
+      <config type="Map">
+        <Option type="QString" value="element_2d1e038c_1f70_4cbe_8991_0305fb4b3058_id_segment_segment_bb2f5510_a1b1_44ff_b8f4_953e448d8a06_id_segment" name="nm-rel"/>
       </config>
     </widget>
     <widget name="element_45b9ee55_4ba6_4126_b75c_a07df5f2e856_id_portion_portion_367b20eb_71df_4577_b82c_50df637836ba_id_portion">
@@ -309,6 +335,11 @@ def my_form_open(dialog, layer, feature):
     <widget name="element_87795107_6a41_4d89_b7a9_27020145c4c2_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_portion">
       <config type="Map">
         <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="element_87_id_portion_v_portion__id_portion">
+      <config type="Map">
+        <Option type="QString" value="element_34_id_segment_segment__id_segment" name="nm-rel"/>
       </config>
     </widget>
     <widget name="element_9448090b_c4ec_49b1_81c1_c622817d5aac_id_portion_portion_8b4d47a9_fcca_4e53_8b4e_cd6aa677ad13_id_portion">
@@ -324,6 +355,16 @@ def my_form_open(dialog, layer, feature):
     <widget name="etape_008e0743_3f06_431d_afbb_0c8da7d8e66f_id_portion_portion_8b4d47a9_fcca_4e53_8b4e_cd6aa677ad13_id_portion">
       <config type="Map">
         <Option type="QString" value="etape_008e0743_3f06_431d_afbb_0c8da7d8e66f_id_itineraire_itineraire_37f151ab_0ac8_4003_b653_f83e948fd3f8_id_itineraire" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_portion_portion_79493e26_d897_49a0_8f75_d4e13768e34d_id_portion">
+      <config type="Map">
+        <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="etape_7d2f_id_portion_v_portion__id_portion">
+      <config type="Map">
+        <Option type="QString" value="" name="nm-rel"/>
       </config>
     </widget>
     <widget name="etape_7d2fa857_5f19_42b8_ae43_c514540041db_id_portion_portion_43c846b8_2e8c_4dbc_a286_7779b2dc6274_id_portion">

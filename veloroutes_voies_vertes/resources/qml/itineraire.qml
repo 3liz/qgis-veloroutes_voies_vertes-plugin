@@ -8,9 +8,6 @@
   <customproperties>
     <property key="dualview/previewExpressions">
       <value>"numero"</value>
-      <value>numero</value>
-      <value>"id_iti"</value>
-      <value>"numero"</value>
     </property>
     <property value="0" key="embeddedWidgets/count"/>
     <property key="variableNames"/>
@@ -290,11 +287,11 @@
   </expressionfields>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting type="1" shortTitle="Suppression d'étape" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" id="{bba2c2e2-b158-490b-90ca-6ad57945f240}">
+    <actionsetting type="1" shortTitle="Suppression d'étape" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" id="{2bb60af6-c6fe-411d-859e-005c084aa736}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting type="1" shortTitle="Ajouter des étapes" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des étapes à partir de portions sélectionnées" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" id="{28a365eb-6437-4aa2-890f-b868f9a401ce}">
+    <actionsetting type="1" shortTitle="Ajouter des étapes" isEnabledOnlyWhenEditable="0" notificationMessage="" icon="" name="Ajouter des étapes à partir de portions sélectionnées" capture="0" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" id="{b2796db9-47c3-4127-8541-f8f73f547993}">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
@@ -349,7 +346,33 @@ def my_form_open(dialog, layer, feature):
 
 ]]></editforminitcode>
   <featformsuppress>0</featformsuppress>
-  <editorlayout>generatedlayout</editorlayout>
+  <editorlayout>tablayout</editorlayout>
+  <attributeEditorForm>
+    <attributeEditorField index="5" showLabel="1" name="id_itineraire"/>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Informations" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Covadis" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="0" showLabel="1" name="numero"/>
+        <attributeEditorField index="1" showLabel="1" name="nom_officiel"/>
+        <attributeEditorField index="2" showLabel="1" name="nom_usage"/>
+        <attributeEditorField index="3" showLabel="1" name="depart"/>
+        <attributeEditorField index="4" showLabel="1" name="arrivee"/>
+        <attributeEditorField index="9" showLabel="1" name="niveau_schema"/>
+        <attributeEditorField index="7" showLabel="1" name="site_web"/>
+        <attributeEditorField index="8" showLabel="1" name="annee_ouverture"/>
+        <attributeEditorField index="10" showLabel="1" name="est_inscrit"/>
+        <attributeEditorField index="6" showLabel="1" name="annee_inscription"/>
+      </attributeEditorContainer>
+      <attributeEditorContainer groupBox="1" columnCount="1" showLabel="1" name="Subvention" visibilityExpression="" visibilityExpressionEnabled="0">
+        <attributeEditorField index="11" showLabel="1" name="mont_subv"/>
+        <attributeEditorField index="12" showLabel="1" name="annee_subv"/>
+        <attributeEditorField index="13" showLabel="1" name="type_pluriannuel"/>
+      </attributeEditorContainer>
+    </attributeEditorContainer>
+    <attributeEditorContainer groupBox="0" columnCount="1" showLabel="1" name="Étapes" visibilityExpression="" visibilityExpressionEnabled="0">
+      <attributeEditorField index="14" showLabel="1" name="etapes"/>
+      <attributeEditorRelation showLinkButton="1" showLabel="1" name="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_itineraire_itineraire_f196ffc9_3afa_4821_997e_689c44e2df18_id_itineraire" showUnlinkButton="1" relation="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_itineraire_itineraire_f196ffc9_3afa_4821_997e_689c44e2df18_id_itineraire"/>
+    </attributeEditorContainer>
+  </attributeEditorForm>
   <editable>
     <field editable="1" name="annee_inscription"/>
     <field editable="1" name="annee_ouverture"/>
@@ -360,6 +383,7 @@ def my_form_open(dialog, layer, feature):
     <field editable="0" name="etapes"/>
     <field editable="0" name="id_iti"/>
     <field editable="0" name="id_itineraire"/>
+    <field editable="1" name="longueur"/>
     <field editable="1" name="mont_subv"/>
     <field editable="1" name="niveau_schema"/>
     <field editable="1" name="nom_officiel"/>
@@ -378,6 +402,7 @@ def my_form_open(dialog, layer, feature):
     <field labelOnTop="0" name="etapes"/>
     <field labelOnTop="0" name="id_iti"/>
     <field labelOnTop="0" name="id_itineraire"/>
+    <field labelOnTop="0" name="longueur"/>
     <field labelOnTop="0" name="mont_subv"/>
     <field labelOnTop="0" name="niveau_schema"/>
     <field labelOnTop="0" name="nom_officiel"/>
@@ -392,7 +417,22 @@ def my_form_open(dialog, layer, feature):
         <Option type="QString" value="etape_008e0743_3f06_431d_afbb_0c8da7d8e66f_id_portion_portion_8b4d47a9_fcca_4e53_8b4e_cd6aa677ad13_id_portion" name="nm-rel"/>
       </config>
     </widget>
+    <widget name="etape_16996ead_334c_40f9_9ab8_32f6c1cfbd04_id_itineraire_itineraire_f196ffc9_3afa_4821_997e_689c44e2df18_id_itineraire">
+      <config type="Map">
+        <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
     <widget name="etape_6a0e5c72_95ba_4012_8a51_77f727a0c755_id_itineraire_itineraire_1bcf6d5d_e7e4_493e_89a3_45ebef699aea_id_iti">
+      <config type="Map">
+        <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="etape_7d2f_id_itineraire_v_itinerai_id_iti">
+      <config type="Map">
+        <Option type="QString" value="" name="nm-rel"/>
+      </config>
+    </widget>
+    <widget name="etape_7d2f_id_itineraire_v_itinerai_id_itineraire">
       <config type="Map">
         <Option type="QString" value="" name="nm-rel"/>
       </config>
