@@ -1,5 +1,10 @@
 ## CHANGELOG
 
+### 0.8.0 - 23/11/2020
+
+* Support de QGIS 3.16
+* Amélioration des migrations des bases de données
+
 ### 0.7.0 - 18/11/2020
 
 * Modification de la table segment avec ajout des champs desserte_college, amenagement et amenagement_type
