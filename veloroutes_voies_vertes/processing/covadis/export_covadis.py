@@ -172,6 +172,7 @@ class ExportCovadis(BaseProcessingAlgorithm):
         if not os.path.exists(sql_file):
             sql_file = resources_path('sql', 'export', 'export_table.sql')
             other = True
+            pk = 'id'
 
         feedback.pushDebugInfo("Lecture du fichier {}".format(sql_file))
         with open(sql_file, "r") as f:
@@ -294,10 +295,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
         if table_name == 'portion':
             name = 'v_portion'
             uri.setKeyColumn('id_portion')
+
+        if table_name == 'poi_portion':
+            name = 'v_portion'
+            uri.setKeyColumn('id_portion')
+
         uri.setTable(name)
         uri.setSchema(schema)
         uri.setGeometryColumn(geom)
-        layer = QgsVectorLayer(uri.uri(), table_name, "postgres")
+        layer = QgsVectorLayer(uri.uri(), name, "postgres")
         layer_name = layer.name()
 
         if len(layer.primaryKeyAttributes()) == 0:
@@ -314,15 +320,15 @@ class ExportCovadis(BaseProcessingAlgorithm):
 
         feedback.pushInfo("")
 
-        sql_layer = self.get_sql_layer(layer_name, geom, pk.name(), uri, feedback)
+        sql_layer = self.get_sql_layer(table_name, geom, pk.name(), uri, feedback)
         if not sql_layer:
             return {self.OUTPUT_MSG: "Layer {} is not valid".format(name), self.OUTPUT: None}
 
-        feedback.pushInfo("## Export de la couche {} en Shapefile".format(layer_name))
-        result = self.export_layer_to_shape(context, sql_layer, dpt, layer_name, dirname, feedback)
+        feedback.pushInfo("## Export de la couche {} en Shapefile".format(sql_layer.name()))
+        result = self.export_layer_to_shape(context, sql_layer, dpt, sql_layer.name(), dirname, feedback)
         if charger:
-            feedback.pushInfo("## Chargement de la couche {}".format(layer_name))
-            self.load_shapefile(result[0], result[1], layer_name, context, feedback)
+            feedback.pushInfo("## Chargement de la couche {}".format(sql_layer.name()))
+            self.load_shapefile(result[0], result[1], sql_layer.name(), context, feedback)
 
         if not result[0]:
             output_layer = ""
