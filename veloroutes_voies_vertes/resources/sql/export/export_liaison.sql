@@ -1,4 +1,5 @@
 SELECT
+	id_liaison,
 	id_local as "ID_LOCAL",
  	id_on3V AS "ID_ON3V",
  	precision AS "PRECISION",
