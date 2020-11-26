@@ -268,9 +268,6 @@ class ExportCovadis(BaseProcessingAlgorithm):
             'itineraire',
             'element',
             'poi_portion',
-            'poi_acces',
-            'poi_service',
-            'poi_tourisme'
         ]
 
         if Qgis.QGIS_VERSION_INT >= 31400:
