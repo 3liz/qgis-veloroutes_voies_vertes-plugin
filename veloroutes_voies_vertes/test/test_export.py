@@ -13,7 +13,7 @@ from qgis.core import QgsProcessingContext, QgsProject
 
 from ..processing.provider import VeloroutesProvider as ProcessingProvider
 
-# from os import listdir
+from os import listdir
 from ..qgis_plugin_tools.tools.logger_processing import (
     LoggerProcessingFeedBack,
 )
@@ -69,32 +69,33 @@ class TestExport(DatabaseTestCase):
         expected = ('Tracé arrêté', 'Voie verte')
         self.assertTupleEqual(expected, res)
 
-    # def test_export_all(self):
-    #     provider = ProcessingProvider()
-    #     project = QgsProject()
-    #     context = QgsProcessingContext()
-    #     context.setProject(project)
-    #     feedback = LoggerProcessingFeedBack()
+    def test_export_all(self):
+        provider = ProcessingProvider()
+        project = QgsProject()
+        context = QgsProcessingContext()
+        context.setProject(project)
+        feedback = LoggerProcessingFeedBack()
 
-    #     params = {
-    #             "DATABASE": 'test',
-    #             "SCHEMA": 'veloroutes',
-    #             "DPT": '066',
-    #             "FOLDER": plugin_test_data_path(),
-    #             "CHARGER": False
-    #         }
-    #     alg = "{}:export_all".format(provider.id())
-    #     processing.run(
-    #         alg, params, context=context, feedback=feedback
-    #     )
-    #     print(listdir(plugin_test_data_path()))
-    #     files = [
-    #         '3V_AVANCEMENT_VAL.dbf','3V_REVETEMENT_VAL.dbf',
-    #         '3V_STATUT_VAL.dbf','3V_TYPEPORTION_VAL.dbf',
-    #         '3V_TYPEREPERE_VAL.dbf', 'N_3V_ITINERAIRE_066.shp',
-    #         'N_3V_PORTION_L_066.shp', 'N_3V_SEGMENT_L_066.shp',
-    #         'N_3V_REPERE_P_066.shp', 'N_3V_LIAISON_L_066.shp',
-    #         'N_3V_ACCES_INTERMODAL_P_066.shp', 'N_3V_SERVICE_P_066.shp',
-    #         'N_3V_TOURISME_P_066.shp']
-    #     for f in file:
-    #         self.assertTrue(f in listdir(plugin_test_data_path()))
+        params = {
+            "DATABASE": 'test',
+            "SCHEMA": 'veloroutes',
+            "DPT": '066',
+            "FOLDER": plugin_test_data_path(),
+            "CHARGER": False,
+        }
+        alg = "{}:export_all_covadis".format(provider.id())
+        processing.run(
+            alg, params, context=context, feedback=feedback
+        )
+        print(listdir(plugin_test_data_path()))
+        files = [
+            '3V_AVANCEMENT_VAL.dbf', '3V_REVETEMENT_VAL.dbf',
+            '3V_STATUT_VAL.dbf', '3V_TYPEPORTION_VAL.dbf',
+            '3V_TYPEREPERE_VAL.dbf', 'N_3V_ITINERAIRE_066.shp',
+            'N_3V_PORTION_L_066.shp', 'N_3V_SEGMENT_L_066.shp',
+            'N_3V_REPERE_P_066.shp', 'N_3V_LIAISON_L_066.shp',
+            'N_3V_ACCES_INTERMODAL_P_066.shp', 'N_3V_SERVICE_P_066.shp',
+            'N_3V_TOURISME_P_066.shp'
+        ]
+        for f in files:
+            self.assertTrue(f in listdir(plugin_test_data_path()))
