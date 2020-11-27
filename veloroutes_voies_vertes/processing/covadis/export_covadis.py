@@ -229,7 +229,10 @@ class ExportCovadis(BaseProcessingAlgorithm):
         # construction du répertoire
         if not os.path.exists(dirname):
             os.mkdir(dirname)
-        file_path = os.path.join(dirname, filename + ".shp")
+        ext = '.shp'
+        if geomcode == '':
+            ext = '.dbf'
+        file_path = os.path.join(dirname, filename + ext)
 
         # Enregistrement du fichier shape
         error = QgsVectorFileWriter.writeAsVectorFormatV2(
