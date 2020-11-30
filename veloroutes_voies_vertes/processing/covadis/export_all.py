@@ -30,7 +30,7 @@ class ExportCovadisAll(ExportCovadis):
         super().initAlgorithm(config)
         self.removeParameter('TABLE')
         self.removeParameter('OUTPUT')
-        self.addParameter(
+        self.addOutput(
             QgsProcessingOutputMultipleLayers(
                 self.OUTPUT,
                 'Couches de sortie'
