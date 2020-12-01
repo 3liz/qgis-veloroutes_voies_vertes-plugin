@@ -8,6 +8,8 @@ import processing
 from ...qgis_plugin_tools.tools.i18n import tr
 from .export_covadis import ExportCovadis
 
+from qgis.core import QgsProcessingOutputMultipleLayers
+
 
 class ExportCovadisAll(ExportCovadis):
     """
@@ -27,6 +29,13 @@ class ExportCovadisAll(ExportCovadis):
     def initAlgorithm(self, config):
         super().initAlgorithm(config)
         self.removeParameter('TABLE')
+        self.removeParameter('OUTPUT')
+        self.addOutput(
+            QgsProcessingOutputMultipleLayers(
+                self.OUTPUT,
+                'Couches de sortie'
+            )
+        )
 
     def processAlgorithm(self, parameters, context, feedback):
         msg = ""
