@@ -583,13 +583,13 @@
   </expressionfields>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_segment%],[% @click_x %],[% @click_y %])" isEnabledOnlyWhenEditable="1" icon="" shortTitle="split" type="1" name="Couper un segment en un point" id="{7b62d3fa-f304-493b-9f7e-51209ddc522a}" capture="0" notificationMessage="">
+    <actionsetting action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('split_segment', [%id_segment%],[% @click_x %],[% @click_y %])" isEnabledOnlyWhenEditable="1" icon="" shortTitle="Couper un segment" type="1" name="Couper un segment en un point" id="{bb5d34c1-875d-4c7b-b50c-92cf2e9fa151}" capture="0" notificationMessage="">
       <actionScope id="Feature"/>
       <actionScope id="Field"/>
       <actionScope id="Layer"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('create_relation', [% '\''||@layer_name||'\'' %] , 'portion', 'element', 'id_portion', 'id_segment', 'v_portion')" isEnabledOnlyWhenEditable="0" icon="" shortTitle="Créer une portion" type="1" name="Créer une portion à partir de segments sélectionnés" id="{d5e7bd38-6dce-4e68-9965-7d2fd17c67e7}" capture="0" notificationMessage="">
+    <actionsetting action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('create_relation', [% '\''||@layer_name||'\'' %] , 'portion', 'element', 'id_portion', 'id_segment', 'v_portion')" isEnabledOnlyWhenEditable="0" icon="" shortTitle="Créer une portion" type="1" name="Créer une portion à partir de segments sélectionnés" id="{945c1e64-992f-487d-ba61-1ecbf5cb24a3}" capture="0" notificationMessage="">
       <actionScope id="Feature"/>
       <actionScope id="Field"/>
       <actionScope id="Layer"/>
