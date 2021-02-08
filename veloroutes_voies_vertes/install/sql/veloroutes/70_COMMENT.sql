@@ -181,18 +181,6 @@ COMMENT ON COLUMN veloroutes.itineraire.niveau_schema IS 'Niveau administratif d
 COMMENT ON COLUMN veloroutes.itineraire.est_inscrit IS 'Vrai si l’itinéraire est inscrit à un schéma de développement des véloroutes';
 
 
--- itineraire.mont_subv
-COMMENT ON COLUMN veloroutes.itineraire.mont_subv IS 'Montant de la subvention de l''itinéraire';
-
-
--- itineraire.annee_subv
-COMMENT ON COLUMN veloroutes.itineraire.annee_subv IS 'Année de la subvention';
-
-
--- itineraire.type_pluriannuel
-COMMENT ON COLUMN veloroutes.itineraire.type_pluriannuel IS 'Type pluriannuel';
-
-
 -- liaison
 COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
 
@@ -623,16 +611,8 @@ COMMENT ON VIEW veloroutes.v_port_geom IS 'Vue intermédiaire qui joint les port
 COMMENT ON VIEW veloroutes.v_portion IS 'Vue qui joint les portions aux collections de géométries des segments qui les composent';
 
 
--- TRIGGER delete_v_itineraire ON v_itineraire
-COMMENT ON TRIGGER delete_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_delete()';
-
-
 -- TRIGGER delete_v_portion ON v_portion
 COMMENT ON TRIGGER delete_v_portion ON veloroutes.v_portion IS 'Rend la vue éditable avec la fonction v_portion_delete()';
-
-
--- TRIGGER insert_v_itineraire ON v_itineraire
-COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
 
 
 -- TRIGGER insert_v_portion ON v_portion
@@ -641,10 +621,6 @@ COMMENT ON TRIGGER insert_v_portion ON veloroutes.v_portion IS 'Rend la vue édi
 
 -- TRIGGER numserie ON repere
 COMMENT ON TRIGGER numserie ON veloroutes.repere IS 'Contrainte sur le champs numero_serie avec la fonction numserie()';
-
-
--- TRIGGER update_v_itineraire ON v_itineraire
-COMMENT ON TRIGGER update_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_update()';
 
 
 -- TRIGGER update_v_portion ON v_portion
