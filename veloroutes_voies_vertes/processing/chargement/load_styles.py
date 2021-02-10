@@ -5,9 +5,12 @@ __revision__ = "$Format:%H$"
 
 import os
 
+from collections import OrderedDict
+
 from qgis.core import (
     Qgis,
     QgsDataSourceUri,
+    QgsLayerTreeGroup,
     QgsMapLayerDependency,
     QgsMapLayerType,
     QgsProcessingOutputMultipleLayers,
@@ -39,6 +42,10 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
     SCHEMA = "SCHEMA"
     OUTPUT = "OUTPUT"
     OUTPUT_MSG = "OUTPUT MSG"
+
+    def __init__(self):
+        super(LoadStylesAlgorithm, self).__init__()
+        self.available_layers = None
 
     def name(self):
         return "load_styles"
@@ -246,4 +253,36 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
                     msg += " // Style de {} ({}) chargé".format(layer.name(), osm_name)
                     layer.triggerRepaint()
 
+        feedback.pushInfo("## MISE A JOUR DE L'ARBRE DES COUCHES ##")
+        self.organize_legend(context, self.available_layers)
+
         return {self.OUTPUT_MSG: msg, self.OUTPUT: list(self.available_layers.values())}
+
+    @staticmethod
+    def organize_legend(context, available_layers) -> None:
+        """ Create groups and organize the legend. """
+        root = context.project().layerTreeRoot()
+
+        groups = OrderedDict()
+        groups[root] = [
+            "v_itineraire", "v_portion", "segment", "liaison", "repere", "poi_service", "poi_tourisme"]
+
+        groups[QgsLayerTreeGroup('Composants')] = [
+            "element", "portion", "etape", "itineraire"]
+
+        groups[QgsLayerTreeGroup('Nomenclatures')] = [
+            "statut_segment_val", "amenagement_segment_val", "amenagement_type_segment_val"]
+
+        for node_composants, content in groups.items():
+            if root != node_composants:
+                root.addChildNode(node_composants)
+
+            for com in content:
+                layer_id = available_layers.get(com)
+
+                if not layer_id:
+                    continue
+
+                layer = root.findLayer(layer_id)
+                node_composants.addChildNode(layer.clone())
+                layer.parent().removeChildNode(layer)
