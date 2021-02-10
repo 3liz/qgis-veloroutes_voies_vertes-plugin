@@ -10,7 +10,6 @@ from qgis.core import (
     QgsDataSourceUri,
     QgsMapLayerDependency,
     QgsMapLayerType,
-    QgsProcessingAlgorithm,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
     QgsProcessingParameterString,
