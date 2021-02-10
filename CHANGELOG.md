@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.0 - XX/02/2020
+
+* Organisation de la légende lors du chargement des styles en ajoutant des groupes
+
 ## 0.8.0 - 23/11/2020
 
 * Support de QGIS 3.16
