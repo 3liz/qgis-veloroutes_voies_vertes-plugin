@@ -10,6 +10,7 @@ from qgis.core import (
     QgsDataSourceUri,
     QgsMapLayerDependency,
     QgsMapLayerType,
+    QgsProcessingAlgorithm,
     QgsProcessingOutputMultipleLayers,
     QgsProcessingOutputString,
     QgsProcessingParameterString,
@@ -113,19 +114,20 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         self.addOutput(output)
 
         output = QgsProcessingOutputMultipleLayers(self.OUTPUT, tr("Couches dont le style a été modifié"))
-        output.tooltip_3liz = 'Les différentes couches de l\'extention véloroutes et voies vertes'
+        output.tooltip_3liz = 'Les différentes couches de l\'extension véloroutes et voies vertes'
         self.addOutput(output)
 
     @staticmethod
-    def createRelation(referenced, referencing, fielda, fieldb, name, setid):
+    def createRelation(manager, referenced, referencing, field_a, field_b, name, id_relation, feedback):
         rel = QgsRelation()
-        rel.setReferencedLayer(referenced)
-        rel.setReferencingLayer(referencing)
-        rel.addFieldPair(fielda, fieldb)
+        rel.setReferencedLayer(referenced.id())
+        rel.setReferencingLayer(referencing.id())
+        rel.addFieldPair(field_a, field_b)
         rel.setName(name)
-        rel.setId(setid)
+        rel.setId(id_relation)
 
-        return rel
+        manager.addRelation(rel)
+        feedback.pushInfo("// Relation entre {} et {}".format(referenced.name(), referencing.name()))
 
     def processAlgorithm(self, parameters, context, feedback):
         if Qgis.QGIS_VERSION_INT >= 31400:
@@ -144,7 +146,7 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
 
         is_host = uri.host() != ""
         if is_host:
-            feedback.pushInfo("Connexion établie via l'hote")
+            feedback.pushInfo("Connexion établie via l'hôte")
         else:
             feedback.pushInfo("Connexion établie via le service")
 
@@ -196,29 +198,21 @@ class LoadStylesAlgorithm(BaseProcessingAlgorithm):
         element = vector_layers.get('element')
 
         if vportion and etape:
-            rel1 = self.createRelation(
-                vportion.id(), etape.id(), "id_portion", "id_portion",
-                "vportion_etape", "etape_7d2f_id_portion_v_portion__id_portion")
-            manager.addRelation(rel1)
-            feedback.pushInfo("// Relation entre {} et {}".format(vportion.name(), etape.name()))
+            self.createRelation(
+                manager, vportion, etape, "id_portion", "id_portion",
+                "vportion_etape", "etape_7d2f_id_portion_v_portion__id_portion", feedback)
         if vportion and element:
-            rel2 = self.createRelation(
-                vportion.id(), element.id(), "id_portion", "id_portion",
-                "vportion_element", "element_87_id_portion_v_portion__id_portion")
-            manager.addRelation(rel2)
-            feedback.pushInfo("// Relation entre {} et {}".format(vportion.name(), element.name()))
+            self.createRelation(
+                manager, vportion, element, "id_portion", "id_portion",
+                "vportion_element", "element_87_id_portion_v_portion__id_portion", feedback)
         if vitineraire and etape:
-            rel3 = self.createRelation(
-                vitineraire.id(), etape.id(), "id_itineraire", "id_itineraire",
-                "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_itineraire")
-            manager.addRelation(rel3)
-            feedback.pushInfo("// Relation entre {} et {}".format(vitineraire.name(), etape.name()))
+            self.createRelation(
+                manager, vitineraire, etape, "id_itineraire", "id_itineraire",
+                "vitineraire_etape", "etape_7d2f_id_itineraire_v_itinerai_id_itineraire", feedback)
         if segment and element:
-            rel4 = self.createRelation(
-                segment.id(), element.id(), "id_segment", "id_segment",
-                "segment_element", "element_34_id_segment_segment__id_segment")
-            manager.addRelation(rel4)
-            feedback.pushInfo("// Relation entre {} et {}".format(segment.name(), element.name()))
+            self.createRelation(
+                manager, segment, element, "id_segment", "id_segment",
+                "segment_element", "element_34_id_segment_segment__id_segment", feedback)
 
         # Add Dependencies
         feedback.pushInfo("")

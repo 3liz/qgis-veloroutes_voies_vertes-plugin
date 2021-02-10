@@ -5,10 +5,10 @@ __revision__ = "$Format:%H$"
 
 import processing
 
+from qgis.core import QgsProcessingOutputMultipleLayers
+
 from ...qgis_plugin_tools.tools.i18n import tr
 from .export_covadis import ExportCovadis
-
-from qgis.core import QgsProcessingOutputMultipleLayers
 
 
 class ExportCovadisAll(ExportCovadis):

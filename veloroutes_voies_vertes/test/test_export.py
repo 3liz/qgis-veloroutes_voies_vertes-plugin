@@ -6,15 +6,15 @@ __email__ = "info@3liz.org"
 __revision__ = "$Format:%H$"
 
 import os.path
-from os import listdir
 import unittest
+
+from os import listdir
 
 import processing
 
 from qgis.core import QgsProcessingContext, QgsProject
 
 from ..processing.provider import VeloroutesProvider as ProcessingProvider
-
 from ..qgis_plugin_tools.tools.logger_processing import (
     LoggerProcessingFeedBack,
 )
