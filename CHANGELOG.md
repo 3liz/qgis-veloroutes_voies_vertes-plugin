@@ -1,17 +1,20 @@
 # CHANGELOG
 
-## 0.9.0 - XX/02/2020
+## 0.9.0 - 2021-02-XX
 
 * Organisation de la légende lors du chargement des styles en ajoutant des groupes
+* Ajout d'un champ virtuel pour la longueur d'un segment
+* Déplacement du champ "longueur" dans les formulaires
+* Renommer l'action split
 
-## 0.8.0 - 23/11/2020
+## 0.8.0 - 2020-11-23
 
 * Support de QGIS 3.16
 * Amélioration des migrations des bases de données
 * Ajout des champs "convention" et "type_pluriannuel"
 * Modification des formulaires par glisser déposer
 
-## 0.7.0 - 18/11/2020
+## 0.7.0 - 2020-11-18
 
 * Modification de la table segment avec ajout des champs "desserte_college", "amenagement" et "amenagement_type"
 * Ajout des tables de valeurs pour "amenagement" et "amenagment_type"
@@ -23,7 +26,7 @@
 * Amélioration du processus des migrations de la base de données
 * Début du portage vers QGIS 3.16
 
-## 0.6.0 - 10/11/2020
+## 0.6.0 - 2020-11-10
 
 * DELETE ON CASCADE pour les clés étrangères des éléments et étapes
 * Fonctions et triggers de mise à jour et suppression à partir des vues "v_portion" et "v_itineraire"
@@ -32,21 +35,21 @@
 * Actions add or del selected_feature pour "portion" et "itineraire"
 * Mise en forme des tableaux de portion et itinéraire
 
-## 0.5.1 - 10/11/2020
+## 0.5.1 - 2020-11-10
 
 * Amélioration de la construction du zip
 
-## 0.5.0 - 10/11/2020
+## 0.5.0 - 2020-11-10
 
 * Upgrade database : champs "annee" en text et code avancement
 * Fix : Get the last DB version even if it is the same date
 * Fix : triggerRepaint après chargement des styles
 
-## 0.4.1 - 27/10/2020
+## 0.4.1 - 2020-10-27
 
 * Fix bug
 
-## 0.4.0 - 23/10/2020
+## 0.4.0 - 2020-10-23
 
 * Ajout d'actions
   * Ajouter / retirer un élément à une portion
@@ -62,7 +65,7 @@
   * Mise à jour de deux champs
 * Ajout des fichiers SQL pour l'export
 
-## 0.3.0 - 28/09/2020
+## 0.3.0 - 2020-09-28
 
 * Ajout de l'algorithme d'import
   * Import d'un fichier dans une table de la base de données
@@ -74,7 +77,7 @@
   * Export possible des 16 couches COVADIS
 * Ajout des champs dans la base de données
 
-## 0.2.0 - 20/06/2020
+## 0.2.0 - 2020-06-20
 
 * Adding features to manipulate data
   * Action on segment layer to split a segment
@@ -84,7 +87,7 @@
   * Algorithm to load styles
 * Adding some fields in database
 
-## 0.1.0 - 03/06/2020
+## 0.1.0 - 2020-06-03
 
 * Database structure following the COVADIS standardization
   * SQL files for the structure
@@ -93,5 +96,3 @@
   * Algo to create the database structure
 * Setting up the plugin
   * Including set up of continuous integration
-
-##
