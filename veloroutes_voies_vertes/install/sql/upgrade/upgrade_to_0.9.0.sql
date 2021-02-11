@@ -124,6 +124,31 @@ UNION ALL
 
 COMMENT ON VIEW veloroutes.v_itineraire IS 'Vue qui joint les itinéraires aux collections de géométries des segments qui les composent';
 
+
+-- v_itineraire delete_v_itineraire
+CREATE TRIGGER delete_v_itineraire INSTEAD OF DELETE ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_delete();
+
+
+-- TRIGGER delete_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER delete_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_delete()';
+
+
+-- v_itineraire insert_v_itineraire
+CREATE TRIGGER insert_v_itineraire INSTEAD OF INSERT ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_insert();
+
+
+-- TRIGGER insert_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER insert_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_insert()';
+
+
+-- v_itineraire update_v_itineraire
+CREATE TRIGGER update_v_itineraire INSTEAD OF UPDATE ON veloroutes.v_itineraire FOR EACH ROW EXECUTE PROCEDURE veloroutes.v_itineraire_update();
+
+
+-- TRIGGER update_v_itineraire ON v_itineraire
+COMMENT ON TRIGGER update_v_itineraire ON veloroutes.v_itineraire IS 'Rend la vue éditable avec la fonction v_itineraire_update()';
+
+
 -- itineraire
 ALTER TABLE veloroutes.itineraire
     DROP COLUMN type_pluriannuel,
