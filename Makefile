@@ -46,6 +46,7 @@ export_test_data:
 	cd veloroutes_voies_vertes/install/sql && sed -i "s#SELECT pg_catalog.set_config('search_path', '', false);##g" 99_test_data.sql
 	cd veloroutes_voies_vertes/install/sql && sed -i "s#SET idle_in_transaction_session_timeout = 0;##g" 99_test_data.sql
 	cd veloroutes_voies_vertes/install/sql && sed -i "s#SET default_table_access_method = heap##g" 99_test_data.sql
+	echo 'REMOVE MANUALLY ALL REFERENCES TO "metadata" in 99_test_data.sql'
 
 generate_sql:
 	@echo 'Generate SQL into install files'
