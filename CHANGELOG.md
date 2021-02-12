@@ -1,11 +1,12 @@
 # CHANGELOG
 
-## 0.9.0 - 2021-02-XX
+## 0.9.0 - 2021-02-12
 
 * Organisation de la légende lors du chargement des styles en ajoutant des groupes
 * Ajout d'un champ virtuel pour la longueur d'un segment
 * Déplacement du champ "longueur" dans les formulaires
 * Renommer l'action split
+* Suppression des champs de subventions sur itinéraires
 
 ## 0.8.0 - 2020-11-23
 
