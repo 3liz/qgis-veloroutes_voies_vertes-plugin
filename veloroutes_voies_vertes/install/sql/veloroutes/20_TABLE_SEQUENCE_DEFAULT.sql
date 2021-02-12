@@ -201,10 +201,7 @@ CREATE TABLE veloroutes.itineraire (
     site_web text,
     annee_ouverture text,
     niveau_schema text,
-    est_inscrit text,
-    mont_subv real,
-    annee_subv text,
-    type_pluriannuel text
+    est_inscrit text
 );
 
 

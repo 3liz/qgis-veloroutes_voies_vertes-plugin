@@ -181,18 +181,6 @@ COMMENT ON COLUMN veloroutes.itineraire.niveau_schema IS 'Niveau administratif d
 COMMENT ON COLUMN veloroutes.itineraire.est_inscrit IS 'Vrai si l’itinéraire est inscrit à un schéma de développement des véloroutes';
 
 
--- itineraire.mont_subv
-COMMENT ON COLUMN veloroutes.itineraire.mont_subv IS 'Montant de la subvention de l''itinéraire';
-
-
--- itineraire.annee_subv
-COMMENT ON COLUMN veloroutes.itineraire.annee_subv IS 'Année de la subvention';
-
-
--- itineraire.type_pluriannuel
-COMMENT ON COLUMN veloroutes.itineraire.type_pluriannuel IS 'Type pluriannuel';
-
-
 -- liaison
 COMMENT ON TABLE veloroutes.liaison IS 'Liaison cyclable, antenne cyclable';
 

@@ -623,10 +623,7 @@ BEGIN
         site_web,
         annee_ouverture,
         niveau_schema,
-        est_inscrit,
-        mont_subv,
-        annee_subv,
-        type_pluriannuel
+        est_inscrit
     ) VALUES (
         NEW.numero,
         NEW.nom_officiel,
@@ -637,10 +634,7 @@ BEGIN
         NEW.site_web,
         NEW.annee_ouverture,
         NEW.niveau_schema,
-        NEW.est_inscrit,
-        NEW.mont_subv,
-        NEW.annee_subv,
-        NEW.type_pluriannuel
+        NEW.est_inscrit
     ) RETURNING id_itineraire into iti_id;
 
     --INSERT stages of the itineray in etape
@@ -690,10 +684,7 @@ BEGIN
         site_web = NEW.site_web,
         annee_ouverture = NEW.annee_ouverture,
         niveau_schema = NEW.niveau_schema,
-        est_inscrit = NEW.est_inscrit,
-        mont_subv = NEW.mont_subv,
-        annee_subv = NEW.annee_subv,
-        type_pluriannuel = NEW.type_pluriannuel
+        est_inscrit = NEW.est_inscrit
     WHERE id_itineraire = OLD.id_itineraire;
 
     RETURN NEW;

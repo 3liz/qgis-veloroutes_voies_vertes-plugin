@@ -47,9 +47,6 @@ CREATE VIEW veloroutes.v_itineraire AS
     ''::text AS annee_ouverture,
     'DEP'::text AS niveau_schema,
     'F'::text AS est_inscrit,
-    0.0 AS mont_subv,
-    ''::text AS annee_subv,
-    ''::text AS type_pluriannuel,
     0.0 AS longueur
   WHERE (( SELECT count(*) AS count
            FROM veloroutes.v_itin_geom) = 0)
@@ -66,9 +63,6 @@ UNION ALL
     itineraire.annee_ouverture,
     itineraire.niveau_schema,
     itineraire.est_inscrit,
-    itineraire.mont_subv,
-    itineraire.annee_subv,
-    itineraire.type_pluriannuel,
     public.st_length(v_itin_geom.collect_geom) AS longueur
    FROM (veloroutes.itineraire
      JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));
