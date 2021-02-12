@@ -324,57 +324,6 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td><span id="mont_subv">mont_subv</span></td>
-                                    <td>float4</td>
-                                    <td>8,8</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="annee_subv">annee_subv</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td><span id="type_pluriannuel">type_pluriannuel</span></td>
-                                    <td>text</td>
-                                    <td>2147483647</td>
-                                    <td title='nullable'>√</td>
-                                    <td title=''></td>
-                                    <td>null</td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td>
-                                        <table border='0' cellspacing='0' cellpadding='0'>
-                                        </table>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
                                     <td><span id="longueur">longueur</span></td>
                                     <td>float8</td>
                                     <td>17,17</td>
@@ -415,13 +364,13 @@
                                 <div class="tab-content no-padding">
                                     <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
-<area shape="rect" id="node1" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="5,5,376,520">
+<area shape="rect" id="node1" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="5,5,376,432">
 </map>
                                         <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/v_itineraire.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
                                     </div>
                                     <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
                                         <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
-<area shape="rect" id="node1" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="240,5,611,520">
+<area shape="rect" id="node1" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="240,5,611,432">
 <area shape="rect" id="node2" href="itineraire.html" target="_top" title="itineraire" alt="" coords="5,37,196,213">
 </map>
                                         <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/v_itineraire.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
@@ -433,7 +382,7 @@
 <area shape="rect" id="node3" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="55,207,231,295">
 <area shape="rect" id="node4" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="5,101,280,189">
 <area shape="rect" id="node5" href="v_itin_geom.html" target="_top" title="v_itin_geom" alt="" coords="658,111,830,175">
-<area shape="rect" id="node6" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="559,192,929,707">
+<area shape="rect" id="node6" href="v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="559,192,929,619">
 </map>
                                         <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/v_itineraire.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
                                     </div>
@@ -451,7 +400,7 @@
                             </div>
                         </div>
                         <div class="box-body">
-                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT st_setsrid(st_geomfromtext(&#39;LINESTRING(0 0, 0 0)&#39;::text), 2154) AS geom,&#10;    0 AS id_itineraire,&#10;    &#39;&#39;::text AS numero,&#10;    &#39;&#39;::text AS nom_officiel,&#10;    &#39;&#39;::text AS nom_usage,&#10;    &#39;&#39;::text AS depart,&#10;    &#39;&#39;::text AS arrivee,&#10;    &#39;&#39;::text AS annee_inscription,&#10;    &#39;&#39;::text AS site_web,&#10;    &#39;&#39;::text AS annee_ouverture,&#10;    &#39;DEP&#39;::text AS niveau_schema,&#10;    &#39;F&#39;::text AS est_inscrit,&#10;    0.0 AS mont_subv,&#10;    &#39;&#39;::text AS annee_subv,&#10;    &#39;&#39;::text AS type_pluriannuel,&#10;    0.0 AS longueur&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_itin_geom) = 0)&#10;UNION ALL&#10; SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv,&#10;    itineraire.type_pluriannuel,&#10;    st_length(v_itin_geom.collect_geom) AS longueur&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));</textarea>
+                            <textarea id="sql-script-codemirror" name="sql-script-codemirror" rows="" style="display: none;">SELECT st_setsrid(st_geomfromtext(&#39;LINESTRING(0 0, 0 0)&#39;::text), 2154) AS geom,&#10;    0 AS id_itineraire,&#10;    &#39;&#39;::text AS numero,&#10;    &#39;&#39;::text AS nom_officiel,&#10;    &#39;&#39;::text AS nom_usage,&#10;    &#39;&#39;::text AS depart,&#10;    &#39;&#39;::text AS arrivee,&#10;    &#39;&#39;::text AS annee_inscription,&#10;    &#39;&#39;::text AS site_web,&#10;    &#39;&#39;::text AS annee_ouverture,&#10;    &#39;DEP&#39;::text AS niveau_schema,&#10;    &#39;F&#39;::text AS est_inscrit,&#10;    0.0 AS longueur&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_itin_geom) = 0)&#10;UNION ALL&#10; SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    st_length(v_itin_geom.collect_geom) AS longueur&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));</textarea>
                             <div style="padding-top: 5px;"><hr></div>
                             <div class="box box-solid">
                                 <div class="box-header with-border">

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<database name="gis" schema="veloroutes" type="PostgreSQL - 10.14 (Debian 10.14-1.pgdg100+1)">
+<database name="gis" schema="veloroutes" type="PostgreSQL - 10.15 (Debian 10.15-1.pgdg100+1)">
    <sequences>
       <sequence increment="1" name="amenagement_segment_val_id_seq" startValue="1"/>
       <sequence increment="1" name="amenagement_type_segment_val_id_seq" startValue="1"/>
@@ -165,9 +165,6 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="est_inscrit" nullable="true" remarks="Vrai si l’itinéraire est inscrit à un schéma de développement des véloroutes" size="2147483647" type="text" typeCode="12">
             <parent column="code" foreignKey="est_inscrit_booleen" implied="false" onDeleteCascade="false" schema="veloroutes" table="booleen_val"/>
          </column>
-         <column autoUpdated="false" defaultValue="null" digits="8" id="11" name="mont_subv" nullable="true" remarks="Montant de la subvention de l'itinéraire" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="annee_subv" nullable="true" remarks="Année de la subvention" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="type_pluriannuel" nullable="true" remarks="Type pluriannuel" size="2147483647" type="text" typeCode="12"/>
          <primaryKey column="id_itineraire" sequenceNumberInPK="1"/>
          <index name="itineraire_pkey" unique="true">
             <column ascending="true" name="id_itineraire"/>
@@ -496,7 +493,7 @@
             <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
          </column>
       </table>
-      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_setsrid(st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,&#10;    0 AS id_itineraire,&#10;    ''::text AS numero,&#10;    ''::text AS nom_officiel,&#10;    ''::text AS nom_usage,&#10;    ''::text AS depart,&#10;    ''::text AS arrivee,&#10;    ''::text AS annee_inscription,&#10;    ''::text AS site_web,&#10;    ''::text AS annee_ouverture,&#10;    'DEP'::text AS niveau_schema,&#10;    'F'::text AS est_inscrit,&#10;    0.0 AS mont_subv,&#10;    ''::text AS annee_subv,&#10;    ''::text AS type_pluriannuel,&#10;    0.0 AS longueur&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_itin_geom) = 0)&#10;UNION ALL&#10; SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    itineraire.mont_subv,&#10;    itineraire.annee_subv,&#10;    itineraire.type_pluriannuel,&#10;    st_length(v_itin_geom.collect_geom) AS longueur&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));">
+      <table name="v_itineraire" numRows="0" remarks="Vue qui joint les itinéraires aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_setsrid(st_geomfromtext('LINESTRING(0 0, 0 0)'::text), 2154) AS geom,&#10;    0 AS id_itineraire,&#10;    ''::text AS numero,&#10;    ''::text AS nom_officiel,&#10;    ''::text AS nom_usage,&#10;    ''::text AS depart,&#10;    ''::text AS arrivee,&#10;    ''::text AS annee_inscription,&#10;    ''::text AS site_web,&#10;    ''::text AS annee_ouverture,&#10;    'DEP'::text AS niveau_schema,&#10;    'F'::text AS est_inscrit,&#10;    0.0 AS longueur&#10;  WHERE (( SELECT count(*) AS count&#10;           FROM veloroutes.v_itin_geom) = 0)&#10;UNION ALL&#10; SELECT v_itin_geom.collect_geom AS geom,&#10;    itineraire.id_itineraire,&#10;    itineraire.numero,&#10;    itineraire.nom_officiel,&#10;    itineraire.nom_usage,&#10;    itineraire.depart,&#10;    itineraire.arrivee,&#10;    itineraire.annee_inscription,&#10;    itineraire.site_web,&#10;    itineraire.annee_ouverture,&#10;    itineraire.niveau_schema,&#10;    itineraire.est_inscrit,&#10;    st_length(v_itin_geom.collect_geom) AS longueur&#10;   FROM (veloroutes.itineraire&#10;     JOIN veloroutes.v_itin_geom ON ((v_itin_geom.id_itineraire = itineraire.id_itineraire)));">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="id_itineraire" nullable="true" remarks="" size="10" type="int4" typeCode="4">
             <parent column="id_itineraire" foreignKey="Implied Constraint" implied="true" onDeleteCascade="false" schema="veloroutes" table="itineraire"/>
@@ -511,10 +508,7 @@
          <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="annee_ouverture" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="niveau_schema" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
          <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="est_inscrit" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="8" id="12" name="mont_subv" nullable="true" remarks="" size="8" type="float4" typeCode="7"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="13" name="annee_subv" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="0" id="14" name="type_pluriannuel" nullable="true" remarks="" size="2147483647" type="text" typeCode="12"/>
-         <column autoUpdated="false" defaultValue="null" digits="17" id="15" name="longueur" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="17" id="12" name="longueur" nullable="true" remarks="" size="17" type="float8" typeCode="8"/>
       </table>
       <table name="v_port_geom" numRows="0" remarks="Vue intermédiaire qui joint les portions aux collections de géométries des segments qui les composent" schema="veloroutes" type="VIEW" viewSql=" SELECT st_collect(segment.geom) AS collect_geom,&#10;    element.id_portion&#10;   FROM ((veloroutes.element&#10;     JOIN veloroutes.segment ON ((segment.id_segment = element.id_segment)))&#10;     JOIN veloroutes.portion ON ((portion.id_portion = element.id_portion)))&#10;  GROUP BY element.id_portion;">
          <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="collect_geom" nullable="true" remarks="" size="2147483647" type="geometry" typeCode="1111"/>
@@ -1106,10 +1100,7 @@ BEGIN
         site_web,
         annee_ouverture,
         niveau_schema,
-        est_inscrit,
-        mont_subv,
-        annee_subv,
-        type_pluriannuel
+        est_inscrit
     ) VALUES (
         NEW.numero,
         NEW.nom_officiel,
@@ -1120,10 +1111,7 @@ BEGIN
         NEW.site_web,
         NEW.annee_ouverture,
         NEW.niveau_schema,
-        NEW.est_inscrit,
-        NEW.mont_subv,
-        NEW.annee_subv,
-        NEW.type_pluriannuel
+        NEW.est_inscrit
     ) RETURNING id_itineraire into iti_id;
 
     --INSERT stages of the itineray in etape
@@ -1167,10 +1155,7 @@ BEGIN
         site_web = NEW.site_web,
         annee_ouverture = NEW.annee_ouverture,
         niveau_schema = NEW.niveau_schema,
-        est_inscrit = NEW.est_inscrit,
-        mont_subv = NEW.mont_subv,
-        annee_subv = NEW.annee_subv,
-        type_pluriannuel = NEW.type_pluriannuel
+        est_inscrit = NEW.est_inscrit
     WHERE id_itineraire = OLD.id_itineraire;
 
     RETURN NEW;
