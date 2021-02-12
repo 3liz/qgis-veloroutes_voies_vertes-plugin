@@ -4,15 +4,16 @@
  <head>
   <meta charset="utf-8"/>
   <title>Véloroutes et voies vertes COVADIS</title>
-  <link type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
-  <link type="text/css" href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
-  <link type="image/png" href="../icon.png" rel="icon" >
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/github.min.css" rel="stylesheet"/>
+  <link href="https://docs.3liz.org/remarkable.css" rel="stylesheet"/>
+  <link href="../icon.png" rel="icon" type="image/png" >
  </head>
  <body>
  <header class="header-container" style="">
     <h1>Véloroutes et voies vertes COVADIS</h1>
  </header>
  <article>
+
 <div class="toc"><span class="toctitle">Table of content</span><ul>
 <li><a href="#veloroutes-et-voies-vertes-covadis">Véloroutes et voies vertes COVADIS</a><ul>
 <li><a href="#configuration">Configuration</a><ul>
@@ -23,7 +24,7 @@
 </li>
 </ul>
 </li>
-<li><a href="#structure">Structure</a><ul>
+<li><a href="#base-de-donnees">Base de données</a><ul>
 <li><a href="#installation-de-la-structure-sur-la-base-de-donnees">Installation de la structure sur la base de données</a><ul>
 <li><a href="#parameters_1">Parameters</a></li>
 <li><a href="#outputs_1">Outputs</a></li>
@@ -92,9 +93,9 @@
 <tbody>
 <tr>
 <td align="center">CONNECTION_NAME</td>
-<td align="center">Connexion à la base PostgreSQL</td>
+<td align="center">Connexion PostgreSQL vers la base de données</td>
 <td align="center">String</td>
-<td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
+<td align="center">Base de données de destination</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -127,7 +128,7 @@
 </tbody>
 </table>
 <hr>
-<h2 id="structure">Structure</h2>
+<h2 id="base-de-donnees">Base de données</h2>
 <h3 id="installation-de-la-structure-sur-la-base-de-donnees">Installation de la structure sur la base de données</h3>
 <p>Création de la structure de la base données. Vous pouvez aussi charger des données de tests.</p>
 <p><img alt="algo_id" src="./veloroutes_vv-create_database_structure.png"></p>
@@ -149,7 +150,7 @@
 <td align="center">CONNECTION_NAME</td>
 <td align="center">Connexion PostgreSQL vers la base de données</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -186,14 +187,8 @@
 </thead>
 <tbody>
 <tr>
-<td align="center">OUTPUT_STATUS</td>
-<td align="center">Output status</td>
-<td align="center">Number</td>
-<td align="center"></td>
-</tr>
-<tr>
-<td align="center">OUTPUT_STRING</td>
-<td align="center">Output message</td>
+<td align="center">DATABASE_VERSION</td>
+<td align="center">Version de la base de données</td>
 <td align="center">String</td>
 <td align="center"></td>
 </tr>
@@ -219,9 +214,9 @@
 <tbody>
 <tr>
 <td align="center">CONNECTION_NAME</td>
-<td align="center">Connexion PostgreSQL vers la base de données</td>
+<td align="center">Connexion à la base de données</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -294,8 +289,8 @@
 <td align="center">SCHEMA</td>
 <td align="center">Schéma</td>
 <td align="center">String</td>
-<td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
-<td align="center">✓</td>
+<td align="center">Nom du schéma où importer les données</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">Default: veloroutes <br></td>
 </tr>
@@ -384,8 +379,8 @@
 <td align="center">SCHEMA</td>
 <td align="center">Schéma</td>
 <td align="center">String</td>
-<td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
-<td align="center">✓</td>
+<td align="center">Nom du schéma où importer les données</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">Default: veloroutes <br></td>
 </tr>
@@ -472,9 +467,9 @@
 <tbody>
 <tr>
 <td align="center">DATABASE</td>
-<td align="center">Connexion à la base de données</td>
+<td align="center">Connexion PostgreSQL vers la base de données</td>
 <td align="center">String</td>
-<td align="center">Nom de la connexion dans QGIS pour se connecter à la base de données</td>
+<td align="center">Base de données de destination</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
@@ -484,7 +479,7 @@
 <td align="center">Schéma</td>
 <td align="center">String</td>
 <td align="center">Nom du schéma où importer les données</td>
-<td align="center">✓</td>
+<td align="center"></td>
 <td align="center"></td>
 <td align="center">Default: veloroutes <br></td>
 </tr>
@@ -492,7 +487,7 @@
 <td align="center">TABLE</td>
 <td align="center">Table de destination</td>
 <td align="center">String</td>
-<td align="center"></td>
+<td align="center">Nom du schéma où importer les données</td>
 <td align="center">✓</td>
 <td align="center"></td>
 <td align="center">Default: portion <br></td>
@@ -568,7 +563,7 @@
 <td align="center">SCHEMA</td>
 <td align="center">Schéma</td>
 <td align="center">String</td>
-<td align="center">Nom du schéma pour chercher les couches dans la base de données</td>
+<td align="center">Nom du schéma pour importer les couches</td>
 <td align="center"></td>
 <td align="center"></td>
 <td align="center">Default: veloroutes <br></td>
@@ -599,7 +594,7 @@
 <td align="center">OUTPUT</td>
 <td align="center">Couches de sortie</td>
 <td align="center">MultipleLayers</td>
-<td align="center">Les différentes couches de l'extention véloroutes et voies vertes</td>
+<td align="center">Les différentes couches de l'extension véloroutes et voies vertes</td>
 </tr>
 <tr>
 <td align="center">OUTPUT MSG</td>
@@ -628,13 +623,22 @@
 </thead>
 <tbody>
 <tr>
-<td align="center">INPUT</td>
-<td align="center">Champ qui ne sert à rien !</td>
+<td align="center">DATABASE</td>
+<td align="center">Connexion PostgreSQL vers la base de données</td>
 <td align="center">String</td>
+<td align="center">Base de données de destination</td>
+<td align="center">✓</td>
 <td align="center"></td>
 <td align="center"></td>
+</tr>
+<tr>
+<td align="center">SCHEMA</td>
+<td align="center">Schéma</td>
+<td align="center">String</td>
+<td align="center">Nom du schéma pour chercher les couches</td>
 <td align="center"></td>
 <td align="center"></td>
+<td align="center">Default: veloroutes <br></td>
 </tr>
 </tbody>
 </table>
@@ -655,9 +659,16 @@
 <td align="center">String</td>
 <td align="center">Message de sortie</td>
 </tr>
+<tr>
+<td align="center">OUTPUT</td>
+<td align="center">Couches dont le style a été modifié</td>
+<td align="center">MultipleLayers</td>
+<td align="center">Les différentes couches de l'extension véloroutes et voies vertes</td>
+</tr>
 </tbody>
 </table>
 <hr>
+
   </article>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js">
   </script>

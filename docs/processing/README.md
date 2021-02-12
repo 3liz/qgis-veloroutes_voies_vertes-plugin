@@ -20,7 +20,7 @@ Ajoute la variable "veloroutes_connection_name" à QGIS.
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion à la base PostgreSQL|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
 
 
 #### Outputs
@@ -34,7 +34,7 @@ OUTPUT_STRING|Message de sortie|String|Message de sortie|
 ***
 
 
-## Structure
+## Base de données
 
 
 ### Installation de la structure sur la base de données
@@ -47,7 +47,7 @@ Création de la structure de la base données. Vous pouvez aussi charger des don
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 OVERRIDE|Écraser le schéma veloroutes ? ** ATTENTION ** Cela supprimera toutes les données !|Boolean||✓|||
 ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
 
@@ -56,8 +56,7 @@ ADD_TEST_DATA|Ajouter des données de test ?|Boolean||✓|||
 
 | ID | Description | Type | Info |
 |:-:|:-:|:-:|:-:|
-OUTPUT_STATUS|Output status|Number||
-OUTPUT_STRING|Output message|String||
+DATABASE_VERSION|Version de la base de données|String||
 
 
 ***
@@ -73,7 +72,7 @@ Mise à jour de la base de données suite à une nouvelle version de l'extension
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String||✓|||
+CONNECTION_NAME|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 RUN_MIGRATIONS|Cocher cette option pour lancer la mise-à-jour.|Boolean||✓|||
 
 
@@ -102,7 +101,7 @@ Exporter tous les fichiers au format shape d'ESRI
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||Default: veloroutes <br> |
+SCHEMA|Schéma|String|Nom du schéma où importer les données|||Default: veloroutes <br> |
 DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||Default: 066 <br> |
 FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓|||
 CHARGER|Charger le fichier d'export dans le projet|Boolean|Si le traitement doit charger la couche Shapefile dans le projet|✓|||
@@ -130,7 +129,7 @@ Exporter un fichier au format shape d'ESRI
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|✓||Default: veloroutes <br> |
+SCHEMA|Schéma|String|Nom du schéma où importer les données|||Default: veloroutes <br> |
 TABLE|Donnée à exporter|Enum|Nom de la table à exporter|✓||Values: itineraire, portion, element, segment, repere, liaison, poi_portion, poi_acces, poi_service, poi_tourisme, etat_avancement_val, revetement_val, statut_segment_val, portion_val, repere_val <br>|
 DPT|Département au format XXX|String|Pour le département de l'Ain, mettre 001|✓||Default: 066 <br> |
 FOLDER|Chemin de destination|FolderDestination|Chemin de destination pour enregistrer les exports Shapefile|✓|||
@@ -158,9 +157,9 @@ Charger les données des différentes couches
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
-SCHEMA|Schéma|String|Nom du schéma où importer les données|✓||Default: veloroutes <br> |
-TABLE|Table de destination|String||✓||Default: portion <br> |
+DATABASE|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
+SCHEMA|Schéma|String|Nom du schéma où importer les données|||Default: veloroutes <br> |
+TABLE|Table de destination|String|Nom du schéma où importer les données|✓||Default: portion <br> |
 INPUT|Couche à importer|VectorLayer||✓||Type: TypeVector <br>|
 MATRIX|matrix|Matrix||✓||Default: ['TYPE_PORTION_COVADIS', 'type_portion', 'MONTANT_SUBVENTION', 'mont_subv', 'ANNE_SUBVENTION', 'annee_subv', 'fid', 'id_import', 'LIEN_ITIN', 'lien_itin', 'LIEN_CYCLO', 'lien_segm'] <br> |
 
@@ -189,7 +188,7 @@ Charger toutes les couches de la base de données.Vous pouvez aussi ajouter un f
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
-SCHEMA|Schéma|String|Nom du schéma pour chercher les couches dans la base de données|||Default: veloroutes <br> |
+SCHEMA|Schéma|String|Nom du schéma pour importer les couches|||Default: veloroutes <br> |
 RASTER|Ajouter un fond raster OpenStreetMap?|Boolean||✓|||
 
 
@@ -197,7 +196,7 @@ RASTER|Ajouter un fond raster OpenStreetMap?|Boolean||✓|||
 
 | ID | Description | Type | Info |
 |:-:|:-:|:-:|:-:|
-OUTPUT|Couches de sortie|MultipleLayers|Les différentes couches de l'extention véloroutes et voies vertes|
+OUTPUT|Couches de sortie|MultipleLayers|Les différentes couches de l'extension véloroutes et voies vertes|
 OUTPUT MSG|Message de sortie|String|Message de sortie|
 
 
@@ -214,7 +213,8 @@ Charger les styles pour les différentes couches.
 
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-INPUT|Champ qui ne sert à rien !|String|||||
+DATABASE|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
+SCHEMA|Schéma|String|Nom du schéma pour chercher les couches|||Default: veloroutes <br> |
 
 
 #### Outputs
@@ -222,6 +222,7 @@ INPUT|Champ qui ne sert à rien !|String|||||
 | ID | Description | Type | Info |
 |:-:|:-:|:-:|:-:|
 OUTPUT MSG|Message de sortie|String|Message de sortie|
+OUTPUT|Couches dont le style a été modifié|MultipleLayers|Les différentes couches de l'extension véloroutes et voies vertes|
 
 
 ***
