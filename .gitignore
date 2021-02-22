@@ -5,6 +5,12 @@ __pycache__/
 .vscode/
 .idea/
 
+# Docs
+docs/CHANGELOG.md
+docs/CONTRIBUTING.md
+build/
+
+# QGIS-Plugin-CI
 plugins.xml
 veloroutes_voies_vertes.*.zip
 

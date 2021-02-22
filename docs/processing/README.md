@@ -1,11 +1,9 @@
 ---
-Title: Véloroutes et voies vertes COVADIS
-Favicon: ../icon.png
-...
+hide:
+  - navigation
+---
 
-[TOC]
-
-# Véloroutes et voies vertes COVADIS
+# Processing
 
 ## Configuration
 

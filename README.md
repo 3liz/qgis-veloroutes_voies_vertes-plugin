@@ -1,21 +1,13 @@
-# qgis-veloroutes_voies_vertes-plugin
+# Véloroutes et voies vertes
 
-Standard Covadis Véloroutes et Voies Vertes (3V)
+Extension QGIS pour la gestion des véloroutes et voies vertes suivant le standard
+[COVADIS 3V](https://www.velo-territoires.org/observatoires/observatoire-national-des-veloroutes-et-voies-vertes/geostandard-velo/)
 
-QGIS >= 3.10
+![Logo](docs/media/icon.png)
 
-Documentation de la base de données : 
-* https://3liz.github.io/qgis-veloroutes_voies_vertes-plugin/
+![Démo](docs/media/demo.png)
 
-Dépôt QGIS :
-* URL : `https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/releases/latest/download/plugins.xml`
-* [Comment ajouter un dépôt dans QGIS](https://3liz.github.io/add_qgis_repository.html)
+## Documentation
 
-## Tester les migrations
-
-Faire une variable d'environement, soit dans QGIS ou en Python : 
-```python
-import os
-os.environ['TEST_DATABASE_INSTALL_VELOROUTES'] = '0.3.0'
-```
-L'installation de la base se fera avec 0.3.0. On peut ensuite appliquer les migrations.
+L'ensemble de la documentation (installation, guide utilisateur, traitements, base de données etc) se trouve
+sur [docs.3liz.org](https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/).

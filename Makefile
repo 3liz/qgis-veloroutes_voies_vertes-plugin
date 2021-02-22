@@ -33,9 +33,6 @@ reformat_sql:
 	@cd .docker && ./reformat_sql_install.sh
 	@cd .docker && ./stop.sh
 
-github-pages:
-	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/README.md docs/index.html
-
 processing-doc:
 	cd .docker && ./processing_doc.sh
 	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/README.md docs/processing/index.html
