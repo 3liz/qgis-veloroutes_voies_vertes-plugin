@@ -10,7 +10,7 @@ site_dir: build
 
 nav:
     - docs.3liz.org: '../'
-    - Acceuil: index.md
+    - Accueil: index.md
     - Guide utilisateur:
         - 'Installation': 'user-guide/installation.md'
     - Traitements: processing/README.md
