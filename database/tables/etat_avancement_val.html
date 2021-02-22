@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>etat_avancement_val - gis Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="../bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="../bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="../bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="../bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="../bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='../fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='../fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="../bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="../bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="../schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="../bower/html5shiv/html5shiv.min.js"></script>
+        <script src="../bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="../index.html" class="navbar-brand"><b>gis</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="../index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="../columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="../constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="../relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="../orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="../anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="../routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>etat_avancement_val</h1><p><span id="recordNumber">4</span> rows</p><br />
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-file-text-o"></i>
+                            <h3 id="Description" class="box-title">Description</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div><!-- /.box-header -->
+                        <div class="box-body clearfix">
+                            <p>Nomenclature pour l’état de réalisation d’un segment cyclable</p>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+                            <h3 id="Columns" class="box-title">Columns</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="standard_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead align='left'>
+                                <tr>
+                                    <th>Column</th>
+                                    <th>Type</th>
+                                    <th>Size</th>
+                                    <th title='Are nulls allowed?'>Nulls</th>
+                                    <th title='Is column automatically updated?'>Auto</th>
+                                    <th title='Default value'>Default</th>
+                                    <th title='Columns in tables that reference this column'>Children</th>
+                                    <th title='Columns in tables that are referenced by this column'>Parents</th>
+                                    <th title='Comments' class="toggle"><span>Comments</span></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey' style='padding-left: 5px;'></i><span id="code">code</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title=''></td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                            <tr>
+                                                <td title="amenagement_segment_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='amenagement_segment_val.html'>amenagement_segment_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="amenagement_type_segment_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='amenagement_type_segment_val.html'>amenagement_type_segment_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="booleen_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='booleen_val.html'>booleen_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="niveau_administratif_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='niveau_administratif_val.html'>niveau_administratif_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="poi_acces_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='poi_acces_val.html'>poi_acces_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="poi_service_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='poi_service_val.html'>poi_service_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="poi_tourisme_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='poi_tourisme_val.html'>poi_tourisme_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="portion_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='portion_val.html'>portion_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="repere_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='repere_val.html'>repere_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="revetement_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='revetement_val.html'>revetement_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="segment.avancement references etat_avancement_val.code via avancement"><a href='segment.html'>segment</a><span class='relatedKey'>.avancement</span></td>
+                                                <td class="constraint detail">avancement<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td title="statut_segment_val.code&#39;s name implies that it&#39;s a child of etat_avancement_val.code, but it doesn&#39;t reference that column."><a href='statut_segment_val.html'>statut_segment_val</a><span class='relatedKey'>.code</span></td>
+                                                <td class="constraint detail">Implied Constraint<span title='Restrict delete:&#10;Parent cannot be deleted if children exist'>R</span></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Code</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="libelle">libelle</span></td>
+                                    <td>text</td>
+                                    <td>2147483647</td>
+                                    <td title='nullable'>√</td>
+                                    <td title=''></td>
+                                    <td>null</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Libellé</p></td>
+                                </tr>
+                                <tr>
+                                    <td><span id="id">id</span></td>
+                                    <td>serial</td>
+                                    <td>10</td>
+                                    <td title=''></td>
+                                    <td title='Automatically updated by the database'>√</td>
+                                    <td>nextval(&#39;veloroutes.etat_avancement_val_id_seq&#39;::regclass)</td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td>
+                                        <table border='0' cellspacing='0' cellpadding='0'>
+                                        </table>
+                                    </td>
+                                    <td><p>Identifiant</p></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-sitemap"></i>
+                            <h3 id="Indexes" class="box-title">Indexes</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <table id="indexes_table" class="table table-bordered table-striped dataTable" role="grid">
+                                <thead>
+                                <tr>
+                                    <th>Constraint Name</th>
+                                    <th>Type</th>
+                                    <th>Sort</th>
+                                    <th>Column(s)</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td class='primaryKey' title='Primary Key'><i class='icon ion-key iconkey'></i> etat_avancement_val_pkey</td>
+                                    <td>Primary key</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>code</td>
+                                </tr>
+                                <tr>
+                                    <td class='uniqueKey' title='Unique Key'><i class='icon ion-key iconkey'></i> code9</td>
+                                    <td>Must be unique</td>
+                                    <td><span title='Ascending'>Asc</span></td>
+                                    <td>code</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div><!-- /.box-body -->
+                    </div>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 id="Relationships" class="box-title">Relationships</h3>
+                            <div class="box-tools pull-right">
+                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom"><!-- Tabs within a box -->
+                                <h5>Close relationships within degrees of separation</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#oneDegreeImg-chart" data-toggle="tab" aria-expanded="true">One</a></li>
+                                    <li class=""><a href="#twodegreesDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two degrees</a></li>
+                                    <li class=""><a href="#oneimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">One implied</a></li>
+                                    <li class=""><a href="#twoimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Two implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="oneDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagram" name="oneDegreeRelationshipsDiagram">
+<area shape="rect" id="node1" href="segment.html" target="_top" title="segment" alt="" coords="407,5,613,387">
+<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,32,363,189">
+</map>
+                                        <a name='diagram'><img id="oneDegreeImg" src="../diagrams/tables/etat_avancement_val.1degree.png" usemap="#oneDegreeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twodegreesDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagram" name="twoDegreesRelationshipsDiagram">
+<area shape="rect" id="node1" href="amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="355,532,693,620">
+<area shape="rect" id="node2" href="amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="5,496,301,584">
+<area shape="rect" id="node3" href="element.html" target="_top" title="element" alt="" coords="997,207,1148,295">
+<area shape="rect" id="node4" href="segment.html" target="_top" title="segment" alt="" coords="747,204,953,585">
+<area shape="rect" id="node5" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="345,5,703,163">
+<area shape="rect" id="node6" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="436,391,612,479">
+<area shape="rect" id="node7" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="421,180,627,268">
+<area shape="rect" id="node8" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="407,285,641,373">
+</map>
+                                        <a name='diagram'><img id="twodegreesDegreeImg" src="../diagrams/tables/etat_avancement_val.2degrees.png" usemap="#twoDegreesRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="oneimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="oneDegreeRelationshipsDiagramImplied" name="oneDegreeRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="407,1158,703,1304">
+<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,575,363,732">
+<area shape="rect" id="node3" href="amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="747,1128,1084,1304">
+<area shape="rect" id="node4" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="827,627,1003,774">
+<area shape="rect" id="node5" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="417,138,692,284">
+<area shape="rect" id="node6" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="461,302,648,448">
+<area shape="rect" id="node7" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="455,466,654,612">
+<area shape="rect" id="node8" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="447,630,662,776">
+<area shape="rect" id="node9" href="portion_val.html" target="_top" title="portion_val" alt="" coords="469,794,641,940">
+<area shape="rect" id="node10" href="repere_val.html" target="_top" title="repere_val" alt="" coords="471,958,638,1104">
+<area shape="rect" id="node11" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="812,99,1019,246">
+<area shape="rect" id="node12" href="segment.html" target="_top" title="segment" alt="" coords="1128,436,1335,818">
+<area shape="rect" id="node13" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="799,330,1032,476">
+</map>
+                                        <a name='diagram'><img id="oneimpliedDegreeImg" src="../diagrams/tables/etat_avancement_val.implied1degrees.png" usemap="#oneDegreeRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="twoimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="twoDegreesRelationshipsDiagramImplied" name="twoDegreesRelationshipsDiagramImplied">
+<area shape="rect" id="node1" href="amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="407,953,703,1099">
+<area shape="rect" id="node2" href="etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,698,363,855">
+<area shape="rect" id="node3" href="amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="747,895,1084,1071">
+<area shape="rect" id="node4" href="booleen_val.html" target="_top" title="booleen_val" alt="" coords="827,349,1003,495">
+<area shape="rect" id="node5" href="element.html" target="_top" title="element" alt="" coords="1379,603,1529,691">
+<area shape="rect" id="node6" href="portion.html" target="_top" title="portion" alt="" coords="1160,1031,1303,1119">
+<area shape="rect" id="node7" href="segment.html" target="_top" title="segment" alt="" coords="1128,173,1335,554">
+<area shape="rect" id="node16" href="portion_val.html" target="_top" title="portion_val" alt="" coords="829,1354,1001,1501">
+<area shape="rect" id="node19" href="revetement_val.html" target="_top" title="revetement_val" alt="" coords="451,61,658,207">
+<area shape="rect" id="node20" href="statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="438,225,671,371">
+<area shape="rect" id="node8" href="itineraire.html" target="_top" title="itineraire" alt="" coords="1152,915,1311,1003">
+<area shape="rect" id="node9" href="niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="417,1281,692,1427">
+<area shape="rect" id="node10" href="poi_acces.html" target="_top" title="poi_acces" alt="" coords="837,513,994,601">
+<area shape="rect" id="node11" href="poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="461,425,648,571">
+<area shape="rect" id="node12" href="poi_service.html" target="_top" title="poi_service" alt="" coords="830,621,1001,709">
+<area shape="rect" id="node13" href="poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="455,589,654,735">
+<area shape="rect" id="node14" href="poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="823,754,1008,842">
+<area shape="rect" id="node15" href="poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="447,753,662,899">
+<area shape="rect" id="node17" href="repere.html" target="_top" title="repere" alt="" coords="846,1149,985,1237">
+<area shape="rect" id="node18" href="repere_val.html" target="_top" title="repere_val" alt="" coords="471,1117,638,1263">
+</map>
+                                        <a name='diagram'><img id="twoimpliedDegreeImg" src="../diagrams/tables/etat_avancement_val.implied2degrees.png" usemap="#twoDegreesRelationshipsDiagramImplied" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+                <script>
+                    var config = {
+                        pagination: true
+                    }
+                </script>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="../bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="../bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="../bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="../bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="../bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="../bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="../bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="../bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="../bower/pdfmake/pdfmake.min.js"></script>
+        <script src="../bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="../bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="../bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="../bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="../bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="../bower/codemirror/codemirror.js"></script>
+        <script src="../bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="../bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="table.js"></script>
+        <script src="../schemaSpy.js"></script>
+    </body>
+</html>

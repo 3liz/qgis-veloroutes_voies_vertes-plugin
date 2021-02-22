@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>gis Database</title>
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+        <link rel="icon" type="image/png" sizes="16x16" href="favicon.png">
+        <!-- Bootstrap 3.3.5 -->
+        <link rel="stylesheet" href="bower/admin-lte/bootstrap/css/bootstrap.min.css">
+        <!-- Font Awesome -->
+        <link rel="stylesheet" href="bower/font-awesome/css/font-awesome.min.css">
+        <!-- Ionicons -->
+        <link rel="stylesheet" href="bower/ionicons/css/ionicons.min.css">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="bower/datatables.net-bs/css/dataTables.bootstrap.min.css">
+        <link rel="stylesheet" href="bower/datatables.net-buttons-bs/css/buttons.bootstrap.min.css">
+        <!-- Code Mirror -->
+        <link rel="stylesheet" href="bower/codemirror/codemirror.css">
+        <!-- Fonts -->
+        <link href='fonts/indieflower/indie-flower.css' rel='stylesheet' type='text/css'>
+        <link href='fonts/source-sans-pro/source-sans-pro.css' rel='stylesheet' type='text/css'>
+
+        <!-- Theme style -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/AdminLTE.min.css">
+        <!-- Salvattore -->
+        <link rel="stylesheet" href="bower/salvattore/salvattore.css">
+        <!-- AdminLTE Skins. Choose a skin from the css/skins
+           folder instead of downloading all of them to reduce the load. -->
+        <link rel="stylesheet" href="bower/admin-lte/dist/css/skins/_all-skins.min.css">
+        <!-- SchemaSpy -->
+        <link rel="stylesheet" href="schemaSpy.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="bower/html5shiv/html5shiv.min.js"></script>
+        <script src="bower/respond/respond.min.js"></script>
+        <![endif]-->
+    </head>
+    <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
+    <body class="hold-transition skin-blue layout-top-nav">
+        <div class="wrapper">
+            <header class="main-header">
+                <nav class="navbar navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <a href="index.html" class="navbar-brand"><b>gis</b> Database</a>
+                            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse"><i class="fa fa-bars"></i></button>
+                        </div>
+
+                        <!-- Collect the nav links, forms, and other content for toggling -->
+                        <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                            <ul class="nav navbar-nav">
+                                <li><a href="index.html">Tables <span class="sr-only">(current)</span></a></li>
+                                <li><a href="columns.html" title="All of the columns in the schema">Columns</a></li>
+                                <li><a href="constraints.html" title="Useful for diagnosing error messages that just give constraint name or number">Constraints</a></li>
+                                <li><a href="relationships.html" title="Diagram of table relationships">Relationships</a></li>
+                                <li><a href="orphans.html" title="View of tables with neither parents nor children">Orphan&nbsp;Tables</a></li>
+                                <li><a href="anomalies.html" title="Things that might not be quite right">Anomalies</a></li>
+                                <li><a href="routines.html" title="Procedures and functions">Routines</a></li>
+                            </ul>
+                        </div>
+                        <!-- /.navbar-collapse -->
+                        <!-- Navbar Right Menu -->
+                    </div>
+                    <!-- /.container-fluid -->
+                </nav>
+            </header>
+            <!-- Main content -->
+            <!-- Full Width Column -->
+            <div class="content-wrapper">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>All Relationships</h1>
+                </section>
+                <!-- Main content -->
+                <section class="content">
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <i class="fa fa-code-fork"></i>
+                            <h3 class="box-title">Diagrams</h3>
+                        </div>
+                        <div class="box-body">
+                            <div class="nav-tabs-custom">
+                                <!-- Tabs within a box -->
+                                <h5>By default only columns that are primary keys, foreign keys or indexes are shown.</h5>
+                                <ul class="nav nav-tabs pull-left ui-sortable-handle">
+                                    <li class="active"><a href="#compactDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact</a></li>
+                                    <li class=""><a href="#largeDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large</a></li>
+                                    <li class=""><a href="#compactimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Compact Implied</a></li>
+                                    <li class=""><a href="#largeimpliedDegreeImg-chart" data-toggle="tab" aria-expanded="true">Large Implied</a></li>
+                                </ul>
+                                <div class="tab-content no-padding">
+                                    <div class="chart tab-pane active" id="compactDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="compactRelationshipsDiagram" name="compactRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="5,895,301,1041">
+<area shape="rect" id="node2" href="tables/amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="345,932,683,1108">
+<area shape="rect" id="node3" href="tables/booleen_val.html" target="_top" title="booleen_val" alt="" coords="426,732,602,879">
+<area shape="rect" id="node4" href="tables/element.html" target="_top" title="element" alt="" coords="1007,793,1158,945">
+<area shape="rect" id="node18" href="tables/portion.html" target="_top" title="portion" alt="" coords="742,1125,926,1272">
+<area shape="rect" id="node23" href="tables/segment.html" target="_top" title="segment" alt="" coords="731,556,937,937">
+<area shape="rect" id="node5" href="tables/etape.html" target="_top" title="etape" alt="" coords="1010,1200,1155,1376">
+<area shape="rect" id="node8" href="tables/itineraire.html" target="_top" title="itineraire" alt="" coords="739,1289,929,1465">
+<area shape="rect" id="node6" href="tables/etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="390,269,638,387">
+<area shape="rect" id="node7" href="tables/frequentation.html" target="_top" title="frequentation" alt="" coords="985,1423,1180,1569">
+<area shape="rect" id="node20" href="tables/repere.html" target="_top" title="repere" alt="" coords="755,1483,913,1659">
+<area shape="rect" id="node10" href="tables/niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="377,1289,651,1436">
+<area shape="rect" id="node9" href="tables/liaison.html" target="_top" title="liaison" alt="" coords="1015,1601,1151,1807">
+<area shape="rect" id="node11" href="tables/poi.html" target="_top" title="poi" alt="" coords="765,1676,903,1823">
+<area shape="rect" id="node12" href="tables/poi_acces.html" target="_top" title="poi_acces" alt="" coords="1004,421,1161,597">
+<area shape="rect" id="node13" href="tables/poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="741,392,927,539">
+<area shape="rect" id="node14" href="tables/poi_service.html" target="_top" title="poi_service" alt="" coords="997,228,1168,404">
+<area shape="rect" id="node15" href="tables/poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="735,199,933,345">
+<area shape="rect" id="node16" href="tables/poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="990,35,1175,211">
+<area shape="rect" id="node17" href="tables/poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="727,5,941,152">
+<area shape="rect" id="node19" href="tables/portion_val.html" target="_top" title="portion_val" alt="" coords="428,1125,600,1272">
+<area shape="rect" id="node21" href="tables/repere_val.html" target="_top" title="repere_val" alt="" coords="431,1453,597,1600">
+<area shape="rect" id="node22" href="tables/revetement_val.html" target="_top" title="revetement_val" alt="" coords="411,404,617,551">
+<area shape="rect" id="node24" href="tables/statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="397,568,631,715">
+</map>
+                                        <a name='diagram'><img id="compactDegreeImg" src="diagrams/summary/relationships.real.compact.png" usemap="#compactRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="largeDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="largeRelationshipsDiagram" name="largeRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="5,1248,301,1400">
+<area shape="rect" id="node2" href="tables/amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="345,1271,683,1452">
+<area shape="rect" id="node3" href="tables/booleen_val.html" target="_top" title="booleen_val" alt="" coords="426,1065,602,1217">
+<area shape="rect" id="node4" href="tables/element.html" target="_top" title="element" alt="" coords="1007,1039,1158,1191">
+<area shape="rect" id="node18" href="tables/portion.html" target="_top" title="portion" alt="" coords="742,1328,926,1685">
+<area shape="rect" id="node23" href="tables/segment.html" target="_top" title="segment" alt="" coords="731,689,937,1311">
+<area shape="rect" id="node5" href="tables/etape.html" target="_top" title="etape" alt="" coords="1010,1644,1155,1825">
+<area shape="rect" id="node8" href="tables/itineraire.html" target="_top" title="itineraire" alt="" coords="739,1703,929,2089">
+<area shape="rect" id="node6" href="tables/etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="390,557,638,709">
+<area shape="rect" id="node7" href="tables/frequentation.html" target="_top" title="frequentation" alt="" coords="985,2056,1180,2237">
+<area shape="rect" id="node20" href="tables/repere.html" target="_top" title="repere" alt="" coords="755,2107,913,2376">
+<area shape="rect" id="node10" href="tables/niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="377,1937,651,2089">
+<area shape="rect" id="node9" href="tables/liaison.html" target="_top" title="liaison" alt="" coords="1015,2328,1151,2656">
+<area shape="rect" id="node11" href="tables/poi.html" target="_top" title="poi" alt="" coords="765,2393,903,2633">
+<area shape="rect" id="node12" href="tables/poi_acces.html" target="_top" title="poi_acces" alt="" coords="1004,520,1161,760">
+<area shape="rect" id="node13" href="tables/poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="741,520,927,672">
+<area shape="rect" id="node14" href="tables/poi_service.html" target="_top" title="poi_service" alt="" coords="997,263,1168,503">
+<area shape="rect" id="node15" href="tables/poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="735,263,933,415">
+<area shape="rect" id="node16" href="tables/poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="990,5,1175,245">
+<area shape="rect" id="node17" href="tables/poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="727,5,941,157">
+<area shape="rect" id="node19" href="tables/portion_val.html" target="_top" title="portion_val" alt="" coords="428,1469,600,1621">
+<area shape="rect" id="node21" href="tables/repere_val.html" target="_top" title="repere_val" alt="" coords="431,2165,597,2317">
+<area shape="rect" id="node22" href="tables/revetement_val.html" target="_top" title="revetement_val" alt="" coords="411,727,617,879">
+<area shape="rect" id="node24" href="tables/statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="397,896,631,1048">
+</map>
+                                        <a name='diagram'><img id="largeDegreeImg" src="diagrams/summary/relationships.real.large.png" usemap="#largeRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="compactimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="compactImpliedRelationshipsDiagram" name="compactImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="297,1109,593,1256">
+<area shape="rect" id="node6" href="tables/etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,820,253,937">
+<area shape="rect" id="node2" href="tables/amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="637,1313,975,1489">
+<area shape="rect" id="node3" href="tables/booleen_val.html" target="_top" title="booleen_val" alt="" coords="718,1113,894,1260">
+<area shape="rect" id="node4" href="tables/element.html" target="_top" title="element" alt="" coords="1291,1071,1442,1223">
+<area shape="rect" id="node18" href="tables/portion.html" target="_top" title="portion" alt="" coords="1030,1337,1214,1484">
+<area shape="rect" id="node23" href="tables/segment.html" target="_top" title="segment" alt="" coords="1019,937,1225,1319">
+<area shape="rect" id="node5" href="tables/etape.html" target="_top" title="etape" alt="" coords="1294,865,1439,1041">
+<area shape="rect" id="node8" href="tables/itineraire.html" target="_top" title="itineraire" alt="" coords="1027,744,1217,920">
+<area shape="rect" id="node7" href="tables/frequentation.html" target="_top" title="frequentation" alt="" coords="1269,1528,1464,1675">
+<area shape="rect" id="node20" href="tables/repere.html" target="_top" title="repere" alt="" coords="1043,1501,1201,1677">
+<area shape="rect" id="node10" href="tables/niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="308,5,583,152">
+<area shape="rect" id="node9" href="tables/liaison.html" target="_top" title="liaison" alt="" coords="1299,1692,1435,1897">
+<area shape="rect" id="node11" href="tables/poi.html" target="_top" title="poi" alt="" coords="1053,1695,1191,1841">
+<area shape="rect" id="node12" href="tables/poi_acces.html" target="_top" title="poi_acces" alt="" coords="727,533,885,709">
+<area shape="rect" id="node13" href="tables/poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="352,521,539,668">
+<area shape="rect" id="node14" href="tables/poi_service.html" target="_top" title="poi_service" alt="" coords="721,727,891,903">
+<area shape="rect" id="node15" href="tables/poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="346,704,545,851">
+<area shape="rect" id="node16" href="tables/poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="713,920,899,1096">
+<area shape="rect" id="node17" href="tables/poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="338,876,553,1023">
+<area shape="rect" id="node19" href="tables/portion_val.html" target="_top" title="portion_val" alt="" coords="359,1309,531,1456">
+<area shape="rect" id="node21" href="tables/repere_val.html" target="_top" title="repere_val" alt="" coords="362,1473,529,1620">
+<area shape="rect" id="node22" href="tables/revetement_val.html" target="_top" title="revetement_val" alt="" coords="703,205,909,352">
+<area shape="rect" id="node24" href="tables/statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="689,369,923,516">
+<area shape="rect" id="node25" href="tables/v_itin_geom.html" target="_top" title="v_itin_geom" alt="" coords="1281,637,1453,731">
+<area shape="rect" id="node26" href="tables/v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="1271,748,1462,841">
+<area shape="rect" id="node27" href="tables/v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="1277,1265,1456,1359">
+<area shape="rect" id="node28" href="tables/v_portion.html" target="_top" title="v_portion" alt="" coords="1275,1376,1459,1469">
+</map>
+                                        <a name='diagram'><img id="compactimpliedDegreeImg" src="diagrams/summary/relationships.implied.compact.png" usemap="#compactImpliedRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                    <div class="chart tab-pane " id="largeimpliedDegreeImg-chart" style="position: relative; overflow-x:auto;">
+                                        <map id="largeImpliedRelationshipsDiagram" name="largeImpliedRelationshipsDiagram">
+<area shape="rect" id="node1" href="tables/amenagement_segment_val.html" target="_top" title="amenagement_segment_val" alt="" coords="297,1625,593,1777">
+<area shape="rect" id="node6" href="tables/etat_avancement_val.html" target="_top" title="etat_avancement_val" alt="" coords="5,1603,253,1755">
+<area shape="rect" id="node2" href="tables/amenagement_type_segment_val.html" target="_top" title="amenagement_type_segment_val" alt="" coords="637,1755,975,1936">
+<area shape="rect" id="node3" href="tables/booleen_val.html" target="_top" title="booleen_val" alt="" coords="718,1549,894,1701">
+<area shape="rect" id="node4" href="tables/element.html" target="_top" title="element" alt="" coords="1291,1284,1442,1436">
+<area shape="rect" id="node18" href="tables/portion.html" target="_top" title="portion" alt="" coords="1030,817,1214,1175">
+<area shape="rect" id="node23" href="tables/segment.html" target="_top" title="segment" alt="" coords="1019,1192,1225,1813">
+<area shape="rect" id="node5" href="tables/etape.html" target="_top" title="etape" alt="" coords="1294,560,1439,741">
+<area shape="rect" id="node8" href="tables/itineraire.html" target="_top" title="itineraire" alt="" coords="1027,413,1217,800">
+<area shape="rect" id="node7" href="tables/frequentation.html" target="_top" title="frequentation" alt="" coords="1269,1776,1464,1957">
+<area shape="rect" id="node20" href="tables/repere.html" target="_top" title="repere" alt="" coords="1043,1831,1201,2100">
+<area shape="rect" id="node10" href="tables/niveau_administratif_val.html" target="_top" title="niveau_administratif_val" alt="" coords="308,715,583,867">
+<area shape="rect" id="node9" href="tables/liaison.html" target="_top" title="liaison" alt="" coords="1299,1975,1435,2303">
+<area shape="rect" id="node11" href="tables/poi.html" target="_top" title="poi" alt="" coords="1053,2117,1191,2357">
+<area shape="rect" id="node12" href="tables/poi_acces.html" target="_top" title="poi_acces" alt="" coords="727,1989,885,2229">
+<area shape="rect" id="node13" href="tables/poi_acces_val.html" target="_top" title="poi_acces_val" alt="" coords="352,2000,539,2152">
+<area shape="rect" id="node14" href="tables/poi_service.html" target="_top" title="poi_service" alt="" coords="721,2247,891,2487">
+<area shape="rect" id="node15" href="tables/poi_service_val.html" target="_top" title="poi_service_val" alt="" coords="346,2208,545,2360">
+<area shape="rect" id="node16" href="tables/poi_tourisme.html" target="_top" title="poi_tourisme" alt="" coords="713,2504,899,2744">
+<area shape="rect" id="node17" href="tables/poi_tourisme_val.html" target="_top" title="poi_tourisme_val" alt="" coords="338,2460,553,2612">
+<area shape="rect" id="node19" href="tables/portion_val.html" target="_top" title="portion_val" alt="" coords="359,944,531,1096">
+<area shape="rect" id="node21" href="tables/repere_val.html" target="_top" title="repere_val" alt="" coords="362,1831,529,1983">
+<area shape="rect" id="node22" href="tables/revetement_val.html" target="_top" title="revetement_val" alt="" coords="703,1211,909,1363">
+<area shape="rect" id="node24" href="tables/statut_segment_val.html" target="_top" title="statut_segment_val" alt="" coords="689,1380,923,1532">
+<area shape="rect" id="node25" href="tables/v_itin_geom.html" target="_top" title="v_itin_geom" alt="" coords="1281,5,1453,104">
+<area shape="rect" id="node26" href="tables/v_itineraire.html" target="_top" title="v_itineraire" alt="" coords="1271,121,1462,543">
+<area shape="rect" id="node27" href="tables/v_port_geom.html" target="_top" title="v_port_geom" alt="" coords="1277,759,1456,857">
+<area shape="rect" id="node28" href="tables/v_portion.html" target="_top" title="v_portion" alt="" coords="1275,875,1459,1267">
+</map>
+                                        <a name='diagram'><img id="largeimpliedDegreeImg" src="diagrams/summary/relationships.implied.large.png" usemap="#largeImpliedRelationshipsDiagram" class="diagram" border="0" align="left"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><!-- /.box-body -->
+                    </div>
+                </section>
+            </div>
+            <!-- /.content-wrapper -->
+            <footer class="main-footer">
+                <div>
+                    <div class="pull-right hidden-xs">
+                        <a href="https://github.com/schemaspy/schemaspy" title="GitHub for SchemaSpy"><i class="fa fa-github-square fa-2x"></i></a>
+                        <a href="http://stackoverflow.com/questions/tagged/schemaspy" title="StackOverflow for SchemaSpy"><i class="fa fa-stack-overflow fa-2x"></i></a>
+                    </div>
+                    <strong>Generated by <a href="http://schemaspy.org/" class="logo-text"><i class="fa fa-database"></i> SchemaSpy 6.1.0</a></strong>
+                </div>
+                <!-- /.container -->
+            </footer>
+        </div>
+        <!-- ./wrapper -->
+
+        <!-- jQuery 2.2.3 -->
+        <script src="bower/admin-lte/plugins/jQuery/jquery-2.2.3.min.js"></script>
+        <script src="bower/admin-lte/plugins/jQueryUI/jquery-ui.min.js"></script>
+        <!-- Bootstrap 3.3.5 -->
+        <script src="bower/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+        <!-- DataTables -->
+        <script src="bower/datatables.net/jquery.dataTables.min.js"></script>
+        <script src="bower/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/dataTables.buttons.min.js"></script>
+        <script src="bower/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.html5.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.print.min.js"></script>
+        <script src="bower/datatables.net-buttons/buttons.colVis.min.js"></script>
+        <!-- SheetJS -->
+        <script src="bower/js-xlsx/xlsx.full.min.js"></script>
+        <!-- pdfmake -->
+        <script src="bower/pdfmake/pdfmake.min.js"></script>
+        <script src="bower/pdfmake/vfs_fonts.js"></script>
+        <!-- SlimScroll -->
+        <script src="bower/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+        <!-- FastClick -->
+        <script src="bower/admin-lte/plugins/fastclick/fastclick.js"></script>
+        <!-- Salvattore -->
+        <script src="bower/salvattore/salvattore.min.js"></script>
+        <!-- AnchorJS -->
+        <script src="bower/anchor-js/anchor.min.js"></script>
+        <!-- CodeMirror -->
+        <script src="bower/codemirror/codemirror.js"></script>
+        <script src="bower/codemirror/sql.js"></script>
+        <!-- AdminLTE App -->
+        <script src="bower/admin-lte/dist/js/app.min.js"></script>
+        <script src="relationships.js"></script>
+        <script src="schemaSpy.js"></script>
+    </body>
+</html>
