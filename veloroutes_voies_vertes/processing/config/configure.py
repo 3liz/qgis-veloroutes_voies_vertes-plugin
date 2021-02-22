@@ -38,7 +38,7 @@ class ConfigurePlugin(BaseProcessingAlgorithm):
         return 'configure_plugin'
 
     def displayName(self):
-        return 'Configurer le plugin Véloroutes et voies vertes'
+        return 'Configurer l\'extension Véloroutes et voies vertes'
 
     def group(self):
         return 'Configuration'

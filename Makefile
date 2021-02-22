@@ -35,7 +35,6 @@ reformat_sql:
 
 processing-doc:
 	cd .docker && ./processing_doc.sh
-	@docker run --rm -w /plugin -v $(shell pwd):/plugin 3liz/pymarkdown:latest docs/processing/README.md docs/processing/index.html
 
 export_test_data:
 	# NEED TO IMPROVE THE DUMP TO EXCLUDE metadata qgis version table

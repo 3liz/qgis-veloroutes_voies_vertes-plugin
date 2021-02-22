@@ -8,7 +8,7 @@ hide:
 ## Configuration
 
 
-### Configurer le plugin Véloroutes et voies vertes
+### Configurer l'extension Véloroutes et voies vertes
 
 Ajoute la variable "veloroutes_connection_name" à QGIS.
 
@@ -177,7 +177,8 @@ OUTPUT MSG|Message de sortie|String||
 
 ### Chargement des couches depuis la base
 
-Charger toutes les couches de la base de données.Vous pouvez aussi ajouter un fond raster OpenSreetMap
+Charger toutes les couches de la base de données.
+Vous pouvez aussi ajouter un fond raster OpenStreetMap
 
 ![algo_id](./veloroutes_vv-load_layers.png)
 
@@ -187,7 +188,7 @@ Charger toutes les couches de la base de données.Vous pouvez aussi ajouter un f
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
 SCHEMA|Schéma|String|Nom du schéma pour importer les couches|||Default: veloroutes <br> |
-RASTER|Ajouter un fond raster OpenStreetMap?|Boolean||✓|||
+RASTER|Ajouter un fond raster OpenStreetMap ?|Boolean||✓|||
 
 
 #### Outputs
