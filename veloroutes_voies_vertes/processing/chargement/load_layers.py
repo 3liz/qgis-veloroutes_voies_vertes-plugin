@@ -53,8 +53,10 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         return tr("Données")
 
     def shortHelpString(self):
-        return tr("Charger toutes les couches de la base de données."
-                  "Vous pouvez aussi ajouter un fond raster OpenSreetMap")
+        return tr(
+            "Charger toutes les couches de la base de données.\n"
+            "Vous pouvez aussi ajouter un fond raster OpenStreetMap"
+        )
 
     def initAlgorithm(self, config):
         label = tr("Connexion à la base de données")
@@ -111,7 +113,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         self.addParameter(
             QgsProcessingParameterBoolean(
                 self.RASTER,
-                tr("Ajouter un fond raster OpenStreetMap?"),
+                tr("Ajouter un fond raster OpenStreetMap ?"),
                 defaultValue=False,
                 optional=False,
             )
