@@ -3,7 +3,7 @@ hide:
   - navigation
 ---
 
-# References
+# Références
 
 ## Exemple
 
