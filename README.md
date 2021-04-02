@@ -5,9 +5,7 @@ Extension QGIS pour la gestion des véloroutes et voies vertes suivant le standa
 
 ![Logo](docs/media/icon.png)
 
-![Démo](docs/media/demo.png)
-
-## Documentation
-
 L'ensemble de la documentation (installation, guide utilisateur, traitements, base de données etc) se trouve
 sur [docs.3liz.org](https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/).
+
+![Démo](docs/media/demo.png)
