@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/user-guide/installation/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/processing/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/references/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/changelog/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/contributing/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url><url>
      <loc>https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/database/</loc>
-     <lastmod>2021-04-02</lastmod>
+     <lastmod>2021-05-06</lastmod>
      <changefreq>daily</changefreq>
     </url>
 </urlset>
