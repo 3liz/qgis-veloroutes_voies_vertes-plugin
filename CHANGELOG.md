@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.1 - 2021-05-06
+
+* Mise à jour des QMLs itineraire, portion et segement
+
 ## 0.9.0 - 2021-02-12
 
 * Organisation de la légende lors du chargement des styles en ajoutant des groupes
