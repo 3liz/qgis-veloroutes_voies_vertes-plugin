@@ -2,7 +2,7 @@
 
 ## 0.9.1 - 2021-05-06
 
-* Mise à jour des QMLs itineraire, portion et segement
+* Mise à jour des styles itineraire, portion et segment
 
 ## 0.9.0 - 2021-02-12
 
