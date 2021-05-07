@@ -22,7 +22,7 @@ Pour cette partie il y a deux algorithmes :
 
 Après utilisation, les couches sont chargées dans le projet.
 
-![main_window_load_layers](media/veloroutes_vv-main-window-load-layers.jpg)
+![main_window_load_layers](./media/veloroutes_vv-all_layers.jpg)
 
 * Le second s'appelle **Chargement des styles depuis le dossier ressources**. Il prend en paramètre :
   * la connexion à la base de données depuis la liste des connexions PostGIS du profil QGIS

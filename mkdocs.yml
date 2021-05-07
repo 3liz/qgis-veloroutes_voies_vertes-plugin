@@ -12,6 +12,9 @@ nav:
     - docs.3liz.org: '../'
     - Accueil: index.md
     - Guide utilisateur:
+        - 'Index': user-guide/index.md
+        - 'Initialisation': user-guide/initialisation-projet.md
+        - 'Données': user-guide/gestion-structure-donnees.md
         - 'Installation': 'user-guide/installation.md'
     - Traitements: processing/README.md
     - Références: references.md
