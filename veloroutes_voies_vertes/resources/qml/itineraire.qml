@@ -44,21 +44,19 @@
       </editWidget>
     </field>
     <field name="depart">
-      <editWidget type="TextEdit">
+      <editWidget type="UniqueValues">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option name="Editable" value="true" type="bool"/>
           </Option>
         </config>
       </editWidget>
     </field>
     <field name="arrivee">
-      <editWidget type="TextEdit">
+      <editWidget type="UniqueValues">
         <config>
           <Option type="Map">
-            <Option name="IsMultiline" value="false" type="bool"/>
-            <Option name="UseHtml" value="false" type="bool"/>
+            <Option name="Editable" value="true" type="bool"/>
           </Option>
         </config>
       </editWidget>
@@ -234,11 +232,11 @@
   </expressionfields>
   <attributeactions>
     <defaultAction value="{00000000-0000-0000-0000-000000000000}" key="Canvas"/>
-    <actionsetting capture="0" icon="" id="{b97fe771-b04e-4e31-a5ef-1c913c0f7695}" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" shortTitle="Suppression d'étape" type="1" notificationMessage="" isEnabledOnlyWhenEditable="0">
+    <actionsetting capture="0" icon="" id="{613015f6-c2d7-4cd4-ab89-89c2a63fd557}" name="Suppression d'étape sur un itinéraire à partir de portions sélectionnées " action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%],[% '\''||@layer_name||'\'' %], 'del')" shortTitle="Suppression d'étape" type="1" notificationMessage="" isEnabledOnlyWhenEditable="0">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
-    <actionsetting capture="0" icon="" id="{eee0eda3-f3cc-4a2b-a6cb-6e327dfbccf2}" name="Ajouter des étapes à partir de portions sélectionnées" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" shortTitle="Ajouter des étapes" type="1" notificationMessage="" isEnabledOnlyWhenEditable="0">
+    <actionsetting capture="0" icon="" id="{f1dd738e-3484-4392-80e0-16f2fd14cb4a}" name="Ajouter des étapes à partir de portions sélectionnées" action="from qgis.utils import plugins&#xa;plugins['veloroutes_voies_vertes'].run_action('update_selected_feature', [%id_itineraire%], [% '\''||@layer_name||'\'' %] ,'add')" shortTitle="Ajouter des étapes" type="1" notificationMessage="" isEnabledOnlyWhenEditable="0">
       <actionScope id="Feature"/>
       <actionScope id="Canvas"/>
     </actionsetting>
@@ -294,23 +292,16 @@ def my_form_open(dialog, layer, feature):
   <attributeEditorForm>
     <attributeEditorField showLabel="1" name="id_itineraire" index="5"/>
     <attributeEditorContainer showLabel="1" name="Informations" visibilityExpression="" groupBox="0" visibilityExpressionEnabled="0" columnCount="1">
-      <attributeEditorContainer showLabel="1" name="Covadis" visibilityExpression="" groupBox="1" visibilityExpressionEnabled="0" columnCount="1">
-        <attributeEditorField showLabel="1" name="numero" index="0"/>
-        <attributeEditorField showLabel="1" name="nom_officiel" index="1"/>
-        <attributeEditorField showLabel="1" name="nom_usage" index="2"/>
-        <attributeEditorField showLabel="1" name="depart" index="3"/>
-        <attributeEditorField showLabel="1" name="arrivee" index="4"/>
-        <attributeEditorField showLabel="1" name="niveau_schema" index="9"/>
-        <attributeEditorField showLabel="1" name="site_web" index="7"/>
-        <attributeEditorField showLabel="1" name="annee_ouverture" index="8"/>
-        <attributeEditorField showLabel="1" name="est_inscrit" index="10"/>
-        <attributeEditorField showLabel="1" name="annee_inscription" index="6"/>
-      </attributeEditorContainer>
-      <attributeEditorContainer showLabel="1" name="Subvention" visibilityExpression="" groupBox="1" visibilityExpressionEnabled="0" columnCount="1">
-        <attributeEditorField showLabel="1" name="mont_subv" index="-1"/>
-        <attributeEditorField showLabel="1" name="annee_subv" index="-1"/>
-        <attributeEditorField showLabel="1" name="type_pluriannuel" index="-1"/>
-      </attributeEditorContainer>
+      <attributeEditorField showLabel="1" name="numero" index="0"/>
+      <attributeEditorField showLabel="1" name="nom_officiel" index="1"/>
+      <attributeEditorField showLabel="1" name="nom_usage" index="2"/>
+      <attributeEditorField showLabel="1" name="depart" index="3"/>
+      <attributeEditorField showLabel="1" name="arrivee" index="4"/>
+      <attributeEditorField showLabel="1" name="niveau_schema" index="9"/>
+      <attributeEditorField showLabel="1" name="site_web" index="7"/>
+      <attributeEditorField showLabel="1" name="annee_ouverture" index="8"/>
+      <attributeEditorField showLabel="1" name="est_inscrit" index="10"/>
+      <attributeEditorField showLabel="1" name="annee_inscription" index="6"/>
     </attributeEditorContainer>
     <attributeEditorContainer showLabel="1" name="Étapes" visibilityExpression="" groupBox="0" visibilityExpressionEnabled="0" columnCount="1">
       <attributeEditorField showLabel="1" name="etapes" index="11"/>

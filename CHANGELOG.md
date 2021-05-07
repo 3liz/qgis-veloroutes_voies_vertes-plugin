@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.9.2 - 2021-05-XX
+
+* Mise à jour des styles itineraire
+
 ## 0.9.1 - 2021-05-06
 
 * Mise à jour des styles itineraire, portion et segment
