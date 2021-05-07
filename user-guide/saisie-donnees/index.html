@@ -918,21 +918,27 @@ fictive. Une fois le tracé arrêté, la géométrie représente le parcours ava
 travaux. La géométrie peut-être découpée en fonction des changements de caractéristique.</p>
 <p>Enfin le segment est ouvert à la circulation.</p>
 <h3 id="les-actions">Les actions<a class="headerlink" href="#les-actions" title="Permanent link">#</a></h3>
-<p>Le plugin a ajouté à la couche <strong>segment</strong> des actions :
-* Couper un segment en un point <em>alias</em> <strong>Couper un segment</strong>
-* Créer une portion à partir de segments sélectionnés <em>alias</em> <strong>Créer une portion</strong></p>
+<p>Le plugin a ajouté à la couche <strong>segment</strong> des actions :</p>
+<ul>
+<li>Couper un segment en un point <em>alias</em> <strong>Couper un segment</strong></li>
+<li>Créer une portion à partir de segments sélectionnés <em>alias</em> <strong>Créer une portion</strong></li>
+</ul>
 <h4 id="couper-un-segment">Couper un segment<a class="headerlink" href="#couper-un-segment" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Passer la couche segment en édition
-* Cliquer sur <strong>Couper un segment</strong> dans le menu des actions
-* CLiquer sur la carte là où vous souhaitez couper le segment</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Passer la couche segment en édition</li>
+<li>Cliquer sur <strong>Couper un segment</strong> dans le menu des actions</li>
+<li>CLiquer sur la carte là où vous souhaitez couper le segment</li>
+</ul>
 <p>Cette action conserve l'appartenance à une portion. Le segment qui aura été
 pointé sera réduit et le nouveau segment créé sera ajouter à la portion du
 segment initial.</p>
 <h4 id="creer-une-portion">Créer une portion<a class="headerlink" href="#creer-une-portion" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les segments constitutifs d'une nouvelle portion
-* Cliquer sur <strong>Créer une portion</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les segments constitutifs d'une nouvelle portion</li>
+<li>Cliquer sur <strong>Créer une portion</strong> dans le menu des actions</li>
+</ul>
 <p>Un segment peut-être un élément de plusieurs portions</p>
 <h2 id="saisie-des-portions">Saisie des portions<a class="headerlink" href="#saisie-des-portions" title="Permanent link">#</a></h2>
 <p>Dans le modèle de données Véloroutes et Voies Vertes, les portions sont constitués
@@ -941,9 +947,11 @@ Elle peut-être une variante, un portion temporaire ou une portion observable
 d'un itinéraire.</p>
 <p>Une étape peut se parcourir en une journée.</p>
 <h3 id="creer-une-portion_1">Créer une portion<a class="headerlink" href="#creer-une-portion_1" title="Permanent link">#</a></h3>
-<p>La création d'une portion peut se faire de 2 façons :
-* A l'aide de l'action <strong>Créer une portion</strong> de la couche segment
-* En ajoutant une entité à la vue <strong>v_portion</strong></p>
+<p>La création d'une portion peut se faire de 2 façons :</p>
+<ul>
+<li>A l'aide de l'action <strong>Créer une portion</strong> de la couche segment</li>
+<li>En ajoutant une entité à la vue <strong>v_portion</strong></li>
+</ul>
 <p>Pour ajouter une entité à la vue <strong>v_portion</strong>, nous recommandons d'<strong>Activer l'accrochage</strong>
 et d'<em>Activer le tracé</em> en précisant un <strong>Offset</strong>.</p>
 <p>Ensuite, il vous suffit de cliquer le long des segments en s'assurant que
@@ -964,24 +972,32 @@ Ce suivi se fait au niveau des portions.</p>
 <p>Enfin un itinéraire principal est composé d’une collection ordonnée d’étapes cyclables.</p>
 <p><img alt="form_portion_3" src="../media/veloroutes_vv-form-portion-3.jpg" /></p>
 <h3 id="les-actions_1">Les actions<a class="headerlink" href="#les-actions_1" title="Permanent link">#</a></h3>
-<p>Le plugin a ajouté à la vue <strong>v_portion</strong> des actions :
-* Suppression d'éléments de portion à partir des segments sélectionnés <em>alias</em> <strong>Suppression d'éléments de portion</strong>
-* Ajouter des éléments de portion à partir des segments sélectionnés <em>alias</em> <strong>Ajouter des éléments de portion</strong>
-* Créer un itinéraire à partir de portions sélectionnés <em>alias</em> <strong>Créer un itinéraire</strong></p>
+<p>Le plugin a ajouté à la vue <strong>v_portion</strong> des actions :</p>
+<ul>
+<li>Suppression d'éléments de portion à partir des segments sélectionnés <em>alias</em> <strong>Suppression d'éléments de portion</strong></li>
+<li>Ajouter des éléments de portion à partir des segments sélectionnés <em>alias</em> <strong>Ajouter des éléments de portion</strong></li>
+<li>Créer un itinéraire à partir de portions sélectionnés <em>alias</em> <strong>Créer un itinéraire</strong></li>
+</ul>
 <h4 id="suppression-delements-de-portion">Suppression d'éléments de portion<a class="headerlink" href="#suppression-delements-de-portion" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les segments constitutifs d'une portion
-* Identifier la portion concernée par cette modification
-* Cliquer sur <strong>Suppression d'éléments de portion</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les segments constitutifs d'une portion</li>
+<li>Identifier la portion concernée par cette modification</li>
+<li>Cliquer sur <strong>Suppression d'éléments de portion</strong> dans le menu des actions</li>
+</ul>
 <h4 id="ajouter-des-elements-de-portion">Ajouter des éléments de portion<a class="headerlink" href="#ajouter-des-elements-de-portion" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les segments constitutifs d'une portion
-* Identifier la portion concernée par cette modification
-* Cliquer sur <strong>Ajouter des éléments de portion</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les segments constitutifs d'une portion</li>
+<li>Identifier la portion concernée par cette modification</li>
+<li>Cliquer sur <strong>Ajouter des éléments de portion</strong> dans le menu des actions</li>
+</ul>
 <h4 id="creer-un-itineraire">Créer un itinéraire<a class="headerlink" href="#creer-un-itineraire" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les portions constitutives d'un nouvel itinéraire
-* Cliquer sur <strong>Créer un itinéraire</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les portions constitutives d'un nouvel itinéraire</li>
+<li>Cliquer sur <strong>Créer un itinéraire</strong> dans le menu des actions</li>
+</ul>
 <p>Une portion peut-être un élément de plusieurs portions</p>
 <h2 id="saisie-des-itineraires">Saisie des itinéraires<a class="headerlink" href="#saisie-des-itineraires" title="Permanent link">#</a></h2>
 <p>Dans le modèle de données Véloroutes et Voies Vertes, les itinéraires sont constitués
@@ -989,9 +1005,11 @@ de portions. Un itinéraire contient une suite d'étapes et potentiellement
 des variantes, des portions temporaires et des portions observables. Les étapes
 d'un itinéraire sont ordonnées.</p>
 <h3 id="creer-un-itineraire_1">Créer un itinéraire<a class="headerlink" href="#creer-un-itineraire_1" title="Permanent link">#</a></h3>
-<p>La création d'un itinéraire peut se faire de 2 façons :
-* A l'aide de l'action <strong>Créer un itinéraire</strong> de la vue <strong>v_portion</strong>
-* En ajoutant une entité à la vue <strong>v_itineraire</strong></p>
+<p>La création d'un itinéraire peut se faire de 2 façons :</p>
+<ul>
+<li>A l'aide de l'action <strong>Créer un itinéraire</strong> de la vue <strong>v_portion</strong></li>
+<li>En ajoutant une entité à la vue <strong>v_itineraire</strong></li>
+</ul>
 <p>Pour ajouter une entité à la vue <strong>v_itineraire</strong>, nous recommandons d'<strong>Activer l'accrochage</strong>
 et d'<em>Activer le tracé</em> en précisant un <strong>Offset</strong>.</p>
 <p>Ensuite, il vous suffit de cliquer le long des portions en s'assurant que
@@ -1006,19 +1024,25 @@ régional ou départemental) et si celui-ci a été ou est inscript à un schém
 d'aménagement et d'insvestissement.</p>
 <p><img alt="form_itineraire" src="../media/veloroutes_vv-form-itineraire.jpg" /></p>
 <h3 id="les-actions_2">Les actions<a class="headerlink" href="#les-actions_2" title="Permanent link">#</a></h3>
-<p>Le plugin a ajouté à la vue <strong>v_itineraire</strong> des actions :
-* Suppression d'étape sur un itinéraire à partir de portions sélectionnées <em>alias</em> <strong>Suppression d'étapes</strong>
-* Ajouter des étapes à partir de portions sélectionnées <em>alias</em> <strong>Ajouter des étapes</strong></p>
+<p>Le plugin a ajouté à la vue <strong>v_itineraire</strong> des actions :</p>
+<ul>
+<li>Suppression d'étape sur un itinéraire à partir de portions sélectionnées <em>alias</em> <strong>Suppression d'étapes</strong></li>
+<li>Ajouter des étapes à partir de portions sélectionnées <em>alias</em> <strong>Ajouter des étapes</strong></li>
+</ul>
 <h4 id="supression-detapes">Supression d'étapes<a class="headerlink" href="#supression-detapes" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les portions constitutifs d'un itinéraire
-* Identifier l'itinéraire concerné par cette modification
-* Cliquer sur <strong>Suppression d'étapes</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les portions constitutifs d'un itinéraire</li>
+<li>Identifier l'itinéraire concerné par cette modification</li>
+<li>Cliquer sur <strong>Suppression d'étapes</strong> dans le menu des actions</li>
+</ul>
 <h4 id="ajouter-des-etapes">Ajouter des étapes<a class="headerlink" href="#ajouter-des-etapes" title="Permanent link">#</a></h4>
-<p>Cette action fonctionne de la façon suivante :
-* Sélectionner le ou les portions constitutifs d'un itinéraire
-* Identifier l'itinéraire concerné par cette modification
-* Cliquer sur <strong>Ajouter des étapes</strong> dans le menu des actions</p>
+<p>Cette action fonctionne de la façon suivante :</p>
+<ul>
+<li>Sélectionner le ou les portions constitutifs d'un itinéraire</li>
+<li>Identifier l'itinéraire concerné par cette modification</li>
+<li>Cliquer sur <strong>Ajouter des étapes</strong> dans le menu des actions</li>
+</ul>
                 
               
               
