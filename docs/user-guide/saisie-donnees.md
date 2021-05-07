@@ -27,12 +27,14 @@ Enfin le segment est ouvert à la circulation.
 ### Les actions
 
 Le plugin a ajouté à la couche **segment** des actions :
+
 * Couper un segment en un point _alias_ **Couper un segment**
 * Créer une portion à partir de segments sélectionnés _alias_ **Créer une portion**
 
 #### Couper un segment
 
 Cette action fonctionne de la façon suivante :
+
 * Passer la couche segment en édition
 * Cliquer sur **Couper un segment** dans le menu des actions
 * CLiquer sur la carte là où vous souhaitez couper le segment
@@ -44,6 +46,7 @@ segment initial.
 #### Créer une portion
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les segments constitutifs d'une nouvelle portion
 * Cliquer sur **Créer une portion** dans le menu des actions
 
@@ -61,6 +64,7 @@ Une étape peut se parcourir en une journée.
 ### Créer une portion
 
 La création d'une portion peut se faire de 2 façons :
+
 * A l'aide de l'action **Créer une portion** de la couche segment
 * En ajoutant une entité à la vue **v_portion**
 
@@ -96,6 +100,7 @@ Enfin un itinéraire principal est composé d’une collection ordonnée d’ét
 ### Les actions
 
 Le plugin a ajouté à la vue **v_portion** des actions :
+
 * Suppression d'éléments de portion à partir des segments sélectionnés _alias_ **Suppression d'éléments de portion**
 * Ajouter des éléments de portion à partir des segments sélectionnés _alias_ **Ajouter des éléments de portion**
 * Créer un itinéraire à partir de portions sélectionnés _alias_ **Créer un itinéraire**
@@ -103,6 +108,7 @@ Le plugin a ajouté à la vue **v_portion** des actions :
 #### Suppression d'éléments de portion
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les segments constitutifs d'une portion
 * Identifier la portion concernée par cette modification
 * Cliquer sur **Suppression d'éléments de portion** dans le menu des actions
@@ -110,6 +116,7 @@ Cette action fonctionne de la façon suivante :
 #### Ajouter des éléments de portion
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les segments constitutifs d'une portion
 * Identifier la portion concernée par cette modification
 * Cliquer sur **Ajouter des éléments de portion** dans le menu des actions
@@ -117,6 +124,7 @@ Cette action fonctionne de la façon suivante :
 #### Créer un itinéraire
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les portions constitutives d'un nouvel itinéraire
 * Cliquer sur **Créer un itinéraire** dans le menu des actions
 
@@ -132,6 +140,7 @@ d'un itinéraire sont ordonnées.
 ### Créer un itinéraire
 
 La création d'un itinéraire peut se faire de 2 façons :
+
 * A l'aide de l'action **Créer un itinéraire** de la vue **v_portion**
 * En ajoutant une entité à la vue **v_itineraire**
 
@@ -157,12 +166,14 @@ d'aménagement et d'insvestissement.
 ### Les actions
 
 Le plugin a ajouté à la vue **v_itineraire** des actions :
+
 * Suppression d'étape sur un itinéraire à partir de portions sélectionnées _alias_ **Suppression d'étapes**
 * Ajouter des étapes à partir de portions sélectionnées _alias_ **Ajouter des étapes**
 
 #### Supression d'étapes
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les portions constitutifs d'un itinéraire
 * Identifier l'itinéraire concerné par cette modification
 * Cliquer sur **Suppression d'étapes** dans le menu des actions
@@ -170,6 +181,7 @@ Cette action fonctionne de la façon suivante :
 #### Ajouter des étapes
 
 Cette action fonctionne de la façon suivante :
+
 * Sélectionner le ou les portions constitutifs d'un itinéraire
 * Identifier l'itinéraire concerné par cette modification
 * Cliquer sur **Ajouter des étapes** dans le menu des actions
