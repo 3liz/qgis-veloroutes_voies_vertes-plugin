@@ -2,13 +2,13 @@ name: Tests 🎳
 
 on:
   push:
-#    paths:
-#      - '**.sql'
-#      - '**.py'
+    paths:
+      - '**.sql'
+      - '**.py'
   pull_request:
-#    paths:
-#      - '**.sql'
-#      - '**.py'
+    paths:
+      - '**.sql'
+      - '**.py'
 
 jobs:
   test-qgis:
