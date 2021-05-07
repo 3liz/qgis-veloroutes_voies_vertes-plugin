@@ -13,4 +13,4 @@ Il y a plusieurs étapes :
 
 * [Gestion de la structure de données](./gestion-structure-donnees.md)
 * [Création du projet](./initialisation-projet.md)
-<!-- * [Saisie des données](./saisie-donnees.md) -->
+* [Saisie et gestion des données](./saisie-donnees.md)

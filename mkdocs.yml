@@ -15,6 +15,7 @@ nav:
         - 'Index': user-guide/index.md
         - 'Initialisation': user-guide/initialisation-projet.md
         - 'Données': user-guide/gestion-structure-donnees.md
+        - 'Saisie': user-guide/saisie-donnees.md
         - 'Installation': 'user-guide/installation.md'
     - Traitements: processing/README.md
     - Références: references.md
