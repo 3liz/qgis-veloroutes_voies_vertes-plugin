@@ -13,7 +13,7 @@ Le code SQL et Python sont couverts par des tests unitaires utilisant Docker.
 [![Migration 🗂](https://github.com/3liz/qgis-pgmetadata-plugin/workflows/Migration%20%F0%9F%97%82/badge.svg)](https://github.com/3liz/qgis-pgmetadata-plugin/actions?query=workflow%3A%22Migration+%F0%9F%97%82%22+branch%3Amaster)
 
 ```bash
-pip install -r requirements-dev.txt
+pip install -r requirements/dev.txt
 flake8
 make tests
 make test_migration
@@ -32,6 +32,6 @@ del os.environ['TEST_DATABASE_INSTALL_VELOROUTES']  # Disable
 La documentation utilise [MkDocs](https://www.mkdocs.org/) avec [Material](https://squidfunk.github.io/mkdocs-material/) :
 
 ```bash
-pip install -r requirements-doc.txt
+pip install -r requirements/doc.txt
 mkdocs serve
 ```
