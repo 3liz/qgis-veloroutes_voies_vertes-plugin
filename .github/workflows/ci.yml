@@ -118,7 +118,7 @@ jobs:
         consumer_secret: ${{ secrets.TWITTER_CONSUMER_SECRET }}
         access_token_key: ${{ secrets.TWITTER_ACCESS_TOKEN_KEY }}
         access_token_secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-        tweet_body: "Nouvelle version de l'extension Véloroute et Voies Vertes ${{ env.RELEASE_VERSION }} 🇫🇷 pour #QGIS, géostandard #COVADIS https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/releases"
+        tweet_body: "Nouvelle version de l'extension Véloroute et Voies Vertes ${{ env.RELEASE_VERSION }} 🚲 pour #QGIS, géostandard #COVADIS https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/releases"
 
     - name: Repository Dispatch
       uses: peter-evans/repository-dispatch@v1
