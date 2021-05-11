@@ -1,5 +1,7 @@
 # Véloroutes et voies vertes
 
+[![🎳 Tests](https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/actions/workflows/ci.yml)
+
 Extension QGIS pour la gestion des véloroutes et voies vertes suivant le standard
 [COVADIS 3V](https://www.velo-territoires.org/observatoires/observatoire-national-des-veloroutes-et-voies-vertes/geostandard-velo/)
 

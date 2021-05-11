@@ -1,7 +1,8 @@
 # Changelog
 
-## 0.9.2 - 2021-05-XX
+## 0.9.2 - 2021-05-11
 
+* Mise à jour de la documentation https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/
 * Mise à jour des styles itineraire
 
 ## 0.9.1 - 2021-05-06

@@ -8,9 +8,7 @@ Le projet est hébergé sur GitHub
 
 Le code SQL et Python sont couverts par des tests unitaires utilisant Docker.
 
-[![Tests 🎳](https://github.com/3liz/qgis-pgmetadata-plugin/workflows/Tests%20%F0%9F%8E%B3/badge.svg)](https://github.com/3liz/qgis-pgmetadata-plugin/actions?query=workflow%3A%22Tests+%F0%9F%8E%B3%22+branch%3Amaster)
-[![Flake8 🎳](https://github.com/3liz/qgis-pgmetadata-plugin/workflows/Flake8%20%F0%9F%8E%B3/badge.svg)](https://github.com/3liz/qgis-pgmetadata-plugin/actions?query=workflow%3A%22Flake8+%F0%9F%8E%B3%22+branch%3Amaster)
-[![Migration 🗂](https://github.com/3liz/qgis-pgmetadata-plugin/workflows/Migration%20%F0%9F%97%82/badge.svg)](https://github.com/3liz/qgis-pgmetadata-plugin/actions?query=workflow%3A%22Migration+%F0%9F%97%82%22+branch%3Amaster)
+[![🎳 Tests](https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/actions/workflows/ci.yml/badge.svg)](https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin/actions/workflows/ci.yml)
 
 ```bash
 pip install -r requirements/dev.txt
