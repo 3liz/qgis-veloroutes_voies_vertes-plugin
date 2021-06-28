@@ -27,17 +27,24 @@ def split_segment(*args):
     id_seg = int(args[0])
     xnode = args[1]
     ynode = args[2]
+
     project = QgsProject.instance()
-    connection_name = QgsExpressionContextUtils.projectScope(project).variable(
-        "veloroutes_connection_name"
-    )
+    project_scope = QgsExpressionContextUtils.projectScope(project)
+    connection_name = project_scope.variable("veloroutes_connection_name")
+    schema = project_scope.variable("veloroutes_schema")
     if not connection_name:
         iface.messageBar().pushCritical('Véloroutes', 'Vous devez configurer le plugin')
         return
+
+    if not schema:
+        schema = 'veloroutes'
+
     metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
     connection = metadata.findConnection(connection_name)
     try:
-        sql = """SELECT veloroutes.split({},{},{})""".format(id_seg, xnode, ynode)
+        sql = """SELECT "{}".split({},{},{})""".format(
+            schema, id_seg, xnode, ynode
+        )
         connection.executeSql(sql)
         msg = "Le segment {} a bien été coupé".format(id_seg)
         iface.messageBar().pushInfo('Véloroutes', msg)

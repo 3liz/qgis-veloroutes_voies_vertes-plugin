@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+* Ajout du schema à la configuration du projet
+
 ## 0.9.2 - 2021-05-11
 
 * Mise à jour de la documentation https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/
