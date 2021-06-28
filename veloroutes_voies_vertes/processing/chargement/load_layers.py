@@ -84,7 +84,7 @@ class LoadLayersAlgorithm(BaseProcessingAlgorithm):
         self.addParameter(param)
 
         label = tr("Schéma")
-        tooltip = 'Nom du schéma pour importer les couches'
+        tooltip = 'Nom du schéma des données véloroutes et voies vertes'
         default = 'veloroutes'
         if Qgis.QGIS_VERSION_INT >= 31400:
             param = QgsProcessingParameterDatabaseSchema(
