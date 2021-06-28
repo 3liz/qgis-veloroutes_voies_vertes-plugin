@@ -14,6 +14,9 @@ from qgis.core import (
     QgsProject,
     QgsProviderConnectionException,
     QgsProviderRegistry,
+    QgsCoordinateTransform,
+    QgsCoordinateReferenceSystem,
+    QgsPointXY,
 )
 from qgis.utils import iface
 
@@ -38,6 +41,16 @@ def split_segment(*args):
 
     if not schema:
         schema = 'veloroutes'
+
+    if project.crs().authid() != 'EPSG:2154':
+        xform = QgsCoordinateTransform(
+            project.crs(),
+            QgsCoordinateReferenceSystem("EPSG:2154"),
+            project.transformContext()
+        )
+        pt = xform.transform(QgsPointXY(xnode, ynode))
+        xnode = pt.x()
+        ynode = pt.y()
 
     metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
     connection = metadata.findConnection(connection_name)

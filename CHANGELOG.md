@@ -3,6 +3,7 @@
 ## Unreleased
 
 * Ajout du schema à la configuration du projet
+* Correction de l'action couper un segment en ajoutant une transformation des coordonnées
 
 ## 0.9.2 - 2021-05-11
 
