@@ -2,8 +2,12 @@
 
 ## Unreleased
 
+## 1.0.0 - 2021-07-01
+
+* Publication sur https://plugins.qgis.org
 * Ajout du schema à la configuration du projet
 * Correction de l'action couper un segment en ajoutant une transformation des coordonnées
+* Mise à jour de la documentation
 
 ## 0.9.2 - 2021-05-11
 

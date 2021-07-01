@@ -71,7 +71,7 @@ jobs:
   packaging:
     needs: [flake8, unittests, migration]
     runs-on: ubuntu-latest
-    if: github.owner == '3liz' && contains(github.ref, 'refs/tags/')
+    if: github.repository_owner == '3liz' && contains(github.ref, 'refs/tags/')
 
     steps:
 
