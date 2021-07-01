@@ -5,7 +5,7 @@ hide:
 
 # Guide d'utilisation
 
-Une fois [installé](./installation.md), pour utiliser l'outil, il faut se rendre dans la boîte à outils de traitements de QGIS.
+Une fois installé à l'aide du [gestionnaire d'extensions de QGIS](https://docs.qgis.org/3.16/fr/docs/user_manual/plugins/plugins.html#qgis-plugins), pour utiliser l'outil, il faut se rendre dans la boîte à outils de traitements de QGIS.
 
 ![tools](media/veloroutes_vv-tools.jpg)
 
