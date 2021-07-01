@@ -19,6 +19,7 @@ Ajoute la variable "veloroutes_connection_name" à QGIS.
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 CONNECTION_NAME|Connexion PostgreSQL vers la base de données|String|Base de données de destination|✓|||
+SCHEMA|Schéma|String|Nom du schéma des données véloroutes et voies vertes|||Default: veloroutes <br> |
 
 
 #### Outputs
@@ -187,7 +188,7 @@ Vous pouvez aussi ajouter un fond raster OpenStreetMap
 | ID | Description | Type | Info | Required | Advanced | Option |
 |:-:|:-:|:-:|:-:|:-:|:-:|:-:|
 DATABASE|Connexion à la base de données|String|Nom de la connexion dans QGIS pour se connecter à la base de données|✓|||
-SCHEMA|Schéma|String|Nom du schéma pour importer les couches|||Default: veloroutes <br> |
+SCHEMA|Schéma|String|Nom du schéma des données véloroutes et voies vertes|||Default: veloroutes <br> |
 RASTER|Ajouter un fond raster OpenStreetMap ?|Boolean||✓|||
 
 
