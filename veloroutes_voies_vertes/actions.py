@@ -8,15 +8,15 @@ Actions."""
 from functools import partial
 
 from qgis.core import (
+    QgsCoordinateReferenceSystem,
+    QgsCoordinateTransform,
     QgsExpression,
     QgsExpressionContextUtils,
     QgsFeature,
+    QgsPointXY,
     QgsProject,
     QgsProviderConnectionException,
     QgsProviderRegistry,
-    QgsCoordinateTransform,
-    QgsCoordinateReferenceSystem,
-    QgsPointXY,
 )
 from qgis.utils import iface
 
