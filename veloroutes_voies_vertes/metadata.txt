@@ -1,18 +1,20 @@
 [general]
 name=Véloroutes Voies Vertes
 qgisMinimumVersion=3.10
-description=Standard COVADIS véloroutes et voies vertes
+description=French use-case only for cycling routes following the COVADIS Standard. Extension pour la gestion des vélouroutes et voies vertes selon le standard COVADIS
 author=3Liz
 email=info@3liz.com
-about=Standard COVADIS véloroutes et voies vertes
+about=French use-case only for cycling routes following the COVADIS Standard. Extension pour la gestion des vélouroutes et voies vertes selon le standard COVADIS
 
 version=master
 
+hasProcessingProvider=yes
+tags=covadis,veloroutes,velo,voies vertes
+
 tracker=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
 repository=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
-hasProcessingProvider=yes
-tags=covadis,veloroutes
 homepage=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
+
 category=Analysis
 experimental=False
 deprecated=False
