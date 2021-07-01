@@ -23,8 +23,11 @@ nav:
     - Contribution: contributing.md
     - Base de données: database/index.html
 
+plugins:
+  - search
+  - git-revision-date-localized
+
 markdown_extensions:
-  # - git-revision-date:
   - toc:
       permalink: "#"
   - meta:
@@ -81,3 +84,6 @@ extra:
 
     - icon: fontawesome/brands/docker
       link: https://hub.docker.com/u/3liz
+
+    - icon: fontawesome/brands/youtube
+      link: https://www.youtube.com/channel/UCYYW2CTWR_84kB6pt2zCWbQ
