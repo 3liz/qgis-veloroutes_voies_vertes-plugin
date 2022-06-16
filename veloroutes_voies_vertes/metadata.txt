@@ -13,7 +13,7 @@ tags=covadis,veloroutes,velo,voies vertes
 
 tracker=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
 repository=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
-homepage=https://github.com/3liz/qgis-veloroutes_voies_vertes-plugin
+homepage=https://docs.3liz.org/qgis-veloroutes_voies_vertes-plugin/
 
 category=Analysis
 experimental=False
